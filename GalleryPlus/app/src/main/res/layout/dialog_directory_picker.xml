@@ -12,15 +12,15 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/activity_margin">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
+        <com.jetug.commons.views.MyRecyclerView
             android:id="@+id/directories_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+            app:layoutManager="com.jetug.commons.views.MyGridLayoutManager"
             app:spanCount="@integer/directory_columns_vertical_scroll"/>
 
-        <com.simplemobiletools.commons.views.FastScroller
+        <com.jetug.commons.views.FastScroller
             android:id="@+id/directories_vertical_fastscroller"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -29,9 +29,9 @@
 
             <include layout="@layout/fastscroller_handle_vertical"/>
 
-        </com.simplemobiletools.commons.views.FastScroller>
+        </com.jetug.commons.views.FastScroller>
 
-        <com.simplemobiletools.commons.views.FastScroller
+        <com.jetug.commons.views.FastScroller
             android:id="@+id/directories_horizontal_fastscroller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,10 +41,10 @@
 
             <include layout="@layout/fastscroller_handle_horizontal"/>
 
-        </com.simplemobiletools.commons.views.FastScroller>
+        </com.jetug.commons.views.FastScroller>
     </RelativeLayout>
 
-    <com.simplemobiletools.commons.views.MyFloatingActionButton
+    <com.jetug.commons.views.MyFloatingActionButton
         android:id="@+id/directories_show_hidden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

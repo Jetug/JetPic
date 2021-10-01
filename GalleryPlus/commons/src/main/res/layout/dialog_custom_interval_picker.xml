@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin">
 
-        <com.simplemobiletools.commons.views.MyEditText
+        <com.jetug.commons.views.MyEditText
             android:id="@+id/dialog_custom_interval_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_margin">
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/dialog_radio_seconds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:paddingTop="@dimen/activity_margin"
                 android:text="@string/seconds_raw"/>
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/dialog_radio_minutes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:paddingTop="@dimen/activity_margin"
                 android:text="@string/minutes_raw"/>
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/dialog_radio_hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:paddingTop="@dimen/activity_margin"
                 android:text="@string/hours_raw"/>
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/dialog_radio_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

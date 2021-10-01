@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_margin">
 
-    <com.simplemobiletools.commons.views.MyTextInputLayout
+    <com.jetug.commons.views.MyTextInputLayout
         android:id="@+id/add_blocked_number_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/medium_margin"
         android:hint="@string/number">
 
-        <com.simplemobiletools.commons.views.MyEditText
+        <com.jetug.commons.views.MyEditText
             android:id="@+id/add_blocked_number_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,6 +21,6 @@
             android:inputType="phone"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/bigger_text_size" />
-    </com.simplemobiletools.commons.views.MyTextInputLayout>
+    </com.jetug.commons.views.MyTextInputLayout>
 
 </RelativeLayout>

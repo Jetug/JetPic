@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin">
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/name" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_path"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/path" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/size" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_last_modified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/last_modified" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_date_taken"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/date_taken" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_random"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/random" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             android:layout_marginTop="@dimen/medium_margin"
             android:paddingBottom="@dimen/medium_margin">
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_ascending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                 android:paddingBottom="@dimen/medium_margin"
                 android:text="@string/ascending" />
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <com.jetug.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_descending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
             android:id="@+id/use_for_this_folder_divider"
             layout="@layout/divider" />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <com.jetug.commons.views.MyAppCompatCheckbox
             android:id="@+id/sorting_dialog_numeric_sorting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
             android:text="@string/sort_numeric_parts"
             />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <com.jetug.commons.views.MyAppCompatCheckbox
             android:id="@+id/sorting_dialog_use_for_this_folder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/use_for_this_folder"/>
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <com.jetug.commons.views.MyTextView
             android:id="@+id/sorting_dialog_bottom_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

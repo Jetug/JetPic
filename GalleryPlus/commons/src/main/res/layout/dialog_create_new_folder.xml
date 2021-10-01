@@ -9,12 +9,12 @@
     android:paddingRight="@dimen/activity_margin"
     android:paddingTop="@dimen/activity_margin">
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/folder_path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.simplemobiletools.commons.views.MyEditText
+    <com.jetug.commons.views.MyEditText
         android:id="@+id/folder_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

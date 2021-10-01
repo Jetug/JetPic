@@ -6,15 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.simplemobiletools.commons.views.MyRecyclerView
+    <com.jetug.commons.views.MyRecyclerView
         android:id="@+id/manage_folders_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:scrollbars="vertical"
-        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager"/>
+        app:layoutManager="com.jetug.commons.views.MyLinearLayoutManager"/>
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/manage_folders_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

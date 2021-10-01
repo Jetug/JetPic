@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.simplemobiletools.gallery.pro"
+    package="com.jetug.gallery.pro"
     android:installLocation="auto">
 
     <!-- override the android:maxSdkVersion="28" from PhotoEditorSDK with some higher number -->
@@ -28,7 +28,7 @@
         android:required="false"/>
 
     <application
-        android:name=".App"
+        android:name="com.jetug.gallery.pro.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_launcher_name"
@@ -39,11 +39,11 @@
         tools:replace="android:label">
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.jetug.gallery.pro.activities.SplashActivity"
             android:theme="@style/SplashTheme"/>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.jetug.gallery.pro.activities.MainActivity"
             android:resizeableActivity="true">
 
             <meta-data
@@ -78,8 +78,8 @@
         </activity>
 
         <activity
-            android:name=".activities.MediaActivity"
-            android:parentActivityName=".activities.MainActivity">
+            android:name="com.jetug.gallery.pro.activities.MediaActivity"
+            android:parentActivityName="com.jetug.gallery.pro.activities.MainActivity">
 
             <meta-data
                 android:name="android.app.default_searchable"
@@ -92,9 +92,9 @@
         </activity>
 
         <activity
-            android:name=".activities.SearchActivity"
+            android:name="com.jetug.gallery.pro.activities.SearchActivity"
             android:label="@string/search"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName="com.jetug.gallery.pro.activities.MainActivity"
             android:resizeableActivity="true">
 
             <meta-data
@@ -107,9 +107,9 @@
         </activity>
 
         <activity
-            android:name=".activities.ViewPagerActivity"
+            android:name="com.jetug.gallery.pro.activities.ViewPagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".activities.MediaActivity">
+            android:parentActivityName="com.jetug.gallery.pro.activities.MediaActivity">
 
             <intent-filter>
                 <action android:name="com.android.camera.action.REVIEW"/>
@@ -123,66 +123,66 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.AboutActivity"
+            android:name="com.jetug.commons.activities.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName=".activities.MainActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.MainActivity"/>
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.LicenseActivity"
+            android:name="com.jetug.commons.activities.LicenseActivity"
             android:label="@string/third_party_licences"
-            android:parentActivityName="com.simplemobiletools.commons.activities.AboutActivity"/>
+            android:parentActivityName="com.jetug.commons.activities.AboutActivity"/>
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.CustomizationActivity"
+            android:name="com.jetug.commons.activities.CustomizationActivity"
             android:label="@string/customize_colors"
-            android:parentActivityName=".activities.SettingsActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.SettingsActivity"/>
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.FAQActivity"
+            android:name="com.jetug.commons.activities.FAQActivity"
             android:label="@string/frequently_asked_questions"
-            android:parentActivityName="com.simplemobiletools.commons.activities.AboutActivity"/>
+            android:parentActivityName="com.jetug.commons.activities.AboutActivity"/>
 
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="com.jetug.gallery.pro.activities.SettingsActivity"
             android:label="@string/settings"
-            android:parentActivityName=".activities.MainActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.MainActivity"/>
 
         <activity
-            android:name=".activities.PhotoVideoActivity"
+            android:name="com.jetug.gallery.pro.activities.PhotoVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <activity
-            android:name=".activities.VideoPlayerActivity"
+            android:name="com.jetug.gallery.pro.activities.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".activities.MediaActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.MediaActivity"/>
 
         <activity
-            android:name=".activities.PanoramaPhotoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullScreenTheme"/>
-
-        <activity
-            android:name=".activities.PanoramaVideoActivity"
+            android:name="com.jetug.gallery.pro.activities.PanoramaPhotoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullScreenTheme"/>
 
         <activity
-            android:name=".activities.IncludedFoldersActivity"
+            android:name="com.jetug.gallery.pro.activities.PanoramaVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullScreenTheme"/>
+
+        <activity
+            android:name="com.jetug.gallery.pro.activities.IncludedFoldersActivity"
             android:label="@string/include_folders"
-            android:parentActivityName=".activities.SettingsActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.SettingsActivity"/>
 
         <activity
-            android:name=".activities.ExcludedFoldersActivity"
+            android:name="com.jetug.gallery.pro.activities.ExcludedFoldersActivity"
             android:label="@string/excluded_folders"
-            android:parentActivityName=".activities.SettingsActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.SettingsActivity"/>
 
         <activity
-            android:name=".activities.HiddenFoldersActivity"
+            android:name="com.jetug.gallery.pro.activities.HiddenFoldersActivity"
             android:label="@string/hidden_folders"
-            android:parentActivityName=".activities.SettingsActivity"/>
+            android:parentActivityName="com.jetug.gallery.pro.activities.SettingsActivity"/>
 
         <activity
-            android:name=".activities.PhotoActivity"
+            android:name="com.jetug.gallery.pro.activities.PhotoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -195,7 +195,7 @@
         </activity>
 
         <activity
-            android:name=".activities.VideoActivity"
+            android:name="com.jetug.gallery.pro.activities.VideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -208,7 +208,7 @@
         </activity>
 
         <activity
-            android:name=".activities.EditActivity"
+            android:name="com.jetug.gallery.pro.activities.EditActivity"
             android:label="@string/editor">
 
             <intent-filter
@@ -235,7 +235,7 @@
         </activity>
 
         <activity
-            android:name=".activities.SetWallpaperActivity"
+            android:name="com.jetug.gallery.pro.activities.SetWallpaperActivity"
             android:label="@string/simple_wallpaper">
             <intent-filter>
                 <action android:name="android.intent.action.ATTACH_DATA"/>
@@ -253,7 +253,7 @@
         </activity>
 
         <activity
-            android:name=".activities.WidgetConfigureActivity"
+            android:name="com.jetug.gallery.pro.activities.WidgetConfigureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyWidgetConfigTheme">
             <intent-filter>
@@ -272,7 +272,7 @@
         </provider>
 
         <receiver
-            android:name=".receivers.RefreshMediaReceiver"
+            android:name="com.jetug.gallery.pro.receivers.RefreshMediaReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.simplemobiletools.REFRESH_MEDIA"/>
@@ -280,7 +280,7 @@
         </receiver>
 
         <receiver
-            android:name=".helpers.MyWidgetProvider"
+            android:name="com.jetug.gallery.pro.helpers.MyWidgetProvider"
             android:icon="@drawable/img_widget_preview">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -291,7 +291,7 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
 
-        <receiver android:name=".receivers.BootCompletedReceiver"
+        <receiver android:name="com.jetug.gallery.pro.receivers.BootCompletedReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>
@@ -301,7 +301,7 @@
         </receiver>
 
         <service
-            android:name=".jobs.NewPhotoFetcher"
+            android:name="com.jetug.gallery.pro.jobs.NewPhotoFetcher"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
@@ -310,7 +310,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_red"
             android:roundIcon="@mipmap/ic_launcher_red"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -323,7 +323,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_pink"
             android:roundIcon="@mipmap/ic_launcher_pink"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -336,7 +336,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_purple"
             android:roundIcon="@mipmap/ic_launcher_purple"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -349,7 +349,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_deep_purple"
             android:roundIcon="@mipmap/ic_launcher_deep_purple"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -362,7 +362,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_indigo"
             android:roundIcon="@mipmap/ic_launcher_indigo"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -375,7 +375,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_blue"
             android:roundIcon="@mipmap/ic_launcher_blue"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -388,7 +388,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_light_blue"
             android:roundIcon="@mipmap/ic_launcher_light_blue"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -401,7 +401,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_cyan"
             android:roundIcon="@mipmap/ic_launcher_cyan"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -414,7 +414,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_teal"
             android:roundIcon="@mipmap/ic_launcher_teal"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -427,7 +427,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_green"
             android:roundIcon="@mipmap/ic_launcher_green"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -440,7 +440,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_light_green"
             android:roundIcon="@mipmap/ic_launcher_light_green"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -453,7 +453,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_lime"
             android:roundIcon="@mipmap/ic_launcher_lime"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -466,7 +466,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_yellow"
             android:roundIcon="@mipmap/ic_launcher_yellow"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -479,7 +479,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_amber"
             android:roundIcon="@mipmap/ic_launcher_amber"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -492,7 +492,7 @@
             android:enabled="true"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -504,7 +504,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_deep_orange"
             android:roundIcon="@mipmap/ic_launcher_deep_orange"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -517,7 +517,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_brown"
             android:roundIcon="@mipmap/ic_launcher_brown"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -530,7 +530,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_blue_grey"
             android:roundIcon="@mipmap/ic_launcher_blue_grey"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -543,7 +543,7 @@
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_grey_black"
             android:roundIcon="@mipmap/ic_launcher_grey_black"
-            android:targetActivity=".activities.SplashActivity">
+            android:targetActivity="com.jetug.gallery.pro.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

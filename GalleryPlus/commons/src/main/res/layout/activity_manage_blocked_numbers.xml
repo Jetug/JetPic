@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.simplemobiletools.commons.views.MyRecyclerView
+    <com.jetug.commons.views.MyRecyclerView
         android:id="@+id/manage_blocked_numbers_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:scrollbars="vertical"
-        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+        app:layoutManager="com.jetug.commons.views.MyLinearLayoutManager" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/manage_blocked_numbers_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:textStyle="italic"
         android:visibility="gone" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/manage_blocked_numbers_placeholder_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

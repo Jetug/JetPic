@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/breadcrumb_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

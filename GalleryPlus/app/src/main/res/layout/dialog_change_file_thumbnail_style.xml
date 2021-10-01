@@ -23,7 +23,7 @@
             android:paddingEnd="@dimen/normal_margin"
             android:paddingBottom="@dimen/bigger_margin">
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/dialog_file_style_spacing_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:paddingEnd="@dimen/medium_margin"
                 android:text="@string/thumbnail_spacing" />
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/dialog_file_style_spacing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/normal_margin">
 
-            <com.simplemobiletools.commons.views.MySwitchCompat
+            <com.jetug.commons.views.MySwitchCompat
                 android:id="@+id/dialog_file_style_rounded_corners"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/normal_margin">
 
-            <com.simplemobiletools.commons.views.MySwitchCompat
+            <com.jetug.commons.views.MySwitchCompat
                 android:id="@+id/dialog_file_style_animate_gifs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/normal_margin">
 
-            <com.simplemobiletools.commons.views.MySwitchCompat
+            <com.jetug.commons.views.MySwitchCompat
                 android:id="@+id/dialog_file_style_show_thumbnail_video_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/normal_margin">
 
-            <com.simplemobiletools.commons.views.MySwitchCompat
+            <com.jetug.commons.views.MySwitchCompat
                 android:id="@+id/dialog_file_style_show_thumbnail_file_types"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

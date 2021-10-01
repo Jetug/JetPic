@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_margin"
     android:paddingRight="@dimen/activity_margin">
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/conflict_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/medium_margin">
 
-        <com.simplemobiletools.commons.views.MyCompatRadioButton
+        <com.jetug.commons.views.MyCompatRadioButton
             android:id="@+id/conflict_dialog_radio_skip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:paddingBottom="@dimen/normal_margin"
             android:text="@string/skip"/>
 
-        <com.simplemobiletools.commons.views.MyCompatRadioButton
+        <com.jetug.commons.views.MyCompatRadioButton
             android:id="@+id/conflict_dialog_radio_overwrite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:paddingBottom="@dimen/normal_margin"
             android:text="@string/overwrite"/>
 
-        <com.simplemobiletools.commons.views.MyCompatRadioButton
+        <com.jetug.commons.views.MyCompatRadioButton
             android:id="@+id/conflict_dialog_radio_merge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:paddingBottom="@dimen/normal_margin"
             android:text="@string/merge"/>
 
-        <com.simplemobiletools.commons.views.MyCompatRadioButton
+        <com.jetug.commons.views.MyCompatRadioButton
             android:id="@+id/conflict_dialog_radio_keep_both"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
 
     </RadioGroup>
 
-    <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+    <com.jetug.commons.views.MyAppCompatCheckbox
         android:id="@+id/conflict_dialog_apply_to_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

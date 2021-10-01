@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.commons.views.PinTab
+<com.jetug.commons.views.PinTab
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pin_lock_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/pin_lock_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:paddingTop="@dimen/activity_margin"
         android:text="@string/enter_pin"/>
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/pin_lock_current_pin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_1"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:text="1"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_2"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -57,7 +57,7 @@
                 android:layout_weight="1"
                 android:text="2"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_3"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -72,7 +72,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_4"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:text="4"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_5"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:text="5"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_6"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -103,7 +103,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_7"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 android:text="7"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_8"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -119,7 +119,7 @@
                 android:layout_weight="1"
                 android:text="8"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_9"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -134,7 +134,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_c"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -142,7 +142,7 @@
                 android:layout_weight="1"
                 android:text="C"/>
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.jetug.commons.views.MyTextView
                 android:id="@+id/pin_0"
                 style="@style/PinNumberStyle"
                 android:layout_width="0dp"
@@ -161,4 +161,4 @@
 
         </LinearLayout>
     </LinearLayout>
-</com.simplemobiletools.commons.views.PinTab>
+</com.jetug.commons.views.PinTab>

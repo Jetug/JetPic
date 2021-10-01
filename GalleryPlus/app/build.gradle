@@ -95,6 +95,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.github.penfeizhou.android.animation:awebp:2.11.0'
     implementation 'com.github.penfeizhou.android.animation:apng:2.11.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
     implementation('com.squareup.picasso:picasso:2.71828') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
