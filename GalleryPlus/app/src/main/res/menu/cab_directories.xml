@@ -32,11 +32,6 @@
         android:title="@string/unpin_folder"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/cab_change_order"
-        android:icon="@drawable/ic_drag_handle_vector"
-        android:title="@string/reorder_by_dragging"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/cab_rename"
         android:icon="@drawable/ic_rename_new"
         android:title="@string/rename"

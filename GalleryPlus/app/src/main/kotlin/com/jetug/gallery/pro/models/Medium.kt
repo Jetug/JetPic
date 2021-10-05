@@ -9,6 +9,10 @@ import com.jetug.commons.helpers.SORT_BY_NAME
 import com.jetug.commons.helpers.SORT_BY_PATH
 import com.jetug.commons.helpers.SORT_BY_SIZE
 import com.jetug.gallery.pro.helpers.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.Serializable
 import java.util.*
@@ -30,7 +34,16 @@ data class Medium(
     @Ignore var gridPosition: Int = 0   // used at grid view decoration at Grouping enabled
 ) : Serializable, ThumbnailItem() {
 
-    constructor() : this(null, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0)
+    constructor() : this(null, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0){
+        CoroutineScope(Dispatchers.Default).launch {
+            while (true) {
+                delay(5000)
+                val file = File(path)
+                if (file.exists())
+                    modified = file.lastModified()
+            }
+        }
+    }
 
     companion object {
         private const val serialVersionUID = -6553149366975655L

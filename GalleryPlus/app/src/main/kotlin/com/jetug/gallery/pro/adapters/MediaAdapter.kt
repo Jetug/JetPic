@@ -1,18 +1,22 @@
 package com.jetug.gallery.pro.adapters
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Handler
 import android.os.Looper
-import android.view.Menu
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.util.DisplayMetrics
+import android.view.*
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.example.unipicdev.views.dialogs.DateEditingDialog
+import com.google.vr.sdk.widgets.video.deps.s
 import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.adapters.MyRecyclerViewAdapter
 import com.jetug.commons.dialogs.PropertiesDialog
@@ -43,12 +47,15 @@ import kotlinx.android.synthetic.main.video_item_grid.view.medium_name
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_thumbnail
 import kotlinx.android.synthetic.main.photo_item_grid.view.media_drag_handle
 import java.util.*
+import kotlin.collections.ArrayList
 
-class MediaAdapterBase(
+
+@SuppressLint("ClickableViewAccessibility")
+open class MediaAdapter(
     activity: BaseSimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
-    val allowMultiplePicks: Boolean, val path: String, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit
+    val allowMultiplePicks: Boolean, val path: String, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null, swipeRefreshLayout: SwipeRefreshLayout? = null, itemClick: (Any) -> Unit
 ) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+    RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick) {
 
     private val INSTANT_LOAD_DURATION = 2000L
     private val IMAGE_LOAD_DELAY = 100L
@@ -73,6 +80,9 @@ class MediaAdapterBase(
     private var showFileTypes = config.showThumbnailFileTypes
 
     override val itemList = media
+
+    private val mediums: ArrayList<Medium>
+        get() = propGetMediums()
 
     init {
         setupDragListener(true)
@@ -122,29 +132,6 @@ class MediaAdapterBase(
         bindViewHolder(holder)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupView(view: View, holder: ViewHolder){
-        view.apply {
-
-            if (media_drag_handle != null) {
-                media_drag_handle.beVisibleIf(isDragAndDropping)
-
-                if (isDragAndDropping) {
-
-                    media_drag_handle.applyColorFilter(textColor)
-
-                    //drag
-                    media_drag_handle.setOnTouchListener { _, event ->
-                        if (event.action == MotionEvent.ACTION_DOWN) {
-                            startReorderDragListener?.requestDrag(holder)
-                        }
-                        false
-                    }
-                }
-            }
-        }
-    }
-
     override fun getItemCount() = media.size
 
     override fun getItemViewType(position: Int): Int {
@@ -187,8 +174,8 @@ class MediaAdapterBase(
 
         when (id) {
             R.id.cab_confirm_selection -> confirmSelection()
+            R.id.editDate -> showDateEditionDialog()
             R.id.cab_properties -> showProperties()
-            R.id.cab_change_order -> changeOrder()
             R.id.cab_rename -> renameFile()
             R.id.cab_edit -> editFile()
             R.id.cab_hide -> toggleFileVisibility(true)
@@ -211,20 +198,33 @@ class MediaAdapterBase(
         }
     }
 
-    override fun getSelectableItemCount() = media.filter { it is Medium }.size
-
-    override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)
-
-    override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
-
-    override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
-
-    override fun onActionModeCreated() {}
-    override fun onActionModeDestroyed() {}
-
-    override fun onDragAndDroppingEnded() {
-        saveImagePositions(media as ArrayList<Medium>)
+    private fun showDateEditionDialog(){
+        val paths = getSelectedPaths()
+        val dialog = DateEditingDialog(paths) {_,_->}
+        createDialog(dialog, "")
+        //setDialogMatchParent(dialog)
     }
+
+    fun setDialogMatchParent(dialog: Dialog) {
+        val wm = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val dm = DisplayMetrics()
+        wm.defaultDisplay.getMetrics(dm);
+        val width = dm.widthPixels
+        val height = dm.heightPixels
+        val density = dm.density
+        val densityDpi = dm.densityDpi
+        val layoutParams = dialog.window!!.attributes
+        layoutParams.width = width;
+        layoutParams.height = height;
+        dialog.window!!.attributes = layoutParams;
+    }
+
+    override fun getSelectableItemCount() = media.filter { it is Medium }.size
+    override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)
+    override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
+    override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
+    override fun onActionModeCreated() {}
+    override fun onDragAndDroppingEnded() = saveImagePositions(mediums)
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -239,6 +239,30 @@ class MediaAdapterBase(
     }
 
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
+
+    private fun setupView(view: View, holder: ViewHolder){
+        view.apply {
+            if (media_drag_handle != null) {
+                media_drag_handle.beVisibleIf(isDragAndDropping)
+
+                if (isDragAndDropping) {
+                    media_drag_handle.applyColorFilter(textColor)
+                    //drag
+                    media_drag_handle.setOnTouchListener { _, event ->
+                        if (event.action == MotionEvent.ACTION_DOWN) {
+                            startReorderDragListener?.requestDrag(holder)
+                        }
+                        false
+                    }
+                }
+            }
+        }
+    }
+
+    private fun propGetMediums(): ArrayList<Medium>{
+        val list = media.takeWhile { it is Medium } as List<Medium>
+        return ArrayList(list)
+    }
 
     private fun checkHideBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
         val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true

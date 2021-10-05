@@ -8,6 +8,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|always" />
     <item
+        android:id="@+id/cab_change_order"
+        android:icon="@drawable/ic_drag_handle_vector"
+        android:title="@string/reorder_by_dragging"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/open_camera"
         android:icon="@drawable/ic_camera_vector"
         android:title="@string/open_camera"

@@ -36,16 +36,11 @@ class ManageBlockedNumbersAdapter(
     }
 
     override fun getSelectableItemCount() = blockedNumbers.size
-
     override fun getIsItemSelectable(position: Int) = true
-
     override fun getItemSelectionKey(position: Int) = blockedNumbers.getOrNull(position)?.id?.toInt()
-
     override fun getItemKeyPosition(key: Int) = blockedNumbers.indexOfFirst { it.id.toInt() == key }
-
     override fun onActionModeCreated() {}
     override fun onActionModeDestroyed() {}
-    override fun onDragAndDroppingEnded() {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_manage_blocked_number, parent)
 

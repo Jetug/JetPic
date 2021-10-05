@@ -16,13 +16,10 @@
         android:icon="@drawable/ic_share_vector"
         android:title="@string/share"
         app:showAsAction="ifRoom"/>
-
     <item
-        android:id="@+id/cab_change_order"
-        android:icon="@drawable/ic_drag_handle_vector"
-        android:title="@string/reorder_by_dragging"
-        app:showAsAction="ifRoom" />
-
+        android:id="@+id/editDate"
+        android:title="@string/edit_date"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/cab_rotate"
         android:icon="@drawable/ic_rotate_right_vector"

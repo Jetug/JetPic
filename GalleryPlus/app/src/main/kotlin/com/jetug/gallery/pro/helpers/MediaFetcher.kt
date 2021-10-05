@@ -20,6 +20,7 @@ import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MediaFetcher(val context: Context) {
     var shouldStop = false

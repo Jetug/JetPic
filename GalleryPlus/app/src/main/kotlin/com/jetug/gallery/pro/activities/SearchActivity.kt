@@ -18,7 +18,7 @@ import com.jetug.commons.helpers.ensureBackgroundThread
 import com.jetug.commons.models.FileDirItem
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
-import com.jetug.gallery.pro.adapters.MediaAdapterBase
+import com.jetug.gallery.pro.adapters.SearchResultAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
@@ -137,7 +137,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
         val currAdapter = media_grid.adapter
         if (currAdapter == null) {
             val fastscroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
-            MediaAdapterBase(this, ArrayList(), this, false, false, "", media_grid, fastscroller) {
+            SearchResultAdapter(this, ArrayList(), this, false, false, "", media_grid, fastscroller) {
                 if (it is Medium) {
                     itemClicked(it.path)
                 }
@@ -148,7 +148,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
             handleGridSpacing(mAllMedia)
             measureRecyclerViewContent(mAllMedia)
         } else if (mLastSearchedText.isEmpty()) {
-            (currAdapter as MediaAdapterBase).updateMedia(mAllMedia)
+            (currAdapter as SearchResultAdapter).updateMedia(mAllMedia)
             handleGridSpacing(mAllMedia)
             measureRecyclerViewContent(mAllMedia)
         } else {
@@ -172,7 +172,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
         }
     }
 
-    private fun getMediaAdapter() = media_grid.adapter as? MediaAdapterBase
+    private fun getMediaAdapter() = media_grid.adapter as? SearchResultAdapter
 
     private fun toggleFilenameVisibility() {
         config.displayFileNames = !config.displayFileNames

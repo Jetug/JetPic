@@ -64,17 +64,18 @@ open class FileDirItem(val path: String, val name: String = "", var isDirectory:
     }
 
     fun getProperSize(context: Context, countHidden: Boolean): Long {
-        return if (context.isPathOnOTG(path)) {
-            context.getDocumentFile(path)?.getItemSize(countHidden) ?: 0
-        } else if (isNougatPlus() && path.startsWith("content://")) {
-            try {
-                context.contentResolver.openInputStream(Uri.parse(path))?.available()?.toLong() ?: 0L
-            } catch (e: Exception) {
-                context.getSizeFromContentUri(Uri.parse(path))
-            }
-        } else {
-            File(path).getProperSize(countHidden)
-        }
+        return  File(path).getProperSize(countHidden)
+    //if (context.isPathOnOTG(path)) {
+//            context.getDocumentFile(path)?.getItemSize(countHidden) ?: 0
+//        } else if (isNougatPlus() && path.startsWith("content://")) {
+//            try {
+//                context.contentResolver.openInputStream(Uri.parse(path))?.available()?.toLong() ?: 0L
+//            } catch (e: Exception) {
+//                context.getSizeFromContentUri(Uri.parse(path))
+//            }
+//        } else {
+            //File(path).getProperSize(countHidden)
+        //}
     }
 
     fun getProperFileCount(context: Context, countHidden: Boolean): Int {

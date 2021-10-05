@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="116dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="Initial date"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <DatePicker
+        android:id="@+id/initialDatePicker"
+        android:layout_width="221dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:padding="0dp"
+        android:scaleX="0.7"
+        android:scaleY="0.8"
+        android:spinnersShown="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TimePicker
+        android:id="@+id/initialTimePicker"
+        android:layout_width="213dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:scaleX="0.7"
+        android:scaleY="0.8"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/initSeconds"
+        android:layout_width="50dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="18dp"
+        android:scaleX="0.7"
+        android:scaleY="0.8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="5dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="64dp"
+        android:gravity="center"
+        android:scaleX="0.7"
+        android:scaleY="0.8"
+        android:text=":"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

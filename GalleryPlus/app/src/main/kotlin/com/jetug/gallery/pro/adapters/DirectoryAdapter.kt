@@ -55,8 +55,8 @@ import kotlin.collections.HashMap
 
 @SuppressLint("NotifyDataSetChanged")
 class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directory>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
-                       val isPickIntent: Boolean, val swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick){
+                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
+    RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     private val config = activity.config
     private val isListViewType = config.viewTypeFolders == VIEW_TYPE_LIST
@@ -142,7 +142,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
             R.id.cab_rename -> renameDir()
             R.id.cab_pin -> pinFolders(true)
             R.id.cab_unpin -> pinFolders(false)
-            R.id.cab_change_order -> changeOrder()
             R.id.cab_empty_recycle_bin -> tryEmptyRecycleBin(true)
             R.id.cab_empty_disable_recycle_bin -> emptyAndDisableRecycleBin()
             R.id.cab_hide -> toggleFoldersVisibility(true)
@@ -161,26 +160,10 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
     }
 
     override fun getSelectableItemCount() = dirs.size
-
     override fun getIsItemSelectable(position: Int) = true
-
     override fun getItemSelectionKey(position: Int) = dirs.getOrNull(position)?.path?.hashCode()
-
     override fun getItemKeyPosition(key: Int) = dirs.indexOfFirst { it.path.hashCode() == key }
-
     override fun onActionModeCreated() {}
-
-    override fun onActionModeDestroyed() {
-//        if (isDragAndDropping) {
-//            notifyDataSetChanged()
-//
-//            val reorderedFoldersList = dirs.map { it.path }
-//            config.customFoldersOrder = TextUtils.join("|||", reorderedFoldersList)
-//            config.directorySorting = SORT_BY_CUSTOM
-//        }
-//
-//        isDragAndDropping = false
-    }
 
     override fun onDragAndDroppingEnded() {
         val reorderedFoldersList = dirs.map { it.path }
@@ -215,23 +198,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
         }
 
         notifyDataSetChanged()
-    }
-
-    fun changeOrder1() {
-        isDragAndDropping = true
-        notifyDataSetChanged()
-        actMode?.invalidate()
-
-        if (startReorderDragListener == null) {
-            val touchHelper = ItemTouchHelper(ItemMoveCallback(this, true))
-            touchHelper.attachToRecyclerView(recyclerView)
-
-            startReorderDragListener = object : StartReorderDragListener {
-                override fun requestDrag(viewHolder: RecyclerView.ViewHolder) {
-                    touchHelper.startDrag(viewHolder)
-                }
-            }
-        }
     }
 
     private fun moveSelectedItemsToBottom() {
@@ -855,41 +821,5 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
                 }
             }
         }
-    }
-
-//    private fun setupView2(view: View, directory: Directory, holder: ViewHolder) {
-//        if (isDragAndDropping) {
-//            dir_drag_handle.applyColorFilter(textColor)
-//
-//            //drag
-//            dir_drag_handle.setOnTouchListener { _, event ->
-//                if (event.action == MotionEvent.ACTION_DOWN) {
-//                    startReorderDragListener?.requestDrag(holder)
-//                }
-//                false
-//            }
-//        }
-//    }
-
-//    override fun onRowMoved(fromPosition: Int, toPosition: Int) {
-//        if (fromPosition < toPosition) {
-//            for (i in fromPosition until toPosition) {
-//                Collections.swap(dirs, i, i + 1)
-//            }
-//        } else {
-//            for (i in fromPosition downTo toPosition + 1) {
-//                Collections.swap(dirs, i, i - 1)
-//            }
-//        }
-//
-//        notifyItemMoved(fromPosition, toPosition)
-//    }
-
-    override fun onRowSelected(myViewHolder: ViewHolder?) {
-        swipeRefreshLayout?.isEnabled = false
-    }
-
-    override fun onRowClear(myViewHolder: ViewHolder?) {
-        swipeRefreshLayout?.isEnabled = activity.config.enablePullToRefresh
     }
 }

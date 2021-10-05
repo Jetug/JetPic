@@ -29,7 +29,7 @@ import kotlin.collections.ArrayList
 
 @SuppressLint("NotifyDataSetChanged")
 abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyclerView: MyRecyclerView, val fastScroller: FastScroller? = null,
-                                     val itemClick: (Any) -> Unit) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperContract {
+                                     val itemClick: (Any) -> Unit) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
     protected val baseConfig = activity.baseConfig
     protected val resources = activity.resources!!
     protected val layoutInflater = activity.layoutInflater
@@ -42,9 +42,6 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
     protected var selectedKeys = LinkedHashSet<Int>()
     protected var positionOffset = 0
     protected var actMode: ActionMode? = null
-
-    protected var isDragAndDropping = false
-    protected var startReorderDragListener: StartReorderDragListener? = null
 
     private var actBarTextView: TextView? = null
     private var lastLongPressedItem = -1
@@ -59,10 +56,6 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
     abstract fun getItemKeyPosition(key: Int): Int
     abstract fun onActionModeCreated()
     abstract fun onActionModeDestroyed()
-
-    protected open fun onDragAndDroppingEnded(){}
-
-    open val itemList: ArrayList<*> = arrayListOf<Any>()
 
     protected fun isOneItemSelected() = selectedKeys.size == 1
 
@@ -116,38 +109,9 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
                 actMode = null
                 lastLongPressedItem = -1
 
-
                 onActionModeDestroyed()
-
-                if (isDragAndDropping) {
-                    notifyDataSetChanged()
-                    onDragAndDroppingEnded()
-                }
-                isDragAndDropping = false
             }
         }
-    }
-
-    override fun onRowMoved(fromPosition: Int, toPosition: Int) {
-        if (fromPosition < toPosition) {
-            for (i in fromPosition until toPosition) {
-                Collections.swap(itemList, i, i + 1)
-            }
-        } else {
-            for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(itemList, i, i - 1)
-            }
-        }
-
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-    override fun onRowSelected(myViewHolder: ViewHolder?) {
-        //swipeRefreshLayout?.isEnabled = false
-    }
-
-    override fun onRowClear(myViewHolder: ViewHolder?) {
-        //swipeRefreshLayout?.isEnabled = activity.config.enablePullToRefresh
     }
 
 
@@ -338,24 +302,6 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
         fastScroller?.measureRecyclerView()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    protected fun changeOrder() {
-        isDragAndDropping = true
-        notifyDataSetChanged()
-        actMode?.invalidate()
-
-        if (startReorderDragListener == null) {
-            val touchHelper = ItemTouchHelper(ItemMoveCallback(this, true))
-            touchHelper.attachToRecyclerView(recyclerView)
-
-            startReorderDragListener = object : StartReorderDragListener {
-                override fun requestDrag(viewHolder: RecyclerView.ViewHolder) {
-                    touchHelper.startDrag(viewHolder)
-                }
-            }
-        }
-    }
-
     open inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindView(any: Any, allowSingleClick: Boolean, allowLongClick: Boolean, callback: (itemView: View, adapterPosition: Int) -> Unit): View {
             return itemView.apply {
@@ -384,12 +330,15 @@ abstract class MyRecyclerViewAdapter(val activity: BaseSimpleActivity, val recyc
 
         private fun viewLongClicked() {
             val currentPosition = adapterPosition - positionOffset
-            if (!actModeCallback.isSelectable) {
-                activity.startSupportActionMode(actModeCallback)
-            }
-
+            enterSelectionMode()
             toggleItemSelection(true, currentPosition, true)
             itemLongClicked(currentPosition)
+        }
+    }
+
+    fun enterSelectionMode(){
+        if (!actModeCallback.isSelectable) {
+            activity.startSupportActionMode(actModeCallback)
         }
     }
 }

@@ -65,7 +65,6 @@ class FilepickerItemsAdapter(activity: BaseSimpleActivity, val fileDirItems: Lis
     override fun onActionModeCreated() {}
 
     override fun onActionModeDestroyed() {}
-    override fun onDragAndDroppingEnded() {}
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)

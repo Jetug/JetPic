@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.unipicdev.views.dialogs.DateEditingDialog
 import com.jetug.commons.dialogs.CreateNewFolderDialog
 import com.jetug.commons.extensions.*
 import com.jetug.commons.helpers.*
@@ -29,7 +30,7 @@ import com.jetug.commons.models.FileDirItem
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
-import com.jetug.gallery.pro.adapters.MediaAdapterBase
+import com.jetug.gallery.pro.adapters.MediaAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.databases.GalleryDatabase
 import com.jetug.gallery.pro.dialogs.ChangeGroupingDialog
@@ -268,6 +269,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.cab_change_order -> getMediaAdapter()?.changeOrder()
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterMediaDialog()
             R.id.empty_recycle_bin -> emptyRecycleBin()
@@ -402,7 +404,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }
     }
 
-    private fun getMediaAdapter() = media_grid.adapter as? MediaAdapterBase
+    private fun getMediaAdapter() = media_grid.adapter as? MediaAdapter
 
     private fun setupAdapter() {
         if (!mShowAll && isDirEmpty()) {
@@ -413,8 +415,8 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         if (currAdapter == null) {
             initZoomListener()
             val fastscroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
-            MediaAdapterBase(this, mMedia.clone() as ArrayList<ThumbnailItem>, this, mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent,
-                mAllowPickingMultiple, mPath, media_grid, fastscroller) {
+            MediaAdapter(this, mMedia.clone() as ArrayList<ThumbnailItem>, this, mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent,
+                mAllowPickingMultiple, mPath, media_grid, fastscroller, media_refresh_layout) {
                 if (it is Medium && !isFinishing) {
                     itemClicked(it.path)
                 }
@@ -432,7 +434,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             handleGridSpacing()
             measureRecyclerViewContent(mMedia)
         } else if (mLastSearchedText.isEmpty()) {
-            (currAdapter as MediaAdapterBase).updateMedia(mMedia)
+            (currAdapter as MediaAdapter).updateMedia(mMedia)
             handleGridSpacing()
             measureRecyclerViewContent(mMedia)
         } else {

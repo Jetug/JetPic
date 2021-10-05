@@ -36,18 +36,12 @@ class FilepickerFavoritesAdapter(activity: BaseSimpleActivity, val paths: List<S
     override fun prepareActionMode(menu: Menu) {}
 
     override fun actionItemPressed(id: Int) {}
-
     override fun getSelectableItemCount() = paths.size
-
     override fun getIsItemSelectable(position: Int) = false
-
     override fun getItemKeyPosition(key: Int) = paths.indexOfFirst { it.hashCode() == key }
-
     override fun getItemSelectionKey(position: Int) = paths[position].hashCode()
-
     override fun onActionModeCreated() {}
     override fun onActionModeDestroyed() {}
-    override fun onDragAndDroppingEnded() {}
 
     private fun setupView(view: View, path: String) {
         view.apply {
