@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.unipicdev.views.dialogs.DateEditingDialog
 import com.jetug.commons.dialogs.CreateNewFolderDialog
 import com.jetug.commons.extensions.*
 import com.jetug.commons.helpers.*
@@ -54,8 +53,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private val IS_SWIPEREFRESH_ENABLED = false
 
     private var mPath = ""
-    private var mIsGetImageIntent = false
-    private var mIsGetVideoIntent = false
     private var mIsGetAnyIntent = false
     private var mIsGettingMedia = false
     private var mAllowPickingMultiple = false
@@ -81,6 +78,9 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private var mStoredTextColor = 0
     private var mStoredAdjustedPrimaryColor = 0
     private var mStoredThumbnailSpacing = 0
+
+    var mIsGetImageIntent = false
+    var mIsGetVideoIntent = false
 
     companion object {
         var mMedia = ArrayList<ThumbnailItem>()
@@ -581,7 +581,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }
     }
 
-    private fun getMedia() {
+    fun getMedia() {
         if (mIsGettingMedia) {
             return
         }

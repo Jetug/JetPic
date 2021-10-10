@@ -13,7 +13,7 @@ class SearchResultAdapter(activity: BaseSimpleActivity, media: ArrayList<Thumbna
                           listener: MediaOperationsListener?, isAGetIntent: Boolean,
                           allowMultiplePicks: Boolean, path: String, recyclerView: MyRecyclerView,
                           fastScroller: FastScroller? = null, itemClick: (Any) -> Unit):
-    MediaAdapter(activity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView,fastScroller, null, itemClick) {
+    MediaAdapterBase(activity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView,fastScroller, null, itemClick) {
     override fun prepareActionMode(menu: Menu) {
         super.prepareActionMode(menu)
         menu.apply {

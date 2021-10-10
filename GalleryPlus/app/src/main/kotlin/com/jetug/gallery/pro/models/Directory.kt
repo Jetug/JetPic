@@ -25,9 +25,13 @@ data class Directory(
         // used with "Group direct subfolders" enabled
         @Ignore var subfoldersCount: Int = 0,
         @Ignore var subfoldersMediaCount: Int = 0,
-        @Ignore var containsMediaFilesDirectly: Boolean = true) {
+        @Ignore var containsMediaFilesDirectly: Boolean = true,
 
-    constructor() : this(null, "", "", "", 0, 0L, 0L, 0L, 0, 0, "", 0, 0)
+        @ColumnInfo(name = "group_name") var groupName: String = ""
+        ): FolderItem() {
+
+    constructor() : this(null, "", "", "", 0, 0L, 0L, 0L,
+        0, 0, "", 0, 0)
 
     fun getBubbleText(sorting: Int, context: Context, dateFormat: String? = null, timeFormat: String? = null) = when {
         sorting and SORT_BY_NAME != 0 -> name

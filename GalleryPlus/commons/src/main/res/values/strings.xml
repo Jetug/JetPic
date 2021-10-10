@@ -41,7 +41,7 @@
     <string name="call_person">Call %s</string>
 
     <!-- View types -->
-    <string name="change_view_type">Change view type</string>
+    <string name="change_view_type">View</string>
     <string name="grid">Grid</string>
     <string name="list">List</string>
     <string name="increase_column_count">Increase column count</string>
@@ -273,7 +273,7 @@
     <string name="unhide">Unhide</string>
     <string name="hide_folder">Hide folder</string>
     <string name="unhide_folder">Unhide folder</string>
-    <string name="temporarily_show_hidden">Temporarily show hidden</string>
+    <string name="temporarily_show_hidden">Show hidden</string>
     <string name="stop_showing_hidden">Stop showing hidden media</string>
     <string name="maximum_share_reached">You cannot share this much content at once</string>
     <string name="empty_and_disable_recycle_bin">Empty and disable the Recycle Bin</string>

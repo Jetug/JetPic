@@ -162,6 +162,7 @@ fun Context.getSortedDirectories(source: ArrayList<Directory>): ArrayList<Direct
     return movePinnedDirectoriesToFront(dirs)
 }
 
+//Jet
 fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String): ArrayList<Directory> {
     return if (config.groupDirectSubfolders) {
         dirs.forEach {

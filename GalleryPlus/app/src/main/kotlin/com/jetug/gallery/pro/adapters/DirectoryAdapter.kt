@@ -68,7 +68,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
     private var currentDirectoriesHash = dirs.hashCode()
     private var lockedFolderPaths = ArrayList<String>()
 
-
     private var showMediaCount = config.showFolderMediaCount
     private var folderStyle = config.folderStyle
     private var limitFolderTitle = config.limitFolderTitle

@@ -11,6 +11,7 @@ import com.jetug.commons.helpers.VIEW_TYPE_GRID
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.adapters.MediaAdapter
+import com.jetug.gallery.pro.adapters.SearchResultAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.extensions.config
 import com.jetug.gallery.pro.extensions.getCachedMedia
@@ -66,7 +67,7 @@ class PickMediumDialog(val activity: BaseSimpleActivity, val path: String, val c
             return
 
         shownMedia = media
-        val adapter = MediaAdapter(activity, shownMedia.clone() as ArrayList<ThumbnailItem>, null, true, false, path, view.media_grid, null) {
+        val adapter = SearchResultAdapter(activity, shownMedia.clone() as ArrayList<ThumbnailItem>, null, true, false, path, view.media_grid, null) {
             if (it is Medium) {
                 callback(it.path)
                 dialog.dismiss()
