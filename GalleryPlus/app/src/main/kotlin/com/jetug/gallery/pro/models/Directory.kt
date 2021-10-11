@@ -30,8 +30,10 @@ data class Directory(
         @ColumnInfo(name = "group_name") var groupName: String = ""
         ): FolderItem() {
 
+    @Ignore val innerDirs: ArrayList<Directory> = arrayListOf()
+
     constructor() : this(null, "", "", "", 0, 0L, 0L, 0L,
-        0, 0, "", 0, 0)
+        0, 0, "", 0, 0, true, )
 
     fun getBubbleText(sorting: Int, context: Context, dateFormat: String? = null, timeFormat: String? = null) = when {
         sorting and SORT_BY_NAME != 0 -> name

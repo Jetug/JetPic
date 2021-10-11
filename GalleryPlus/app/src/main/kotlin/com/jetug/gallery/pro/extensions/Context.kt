@@ -37,6 +37,10 @@ import com.jetug.gallery.pro.models.*
 import com.jetug.gallery.pro.svg.SvgSoftwareLayerSetter
 import com.jetug.gallery.pro.views.MySquareImageView
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import pl.droidsonroids.gif.GifDrawable
 import java.io.File
 import java.io.FileInputStream
@@ -183,9 +187,55 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         }
 
         getSortedDirectories(parentDirs)
-    } else {
-        dirs.forEach { it.subfoldersMediaCount = it.mediaCnt }
-        dirs
+    }
+    else {
+
+//        fun getNameWithNum(name: String):String{
+//            val numIndex = name.length-2
+//            val num = name[numIndex].digitToInt()+1
+//            val newName = name.subSequence(0)
+//            return charArr.toString()
+//        }
+
+        val result = arrayListOf<Directory>()
+        val groups = mutableMapOf<String, Directory>()
+
+        dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
+
+        dirs.forEach{dir ->
+            val groupName = dir.groupName
+            if(groupName == ""){
+                result.add(dir)
+            }
+            else{
+                if (groups.containsKey(groupName)){
+                    groups[groupName]!!.innerDirs.add(dir)
+                    groups[groupName]!!.mediaCnt += dir.mediaCnt
+//                    var name = groups[groupName]!!.name
+//                    name = getNameWithNum(name)
+                    //groups[groupName]!!.name = name
+                }
+                else{
+                    val dirGroup = Directory(null,
+                        dir.path,
+                        dir.tmb,
+                        groupName,
+                        dir.mediaCnt,
+                        dir.modified,
+                        dir.taken,
+                        0,
+                        LOCATION_INTERNAL,
+                        dir.types,
+                        dir.sortValue
+                    )
+                    dirGroup.innerDirs.add(dir)
+                    groups[groupName] = dirGroup
+                }
+            }
+        }
+
+        groups.forEach{ result.add(it.value)}
+        getSortedDirectories(result)
     }
 }
 
@@ -599,6 +649,7 @@ fun Context.tryLoadingWithPicasso(path: String, view: MySquareImageView, cropThu
     }
 }
 
+//Jet
 fun Context.getCachedDirectories(getVideosOnly: Boolean = false, getImagesOnly: Boolean = false, forceShowHidden: Boolean = false, callback: (ArrayList<Directory>) -> Unit) {
     ensureBackgroundThread {
         try {
@@ -780,10 +831,23 @@ fun Context.updateDBMediaPath(oldPath: String, newPath: String) {
 }
 
 fun Context.updateDBDirectory(directory: Directory) {
-    try {
-        directoryDao.updateDirectory(directory.path, directory.tmb, directory.mediaCnt, directory.modified, directory.taken, directory.size, directory.types, directory.sortValue)
-    } catch (ignored: Exception) {
+//    try {
+    CoroutineScope(Dispatchers.Default).launch{
+        directoryDao.updateDirectory(
+            directory.path,
+            directory.tmb,
+            directory.mediaCnt,
+            directory.modified,
+            directory.taken,
+            directory.size,
+            directory.types,
+            directory.sortValue,
+            directory.groupName
+        )
     }
+//    } catch (ignored: Exception) {
+//        val r = 0
+//    }
 }
 
 fun Context.getOTGFolderChildren(path: String) = getDocumentFile(path)?.listFiles()

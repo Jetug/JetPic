@@ -422,11 +422,13 @@
         https://www.reddit.com/r/SimpleMobileTools
     </string>
     <string name="edit_date">Edit date</string>
-
+    <string name="group_dirs">Group</string>
     <string-array name="signs">
         <item>+</item>
         <item>-</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

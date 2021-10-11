@@ -21,6 +21,12 @@
         android:icon="@drawable/ic_info"
         android:title="@string/properties"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/cab_group"
+        android:title="@string/group_dirs"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/cab_pin"
         android:icon="@drawable/ic_pin"

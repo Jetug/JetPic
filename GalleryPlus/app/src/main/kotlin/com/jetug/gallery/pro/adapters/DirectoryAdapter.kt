@@ -12,8 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -22,8 +20,6 @@ import com.jetug.commons.adapters.MyRecyclerViewAdapter
 import com.jetug.commons.dialogs.*
 import com.jetug.commons.extensions.*
 import com.jetug.commons.helpers.*
-import com.jetug.commons.interfaces.ItemMoveCallback
-import com.jetug.commons.interfaces.StartReorderDragListener
 import com.jetug.commons.models.FileDirItem
 import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
@@ -31,6 +27,7 @@ import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
 import com.jetug.gallery.pro.dialogs.ConfirmDeleteFolderDialog
 import com.jetug.gallery.pro.dialogs.ExcludeFolderDialog
+import com.jetug.gallery.pro.dialogs.GroupDirectoryDialog
 import com.jetug.gallery.pro.dialogs.PickMediumDialog
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
@@ -77,7 +74,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
     init {
         setupDragListener(true)
         fillLockedFolders()
-
     }
 
     override fun getActionMenuId() = R.menu.cab_directories
@@ -135,6 +131,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
         }
 
         when (id) {
+            R.id.cab_group -> groupDirs()
             R.id.cab_move_to_top -> moveSelectedItemsToTop()
             R.id.cab_move_to_bottom -> moveSelectedItemsToBottom()
             R.id.cab_properties -> showProperties()
@@ -155,6 +152,17 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_select_photo -> tryChangeAlbumCover(false)
             R.id.cab_use_default -> tryChangeAlbumCover(true)
+        }
+    }
+
+    private fun groupDirs(){
+        GroupDirectoryDialog(activity){ name ->
+            val items = getSelectedItems()
+            for (i in 0 until items.size){
+                val item = items[i]
+                item.groupName = name
+                activity.updateDBDirectory(item)
+            }
         }
     }
 
@@ -784,11 +792,14 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
             if (showMediaCount == FOLDER_MEDIA_CNT_BRACKETS) {
                 nameCount += " (${directory.subfoldersMediaCount})"
             }
-
+            //Jet
             if (groupDirectSubfolders) {
                 if (directory.subfoldersCount > 1) {
                     nameCount += " [${directory.subfoldersCount}]"
                 }
+            }
+            if(directory.innerDirs.isNotEmpty()){
+                nameCount += " [${directory.innerDirs.size}]"
             }
 
             dir_name.text = nameCount
