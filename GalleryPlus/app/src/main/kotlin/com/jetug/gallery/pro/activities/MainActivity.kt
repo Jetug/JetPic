@@ -41,6 +41,7 @@ import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.jobs.NewPhotoFetcher
 import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.*
@@ -78,7 +79,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mLastMediaFetcher: MediaFetcher? = null
-    private var mDirs = ArrayList<Directory>()
+    private var mDirs = ArrayList<FolderItem>()
 
     private var mStoredAnimateGifs = true
     private var mStoredCropThumbnails = true
@@ -475,7 +476,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         val getVideosOnly = mIsPickVideoIntent || mIsGetVideoContentIntent
 
         getCachedDirectories(getVideosOnly, getImagesOnly) {
-            gotDirectories(addTempFolderIfNeeded(it))
+            gotDirectories(addTempFolderIfNeeded(it as ArrayList<FolderItem> ))
         }
     }
 
@@ -659,7 +660,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         mZoomListener = null
     }
 
-    private fun measureRecyclerViewContent(directories: ArrayList<Directory>) {
+    private fun measureRecyclerViewContent(directories: ArrayList<FolderItem>) {
         directories_grid.onGlobalLayout {
             if (config.scrollHorizontally) {
                 calculateContentWidth(directories)
@@ -669,7 +670,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-    private fun calculateContentWidth(directories: ArrayList<Directory>) {
+    private fun calculateContentWidth(directories: ArrayList<FolderItem>) {
         val layoutManager = directories_grid.layoutManager as MyGridLayoutManager
 
         val fullWidth = if (config.folderStyle == FOLDER_STYLE_SQUARE) {
@@ -685,7 +686,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_horizontal_fastscroller.setScrollToX(directories_grid.computeHorizontalScrollOffset())
     }
 
-    private fun calculateContentHeight(directories: ArrayList<Directory>) {
+    private fun calculateContentHeight(directories: ArrayList<FolderItem>) {
         val layoutManager = directories_grid.layoutManager as MyGridLayoutManager
 
         val fullHeight = if (config.folderStyle == FOLDER_STYLE_SQUARE) {
@@ -734,7 +735,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         ensureBackgroundThread {
             var dirs = getCurrentlyDisplayedDirs()
             if (!show) {
-                dirs = dirs.filter { it.path != RECYCLE_BIN } as ArrayList<Directory>
+                dirs = dirs.filter { it.path != RECYCLE_BIN } as ArrayList<FolderItem>
             }
             gotDirectories(dirs)
         }
@@ -897,7 +898,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-    private fun gotDirectories(newDirs: ArrayList<Directory>) {
+    private fun gotDirectories(newDirs: ArrayList<FolderItem>) {
         mIsGettingDirs = false
         mShouldStopFetching = false
 
@@ -911,7 +912,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         val dirs = getSortedDirectories(newDirs)
         if (config.groupDirectSubfolders) {
-            mDirs = dirs.clone() as ArrayList<Directory>
+            mDirs = dirs.clone() as ArrayList<FolderItem>
         }
 
         var isPlaceholderVisible = dirs.isEmpty()
@@ -922,7 +923,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
             directories_vertical_fastscroller.beVisibleIf(directories_grid.isVisible() && !allowHorizontalScroll)
             directories_horizontal_fastscroller.beVisibleIf(directories_grid.isVisible() && allowHorizontalScroll)
-            setupAdapter(dirs.clone() as ArrayList<Directory>)
+            setupAdapter(dirs.clone() as ArrayList<FolderItem>)
         }
 
         // cached folders have been loaded, recheck folders one by one starting with the first displayed
@@ -1126,7 +1127,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             config.everShownFolders = HashSet()
         }
 
-        mDirs = dirs.clone() as ArrayList<Directory>
+        mDirs = dirs.clone() as ArrayList<FolderItem>
     }
 
     private fun setAsDefaultFolder() {
@@ -1152,7 +1153,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-    private fun checkPlaceholderVisibility(dirs: ArrayList<Directory>) {
+    private fun checkPlaceholderVisibility(dirs: ArrayList<FolderItem>) {
         directories_empty_placeholder.beVisibleIf(dirs.isEmpty() && mLoadedInitialPhotos)
         directories_empty_placeholder_2.beVisibleIf(dirs.isEmpty() && mLoadedInitialPhotos)
 
@@ -1181,11 +1182,11 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.beVisibleIf(directories_empty_placeholder.isGone())
     }
 
-    private fun setupAdapter(dirs: ArrayList<Directory>, textToSearch: String = "", forceRecreate: Boolean = false) {
+    private fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         val currAdapter = directories_grid.adapter
         val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<Directory>
-        val sortedDirs = getSortedDirectories(distinctDirs)
-        var dirsToShow = getDirsToShow(sortedDirs, mDirs, mCurrentPathPrefix).clone() as ArrayList<Directory>
+        val sortedDirs = getSortedDirectories(distinctDirs as ArrayList<FolderItem>)
+        var dirsToShow = getDirsToShow(sortedDirs as ArrayList<Directory>, mDirs, mCurrentPathPrefix).clone() as ArrayList<FolderItem>
 
         if (currAdapter == null || forceRecreate) {
             initZoomListener()
@@ -1196,7 +1197,11 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 val clickedDir = it as Directory
                 val path = clickedDir.path
                 if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
-                    if (path != config.tempFolderPath) {
+//                    if(clickedDir.innerDirs.isNotEmpty()){
+//                        setupAdapter(clickedDir.innerDirs, "")
+//                    }
+//                    else
+                        if (path != config.tempFolderPath) {
                         itemClicked(path)
                     }
                 } else {
@@ -1253,8 +1258,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-    private fun checkInvalidDirectories(dirs: ArrayList<Directory>) {
-        val invalidDirs = ArrayList<Directory>()
+    private fun checkInvalidDirectories(dirs: ArrayList<FolderItem>) {
+        val invalidDirs = ArrayList<FolderItem>()
         val OTGPath = config.OTGPath
         dirs.filter { !it.areFavorites() && !it.isRecycleBin() }.forEach {
             if (!getDoesFilePathExist(it.path, OTGPath)) {
@@ -1426,7 +1431,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-    override fun updateDirectories(directories: ArrayList<Directory>) {
+    override fun updateDirectories(directories: ArrayList<FolderItem>) {
         ensureBackgroundThread {
             storeDirectoryItems(directories)
             removeInvalidDBDirectories()

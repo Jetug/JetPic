@@ -1,6 +1,7 @@
 package com.jetug.gallery.pro.interfaces
 
 import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.FolderItem
 import java.io.File
 
 interface DirectoryOperationsListener {
@@ -10,5 +11,5 @@ interface DirectoryOperationsListener {
 
     fun recheckPinnedFolders()
 
-    fun updateDirectories(directories: ArrayList<Directory>)
+    fun updateDirectories(directories: ArrayList<FolderItem>)
 }

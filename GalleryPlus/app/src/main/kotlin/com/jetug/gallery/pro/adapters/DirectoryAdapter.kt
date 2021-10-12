@@ -34,6 +34,8 @@ import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.models.AlbumCover
 import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.DirectoryGroup
+import com.jetug.gallery.pro.models.FolderItem
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_location
@@ -51,7 +53,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @SuppressLint("NotifyDataSetChanged")
-class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directory>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
+class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
                        private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
@@ -160,8 +162,10 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
             val items = getSelectedItems()
             for (i in 0 until items.size){
                 val item = items[i]
-                item.groupName = name
-                activity.updateDBDirectory(item)
+                if(item is Directory) {
+                    item.groupName = name
+                    activity.updateDBDirectory(item)
+                }
             }
         }
     }
@@ -384,7 +388,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
                         affectedPositions.add(index)
                     }
                     !removeDir
-                } as ArrayList<Directory>
+                } as ArrayList<FolderItem>
 
                 activity.runOnUiThread {
                     affectedPositions.sortedDescending().forEach {
@@ -679,7 +683,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
         listener?.refreshItems()
     }
 
-    private fun getSelectedItems() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<Directory>
+    private fun getSelectedItems() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<FolderItem>
 
     private fun getSelectedPaths() = getSelectedItems().map { it.path } as ArrayList<String>
 
@@ -687,7 +691,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
 
     private fun getFirstSelectedItemPath() = getFirstSelectedItem()?.path
 
-    private fun getItemWithKey(key: Int): Directory? = dirs.firstOrNull { it.path.hashCode() == key }
+    private fun getItemWithKey(key: Int): FolderItem? = dirs.firstOrNull { it.path.hashCode() == key }
 
     private fun fillLockedFolders() {
         lockedFolderPaths.clear()
@@ -696,8 +700,8 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
         }
     }
 
-    fun updateDirs(newDirs: ArrayList<Directory>) {
-        val directories = newDirs.clone() as ArrayList<Directory>
+    fun updateDirs(newDirs: ArrayList<FolderItem>) {
+        val directories = newDirs.clone() as ArrayList<FolderItem>
         if (directories.hashCode() != currentDirectoriesHash) {
             currentDirectoriesHash = directories.hashCode()
             dirs = directories
@@ -719,7 +723,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
 
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
-    private fun setupView(view: View, directory: Directory, holder: ViewHolder) {
+    private fun setupView(view: View, directory: FolderItem, holder: ViewHolder) {
         val isSelected = selectedKeys.contains(directory.path.hashCode())
         view.apply {
             dir_path?.text = "${directory.path.substringBeforeLast("/")}/"
@@ -792,13 +796,14 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<Directo
             if (showMediaCount == FOLDER_MEDIA_CNT_BRACKETS) {
                 nameCount += " (${directory.subfoldersMediaCount})"
             }
-            //Jet
+
             if (groupDirectSubfolders) {
                 if (directory.subfoldersCount > 1) {
                     nameCount += " [${directory.subfoldersCount}]"
                 }
             }
-            if(directory.innerDirs.isNotEmpty()){
+            //Jet
+            if(directory is DirectoryGroup && directory.innerDirs.isNotEmpty()){
                 nameCount += " [${directory.innerDirs.size}]"
             }
 

@@ -80,8 +80,8 @@ val Context.recycleBin: File get() = filesDir
 
 val Context.recycleBinPath: String get() = filesDir.absolutePath
 
-fun Context.movePinnedDirectoriesToFront(dirs: ArrayList<Directory>): ArrayList<Directory> {
-    val foundFolders = ArrayList<Directory>()
+fun Context.movePinnedDirectoriesToFront(dirs: ArrayList<FolderItem>): ArrayList<FolderItem> {
+    val foundFolders = ArrayList<FolderItem>()
     val pinnedFolders = config.pinnedFolders
 
     dirs.forEach {
@@ -111,15 +111,15 @@ fun Context.movePinnedDirectoriesToFront(dirs: ArrayList<Directory>): ArrayList<
 }
 
 @Suppress("UNCHECKED_CAST")
-fun Context.getSortedDirectories(source: ArrayList<Directory>): ArrayList<Directory> {
+fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<FolderItem> {
     val sorting = config.directorySorting
-    val dirs = source.clone() as ArrayList<Directory>
+    val dirs = source.clone() as ArrayList<FolderItem>
 
     if (sorting and SORT_BY_RANDOM != 0) {
         dirs.shuffle()
         return movePinnedDirectoriesToFront(dirs)
     } else if (sorting and SORT_BY_CUSTOM != 0) {
-        val newDirsOrdered = ArrayList<Directory>()
+        val newDirsOrdered = ArrayList<FolderItem>()
         config.customFoldersOrder.split("|||").forEach { path ->
             val index = dirs.indexOfFirst { it.path == path }
             if (index != -1) {
@@ -133,8 +133,8 @@ fun Context.getSortedDirectories(source: ArrayList<Directory>): ArrayList<Direct
     }
 
     dirs.sortWith(Comparator { o1, o2 ->
-        o1 as Directory
-        o2 as Directory
+        o1 as FolderItem
+        o2 as FolderItem
 
         var result = when {
             sorting and SORT_BY_NAME != 0 -> {
@@ -167,8 +167,10 @@ fun Context.getSortedDirectories(source: ArrayList<Directory>): ArrayList<Direct
 }
 
 //Jet
-fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String): ArrayList<Directory> {
-    return if (config.groupDirectSubfolders) {
+fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String): ArrayList<FolderItem> {
+    var result = arrayListOf<FolderItem>()
+
+    if (config.groupDirectSubfolders) {
         dirs.forEach {
             it.subfoldersCount = 0
             it.subfoldersMediaCount = it.mediaCnt
@@ -186,7 +188,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
             }
         }
 
-        getSortedDirectories(parentDirs)
+        result = getSortedDirectories(parentDirs as ArrayList<FolderItem>) as ArrayList<FolderItem>
     }
     else {
 
@@ -197,8 +199,8 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
 //            return charArr.toString()
 //        }
 
-        val result = arrayListOf<Directory>()
-        val groups = mutableMapOf<String, Directory>()
+
+        val groups = mutableMapOf<String, DirectoryGroup>()
 
         dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
 
@@ -216,7 +218,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
                     //groups[groupName]!!.name = name
                 }
                 else{
-                    val dirGroup = Directory(null,
+                    val dirGroup = DirectoryGroup(null,
                         dir.path,
                         dir.tmb,
                         groupName,
@@ -235,8 +237,10 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         }
 
         groups.forEach{ result.add(it.value)}
-        getSortedDirectories(result)
+        result = getSortedDirectories(result) as ArrayList<FolderItem>
     }
+
+    return result
 }
 
 fun Context.getDirectParentSubfolders(dirs: ArrayList<Directory>, currentPathPrefix: String): ArrayList<Directory> {
@@ -504,17 +508,21 @@ fun Context.loadImage(type: Int, path: String, target: MySquareImageView, horizo
     }
 }
 
-fun Context.addTempFolderIfNeeded(dirs: ArrayList<Directory>): ArrayList<Directory> {
+fun Context.addTempFolderIfNeeded(dirs: ArrayList<FolderItem>): ArrayList<FolderItem> {
     val tempFolderPath = config.tempFolderPath
-    return if (tempFolderPath.isNotEmpty()) {
-        val directories = ArrayList<Directory>()
+    val result: ArrayList<FolderItem>
+
+    if (tempFolderPath.isNotEmpty()) {
+        val directories = ArrayList<FolderItem>()
         val newFolder = Directory(null, tempFolderPath, "", tempFolderPath.getFilenameFromPath(), 0, 0, 0, 0L, getPathLocation(tempFolderPath), 0, "")
         directories.add(newFolder)
         directories.addAll(dirs)
-        directories
+        result = directories
     } else {
-        dirs
+        result = dirs
     }
+
+    return result
 }
 
 fun Context.getPathLocation(path: String): Int {
@@ -830,21 +838,32 @@ fun Context.updateDBMediaPath(oldPath: String, newPath: String) {
     }
 }
 
-fun Context.updateDBDirectory(directory: Directory) {
+fun Context.updateDBDirectory(directory: FolderItem) {
 //    try {
-    CoroutineScope(Dispatchers.Default).launch{
-        directoryDao.updateDirectory(
-            directory.path,
-            directory.tmb,
-            directory.mediaCnt,
-            directory.modified,
-            directory.taken,
-            directory.size,
-            directory.types,
-            directory.sortValue,
-            directory.groupName
-        )
+    fun update(directory: Directory){
+        CoroutineScope(Dispatchers.Default).launch{
+            directoryDao.updateDirectory(
+                directory.path,
+                directory.tmb,
+                directory.mediaCnt,
+                directory.modified,
+                directory.taken,
+                directory.size,
+                directory.types,
+                directory.sortValue,
+                directory.groupName
+            )
+        }
     }
+
+    if(directory is Directory)
+        update(directory)
+    else if(directory is DirectoryGroup){
+        directory.innerDirs.forEach {
+            update(it)
+        }
+    }
+
 //    } catch (ignored: Exception) {
 //        val r = 0
 //    }
