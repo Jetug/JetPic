@@ -6,12 +6,15 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
+import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.annotation.RequiresApi
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -48,6 +51,9 @@ import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import java.io.File
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.attribute.BasicFileAttributes
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -74,6 +80,12 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     override val itemList = dirs
 
     init {
+        dirs.forEach(){
+            if (it.name == "@Test$ (1) (1) (1)"){
+                Log.d("Jet", it.name)
+            }
+        }
+
         setupDragListener(true)
         fillLockedFolders()
     }
@@ -92,6 +104,20 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val dir = dirs.getOrNull(position) ?: return
+        //@Test$ (1) (1) (1)
+
+        val name = dir.name
+        val str1 = "Camera"
+        val str2 = "@Test$ (1) (1) (1)"
+        val b = name.equals(str1)
+
+        var i = 0
+        if (name.equals(str2)){
+            Log.d("Jet", name)
+            Log.d("Jet", (dir as Directory).groupName)
+            //throw NoSuchFieldException("хуй")
+        }
+
         holder.bindView(dir, true, !isPickIntent) { itemView, adapterPosition ->
             setupView(itemView, dir, holder)
         }
@@ -168,6 +194,51 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                 }
             }
         }
+    }
+
+    fun sort(){
+//        val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
+//        val sortedDirs = activity.getSortedDirectories(distinctDirs)
+//        dirs = activity.getDirsToShow(sortedDirs.getDirectories(), dirs.getDirectories(), "").clone() as ArrayList<FolderItem>
+        dirs = sortDirs(dirs)
+        notifyDataSetChanged()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortDirs(list:ArrayList<FolderItem>): ArrayList<FolderItem>{
+        val dirs = list
+
+        val sorting = config.directorySorting
+
+        fun reverse(): ArrayList<FolderItem> {
+            if(sorting and SORT_DESCENDING != 0) dirs.reverse()
+            return dirs
+        }
+
+        dirs.sortWith(Comparator { o1, o2 ->
+            o1 as FolderItem
+            o2 as FolderItem
+
+            val result = when{
+                sorting and SORT_BY_NAME != 0  -> {
+                    AlphanumericComparator().compare(o1.name.lowercase(), o2.name.lowercase()) //Locale.getDefault()
+                }
+                sorting and SORT_BY_DATE_TAKEN != 0 -> {
+                    val path1 = FileSystems.getDefault().getPath(File(o1.path).absolutePath)
+                    val path2 = FileSystems.getDefault().getPath(File(o2.path).absolutePath)
+                    val attr1 = Files.readAttributes(path1, BasicFileAttributes::class.java)
+                    val attr2 = Files.readAttributes(path2, BasicFileAttributes::class.java)
+                    (attr1.creationTime()).compareTo(attr2.creationTime())
+                }
+                sorting and SORT_BY_DATE_MODIFIED != 0 -> {
+                    (o1.modified).compareTo(o2.modified)
+                }
+                else -> (o1.name.toLongOrNull() ?: 0).compareTo(o2.name.toLongOrNull() ?: 0)
+            }
+            return@Comparator result
+        })
+        reverse()
+        return dirs
     }
 
     override fun getSelectableItemCount() = dirs.size

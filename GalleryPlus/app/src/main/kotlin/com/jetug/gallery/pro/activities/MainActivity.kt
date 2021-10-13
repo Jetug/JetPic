@@ -494,16 +494,19 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
+    //Jet
     private fun showSortingDialog() {
         ChangeSortingDialog(this, true, false) {
-            directories_grid.adapter = null
-            if (config.directorySorting and SORT_BY_DATE_MODIFIED != 0 || config.directorySorting and SORT_BY_DATE_TAKEN != 0) {
-                getDirectories()
-            } else {
-                ensureBackgroundThread {
-                    gotDirectories(getCurrentlyDisplayedDirs())
-                }
-            }
+//            directories_grid.adapter = null
+//            if (config.directorySorting and SORT_BY_DATE_MODIFIED != 0 || config.directorySorting and SORT_BY_DATE_TAKEN != 0) {
+//                getDirectories()
+//            } else {
+//                ensureBackgroundThread {
+//                    gotDirectories(getCurrentlyDisplayedDirs())
+//                }
+//            }
+            val adapter = directories_grid.adapter as DirectoryAdapter
+            adapter.sort()
         }
     }
 
@@ -918,7 +921,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             }
         }
 
-        val dirs = getSortedDirectories(newDirs).getDirectories()
+        val buff = getSortedDirectories(newDirs)
+        val dirs = buff.getDirectories()
         if (config.groupDirectSubfolders) {
             mDirs = dirs.clone() as ArrayList<FolderItem>
         }
@@ -931,12 +935,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
             directories_vertical_fastscroller.beVisibleIf(directories_grid.isVisible() && !allowHorizontalScroll)
             directories_horizontal_fastscroller.beVisibleIf(directories_grid.isVisible() && allowHorizontalScroll)
-            //if(mOpendGroups.isEmpty())
-                setupAdapter(dirs.clone() as ArrayList<FolderItem>)
-//            else{
-//                val group = mOpendGroups.last()
-//                setupAdapter(group.innerDirs as ArrayList<FolderItem>)
-//            }
+
+            //Jet
+            setupAdapter(dirs.clone() as ArrayList<FolderItem>)
         }
 
         // cached folders have been loaded, recheck folders one by one starting with the first displayed
@@ -1056,6 +1057,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
 
         // check the remaining folders which were not cached at all yet
+        val newDirs = arrayListOf<Directory>()
         for (folder in foldersToScan) {
             if (mShouldStopFetching || isDestroyed || isFinishing) {
                 return
@@ -1090,8 +1092,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             }
 
             val newDir = createDirectoryFromMedia(folder, newMedia, albumCovers, hiddenString, includedFolders, getProperFileSize, noMediaFolders)
-            dirs.add(newDir)
-            setupAdapter(dirs as ArrayList<FolderItem>)
+            newDirs.add(newDir)
+            //Jet
+//            dirs.add(newDir)
+//            setupAdapter(dirs as ArrayList<FolderItem>)
 
             // make sure to create a new thread for these operations, dont just use the common bg thread
             Thread {
@@ -1103,6 +1107,11 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 } catch (ignored: Exception) {
                 }
             }.start()
+        }
+
+        if(newDirs.isNotEmpty()){
+            dirs.addAll(newDirs)
+            setupAdapter(dirs as ArrayList<FolderItem>)
         }
 
         mLoadedInitialPhotos = true

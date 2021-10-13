@@ -37,11 +37,13 @@ fun ArrayList<Medium>.getDirMediaTypes(): Int {
 
 fun ArrayList<FolderItem>.getDirectories(): ArrayList<Directory>{
     val result = arrayListOf<Directory>()
-    this.forEach{
-        if (it is Directory)
-            result.add(it)
-        else if(it is DirectoryGroup){
-            result.addAll(it.innerDirs)
+    this.forEach{ item ->
+        if (item is Directory)
+            result.add(item)
+        else if(item is DirectoryGroup){
+            val dirs = item.innerDirs.clone() as ArrayList<Directory>
+            dirs.forEach{d -> d.groupName = item.name }
+            result.addAll(dirs)
         }
     }
     return result
