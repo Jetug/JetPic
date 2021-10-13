@@ -191,15 +191,6 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         result = getSortedDirectories(parentDirs as ArrayList<FolderItem>) as ArrayList<FolderItem>
     }
     else {
-
-//        fun getNameWithNum(name: String):String{
-//            val numIndex = name.length-2
-//            val num = name[numIndex].digitToInt()+1
-//            val newName = name.subSequence(0)
-//            return charArr.toString()
-//        }
-
-
         val groups = mutableMapOf<String, DirectoryGroup>()
 
         dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
@@ -210,12 +201,11 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
                 result.add(dir)
             }
             else{
+                val innerDir = dir.copy(groupName = "")
+
                 if (groups.containsKey(groupName)){
-                    groups[groupName]!!.innerDirs.add(dir)
+                    groups[groupName]!!.innerDirs.add(innerDir)
                     groups[groupName]!!.mediaCnt += dir.mediaCnt
-//                    var name = groups[groupName]!!.name
-//                    name = getNameWithNum(name)
-                    //groups[groupName]!!.name = name
                 }
                 else{
                     val dirGroup = DirectoryGroup(null,
@@ -230,7 +220,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
                         dir.types,
                         dir.sortValue
                     )
-                    dirGroup.innerDirs.add(dir)
+                    dirGroup.innerDirs.add(innerDir)
                     groups[groupName] = dirGroup
                 }
             }
@@ -446,9 +436,9 @@ fun Context.rescanFolderMediaSync(path: String) {
     }
 }
 
-fun Context.storeDirectoryItems(items: ArrayList<Directory>) {
+fun Context.storeDirectoryItems(items: ArrayList<FolderItem>) {
     ensureBackgroundThread {
-        directoryDao.insertAll(items)
+        directoryDao.insertAll(items.getDirectories())
     }
 }
 

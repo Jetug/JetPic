@@ -34,11 +34,5 @@ data class Directory(
     constructor() : this(null, "", "", "", 0, 0L, 0L, 0L,
         0, 0, "", 0, 0, true, )
 
-    fun getBubbleText(sorting: Int, context: Context, dateFormat: String? = null, timeFormat: String? = null) = when {
-        sorting and SORT_BY_NAME != 0 -> name
-        sorting and SORT_BY_PATH != 0 -> path
-        sorting and SORT_BY_SIZE != 0 -> size.formatSize()
-        sorting and SORT_BY_DATE_MODIFIED != 0 -> modified.formatDate(context, dateFormat, timeFormat)
-        else -> taken.formatDate(context)
-    }
+
 }

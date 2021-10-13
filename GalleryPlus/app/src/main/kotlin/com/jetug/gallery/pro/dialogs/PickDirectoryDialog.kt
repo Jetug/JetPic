@@ -12,12 +12,13 @@ import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.adapters.DirectoryAdapter
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.FolderItem
 import kotlinx.android.synthetic.main.dialog_directory_picker.view.*
 
 class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: String, showOtherFolderButton: Boolean, val showFavoritesBin: Boolean,
                           val callback: (path: String) -> Unit) {
     private var dialog: AlertDialog
-    private var shownDirectories = ArrayList<Directory>()
+    private var shownDirectories = ArrayList<FolderItem>()
     private var allDirectories = ArrayList<Directory>()
     private var openedSubfolders = arrayListOf("")
     private var view = activity.layoutInflater.inflate(R.layout.dialog_directory_picker, null)
@@ -69,7 +70,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
                 }
 
                 activity.runOnUiThread {
-                    gotDirectories(activity.addTempFolderIfNeeded(it))
+                    gotDirectories(activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>))
                 }
             }
         }
@@ -85,20 +86,20 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
         }
     }
 
-    private fun gotDirectories(newDirs: ArrayList<Directory>) {
+    private fun gotDirectories(newDirs: ArrayList<FolderItem>) {
         if (allDirectories.isEmpty()) {
             allDirectories = newDirs.clone() as ArrayList<Directory>
         }
 
-        val distinctDirs = newDirs.filter { showFavoritesBin || (!it.isRecycleBin() && !it.areFavorites()) }.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<Directory>
+        val distinctDirs = newDirs.filter { showFavoritesBin || (!it.isRecycleBin() && !it.areFavorites()) }.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
         val sortedDirs = activity.getSortedDirectories(distinctDirs)
-        val dirs = activity.getDirsToShow(sortedDirs, allDirectories, currentPathPrefix).clone() as ArrayList<Directory>
+        val dirs = activity.getDirsToShow(sortedDirs.getDirectories(), allDirectories, currentPathPrefix).clone() as ArrayList<FolderItem>
         if (dirs.hashCode() == shownDirectories.hashCode()) {
             return
         }
 
         shownDirectories = dirs
-        val adapter = DirectoryAdapter(activity, dirs.clone() as ArrayList<Directory>, null, view.directories_grid, true) {
+        val adapter = DirectoryAdapter(activity, dirs.clone() as ArrayList<FolderItem>, null, view.directories_grid, true) {
             val clickedDir = it as Directory
             val path = clickedDir.path
             if (clickedDir.subfoldersCount == 1 || !activity.config.groupDirectSubfolders) {
@@ -116,7 +117,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
             } else {
                 currentPathPrefix = path
                 openedSubfolders.add(path)
-                gotDirectories(allDirectories)
+                gotDirectories(allDirectories as ArrayList<FolderItem>)
             }
         }
 
@@ -152,7 +153,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
             } else {
                 openedSubfolders.removeAt(openedSubfolders.size - 1)
                 currentPathPrefix = openedSubfolders.last()
-                gotDirectories(allDirectories)
+                gotDirectories(allDirectories as ArrayList<FolderItem>)
             }
         } else {
             dialog.dismiss()

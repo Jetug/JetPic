@@ -1,6 +1,9 @@
 package com.jetug.gallery.pro.extensions
 
 import com.jetug.gallery.pro.helpers.*
+import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.DirectoryGroup
+import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 
 fun ArrayList<Medium>.getDirMediaTypes(): Int {
@@ -30,4 +33,22 @@ fun ArrayList<Medium>.getDirMediaTypes(): Int {
     }
 
     return types
+}
+
+fun ArrayList<FolderItem>.getDirectories(): ArrayList<Directory>{
+    val result = arrayListOf<Directory>()
+    this.forEach{
+        if (it is Directory)
+            result.add(it)
+        else if(it is DirectoryGroup){
+            result.addAll(it.innerDirs)
+        }
+    }
+    return result
+}
+
+fun <T>ArrayList<T>.takeLast(): T{
+    val item = this.last()
+    this.removeAt(this.size - 1)
+    return item
 }

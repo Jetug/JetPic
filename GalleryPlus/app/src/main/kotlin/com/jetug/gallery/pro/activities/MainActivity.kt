@@ -41,10 +41,12 @@ import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.jobs.NewPhotoFetcher
 import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.*
+import java.security.acl.Group
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -72,6 +74,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mLatestMediaDateId = 0L
     private var mCurrentPathPrefix = ""                 // used at "Group direct subfolders" for navigation
     private var mOpenedSubfolders = arrayListOf("")     // used at "Group direct subfolders" for navigating Up with the back button
+    private var mOpendGroups = arrayListOf<DirectoryGroup>()
     private var mDateFormat = ""
     private var mTimeFormat = ""
     private var mLastMediaHandler = Handler()
@@ -271,7 +274,12 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 mCurrentPathPrefix = mOpenedSubfolders.last()
                 setupAdapter(mDirs)
             }
-        } else {
+        } else if(mOpendGroups.isNotEmpty()){
+            val group = mOpendGroups.takeLast()
+            //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
+            setupAdapter(mDirs)
+        }
+        else{
             super.onBackPressed()
         }
     }
@@ -910,7 +918,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             }
         }
 
-        val dirs = getSortedDirectories(newDirs)
+        val dirs = getSortedDirectories(newDirs).getDirectories()
         if (config.groupDirectSubfolders) {
             mDirs = dirs.clone() as ArrayList<FolderItem>
         }
@@ -918,12 +926,17 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         var isPlaceholderVisible = dirs.isEmpty()
 
         runOnUiThread {
-            checkPlaceholderVisibility(dirs)
+            checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
 
             val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
             directories_vertical_fastscroller.beVisibleIf(directories_grid.isVisible() && !allowHorizontalScroll)
             directories_horizontal_fastscroller.beVisibleIf(directories_grid.isVisible() && allowHorizontalScroll)
-            setupAdapter(dirs.clone() as ArrayList<FolderItem>)
+            //if(mOpendGroups.isEmpty())
+                setupAdapter(dirs.clone() as ArrayList<FolderItem>)
+//            else{
+//                val group = mOpendGroups.last()
+//                setupAdapter(group.innerDirs as ArrayList<FolderItem>)
+//            }
         }
 
         // cached folders have been loaded, recheck folders one by one starting with the first displayed
@@ -973,6 +986,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 }
 
                 // we are looping through the already displayed folders looking for changes, do not do anything if nothing changed
+
                 if (directory.copy(subfoldersCount = 0, subfoldersMediaCount = 0) == newDir) {
                     continue
                 }
@@ -988,7 +1002,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                     sortValue = getDirectorySortingValue(curMedia, path, name, size)
                 }
 
-                setupAdapter(dirs)
+                setupAdapter(dirs as ArrayList<FolderItem>)
 
                 // update directories and media files in the local db, delete invalid items. Intentionally creating a new thread
                 updateDBDirectory(directory)
@@ -1024,7 +1038,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                     directoryDao.deleteDirPath(it.path)
                 }
                 dirs.removeAll(dirsToRemove)
-                setupAdapter(dirs)
+                setupAdapter(dirs as ArrayList<FolderItem>)
             }
         } catch (ignored: Exception) {
         }
@@ -1077,7 +1091,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
             val newDir = createDirectoryFromMedia(folder, newMedia, albumCovers, hiddenString, includedFolders, getProperFileSize, noMediaFolders)
             dirs.add(newDir)
-            setupAdapter(dirs)
+            setupAdapter(dirs as ArrayList<FolderItem>)
 
             // make sure to create a new thread for these operations, dont just use the common bg thread
             Thread {
@@ -1096,10 +1110,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         runOnUiThread {
             directories_refresh_layout.isRefreshing = false
-            checkPlaceholderVisibility(dirs)
+            checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
         }
 
-        checkInvalidDirectories(dirs)
+        checkInvalidDirectories(dirs as ArrayList<FolderItem>)
         if (mDirs.size > 50) {
             excludeSpamFolders()
         }
@@ -1185,8 +1199,14 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         val currAdapter = directories_grid.adapter
         val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<Directory>
-        val sortedDirs = getSortedDirectories(distinctDirs as ArrayList<FolderItem>)
-        var dirsToShow = getDirsToShow(sortedDirs as ArrayList<Directory>, mDirs, mCurrentPathPrefix).clone() as ArrayList<FolderItem>
+        val sortedDirs: ArrayList<FolderItem>
+
+        if(mOpendGroups.isEmpty()){
+            sortedDirs = getSortedDirectories(distinctDirs as ArrayList<FolderItem>)
+        }
+        else{ sortedDirs = mOpendGroups.last().innerDirs as ArrayList<FolderItem>}
+
+        var dirsToShow = getDirsToShow(sortedDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
 
         if (currAdapter == null || forceRecreate) {
             initZoomListener()
@@ -1194,14 +1214,14 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             DirectoryAdapter(this, dirsToShow, this, directories_grid,
                 isPickIntent(intent) || isGetAnyContentIntent(intent), directories_refresh_layout, fastscroller)
             {
-                val clickedDir = it as Directory
+                val clickedDir = it as FolderItem
                 val path = clickedDir.path
                 if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
-//                    if(clickedDir.innerDirs.isNotEmpty()){
-//                        setupAdapter(clickedDir.innerDirs, "")
-//                    }
-//                    else
-                        if (path != config.tempFolderPath) {
+                    if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
+                        mOpendGroups.add(clickedDir)
+                        setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
+                    }
+                    else if (path != config.tempFolderPath) {
                         itemClicked(path)
                     }
                 } else {
