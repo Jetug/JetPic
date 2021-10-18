@@ -24,7 +24,7 @@ class ManageBlockedNumbersAdapter(
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
-            findItem(R.id.cab_copy_number).isVisible = isOneItemSelected()
+            findItem(R.id.cab_copy_number).isVisible = isOneItemSelected
         }
     }
 

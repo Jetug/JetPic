@@ -423,6 +423,7 @@
     </string>
     <string name="edit_date">Изменить дату</string>
     <string name="group_dirs">Сгруппировать</string>
+    <string name="ungroup_dirs">Разгруппировать</string>
 
     <!--
         Haven't found some strings? There's more at

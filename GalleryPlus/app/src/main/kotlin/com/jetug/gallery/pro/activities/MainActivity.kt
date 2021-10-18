@@ -5,6 +5,8 @@ import android.app.SearchManager
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -158,6 +160,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 finish()
             }
         }
+
+
     }
 
     override fun onStart() {
@@ -167,6 +171,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     override fun onResume() {
         super.onResume()
+
+
         config.isThirdPartyIntent = false
         mDateFormat = config.dateFormat
         mTimeFormat = getTimeFormat()
@@ -226,6 +232,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 tryLoadGallery()
             }
         }
+
+
+//        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        window.statusBarColor = Color.TRANSPARENT
     }
 
     override fun onPause() {
@@ -1205,7 +1215,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.beVisibleIf(directories_empty_placeholder.isGone())
     }
 
-    private fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
+    fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         val currAdapter = directories_grid.adapter
         val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<Directory>
         val sortedDirs: ArrayList<FolderItem>

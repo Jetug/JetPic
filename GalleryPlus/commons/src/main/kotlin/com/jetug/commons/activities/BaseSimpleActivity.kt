@@ -74,6 +74,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
+        
+
     }
 
     override fun onResume() {

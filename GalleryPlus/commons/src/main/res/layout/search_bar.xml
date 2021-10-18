@@ -4,7 +4,7 @@
     android:id="@+id/search_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_primary"
+    android:background="@color/color_action_bar"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:visibility="gone"

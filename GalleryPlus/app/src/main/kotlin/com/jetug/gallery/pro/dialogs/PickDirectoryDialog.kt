@@ -1,5 +1,6 @@
 package com.jetug.gallery.pro.dialogs
 
+import android.icu.text.CaseMap
 import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.adapters.DirectoryAdapter
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.models.Directory
+import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
 import kotlinx.android.synthetic.main.dialog_directory_picker.view.*
 
@@ -25,6 +27,8 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
     private var isGridViewType = activity.config.viewTypeFolders == VIEW_TYPE_GRID
     private var showHidden = activity.config.shouldShowHidden
     private var currentPathPrefix = ""
+
+    private var mOpendGroups = arrayListOf<DirectoryGroup>()
 
     init {
         (view.directories_grid.layoutManager as MyGridLayoutManager).apply {
@@ -100,19 +104,25 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
 
         shownDirectories = dirs
         val adapter = DirectoryAdapter(activity, dirs.clone() as ArrayList<FolderItem>, null, view.directories_grid, true) {
-            val clickedDir = it as Directory
+            val clickedDir = it as FolderItem
             val path = clickedDir.path
             if (clickedDir.subfoldersCount == 1 || !activity.config.groupDirectSubfolders) {
                 if (path.trimEnd('/') == sourcePath) {
                     activity.toast(R.string.source_and_destination_same)
                     return@DirectoryAdapter
                 } else {
-                    activity.handleLockedFolderOpening(path) { success ->
-                        if (success) {
-                            callback(path)
-                        }
+                    if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
+                        mOpendGroups.add(clickedDir)
+                        gotDirectories(clickedDir.innerDirs as ArrayList<FolderItem>)
                     }
-                    dialog.dismiss()
+                    else {
+                        activity.handleLockedFolderOpening(path) { success ->
+                            if (success) {
+                                callback(path)
+                            }
+                        }
+                        dialog.dismiss()
+                    }
                 }
             } else {
                 currentPathPrefix = path
@@ -155,7 +165,12 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
                 currentPathPrefix = openedSubfolders.last()
                 gotDirectories(allDirectories as ArrayList<FolderItem>)
             }
-        } else {
+        }
+        else if(mOpendGroups.isNotEmpty()){
+            mOpendGroups.takeLast()
+            gotDirectories(allDirectories as ArrayList<FolderItem>)
+        }
+        else {
             dialog.dismiss()
         }
     }

@@ -31,33 +31,36 @@ fun saveImagePositions(medias:ArrayList<Medium>){
     }
 }
 
-fun getCustomMediaList(source: ArrayList<Medium>):ArrayList<Medium>{
-    if(source.isNotEmpty()) {
-        val directoryPath = source[0].parentPath
-        val customSortingFile = File(File(directoryPath), SORTING_FILE_NAME)
-        val files = arrayListOf<String>()
-        val newOrdered = ArrayList<Medium>()
-        val medias = source.clone() as ArrayList<Medium>
+fun getCustomMediaList(source: ArrayList<Medium>): ArrayList<Medium>{
+    if (source.isEmpty())
+        return source
 
-        if (customSortingFile.exists()) {
-            customSortingFile.bufferedReader().forEachLine {
-                if (it != "" && File(directoryPath, it).exists()) {
-                    val file = it
-                    files.add(file)
+    val directoryPath = source[0].parentPath
+    val customSortingFileName = "Sort.txt"
+    val customSortingFile = File(File(directoryPath),customSortingFileName)
+    val names = arrayListOf<String>()
+
+    if (customSortingFile.exists()) {
+        customSortingFile.bufferedReader().forEachLine {
+
+            var offset = 0
+
+            if (it != "" && File(directoryPath, it).exists()) {
+                names.add(it)
+                var flag = true
+
+                for (i in offset until source.size){
+                    val medium = source[i]
+                    if(medium.name == it){
+                        source.removeAt(i)
+                        source.add(offset, medium)
+                        offset += 1
+                        break
+                    }
                 }
             }
-
-            files.forEach { path ->
-                val index = medias.indexOfFirst { it.path == path }
-                if (index != -1) {
-                    val dir = medias.removeAt(index)
-                    newOrdered.add(dir)
-                }
-            }
-            medias.mapTo(newOrdered, { it })
-
-            return newOrdered
         }
+        source.reverse()
     }
     return source
 }

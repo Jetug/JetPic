@@ -167,7 +167,7 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
 }
 
 //Jet
-fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String): ArrayList<FolderItem> {
+fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String = ""): ArrayList<FolderItem> {
     var result = arrayListOf<FolderItem>()
 
     if (config.groupDirectSubfolders) {

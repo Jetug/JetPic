@@ -22,17 +22,14 @@ data class Directory(
     @ColumnInfo(name = "media_types") override var types: Int,
     @ColumnInfo(name = "sort_value") override var sortValue: String,
 
-        // used with "Group direct subfolders" enabled
+    // used with "Group direct subfolders" enabled
     @Ignore override var subfoldersCount: Int = 0,
     @Ignore override var subfoldersMediaCount: Int = 0,
     @Ignore override var containsMediaFilesDirectly: Boolean = true,
 
     @ColumnInfo(name = "group_name") var groupName: String = "") : FolderItem(id, path, tmb, name, mediaCnt, modified, taken, size, location, types, sortValue) {
 
-
-
     constructor() : this(null, "", "", "", 0, 0L, 0L, 0L,
-        0, 0, "", 0, 0, true, )
-
-
+        0, 0, "", 0, 0, true
+    )
 }

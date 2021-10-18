@@ -9,8 +9,6 @@ android {
     defaultConfig {
         minSdkVersion propMinSdkVersion
         targetSdkVersion propTargetSdkVersion
-        versionCode propVersionCode
-        versionName propVersionName
     }
 
     buildTypes {

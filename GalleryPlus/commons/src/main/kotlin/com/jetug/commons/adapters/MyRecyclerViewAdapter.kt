@@ -59,7 +59,7 @@ abstract class MyRecyclerViewAdapter(
     abstract fun onActionModeCreated()
     abstract fun onActionModeDestroyed()
 
-    protected fun isOneItemSelected() = selectedKeys.size == 1
+    protected val isOneItemSelected get() = selectedKeys.size == 1
 
     init {
         fastScroller?.resetScrollPositions()

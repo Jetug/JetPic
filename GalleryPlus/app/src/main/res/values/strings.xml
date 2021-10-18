@@ -423,6 +423,7 @@
     </string>
     <string name="edit_date">Edit date</string>
     <string name="group_dirs">Group</string>
+    <string name="ungroup_dirs">Ungroup</string>
     <string-array name="signs">
         <item>+</item>
         <item>-</item>

@@ -32,7 +32,9 @@ class ChangeSortingDialog(val activity: BaseSimpleActivity, val isDirectorySorti
             sorting_dialog_use_for_this_folder.beVisibleIf(showFolderCheckbox)
             sorting_dialog_use_for_this_folder.isChecked = true
             sorting_dialog_bottom_note.beVisibleIf(!isDirectorySorting)
-            sorting_dialog_radio_custom.beVisibleIf(isDirectorySorting)
+            sorting_dialog_radio_path.beVisibleIf(isDirectorySorting)
+            sorting_dialog_radio_custom.beVisibleIf(true)
+
         }
 
         AlertDialog.Builder(activity)

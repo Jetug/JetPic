@@ -28,6 +28,11 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/cab_ungroup"
+        android:title="@string/ungroup_dirs"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/cab_pin"
         android:icon="@drawable/ic_pin"
         android:title="@string/pin_to_the_top"
@@ -52,14 +57,14 @@
         android:icon="@drawable/ic_unhide_vector"
         android:title="@string/unhide_folder"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/cab_copy_to"
-        android:title="@string/copy_to"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/cab_move_to"
-        android:title="@string/move_to"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/cab_copy_to"-->
+<!--        android:title="@string/copy_to"-->
+<!--        app:showAsAction="never" />-->
+<!--    <item-->
+<!--        android:id="@+id/cab_move_to"-->
+<!--        android:title="@string/move_to"-->
+<!--        app:showAsAction="never" />-->
     <item
         android:id="@+id/cab_create_shortcut"
         android:title="@string/create_shortcut"

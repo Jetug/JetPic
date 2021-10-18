@@ -39,6 +39,7 @@ import com.jetug.gallery.pro.models.AlbumCover
 import com.jetug.gallery.pro.models.Directory
 import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
+import com.jetug.gallery.pro.models.jetug.sortDirs
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_location
@@ -76,6 +77,9 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     private var showMediaCount = config.showFolderMediaCount
     private var folderStyle = config.folderStyle
     private var limitFolderTitle = config.limitFolderTitle
+
+    private val selectedGroups: ArrayList<DirectoryGroup>
+        get() = ArrayList(selectedItems.filterIsInstance<DirectoryGroup>())
 
     override val itemList = dirs
 
@@ -132,7 +136,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             return
         }
 
-        val isOneItemSelected = isOneItemSelected()
         menu.apply {
             findItem(R.id.cab_move_to_top).isVisible = isDragAndDropping
             findItem(R.id.cab_move_to_bottom).isVisible = isDragAndDropping
@@ -148,6 +151,10 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
 
+            findItem(R.id.cab_group).isVisible = selectedItems.size > 1 && selectedGroups.size <= 1
+            findItem(R.id.cab_ungroup).isVisible = isOneItemSelected && selectedItems[0] is DirectoryGroup
+
+
             checkHideBtnVisibility(this, selectedPaths)
             checkPinBtnVisibility(this, selectedPaths)
         }
@@ -160,6 +167,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
         when (id) {
             R.id.cab_group -> groupDirs()
+            R.id.cab_ungroup -> ungroupDirs()
             R.id.cab_move_to_top -> moveSelectedItemsToTop()
             R.id.cab_move_to_bottom -> moveSelectedItemsToBottom()
             R.id.cab_properties -> showProperties()
@@ -184,8 +192,8 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
     private fun groupDirs(){
-        GroupDirectoryDialog(activity){ name ->
-            val items = getSelectedItems()
+        val items = selectedItems
+        fun group(name: String){
             for (i in 0 until items.size){
                 val item = items[i]
                 if(item is Directory) {
@@ -193,52 +201,43 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                     activity.updateDBDirectory(item)
                 }
             }
+
+            dirs = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
+            notifyDataSetChanged()
+            finishActMode()
+        }
+        val groups = selectedGroups
+
+        if(selectedGroups.size == 1){
+            group(groups[0].name)
+        }
+        else {
+            GroupDirectoryDialog(activity) { name ->
+                group(name)
+            }
         }
     }
 
-    fun sort(){
-//        val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
-//        val sortedDirs = activity.getSortedDirectories(distinctDirs)
-//        dirs = activity.getDirsToShow(sortedDirs.getDirectories(), dirs.getDirectories(), "").clone() as ArrayList<FolderItem>
-        dirs = sortDirs(dirs)
-        notifyDataSetChanged()
+    private fun ungroupDirs(){
+        val item = selectedItems[0]
+        if(item is DirectoryGroup) {
+            item.innerDirs.forEach{
+                activity.updateDBDirectory(it)
+            }
+
+            dirs.remove(item)
+            dirs.addAll(item.innerDirs)
+
+            dirs = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
+            notifyDataSetChanged()
+            finishActMode()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sortDirs(list:ArrayList<FolderItem>): ArrayList<FolderItem>{
-        val dirs = list
-
-        val sorting = config.directorySorting
-
-        fun reverse(): ArrayList<FolderItem> {
-            if(sorting and SORT_DESCENDING != 0) dirs.reverse()
-            return dirs
-        }
-
-        dirs.sortWith(Comparator { o1, o2 ->
-            o1 as FolderItem
-            o2 as FolderItem
-
-            val result = when{
-                sorting and SORT_BY_NAME != 0  -> {
-                    AlphanumericComparator().compare(o1.name.lowercase(), o2.name.lowercase()) //Locale.getDefault()
-                }
-                sorting and SORT_BY_DATE_TAKEN != 0 -> {
-                    val path1 = FileSystems.getDefault().getPath(File(o1.path).absolutePath)
-                    val path2 = FileSystems.getDefault().getPath(File(o2.path).absolutePath)
-                    val attr1 = Files.readAttributes(path1, BasicFileAttributes::class.java)
-                    val attr2 = Files.readAttributes(path2, BasicFileAttributes::class.java)
-                    (attr1.creationTime()).compareTo(attr2.creationTime())
-                }
-                sorting and SORT_BY_DATE_MODIFIED != 0 -> {
-                    (o1.modified).compareTo(o2.modified)
-                }
-                else -> (o1.name.toLongOrNull() ?: 0).compareTo(o2.name.toLongOrNull() ?: 0)
-            }
-            return@Comparator result
-        })
-        reverse()
-        return dirs
+    fun sort(){
+        dirs = sortDirs(dirs, config.directorySorting)
+        notifyDataSetChanged()
     }
 
     override fun getSelectableItemCount() = dirs.size
@@ -628,7 +627,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             config.skipDeleteConfirmation -> deleteFolders()
             else -> {
                 val itemsCnt = selectedKeys.size
-                if (itemsCnt == 1 && getSelectedItems().first().isRecycleBin()) {
+                if (itemsCnt == 1 && selectedItems.first().isRecycleBin()) {
                     ConfirmationDialog(activity, "", R.string.empty_recycle_bin_confirmation, R.string.yes, R.string.no) {
                         deleteFolders()
                     }
@@ -643,7 +642,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                 }
 
                 val fileDirItem = getFirstSelectedItem() ?: return
-                val baseString = if (!config.useRecycleBin || (isOneItemSelected() && fileDirItem.areFavorites())) {
+                val baseString = if (!config.useRecycleBin || (isOneItemSelected && fileDirItem.areFavorites())) {
                     R.string.deletion_confirmation
                 } else {
                     R.string.move_to_recycle_bin_confirmation
@@ -664,7 +663,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
 
         var SAFPath = ""
-        val selectedDirs = getSelectedItems()
+        val selectedDirs = selectedItems
         selectedDirs.forEach {
             val path = it.path
             if (activity.needsStupidWritePermissions(path) && config.treeUri.isEmpty()) {
@@ -754,9 +753,9 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         listener?.refreshItems()
     }
 
-    private fun getSelectedItems() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<FolderItem>
+    private val selectedItems get() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<FolderItem>
 
-    private fun getSelectedPaths() = getSelectedItems().map { it.path } as ArrayList<String>
+    private fun getSelectedPaths() = selectedItems.map { it.path } as ArrayList<String>
 
     private fun getFirstSelectedItem() = getItemWithKey(selectedKeys.first())
 
@@ -855,7 +854,10 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                 dir_location.setImageResource(if (directory.location == LOCATION_SD) R.drawable.ic_sd_card_vector else R.drawable.ic_usb_vector)
             }
 
-            photo_cnt.text = directory.subfoldersMediaCount.toString()
+            if(config.groupDirectSubfolders)
+                photo_cnt.text = directory.subfoldersMediaCount.toString()
+            else
+                photo_cnt.text = directory.mediaCnt.toString()
             photo_cnt.beVisibleIf(showMediaCount == FOLDER_MEDIA_CNT_LINE)
 
             if (limitFolderTitle) {
