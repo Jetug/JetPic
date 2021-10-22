@@ -5,8 +5,6 @@ import android.app.SearchManager
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -48,7 +46,6 @@ import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.*
-import java.security.acl.Group
 import java.util.*
 import kotlin.collections.ArrayList
 

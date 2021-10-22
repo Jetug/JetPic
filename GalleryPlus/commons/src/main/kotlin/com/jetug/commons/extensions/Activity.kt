@@ -378,7 +378,7 @@ fun Activity.openPathIntent(
             setDataAndType(newUri, mimeType)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            if (applicationId == "com.simplemobiletools.gallery.pro" || applicationId == "com.simplemobiletools.gallery.pro.debug") {
+            if (applicationId == "com.simplemobiletools.gallery.plus" || applicationId == "com.simplemobiletools.gallery.plus.debug") {
                 putExtra(IS_FROM_GALLERY, true)
             }
 
@@ -844,24 +844,24 @@ fun BaseSimpleActivity.getFileOutputStreamSync(path: String, mimeType: String, p
             return null
         }
 
-        try {
+        //try {
             val newDocument = documentFile.createFile(mimeType, path.getFilenameFromPath()) ?: getDocumentFile(path)
             applicationContext.contentResolver.openOutputStream(newDocument!!.uri)
-        } catch (e: Exception) {
-            showErrorToast(e)
-            null
-        }
+//        } catch (e: Exception) {
+//            showErrorToast(e)
+//            null
+//        }
     } else {
         if (targetFile.parentFile?.exists() == false) {
             targetFile.parentFile.mkdirs()
         }
 
-        try {
+        //try {
             FileOutputStream(targetFile)
-        } catch (e: Exception) {
-            showErrorToast(e)
-            null
-        }
+//        } catch (e: Exception) {
+//            showErrorToast(e)
+//            null
+//        }
     }
 }
 

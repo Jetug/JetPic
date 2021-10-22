@@ -581,11 +581,13 @@ fun BaseSimpleActivity.saveRotatedImageToFile(oldPath: String, newPath: String, 
         if (showToasts) {
             toast(R.string.out_of_memory_error)
         }
-    } catch (e: Exception) {
-        if (showToasts) {
-            showErrorToast(e)
-        }
-    } finally {
+    }
+//    catch (e: Exception) {
+//        if (showToasts) {
+//            showErrorToast(e)
+//        }
+//    }
+    finally {
         tryDeleteFileDirItem(tmpFileDirItem, false, true)
     }
 }

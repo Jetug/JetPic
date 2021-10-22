@@ -52,9 +52,6 @@ import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import java.io.File
-import java.nio.file.FileSystems
-import java.nio.file.Files
-import java.nio.file.attribute.BasicFileAttributes
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

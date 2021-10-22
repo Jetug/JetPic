@@ -10,7 +10,6 @@ import com.jetug.commons.extensions.setupDialogStuff
 import com.jetug.commons.helpers.VIEW_TYPE_GRID
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
-import com.jetug.gallery.pro.adapters.MediaAdapter
 import com.jetug.gallery.pro.adapters.SearchResultAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.extensions.config

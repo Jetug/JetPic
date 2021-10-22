@@ -10,6 +10,7 @@ class DirectoryGroup(id: Long?, path: String, tmb: String, name: String, mediaCn
     location,
     types, sortValue
 ) {
+
     @Ignore
     val innerDirs: ArrayList<Directory> = arrayListOf()
 }

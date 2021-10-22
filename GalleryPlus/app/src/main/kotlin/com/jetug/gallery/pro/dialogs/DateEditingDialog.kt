@@ -1,20 +1,15 @@
 package com.example.unipicdev.views.dialogs
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
 import android.widget.DatePicker
-import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.models.jetug.changeFileDate

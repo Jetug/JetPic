@@ -12,12 +12,8 @@ import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import com.example.unipicdev.views.dialogs.DateEditingDialog
-import com.google.vr.cardboard.ThreadUtils.runOnUiThread
-import com.google.vr.sdk.widgets.video.deps.s
 import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.adapters.MyRecyclerViewAdapter
 import com.jetug.commons.dialogs.PropertiesDialog
@@ -38,7 +34,6 @@ import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
 import com.jetug.gallery.pro.models.jetug.saveImagePositions
-import com.jetug.gallery.pro.models.jetug.sortMedia
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.photo_item_grid.view.*

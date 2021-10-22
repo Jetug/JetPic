@@ -1,12 +1,6 @@
 package com.jetug.gallery.pro.models
 
-import android.content.Context
 import androidx.room.*
-import com.bumptech.glide.signature.ObjectKey
-import com.jetug.commons.extensions.formatDate
-import com.jetug.commons.extensions.formatSize
-import com.jetug.commons.helpers.*
-import com.jetug.gallery.pro.helpers.RECYCLE_BIN
 
 @Entity(tableName = "directories", indices = [Index(value = ["path"], unique = true)])
 data class Directory(

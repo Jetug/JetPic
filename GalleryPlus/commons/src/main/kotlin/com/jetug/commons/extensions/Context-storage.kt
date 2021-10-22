@@ -229,7 +229,7 @@ fun Context.getDocumentFile(path: String): DocumentFile? {
         for (part in parts) {
             document = document?.findFile(part)
         }
-        document
+        return document
     } catch (ignored: Exception) {
         null
     }

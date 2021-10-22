@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlinx-serialization'
+
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -9,12 +11,14 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+
     defaultConfig {
-        applicationId "com.simplemobiletools.gallery.pro"
+        applicationId "com.simplemobiletools.gallery.plus"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 348
@@ -102,6 +106,9 @@ dependencies {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation 'com.google.code.gson:gson:2.8.8'
+
     compileOnly 'com.squareup.okhttp3:okhttp:4.9.0'
 
     kapt 'com.github.bumptech.glide:compiler:4.10.0'

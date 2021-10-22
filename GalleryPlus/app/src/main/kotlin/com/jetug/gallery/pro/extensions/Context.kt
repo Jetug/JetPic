@@ -40,7 +40,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import pl.droidsonroids.gif.GifDrawable
 import java.io.File
 import java.io.FileInputStream

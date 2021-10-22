@@ -1,6 +1,5 @@
 package com.jetug.gallery.pro.dialogs
 
-import android.icu.text.CaseMap
 import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,6 @@ import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.adapters.DirectoryAdapter
 import com.jetug.gallery.pro.extensions.*
-import com.jetug.gallery.pro.models.Directory
 import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
 import kotlinx.android.synthetic.main.dialog_directory_picker.view.*
@@ -21,7 +19,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
                           val callback: (path: String) -> Unit) {
     private var dialog: AlertDialog
     private var shownDirectories = ArrayList<FolderItem>()
-    private var allDirectories = ArrayList<Directory>()
+    private var allDirectories = ArrayList<FolderItem>()
     private var openedSubfolders = arrayListOf("")
     private var view = activity.layoutInflater.inflate(R.layout.dialog_directory_picker, null)
     private var isGridViewType = activity.config.viewTypeFolders == VIEW_TYPE_GRID
@@ -92,12 +90,12 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
 
     private fun gotDirectories(newDirs: ArrayList<FolderItem>) {
         if (allDirectories.isEmpty()) {
-            allDirectories = newDirs.clone() as ArrayList<Directory>
+            allDirectories = newDirs.clone() as ArrayList<FolderItem>
         }
 
         val distinctDirs = newDirs.filter { showFavoritesBin || (!it.isRecycleBin() && !it.areFavorites()) }.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
         val sortedDirs = activity.getSortedDirectories(distinctDirs)
-        val dirs = activity.getDirsToShow(sortedDirs.getDirectories(), allDirectories, currentPathPrefix).clone() as ArrayList<FolderItem>
+        val dirs = activity.getDirsToShow(sortedDirs.getDirectories(), allDirectories.getDirectories(), currentPathPrefix).clone() as ArrayList<FolderItem>
         if (dirs.hashCode() == shownDirectories.hashCode()) {
             return
         }

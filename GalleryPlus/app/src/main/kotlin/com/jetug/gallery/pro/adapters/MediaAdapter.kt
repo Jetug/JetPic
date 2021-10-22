@@ -3,17 +3,12 @@ package com.jetug.gallery.pro.adapters
 import android.annotation.SuppressLint
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.unipicdev.views.dialogs.DateEditingDialog
-import com.google.vr.cardboard.ThreadUtils
-import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.helpers.SORT_BY_DATE_MODIFIED
 import com.jetug.commons.helpers.SORT_BY_DATE_TAKEN
-import com.jetug.commons.helpers.SORT_BY_SIZE
 import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
-import com.jetug.gallery.pro.extensions.getCachedMedia
-import com.jetug.gallery.pro.helpers.MediaFetcher
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
 import com.jetug.gallery.pro.models.ThumbnailItem
 import java.util.ArrayList

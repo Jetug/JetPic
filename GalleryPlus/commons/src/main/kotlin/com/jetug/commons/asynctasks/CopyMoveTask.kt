@@ -95,7 +95,8 @@ class CopyMoveTask(
                 }
 
                 copy(file, newFileDirItem)
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 activity.showErrorToast(e)
                 return false
             }

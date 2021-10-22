@@ -1,9 +1,7 @@
 package com.jetug.gallery.pro.models
 
 import android.content.Context
-import androidx.room.ColumnInfo
 import androidx.room.Ignore
-import androidx.room.PrimaryKey
 import com.bumptech.glide.signature.ObjectKey
 import com.jetug.commons.extensions.formatDate
 import com.jetug.commons.extensions.formatSize
@@ -14,7 +12,7 @@ abstract class FolderItem(open var id: Long?,
                           open var path: String,
                           open var tmb: String,
                           open var name: String,
-                          open var mediaCnt: Int,
+                          mediaCnt_: Int,
                           open var modified: Long,
                           open var taken: Long,
                           open var size: Long,
@@ -25,6 +23,24 @@ abstract class FolderItem(open var id: Long?,
                           @Ignore open var subfoldersCount: Int = 0,
                           @Ignore open var subfoldersMediaCount: Int = 0,
                           @Ignore open var containsMediaFilesDirectly: Boolean = true,) {
+
+    open var mediaCnt: Int = 0
+        get(){
+            if(this is DirectoryGroup) {
+                var cnt =0
+                innerDirs.forEach { cnt += it.mediaCnt }
+                return cnt
+            }
+            else return field
+        }
+        set(value){
+            field = value
+        }
+
+
+    init {
+        mediaCnt = mediaCnt_
+    }
 
     fun areFavorites() = path == FAVORITES
     fun isRecycleBin() = path == RECYCLE_BIN
