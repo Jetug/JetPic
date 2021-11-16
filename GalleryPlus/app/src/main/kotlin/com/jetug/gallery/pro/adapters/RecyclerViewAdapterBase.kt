@@ -19,7 +19,6 @@ import java.util.*
 abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null, val swipeRefreshLayout: SwipeRefreshLayout? = null, itemClick: (Any) -> Unit):
     MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract
 {
-    protected var isDragAndDropping = false
     protected var startReorderDragListener: StartReorderDragListener? = null
 
     protected open fun onDragAndDroppingEnded(){}
@@ -34,6 +33,19 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity, recyclerVie
     }
 
     override fun onRowMoved(fromPosition: Int, toPosition: Int) {
+        if(selectedKeys.size < 2)
+            moveItem(fromPosition, toPosition)
+        else{
+            var toPos = toPosition
+            selectedKeys.forEach{ key ->
+                val pos = getItemKeyPosition(key)
+                moveItem(pos, toPos)
+                toPos+=1
+            }
+        }
+    }
+
+    private fun moveItem(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
                 Collections.swap(itemList, i, i + 1)
@@ -46,6 +58,7 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity, recyclerVie
 
         notifyItemMoved(fromPosition, toPosition)
     }
+
 
     override fun onRowSelected(myViewHolder: ViewHolder?) {
         swipeRefreshLayout?.isEnabled = false

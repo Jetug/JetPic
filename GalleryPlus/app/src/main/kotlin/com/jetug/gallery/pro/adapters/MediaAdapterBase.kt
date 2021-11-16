@@ -77,8 +77,10 @@ open class MediaAdapterBase (
 
     override val itemList = media
 
-    protected val mediums: ArrayList<Medium>
+    private val mediums: ArrayList<Medium>
         get() = propGetMediums()
+
+
 
     init {
         setupDragListener(true)
@@ -216,7 +218,7 @@ open class MediaAdapterBase (
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
     override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
     override fun onActionModeCreated() {}
-    override fun onDragAndDroppingEnded() = saveImagePositions(mediums)
+    override fun onDragAndDroppingEnded() = dragAndDroppingEnded()
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -232,6 +234,12 @@ open class MediaAdapterBase (
 
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
 
+    private fun dragAndDroppingEnded(){
+        saveImagePositions(itemList.getMediums())
+        config.saveCustomSorting(path, SORT_BY_CUSTOM)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, holder: ViewHolder){
         view.apply {
             if (media_drag_handle != null) {

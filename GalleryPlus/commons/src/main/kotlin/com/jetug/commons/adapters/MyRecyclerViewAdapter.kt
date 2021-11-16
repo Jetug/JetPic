@@ -60,6 +60,7 @@ abstract class MyRecyclerViewAdapter(
     abstract fun onActionModeDestroyed()
 
     protected val isOneItemSelected get() = selectedKeys.size == 1
+    protected var isDragAndDropping = false
 
     init {
         fastScroller?.resetScrollPositions()
@@ -81,7 +82,7 @@ abstract class MyRecyclerViewAdapter(
                 actBarTextView!!.layoutParams = ActionBar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
                 actMode!!.customView = actBarTextView
                 actBarTextView!!.setOnClickListener {
-                    if (getSelectableItemCount() == selectedKeys.size) {
+                    if (getSelectableItemCount() == selectedKeys.size && !isDragAndDropping) {
                         finishActMode()
                     } else {
                         selectAll()
@@ -116,7 +117,6 @@ abstract class MyRecyclerViewAdapter(
         }
     }
 
-
     protected fun toggleItemSelection(select: Boolean, pos: Int, updateTitle: Boolean = true) {
         if (select && !getIsItemSelectable(pos)) {
             return
@@ -139,7 +139,7 @@ abstract class MyRecyclerViewAdapter(
             updateTitle()
         }
 
-        if (selectedKeys.isEmpty()) {
+        if (selectedKeys.isEmpty() && !isDragAndDropping) {
             finishActMode()
         }
     }

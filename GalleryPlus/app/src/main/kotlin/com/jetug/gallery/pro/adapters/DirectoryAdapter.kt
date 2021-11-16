@@ -195,6 +195,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             val item = firstSelectedItemPath
             if (item != null) {
                 ChangeSortingDialog(activity, false, true, item) {}
+                selectedItems
             }
         }
         else{

@@ -1,10 +1,7 @@
 package com.jetug.gallery.pro.extensions
 
 import com.jetug.gallery.pro.helpers.*
-import com.jetug.gallery.pro.models.Directory
-import com.jetug.gallery.pro.models.DirectoryGroup
-import com.jetug.gallery.pro.models.FolderItem
-import com.jetug.gallery.pro.models.Medium
+import com.jetug.gallery.pro.models.*
 
 fun ArrayList<Medium>.getDirMediaTypes(): Int {
     var types = 0
@@ -33,6 +30,11 @@ fun ArrayList<Medium>.getDirMediaTypes(): Int {
     }
 
     return types
+}
+
+fun ArrayList<ThumbnailItem>.getMediums(): ArrayList<Medium>{
+    val result = this.takeWhile { it is Medium } as List<Medium>
+    return ArrayList(result)
 }
 
 fun ArrayList<FolderItem>.getDirectories(): ArrayList<Directory>{

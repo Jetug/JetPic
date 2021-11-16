@@ -10,6 +10,7 @@ import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
+import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.ThumbnailItem
 import java.util.ArrayList
 
