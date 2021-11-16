@@ -284,6 +284,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         } else if(mOpendGroups.isNotEmpty()){
             val group = mOpendGroups.takeLast()
             //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
+            if(mDirs.size == 0){
+                getDirectories()
+            }
             setupAdapter(mDirs)
         }
         else{
@@ -930,9 +933,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         val buff = getSortedDirectories(newDirs)
         val dirs = buff.getDirectories()
-        if (config.groupDirectSubfolders) {
+        //if (config.groupDirectSubfolders) {
             mDirs = dirs.clone() as ArrayList<FolderItem>
-        }
+        //}
 
         var isPlaceholderVisible = dirs.isEmpty()
 
@@ -1213,8 +1216,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     }
 
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
+
         val currAdapter = directories_grid.adapter
-        val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<Directory>
+        val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
         val sortedDirs: ArrayList<FolderItem>
 
         if(mOpendGroups.isEmpty()){
@@ -1223,6 +1227,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         else{ sortedDirs = mOpendGroups.last().innerDirs as ArrayList<FolderItem>}
 
         var dirsToShow = getDirsToShow(sortedDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
+
 
         if (currAdapter == null || forceRecreate) {
             initZoomListener()

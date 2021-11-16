@@ -66,6 +66,11 @@
 <!--        android:title="@string/move_to"-->
 <!--        app:showAsAction="never" />-->
     <item
+        android:id="@+id/cab_sort"
+        android:icon="@drawable/ic_sort_vector"
+        android:title="@string/sort_by"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/cab_create_shortcut"
         android:title="@string/create_shortcut"
         app:showAsAction="never" />

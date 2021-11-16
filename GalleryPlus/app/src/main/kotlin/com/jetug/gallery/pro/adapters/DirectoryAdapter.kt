@@ -28,10 +28,7 @@ import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
-import com.jetug.gallery.pro.dialogs.ConfirmDeleteFolderDialog
-import com.jetug.gallery.pro.dialogs.ExcludeFolderDialog
-import com.jetug.gallery.pro.dialogs.GroupDirectoryDialog
-import com.jetug.gallery.pro.dialogs.PickMediumDialog
+import com.jetug.gallery.pro.dialogs.*
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
@@ -39,7 +36,10 @@ import com.jetug.gallery.pro.models.AlbumCover
 import com.jetug.gallery.pro.models.Directory
 import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
+import com.jetug.gallery.pro.models.jetug.saveDirectoryGroup
 import com.jetug.gallery.pro.models.jetug.sortDirs
+import com.jetug.gallery.pro.models.jetug.sortMedia
+import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_location
@@ -163,6 +163,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
 
         when (id) {
+            R.id.cab_sort -> sortMedias()
             R.id.cab_group -> groupDirs()
             R.id.cab_ungroup -> ungroupDirs()
             R.id.cab_move_to_top -> moveSelectedItemsToTop()
@@ -188,6 +189,19 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
     }
 
+    private fun sortMedias(){
+
+        if(isOneItemSelected){
+            val item = firstSelectedItemPath
+            if (item != null) {
+                ChangeSortingDialog(activity, false, true, item) {}
+            }
+        }
+        else{
+            MultiChangeSortingDialog(activity, true, getSelectedPaths()) {}
+        }
+    }
+
     private fun groupDirs(){
         val items = selectedItems
         fun group(name: String){
@@ -195,7 +209,9 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                 val item = items[i]
                 if(item is Directory) {
                     item.groupName = name
-                    activity.updateDBDirectory(item)
+                    //activity.updateDBDirectory(item)
+
+                    saveDirectoryGroup(item.path, name)
                 }
             }
 
@@ -219,7 +235,8 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         val item = selectedItems[0]
         if(item is DirectoryGroup) {
             item.innerDirs.forEach{
-                activity.updateDBDirectory(it)
+                //activity.updateDBDirectory(it)
+                saveDirectoryGroup(item.path, "")
             }
 
             dirs.remove(item)
@@ -291,7 +308,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     private fun showProperties() {
         if (selectedKeys.size <= 1) {
-            val path = getFirstSelectedItemPath() ?: return
+            val path = firstSelectedItemPath ?: return
             if (path != FAVORITES && path != RECYCLE_BIN) {
                 activity.handleLockedFolderOpening(path) { success ->
                     if (success) {
@@ -308,7 +325,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     private fun renameDir() {
         if (selectedKeys.size == 1) {
-            val firstDir = getFirstSelectedItem() ?: return
+            val firstDir = firstSelectedItem ?: return
             val sourcePath = firstDir.path
             val dir = File(sourcePath)
             if (activity.isAStorageRootFolder(dir.absolutePath)) {
@@ -584,7 +601,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
     private fun tryCreateShortcut() {
-        activity.handleLockedFolderOpening(getFirstSelectedItemPath() ?: "") { success ->
+        activity.handleLockedFolderOpening(firstSelectedItemPath ?: "") { success ->
             if (success) {
                 createShortcut()
             }
@@ -595,7 +612,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     private fun createShortcut() {
         val manager = activity.getSystemService(ShortcutManager::class.java)
         if (manager.isRequestPinShortcutSupported) {
-            val dir = getFirstSelectedItem() ?: return
+            val dir = firstSelectedItem ?: return
             val path = dir.path
             val drawable = resources.getDrawable(R.drawable.shortcut_image).mutate()
             val coverThumbnail = config.parseAlbumCovers().firstOrNull { it.tmb == dir.path }?.tmb ?: dir.tmb
@@ -638,7 +655,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                     resources.getQuantityString(R.plurals.delete_items, itemsCnt, itemsCnt)
                 }
 
-                val fileDirItem = getFirstSelectedItem() ?: return
+                val fileDirItem = firstSelectedItem ?: return
                 val baseString = if (!config.useRecycleBin || (isOneItemSelected && fileDirItem.areFavorites())) {
                     R.string.deletion_confirmation
                 } else {
@@ -708,7 +725,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
     private fun tryChangeAlbumCover(useDefault: Boolean) {
-        activity.handleLockedFolderOpening(getFirstSelectedItemPath() ?: "") { success ->
+        activity.handleLockedFolderOpening(firstSelectedItemPath ?: "") { success ->
             if (success) {
                 changeAlbumCover(useDefault)
             }
@@ -719,7 +736,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         if (selectedKeys.size != 1)
             return
 
-        val path = getFirstSelectedItemPath() ?: return
+        val path = firstSelectedItemPath ?: return
 
         if (useDefault) {
             val albumCovers = getAlbumCoversWithout(path)
@@ -754,9 +771,9 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     private fun getSelectedPaths() = selectedItems.map { it.path } as ArrayList<String>
 
-    private fun getFirstSelectedItem() = getItemWithKey(selectedKeys.first())
+    private val firstSelectedItem get() = getItemWithKey(selectedKeys.first())
 
-    private fun getFirstSelectedItemPath() = getFirstSelectedItem()?.path
+    private val firstSelectedItemPath get() = firstSelectedItem?.path
 
     private fun getItemWithKey(key: Int): FolderItem? = dirs.firstOrNull { it.path.hashCode() == key }
 

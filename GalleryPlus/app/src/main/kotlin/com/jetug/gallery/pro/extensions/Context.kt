@@ -34,6 +34,7 @@ import com.jetug.gallery.pro.databases.GalleryDatabase
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.*
 import com.jetug.gallery.pro.models.*
+import com.jetug.gallery.pro.models.jetug.getDirectoryGroup
 import com.jetug.gallery.pro.svg.SvgSoftwareLayerSetter
 import com.jetug.gallery.pro.views.MySquareImageView
 import com.squareup.picasso.Picasso
@@ -166,7 +167,7 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
 }
 
 //Jet
-fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String = ""): ArrayList<FolderItem> {
+fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String = "", dirGroup: String = ""): ArrayList<FolderItem> {
     var result = arrayListOf<FolderItem>()
 
     if (config.groupDirectSubfolders) {
@@ -195,12 +196,12 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
 
         dirs.forEach{dir ->
-            val groupName = dir.groupName
-            if(groupName == ""){
+            val groupName = getDirectoryGroup(dir.path)
+            if(groupName == "" || dir.groupName == groupName){
                 result.add(dir)
             }
             else{
-                val innerDir = dir.copy(groupName = "")
+                val innerDir = dir.copy(groupName = groupName)
 
                 if (groups.containsKey(groupName)){
                     groups[groupName]!!.innerDirs.add(innerDir)
@@ -839,8 +840,7 @@ fun Context.updateDBDirectory(directory: FolderItem) {
                 directory.taken,
                 directory.size,
                 directory.types,
-                directory.sortValue,
-                directory.groupName
+                directory.sortValue
             )
         }
     }

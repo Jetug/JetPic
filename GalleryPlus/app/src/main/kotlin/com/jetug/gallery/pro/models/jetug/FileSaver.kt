@@ -1,11 +1,14 @@
 package com.jetug.gallery.pro.models.jetug
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import org.json.JSONTokener
 import java.io.File
 
 
@@ -48,6 +51,24 @@ fun saveImagePositions(medias:ArrayList<Medium>){
             writePositionsToFile(sortingFile, medias)
         }
     }
+
+//    val jsonObject = JSONTokener(response).nextValue() as JSONObject
+//
+//// ID
+//    val id = jsonObject.getString("id")
+//    Log.i("ID: ", id)
+//
+//// Employee Name
+//    val employeeName = jsonObject.getString("employee_name")
+//    Log.i("Employee Name: ", employeeName)
+//
+//// Employee Salary
+//    val employeeSalary = jsonObject.getString("employee_salary")
+//    Log.i("Employee Salary: ", employeeSalary)
+//
+//// Employee Age
+//    val employeeAge = jsonObject.getString("employee_age")
+//    Log.i("Employee Age: ", employeeAge)
 }
 
 fun getCustomMediaList(source: ArrayList<Medium>): ArrayList<Medium>{
