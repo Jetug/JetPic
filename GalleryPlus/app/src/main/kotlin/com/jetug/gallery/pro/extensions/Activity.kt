@@ -48,7 +48,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun Activity.setTopMarginToActionBarsHeight(view: View){
-    view.setMargin(Rect(0,actionBarHeight,0,0))
+    view.setMargin(Rect(0,actionBarHeight + statusBarHeight,0,0))
 }
 
 fun Activity.sharePath(path: String) {
