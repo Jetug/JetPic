@@ -62,7 +62,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (useDynamicTheme) {
-            setTheme(getThemeId(showTransparentTop = showTransparentTop))
+            //setTheme(getThemeId(showTransparentTop = showTransparentTop))
         }
 
         super.onCreate(savedInstanceState)
@@ -81,15 +81,21 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (useDynamicTheme) {
-            setTheme(getThemeId(showTransparentTop = showTransparentTop))
+            //setTheme(getThemeId(showTransparentTop = showTransparentTop))
             updateBackgroundColor()
         }
 
-        if (showTransparentTop) {
-            window.statusBarColor = Color.TRANSPARENT
-        } else {
-            updateActionbarColor()
-        }
+//        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        supportActionBar?.setSplitBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        supportActionBar?.setStackedBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        setTheme(R.style.AppTheme_ActionBar_Transparent)
+
+//        if (showTransparentTop) {
+//            window.statusBarColor = Color.TRANSPARENT
+//        } else {
+//            updateActionbarColor()
+//        }
 
         updateRecentsAppIcon()
         updateNavigationBarColor()

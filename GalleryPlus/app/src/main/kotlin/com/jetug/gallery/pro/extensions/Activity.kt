@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
@@ -16,7 +17,9 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Files
 import android.provider.MediaStore.Images
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.exifinterface.media.ExifInterface
 import com.bumptech.glide.Glide
@@ -36,12 +39,17 @@ import com.jetug.gallery.pro.dialogs.PickDirectoryDialog
 import com.jetug.gallery.pro.helpers.RECYCLE_BIN
 import com.jetug.gallery.pro.models.DateTaken
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.directory_item_list.view.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+
+fun Activity.setTopMarginToActionBarsHeight(view: View){
+    view.setMargin(Rect(0,actionBarHeight,0,0))
+}
 
 fun Activity.sharePath(path: String) {
     sharePathIntent(path, BuildConfig.APPLICATION_ID)

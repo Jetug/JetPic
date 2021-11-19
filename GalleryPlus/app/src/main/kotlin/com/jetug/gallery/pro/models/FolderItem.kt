@@ -37,6 +37,7 @@ abstract class FolderItem(open var id: Long?,
             field = value
         }
 
+    @Ignore var placeholder: Boolean = false
 
     init {
         mediaCnt = mediaCnt_

@@ -4,17 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.text.TextUtils
 import android.util.Log
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.children
+import androidx.core.view.marginTop
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -32,10 +37,7 @@ import com.jetug.gallery.pro.dialogs.*
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
-import com.jetug.gallery.pro.models.AlbumCover
-import com.jetug.gallery.pro.models.Directory
-import com.jetug.gallery.pro.models.DirectoryGroup
-import com.jetug.gallery.pro.models.FolderItem
+import com.jetug.gallery.pro.models.*
 import com.jetug.gallery.pro.models.jetug.saveDirectoryGroup
 import com.jetug.gallery.pro.models.jetug.sortDirs
 import com.jetug.gallery.pro.models.jetug.sortMedia
@@ -60,6 +62,10 @@ import kotlin.collections.HashMap
 class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
                        private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
+
+    private val ITEM_PLACEHOLDER = 0
+    private val ITEM_DIRECTORY = 1
+    private val ITEM_DIRECTORY_GROUP = 2
 
     private val config = activity.config
     private val isListViewType = config.viewTypeFolders == VIEW_TYPE_LIST
@@ -87,17 +93,37 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             }
         }
 
+//        val p = object : FolderItem(0, "","","",0,0,0,0,0,0,"",0) {}
+//        p.placeholder = true
+//        dirs.add(0, p)
+
         setupDragListener(true)
         fillLockedFolders()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val tmbItem = dirs[position]
+        return when {
+            tmbItem.placeholder -> ITEM_PLACEHOLDER
+            tmbItem is DirectoryGroup -> ITEM_DIRECTORY_GROUP
+            else -> ITEM_DIRECTORY
+        }
     }
 
     override fun getActionMenuId() = R.menu.cab_directories
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutType = when {
-            isListViewType -> R.layout.directory_item_list
-            folderStyle == FOLDER_STYLE_SQUARE -> R.layout.directory_item_grid_square
-            else -> R.layout.directory_item_grid_rounded_corners
+        var layoutType = 0
+        if(viewType == ITEM_PLACEHOLDER) {
+            layoutType =  R.layout.item_placeholder
+            //val ph =
+        }
+        else {
+            layoutType = when {
+                isListViewType -> R.layout.directory_item_list
+                folderStyle == FOLDER_STYLE_SQUARE -> R.layout.directory_item_grid_square
+                else -> R.layout.directory_item_grid_rounded_corners
+            }
         }
 
         return createViewHolder(layoutType, parent)
@@ -120,8 +146,12 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
 
         holder.bindView(dir, true, !isPickIntent) { itemView, adapterPosition ->
-            setupView(itemView, dir, holder)
+            if(dir is Directory || dir is DirectoryGroup )
+                setupView(itemView, dir, holder, position)
         }
+
+
+
         bindViewHolder(holder)
     }
 
@@ -269,7 +299,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
-        if (!activity.isDestroyed) {
+        if (!activity.isDestroyed && holder.itemViewType != ITEM_PLACEHOLDER ) {
             Glide.with(activity).clear(holder.itemView.dir_thumbnail!!)
         }
     }
@@ -308,6 +338,12 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
     private fun showProperties() {
+
+//        val oy = recyclerView.computeVerticalScrollOffset()
+//        Toast.makeText(activity, "$oy", Toast.LENGTH_SHORT).show()
+//        val y = recyclerView.offsetChildrenVertical(-150)
+
+        recyclerView.scrollY = 50
         if (selectedKeys.size <= 1) {
             val path = firstSelectedItemPath ?: return
             if (path != FAVORITES && path != RECYCLE_BIN) {
@@ -807,10 +843,18 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
 
+
+
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
-    private fun setupView(view: View, directory: FolderItem, holder: ViewHolder) {
+    private fun setupView(view: View, directory: FolderItem, holder: ViewHolder, position: Int) {
         val isSelected = selectedKeys.contains(directory.path.hashCode())
         view.apply {
+            dir_holder.setMargin(0)
+
+            if(position == 0 || position == 1){
+                activity.setTopMarginToActionBarsHeight(dir_holder)
+            }
+
             dir_path?.text = "${directory.path.substringBeforeLast("/")}/"
             val thumbnailType = when {
                 directory.tmb.isVideoFast() -> TYPE_VIDEOS

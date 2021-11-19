@@ -5,15 +5,16 @@ import android.app.SearchManager
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.icu.text.Transliterator
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -169,6 +170,26 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     override fun onResume() {
         super.onResume()
 
+        this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        this.getWindow().setStatusBarColor(Color.argb(166, 0, 0, 0));
+
+
+
+
+        ///
+//        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        window.statusBarColor = Color.TRANSPARENT
+//
+//        if (config.bottomActions) {
+//            window.navigationBarColor = Color.TRANSPARENT
+//        } else {
+//            setTranslucentNavigation()
+//        }
+        ///
+
+        setTopMarginToActionBarsHeight(directories_vertical_fastscroller)
 
         config.isThirdPartyIntent = false
         mDateFormat = config.dateFormat
@@ -277,6 +298,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             if (mCurrentPathPrefix.isEmpty()) {
                 super.onBackPressed()
             } else {
+                restoreRVPosition()
                 mOpenedSubfolders.removeAt(mOpenedSubfolders.size - 1)
                 mCurrentPathPrefix = mOpenedSubfolders.last()
                 setupAdapter(mDirs)
@@ -284,6 +306,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         } else if(mOpendGroups.isNotEmpty()){
             val group = mOpendGroups.takeLast()
             //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
+            restoreRVPosition()
             if(mDirs.size == 0){
                 getDirectories()
             }
@@ -725,6 +748,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         directories_vertical_fastscroller.setContentHeight(fullHeight)
         directories_vertical_fastscroller.setScrollToY(directories_grid.computeVerticalScrollOffset())
+
+
     }
 
     private fun initZoomListener() {
@@ -1215,8 +1240,23 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.beVisibleIf(directories_empty_placeholder.isGone())
     }
 
-    fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
+    val rvPosition = arrayListOf<Pair<Int,Int>>()
 
+    private fun saveRVPosition(){
+        val ox = directories_grid.computeHorizontalScrollOffset()
+        val oy = directories_grid.computeVerticalScrollOffset()
+        rvPosition.add(Pair(ox, oy))
+    }
+
+    private fun restoreRVPosition(){
+        if(rvPosition.isNotEmpty()) {
+            val pos = rvPosition.takeLast()
+            directories_grid.offsetChildrenHorizontal(pos.first)
+            directories_grid.offsetChildrenVertical(-pos.second)
+        }
+    }
+
+    fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         val currAdapter = directories_grid.adapter
         val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
         val sortedDirs: ArrayList<FolderItem>
@@ -1227,7 +1267,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         else{ sortedDirs = mOpendGroups.last().innerDirs as ArrayList<FolderItem>}
 
         var dirsToShow = getDirsToShow(sortedDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
-
 
         if (currAdapter == null || forceRecreate) {
             initZoomListener()
@@ -1240,6 +1279,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
                     if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
                         mOpendGroups.add(clickedDir)
+                        saveRVPosition()
                         setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
                     }
                     else if (path != config.tempFolderPath) {
@@ -1248,6 +1288,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 } else {
                     mCurrentPathPrefix = path
                     mOpenedSubfolders.add(path)
+                    saveRVPosition()
                     setupAdapter(mDirs, "")
                 }
             }.apply {
@@ -1278,6 +1319,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.postDelayed({
             directories_grid.scrollBy(0, 0)
         }, 500)
+
+
     }
 
     private fun setupScrollDirection() {

@@ -44,6 +44,7 @@
 
         <activity
             android:name="com.jetug.gallery.pro.activities.MainActivity"
+            android:theme="@style/AppTheme.ActionBar.Transparent"
             android:resizeableActivity="true">
 
             <meta-data

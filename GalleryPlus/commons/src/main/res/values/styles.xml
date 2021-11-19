@@ -1,7 +1,20 @@
 <resources>
 
+    <!--Jet-->
+    <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.Base">
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+        <item name="windowActionBarOverlay">true</item>
+        <item name="colorPrimary">@color/color_action_bar_main</item>
+        <item name="colorPrimaryDark">@color/color_action_bar_main</item>
+        <item name="colorAccent">@color/color_action_bar_main</item>
+<!--        <item name="statusBarBackground">@color/md_teal</item>-->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:colorPrimaryDark">@color/color_action_bar_main</item>
+<!--        <item name="android:statusBarColor">@color/md_teal</item>-->
+    </style>
+
     <style name="AppTheme.Base" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimary">@color/color_action_bar_main</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
@@ -15,6 +28,7 @@
         <item name="colorControlHighlight">@color/activated_item_foreground</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
+
 
     <style name="AppTheme.Base.Core" parent="Theme.AppCompat.NoActionBar">
         <item name="android:colorControlHighlight">@color/activated_item_foreground</item>
