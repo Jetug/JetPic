@@ -44,8 +44,10 @@ import kotlinx.android.synthetic.main.video_item_grid.view.medium_check
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_name
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_thumbnail
 import kotlinx.android.synthetic.main.photo_item_grid.view.media_drag_handle
+import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.reflect.typeOf
 
 open class MediaAdapterBase (
     activity: BaseSimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
@@ -80,11 +82,10 @@ open class MediaAdapterBase (
     private val mediums: ArrayList<Medium>
         get() = propGetMediums()
 
-
-
     init {
         setupDragListener(true)
         enableInstantLoad()
+        //activity.makeTranslucentBars()
     }
 
     override fun getActionMenuId() = R.menu.cab_media
@@ -125,7 +126,7 @@ open class MediaAdapterBase (
             }
         }
         holder.bindView(tmbItem, true, !isAGetIntent) { itemView, adapterPosition ->
-            setupView(itemView, holder)
+            setupView(itemView, holder, position)
         }
         bindViewHolder(holder)
     }
@@ -240,8 +241,24 @@ open class MediaAdapterBase (
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun setupView(view: View, holder: ViewHolder){
+    private fun setupView(view: View, holder: ViewHolder, position: Int){
         view.apply {
+            ///Jet
+            val item: View
+            var endId: Int = 0
+            if (holder.itemViewType == ITEM_SECTION) {
+                item = thumbnail_section
+            } else {
+                item = media_item_holder
+                endId = config.mediaColumnCnt
+            }
+            if(media[0] is ThumbnailSection) endId = 1
+
+            item?.setMargin(0)
+            if(position in 0 until endId){
+                activity.setTopMarginToActionBarsHeight(item)
+            }
+            ///
             if (media_drag_handle != null) {
                 media_drag_handle.beVisibleIf(isDragAndDropping)
 

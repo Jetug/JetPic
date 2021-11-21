@@ -169,28 +169,12 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     override fun onResume() {
         super.onResume()
-
-        this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        this.getWindow().setStatusBarColor(Color.argb(166, 0, 0, 0));
-
-
-
-
-        ///
-//        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        window.statusBarColor = Color.TRANSPARENT
-//
-//        if (config.bottomActions) {
-//            window.navigationBarColor = Color.TRANSPARENT
-//        } else {
-//            setTranslucentNavigation()
-//        }
-        ///
-
+        ///Jet
+        makeTranslucentBars()
         setTopMarginToActionBarsHeight(directories_vertical_fastscroller)
-
+        setTopMarginToActionBarsHeight(directories_switch_searching)
+        directories_switch_searching.height = topBarsHeight
+        ///
         config.isThirdPartyIntent = false
         mDateFormat = config.dateFormat
         mTimeFormat = getTimeFormat()
@@ -752,6 +736,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     }
 
+    //Jet zoom
     private fun initZoomListener() {
         if (config.viewTypeFolders == VIEW_TYPE_GRID) {
             val layoutManager = directories_grid.layoutManager as MyGridLayoutManager

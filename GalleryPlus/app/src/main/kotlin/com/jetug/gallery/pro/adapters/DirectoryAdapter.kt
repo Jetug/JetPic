@@ -849,12 +849,12 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     private fun setupView(view: View, directory: FolderItem, holder: ViewHolder, position: Int) {
         val isSelected = selectedKeys.contains(directory.path.hashCode())
         view.apply {
+            ///Jet
             dir_holder.setMargin(0)
-
-            if(position == 0 || position == 1){
+            if(position in 0 until config.dirColumnCnt){
                 activity.setTopMarginToActionBarsHeight(dir_holder)
             }
-
+            ///
             dir_path?.text = "${directory.path.substringBeforeLast("/")}/"
             val thumbnailType = when {
                 directory.tmb.isVideoFast() -> TYPE_VIDEOS

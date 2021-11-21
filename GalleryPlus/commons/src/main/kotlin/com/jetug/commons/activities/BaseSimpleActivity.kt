@@ -78,6 +78,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     }
 
+    fun makeTranslucentBars(){
+        this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        this.getWindow().setStatusBarColor(Color.argb(166, 0, 0, 0));
+    }
+
     override fun onResume() {
         super.onResume()
         if (useDynamicTheme) {
@@ -89,7 +96,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 //        supportActionBar?.setSplitBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 //        supportActionBar?.setStackedBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        setTheme(R.style.AppTheme_ActionBar_Transparent)
+        //setTheme(R.style.AppTheme_ActionBar_Transparent)
 
 //        if (showTransparentTop) {
 //            window.statusBarColor = Color.TRANSPARENT

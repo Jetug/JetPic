@@ -42,6 +42,7 @@ import com.jetug.gallery.pro.interfaces.MediaOperationsListener
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_media.*
 import java.io.File
 import java.io.IOException
@@ -128,6 +129,10 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     override fun onResume() {
         super.onResume()
+
+        makeTranslucentBars()
+        setTopMarginToActionBarsHeight(media_vertical_fastscroller)
+
         mDateFormat = config.dateFormat
         mTimeFormat = getTimeFormat()
 
