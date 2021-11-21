@@ -9,13 +9,13 @@
     android:paddingTop="@dimen/activity_margin"
     android:paddingRight="@dimen/activity_margin">
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/image_width_label"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/width"/>
 
-    <com.simplemobiletools.commons.views.MyEditText
+    <com.jetug.commons.views.MyEditText
         android:id="@+id/image_width"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:textCursorDrawable="@null"
         android:textSize="@dimen/normal_text_size"/>
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.jetug.commons.views.MyTextView
         android:id="@+id/image_height_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_toEndOf="@+id/image_width_label"
         android:text="@string/height"/>
 
-    <com.simplemobiletools.commons.views.MyEditText
+    <com.jetug.commons.views.MyEditText
         android:id="@+id/image_height"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:textCursorDrawable="@null"
         android:textSize="@dimen/normal_text_size"/>
 
-    <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+    <com.jetug.commons.views.MyAppCompatCheckbox
         android:id="@+id/keep_aspect_ratio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

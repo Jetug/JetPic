@@ -1,31 +1,6 @@
 Changelog
 ==========
 
-Version 6.21.6 *(2021-10-10)*
-----------------------------
-
- * Reverting to the previous way of file deletion
- * Added some stability and translation improvements
-
-Version 6.21.5 *(2021-10-10)*
-----------------------------
-
- * Reverting to the previous way of file deletion
- * Added some stability and translation improvements
-
-Version 6.21.4 *(2021-10-09)*
-----------------------------
-
- * Fixed some file operations on Android 11+
- * Fixed files not being recognized by some apps after edit/copy
- * Added some stability, translation and UX improvements
-
-Version 6.21.3 *(2021-10-03)*
-----------------------------
-
- * Fixed a glitch with edited videos being low quality
- * Added some UX, translation and stability improvements
-
 Version 6.21.2 *(2021-09-09)*
 ----------------------------
 

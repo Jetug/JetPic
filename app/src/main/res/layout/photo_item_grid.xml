@@ -7,10 +7,32 @@
     android:clickable="true"
     android:focusable="true">
 
-    <com.simplemobiletools.gallery.pro.views.MySquareImageView
+    <com.jetug.gallery.pro.views.MySquareImageView
         android:id="@+id/medium_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/dir_drag_handle_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/medium_thumbnail"
+        android:layout_alignEnd="@+id/medium_thumbnail"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/media_drag_handle"
+            android:layout_width="@dimen/drag_handle_size"
+            android:layout_height="@dimen/drag_handle_size"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/medium_margin"
+            android:background="@drawable/circle_black_background"
+            android:contentDescription="@string/reorder_by_dragging"
+            android:padding="@dimen/small_margin"
+            android:src="@drawable/ic_drag_handle_vector" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/file_type"

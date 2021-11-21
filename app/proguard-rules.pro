@@ -1,4 +1,4 @@
--keep class com.simplemobiletools.** { *; }
+-keep class com.jetug.** { *; }
 -dontwarn android.graphics.Canvas
 -dontwarn com.simplemobiletools.**
 -dontwarn org.apache.**
@@ -18,6 +18,3 @@
 native <methods>;
 }
 -keep class androidx.renderscript.** { *; }
-
-# Reprint
--keep class com.github.ajalt.reprint.module.** { *; }

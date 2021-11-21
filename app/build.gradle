@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlinx-serialization'
+
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -9,16 +11,18 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+
     defaultConfig {
-        applicationId "com.simplemobiletools.gallery.pro"
-        minSdkVersion 21
+        applicationId "com.simplemobiletools.gallery.plus"
+        minSdkVersion 23
         targetSdkVersion 29
-        versionCode 353
-        versionName "6.21.6"
+        versionCode 348
+        versionName "6.21.2"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
@@ -78,11 +82,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:a000a4b6a8'
+    //implementation 'com.github.SimpleMobileTools:Simple-Commons:554dda71a4'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'it.sephiroth.android.exif:library:1.0.1'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'com.google.android.exoplayer:exoplayer-core:2.9.6'
     implementation 'com.google.vr:sdk-panowidget:1.180.0'
     implementation 'com.google.vr:sdk-videowidget:1.180.0'
@@ -95,9 +99,16 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.github.penfeizhou.android.animation:awebp:2.11.0'
     implementation 'com.github.penfeizhou.android.animation:apng:2.11.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
+    implementation 'joda-time:joda-time:2.10.10'
     implementation('com.squareup.picasso:picasso:2.71828') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation 'com.google.code.gson:gson:2.8.8'
+
     compileOnly 'com.squareup.okhttp3:okhttp:4.9.0'
 
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
@@ -105,6 +116,9 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.room:room-runtime:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+
+    implementation project(':commons')
 }
 
 // Apply the PESDKPlugin

@@ -17,6 +17,10 @@
         android:title="@string/share"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/editDate"
+        android:title="@string/edit_date"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/cab_rotate"
         android:icon="@drawable/ic_rotate_right_vector"
         android:title="@string/rotate"

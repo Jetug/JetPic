@@ -32,7 +32,7 @@
     <string name="switch_to_file_search">Switch to file search across all visible folders</string>
     <string name="set_as_default_folder">Set as default folder</string>
     <string name="unset_as_default_folder">Unset as default folder</string>
-    <string name="reorder_by_dragging">Reorder folders by dragging</string>
+    <string name="reorder_by_dragging">Reorder folders</string>
 
     <!-- Filter -->
     <string name="filter_media">Filter media</string>
@@ -421,7 +421,15 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
+    <string name="edit_date">Edit date</string>
+    <string name="group_dirs">Group</string>
+    <string name="ungroup_dirs">Ungroup</string>
+    <string-array name="signs">
+        <item>+</item>
+        <item>-</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
