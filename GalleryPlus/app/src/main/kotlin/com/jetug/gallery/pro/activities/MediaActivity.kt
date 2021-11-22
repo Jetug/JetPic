@@ -31,6 +31,7 @@ import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.adapters.MediaAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
+import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask2
 import com.jetug.gallery.pro.databases.GalleryDatabase
 import com.jetug.gallery.pro.dialogs.ChangeGroupingDialog
 import com.jetug.gallery.pro.dialogs.ChangeSortingDialog
@@ -44,6 +45,9 @@ import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_media.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -67,7 +71,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private var mLatestMediaDateId = 0L
     private var mLastMediaHandler = Handler()
     private var mTempShowHiddenHandler = Handler()
-    private var mCurrAsyncTask: GetMediaAsynctask? = null
+    private var mCurrAsyncTask: GetMediaAsynctask2? = null
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
 
@@ -124,13 +128,16 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     override fun onStart() {
         super.onStart()
+        //restoreRVPosition()
         mTempShowHiddenHandler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
         super.onResume()
-
+        ///Jet
         makeTranslucentBars()
+        restoreRVPosition()
+        ///
         setTopMarginToActionBarsHeight(media_vertical_fastscroller)
 
         mDateFormat = config.dateFormat
@@ -198,6 +205,8 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 }
             }
         }
+
+
     }
 
     override fun onPause() {
@@ -210,6 +219,9 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         if (!mMedia.isEmpty()) {
             mCurrAsyncTask?.stopFetching()
         }
+
+        ///Jet
+        saveRVPosition()
     }
 
     override fun onStop() {
@@ -411,6 +423,26 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun getMediaAdapter() = media_grid.adapter as? MediaAdapter
 
+    private fun saveRVPosition(){
+        val ox = media_grid.computeHorizontalScrollOffset()
+        val oy = media_grid.computeVerticalScrollOffset()
+        mediaScrollPositions[mPath] = Pair(ox, oy)
+    }
+
+    private fun restoreRVPosition(){
+        //CoroutineScope(Dispatchers.Main).launch{
+            val pos = mediaScrollPositions[mPath]
+            if (pos != null) {
+//                media_grid.offsetChildrenHorizontal(pos.first)
+//                media_grid.offsetChildrenVertical(-pos.second)
+
+                //media_grid.scrollTo()
+
+                (media_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(pos.first, -pos.second)
+            }
+        //}
+    }
+
     private fun setupAdapter() {
         if (!mShowAll && isDirEmpty()) {
             return
@@ -445,7 +477,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         } else {
             searchQueryChanged(mLastSearchedText)
         }
-
         setupScrollDirection()
     }
 
@@ -612,7 +643,8 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun startAsyncTask() {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsynctask(applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
+        mCurrAsyncTask = GetMediaAsynctask2(applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
+            //restoreRVPosition()
             ensureBackgroundThread {
                 val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
                 val newMedia = it
@@ -624,7 +656,13 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 } catch (e: Exception) {
                 }
             }
-        }
+        },
+        {
+
+            ///Jet
+
+            ///
+        })
 
         mCurrAsyncTask!!.execute()
     }
@@ -915,9 +953,13 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
+
+
         mIsGettingMedia = false
         checkLastMediaChanged()
         mMedia = media
+
+
 
         runOnUiThread {
             media_refresh_layout.isRefreshing = false
@@ -947,6 +989,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 }
             }.start()
         }
+
     }
 
     override fun tryDeleteFiles(fileDirItems: ArrayList<FileDirItem>) {

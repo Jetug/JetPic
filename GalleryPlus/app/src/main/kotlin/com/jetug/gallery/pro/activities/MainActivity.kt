@@ -46,6 +46,7 @@ import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_media.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -54,6 +55,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private val PICK_MEDIA = 2
     private val PICK_WALLPAPER = 3
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
+    private val rvPosition = arrayListOf<Pair<Int,Int>>()
 
     private var mIsPickImageIntent = false
     private var mIsPickVideoIntent = false
@@ -1225,8 +1227,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.beVisibleIf(directories_empty_placeholder.isGone())
     }
 
-    val rvPosition = arrayListOf<Pair<Int,Int>>()
-
     private fun saveRVPosition(){
         val ox = directories_grid.computeHorizontalScrollOffset()
         val oy = directories_grid.computeVerticalScrollOffset()
@@ -1236,10 +1236,14 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private fun restoreRVPosition(){
         if(rvPosition.isNotEmpty()) {
             val pos = rvPosition.takeLast()
-            directories_grid.offsetChildrenHorizontal(pos.first)
-            directories_grid.offsetChildrenVertical(-pos.second)
+//            directories_grid.offsetChildrenHorizontal(pos.first)
+//            directories_grid.offsetChildrenVertical(-pos.second)
+
+            (directories_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(pos.first, -pos.second)
         }
     }
+
+
 
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         val currAdapter = directories_grid.adapter
