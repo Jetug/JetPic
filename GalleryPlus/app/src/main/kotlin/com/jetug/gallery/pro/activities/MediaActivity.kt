@@ -430,17 +430,10 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun restoreRVPosition(){
-        //CoroutineScope(Dispatchers.Main).launch{
-            val pos = mediaScrollPositions[mPath]
-            if (pos != null) {
-//                media_grid.offsetChildrenHorizontal(pos.first)
-//                media_grid.offsetChildrenVertical(-pos.second)
-
-                //media_grid.scrollTo()
-
-                (media_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(pos.first, -pos.second)
-            }
-        //}
+        val pos = mediaScrollPositions[mPath]
+        if (pos != null) {
+            (media_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(pos.first, -pos.second)
+        }
     }
 
     private fun setupAdapter() {
@@ -451,9 +444,9 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         val currAdapter = media_grid.adapter
         if (currAdapter == null) {
             initZoomListener()
-            val fastscroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
+            val fastScroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
             MediaAdapter(this, mMedia.clone() as ArrayList<ThumbnailItem>, this, mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent,
-                mAllowPickingMultiple, mPath, media_grid, fastscroller, media_refresh_layout) {
+                mAllowPickingMultiple, mPath, media_grid, fastScroller, media_refresh_layout) {
                 if (it is Medium && !isFinishing) {
                     itemClicked(it.path)
                 }

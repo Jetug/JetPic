@@ -38,6 +38,7 @@
             android:visibility="gone" />
 
         <com.jetug.commons.views.MyRecyclerView
+            android:clipToPadding="false"
             android:id="@+id/media_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

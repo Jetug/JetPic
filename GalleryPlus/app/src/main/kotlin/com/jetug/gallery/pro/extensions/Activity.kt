@@ -53,6 +53,10 @@ fun Activity.setTopMarginToActionBarsHeight(view: View){
     view.setMargin(Rect(0,topBarsHeight,0,0))
 }
 
+fun Activity.setTopPaddingToActionBarsHeight(view: View){
+    view.setPadding(0,topBarsHeight,0,0)
+}
+
 fun Activity.sharePath(path: String) {
     sharePathIntent(path, BuildConfig.APPLICATION_ID)
 }

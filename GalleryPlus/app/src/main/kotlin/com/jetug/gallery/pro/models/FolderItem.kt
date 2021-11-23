@@ -26,18 +26,17 @@ abstract class FolderItem(open var id: Long?,
 
     open var mediaCnt: Int = 0
         get(){
-            if(this is DirectoryGroup) {
+            return if(this is DirectoryGroup) {
                 var cnt =0
                 innerDirs.forEach { cnt += it.mediaCnt }
-                return cnt
-            }
-            else return field
+                cnt
+            } else field
         }
         set(value){
             field = value
         }
 
-    @Ignore var placeholder: Boolean = false
+    @Ignore var isHidden: Boolean = false
 
     init {
         mediaCnt = mediaCnt_

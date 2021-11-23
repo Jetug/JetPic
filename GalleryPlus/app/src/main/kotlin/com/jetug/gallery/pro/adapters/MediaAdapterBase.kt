@@ -85,7 +85,8 @@ open class MediaAdapterBase (
     init {
         setupDragListener(true)
         enableInstantLoad()
-        //activity.makeTranslucentBars()
+
+        activity.setTopPaddingToActionBarsHeight(recyclerView)
     }
 
     override fun getActionMenuId() = R.menu.cab_media
@@ -244,20 +245,22 @@ open class MediaAdapterBase (
     private fun setupView(view: View, holder: ViewHolder, position: Int){
         view.apply {
             ///Jet
-            val item: View
-            var endId: Int = 0
-            if (holder.itemViewType == ITEM_SECTION) {
-                item = thumbnail_section
-            } else {
-                item = media_item_holder
-                endId = config.mediaColumnCnt
-            }
-            if(media[0] is ThumbnailSection) endId = 1
-
-            item?.setMargin(0)
-            if(position in 0 until endId){
-                activity.setTopMarginToActionBarsHeight(item)
-            }
+//            val item: View
+//            var endId: Int = 0
+//            if(!config.scrollHorizontally) {
+//                if (holder.itemViewType == ITEM_SECTION) {
+//                    item = thumbnail_section
+//                } else {
+//                    item = media_item_holder
+//                    endId = config.mediaColumnCnt
+//                }
+//                if (media[0] is ThumbnailSection) endId = 1
+//
+//                item?.setMargin(0)
+//                if (position in 0 until endId) {
+//                    activity.setTopMarginToActionBarsHeight(item)
+//                }
+//            }
             ///
             if (media_drag_handle != null) {
                 media_drag_handle.beVisibleIf(isDragAndDropping)

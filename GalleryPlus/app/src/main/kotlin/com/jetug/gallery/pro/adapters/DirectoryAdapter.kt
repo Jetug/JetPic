@@ -57,6 +57,7 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.round
 
 @SuppressLint("NotifyDataSetChanged")
 class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
@@ -87,6 +88,8 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     override val itemList = dirs
 
     init {
+
+
         dirs.forEach(){
             if (it.name == "@Test$ (1) (1) (1)"){
                 Log.d("Jet", it.name)
@@ -99,13 +102,20 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
         setupDragListener(true)
         fillLockedFolders()
+
+        activity.setTopPaddingToActionBarsHeight(recyclerView)
+
+//        if(config.scrollHorizontally) {
+//            activity.setTopPaddingToActionBarsHeight(recyclerView)
+//        }
+//        else {
+//            recyclerView.setPadding(0, 0, 0, 0)
+//        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val tmbItem = dirs[position]
-        return when {
-            tmbItem.placeholder -> ITEM_PLACEHOLDER
-            tmbItem is DirectoryGroup -> ITEM_DIRECTORY_GROUP
+        return when (dirs[position]) {
+            is DirectoryGroup -> ITEM_DIRECTORY_GROUP
             else -> ITEM_DIRECTORY
         }
     }
@@ -114,16 +124,10 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var layoutType = 0
-        if(viewType == ITEM_PLACEHOLDER) {
-            layoutType =  R.layout.item_placeholder
-            //val ph =
-        }
-        else {
-            layoutType = when {
-                isListViewType -> R.layout.directory_item_list
-                folderStyle == FOLDER_STYLE_SQUARE -> R.layout.directory_item_grid_square
-                else -> R.layout.directory_item_grid_rounded_corners
-            }
+        layoutType = when {
+            isListViewType -> R.layout.directory_item_list
+            folderStyle == FOLDER_STYLE_SQUARE -> R.layout.directory_item_grid_square
+            else -> R.layout.directory_item_grid_rounded_corners
         }
 
         return createViewHolder(layoutType, parent)
@@ -219,6 +223,35 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
     }
 
+    fun changeDirs(newDirs: ArrayList<FolderItem>){
+        dirs = newDirs
+        notifyDataSetChanged()
+    }
+
+    fun sort(){
+        dirs = sortDirs(dirs, config.directorySorting)
+        notifyDataSetChanged()
+    }
+
+    override fun getSelectableItemCount() = dirs.size
+    override fun getIsItemSelectable(position: Int) = true
+    override fun getItemSelectionKey(position: Int) = dirs.getOrNull(position)?.path?.hashCode()
+    override fun getItemKeyPosition(key: Int) = dirs.indexOfFirst { it.path.hashCode() == key }
+    override fun onActionModeCreated() {}
+
+    override fun onDragAndDroppingEnded() {
+        val reorderedFoldersList = dirs.map { it.path }
+        config.customFoldersOrder = TextUtils.join("|||", reorderedFoldersList)
+        config.directorySorting = SORT_BY_CUSTOM
+    }
+
+    override fun onViewRecycled(holder: ViewHolder) {
+        super.onViewRecycled(holder)
+        if (!activity.isDestroyed && holder.itemViewType != ITEM_PLACEHOLDER ) {
+            Glide.with(activity).clear(holder.itemView.dir_thumbnail!!)
+        }
+    }
+
     private fun sortMedias(){
 
         if(isOneItemSelected){
@@ -276,31 +309,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             dirs = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
             notifyDataSetChanged()
             finishActMode()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun sort(){
-        dirs = sortDirs(dirs, config.directorySorting)
-        notifyDataSetChanged()
-    }
-
-    override fun getSelectableItemCount() = dirs.size
-    override fun getIsItemSelectable(position: Int) = true
-    override fun getItemSelectionKey(position: Int) = dirs.getOrNull(position)?.path?.hashCode()
-    override fun getItemKeyPosition(key: Int) = dirs.indexOfFirst { it.path.hashCode() == key }
-    override fun onActionModeCreated() {}
-
-    override fun onDragAndDroppingEnded() {
-        val reorderedFoldersList = dirs.map { it.path }
-        config.customFoldersOrder = TextUtils.join("|||", reorderedFoldersList)
-        config.directorySorting = SORT_BY_CUSTOM
-    }
-
-    override fun onViewRecycled(holder: ViewHolder) {
-        super.onViewRecycled(holder)
-        if (!activity.isDestroyed && holder.itemViewType != ITEM_PLACEHOLDER ) {
-            Glide.with(activity).clear(holder.itemView.dir_thumbnail!!)
         }
     }
 
@@ -843,17 +851,17 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
 
-
-
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     private fun setupView(view: View, directory: FolderItem, holder: ViewHolder, position: Int) {
         val isSelected = selectedKeys.contains(directory.path.hashCode())
         view.apply {
             ///Jet
-            dir_holder.setMargin(0)
-            if(position in 0 until config.dirColumnCnt){
-                activity.setTopMarginToActionBarsHeight(dir_holder)
-            }
+//            dir_holder.setMargin(0)
+//            if(!config.scrollHorizontally) {
+//                if (position in 0 until config.dirColumnCnt) {
+//                    activity.setTopMarginToActionBarsHeight(dir_holder)
+//                }
+//            }
             ///
             dir_path?.text = "${directory.path.substringBeforeLast("/")}/"
             val thumbnailType = when {

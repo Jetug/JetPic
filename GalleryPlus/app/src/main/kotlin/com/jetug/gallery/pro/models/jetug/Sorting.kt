@@ -10,7 +10,6 @@ import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun sortDirs(dirs:ArrayList<FolderItem>, sorting: Int): ArrayList<FolderItem>{
     if (sorting and SORT_BY_RANDOM != 0) {
         dirs.shuffle()
@@ -22,6 +21,8 @@ fun sortDirs(dirs:ArrayList<FolderItem>, sorting: Int): ArrayList<FolderItem>{
         return dirs
     }
 
+    fun sortByModification(o1: FolderItem, o2: FolderItem) = (o1.modified).compareTo(o2.modified)
+
     dirs.sortWith(Comparator { o1, o2 ->
         o1 as FolderItem
         o2 as FolderItem
@@ -31,14 +32,19 @@ fun sortDirs(dirs:ArrayList<FolderItem>, sorting: Int): ArrayList<FolderItem>{
                 AlphanumericComparator().compare(o1.name.lowercase(), o2.name.lowercase()) //Locale.getDefault()
             }
             sorting and SORT_BY_DATE_TAKEN != 0 -> {
-                val path1 = FileSystems.getDefault().getPath(File(o1.path).absolutePath)
-                val path2 = FileSystems.getDefault().getPath(File(o2.path).absolutePath)
-                val attr1 = Files.readAttributes(path1, BasicFileAttributes::class.java)
-                val attr2 = Files.readAttributes(path2, BasicFileAttributes::class.java)
-                (attr1.creationTime()).compareTo(attr2.creationTime())
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val path1 = FileSystems.getDefault().getPath(File(o1.path).absolutePath)
+                    val path2 = FileSystems.getDefault().getPath(File(o2.path).absolutePath)
+                    val attr1 = Files.readAttributes(path1, BasicFileAttributes::class.java)
+                    val attr2 = Files.readAttributes(path2, BasicFileAttributes::class.java)
+
+                    (attr1.creationTime()).compareTo(attr2.creationTime())
+                } else{
+                    sortByModification(o1, o2)
+                }
             }
             sorting and SORT_BY_DATE_MODIFIED != 0 -> {
-                (o1.modified).compareTo(o2.modified)
+                sortByModification(o1, o2)
             }
             sorting and SORT_BY_PATH != 0 -> {
                 if (sorting and SORT_USE_NUMERIC_VALUE != 0) {
