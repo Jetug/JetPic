@@ -53,6 +53,7 @@ import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private val PICK_MEDIA = 2
     private val PICK_WALLPAPER = 3
@@ -101,12 +102,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ////Jet
-        //requireFileAccessPermission()
-        if (savedInstanceState == null) {
-            handleStoragePermission {}
-        }
-        //////////////////
+
+
 
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
@@ -166,13 +163,43 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             launchSearchActivity()
         }
 
-        // just request the permission, tryLoadGallery will then trigger in onResume
-//        handlePermission(PERMISSION_WRITE_STORAGE) {
-//            if (!it) {
+        //if (savedInstanceState == null) {
+        handleStoragePermission {
+            //checkOTGPath()
+            if (!it) {
+                toast(R.string.no_storage_permissions)
+                finish()
+            }
+        }
+        //}
+        //////////////////
+
+
+
+        ////Jet
+        //requireFileAccessPermission()
+//        while(true){
+//            var flag = false
+//            handleStoragePermission {
+//                flag = it
+//            }
+//
+//            if (flag) {
+//                break
+//            }
+//            else{
 //                toast(R.string.no_storage_permissions)
 //                finish()
 //            }
 //        }
+
+        // just request the permission, tryLoadGallery will then trigger in onResume
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (!it) {
+                toast(R.string.no_storage_permissions)
+                finish()
+            }
+        }
 
 
     }
@@ -182,12 +209,12 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
         actionOnPermission = null
-        if (hasStoragePermission()) {
+        if (hasStoragePermission) {
             callback(true)
         } else {
             if (isRPlus()) {
-//                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
-//                    if (success ) {
+                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
+                    if (success ) {
                         isAskingPermissions = true
                         actionOnPermission = callback
                         try {
@@ -201,24 +228,17 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                             intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
                             startActivityForResult(intent, MANAGE_STORAGE_RC)
                         }
-//                    } else {
-//                        finish()
-//                    }
-//                }
+                    } else {
+                        finish()
+                    }
+                }
             } else {
                 handlePermission(PERMISSION_WRITE_STORAGE, callback)
             }
         }
     }
 
-    @SuppressLint("NewApi")
-    private fun hasStoragePermission(): Boolean {
-        return if (isRPlus()) {
-            Environment.isExternalStorageManager()
-        } else {
-            hasPermission(PERMISSION_WRITE_STORAGE)
-        }
-    }
+
 
     ////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
@@ -544,7 +564,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     }
 
     private fun tryLoadGallery() {
-        handlePermission(PERMISSION_WRITE_STORAGE) {
+        fun load (it: Boolean){
             if (it) {
                 if (!mWasDefaultFolderChecked) {
                     openDefaultFolder()
@@ -571,6 +591,18 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 finish()
             }
         }
+
+//        if(isRPlus()){
+//            handleStoragePermission{
+//                load(it)
+//            }
+//        }
+//        else
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            load(it)
+        }
+
+
     }
 
     private fun getDirectories() {

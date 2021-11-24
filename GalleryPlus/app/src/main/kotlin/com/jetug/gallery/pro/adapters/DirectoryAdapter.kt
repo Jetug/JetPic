@@ -267,7 +267,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                     item.groupName = name
                     //activity.updateDBDirectory(item)
 
-                    fileSaver.saveDirectoryGroup(item.path, name)
+                    saveDirectoryGroup(item.path, name)
                 }
             }
 
@@ -292,7 +292,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         if(item is DirectoryGroup) {
             item.innerDirs.forEach{
                 //activity.updateDBDirectory(it)
-                fileSaver.saveDirectoryGroup(item.path, "")
+                saveDirectoryGroup(item.path, "")
             }
 
             dirs.remove(item)

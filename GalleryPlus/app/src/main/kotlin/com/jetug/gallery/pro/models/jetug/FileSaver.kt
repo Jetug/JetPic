@@ -30,25 +30,22 @@ const val SORTING_FILE_NAME = "Sort.txt"
 const val GROUPING_FILE_NAME = "Group.txt"
 
 class FileSaver(val activity: AppCompatActivity){
-    fun saveDirectoryGroup(directoryPath: String, groupName: String){
 
-        activity.requireFileAccessPermission()
-
-        val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
-        //val uri2 = directoryPath.toUri()
-
-        if (!groupFile.exists()) {
-            //activity.createFile(uri2, GROUPING_FILE_NAME)
-            groupFile.createNewFile()
-        }
-
-        groupFile.printWriter().use {
-            it.println(groupName)
-        }
-    }
 }
 
+fun saveDirectoryGroup(directoryPath: String, groupName: String){
+    val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
+    //val uri2 = directoryPath.toUri()
 
+    if (!groupFile.exists()) {
+        //activity.createFile(uri2, GROUPING_FILE_NAME)
+        groupFile.createNewFile()
+    }
+
+    groupFile.printWriter().use {
+        it.println(groupName)
+    }
+}
 
 fun getDirectoryGroup(directoryPath: String): String{
     val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
