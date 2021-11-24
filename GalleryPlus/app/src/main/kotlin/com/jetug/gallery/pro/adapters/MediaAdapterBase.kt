@@ -85,8 +85,6 @@ open class MediaAdapterBase (
     init {
         setupDragListener(true)
         enableInstantLoad()
-
-        activity.setTopPaddingToActionBarsHeight(recyclerView)
     }
 
     override fun getActionMenuId() = R.menu.cab_media

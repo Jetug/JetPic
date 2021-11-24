@@ -137,8 +137,10 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         ///Jet
         makeTranslucentBars()
         restoreRVPosition()
-        ///
+        setTopPaddingToActionBarsHeight(media_grid)
         setTopMarginToActionBarsHeight(media_vertical_fastscroller)
+
+        ///
 
         mDateFormat = config.dateFormat
         mTimeFormat = getTimeFormat()

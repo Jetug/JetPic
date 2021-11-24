@@ -13,14 +13,17 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.os.Build
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.MediaStore.Files
 import android.provider.MediaStore.Images
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.exifinterface.media.ExifInterface
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
@@ -47,6 +50,9 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+//////////////////Jet
+const val CREATE_FILE = 1
+
 val Activity.topBarsHeight get() = actionBarHeight + statusBarHeight
 
 fun Activity.setTopMarginToActionBarsHeight(view: View){
@@ -57,6 +63,31 @@ fun Activity.setTopPaddingToActionBarsHeight(view: View){
     view.setPadding(0,topBarsHeight,0,0)
 }
 
+fun Activity.createFile(pickerInitialUri: Uri, name: String) {
+    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+        addCategory(Intent.CATEGORY_OPENABLE)
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TITLE, name)
+
+        // При необходимости укажите URI для каталога, который должен быть открыт в системном средстве выбора файлов, прежде чем ваше приложение создаст документ.
+        putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
+    }
+    startActivityForResult(intent, CREATE_FILE)
+}
+
+fun Activity.requireFileAccessPermission(){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val uri = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+        startActivity(
+            Intent(
+                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                uri
+            )
+        )
+    }
+}
+
+/////////////////////
 fun Activity.sharePath(path: String) {
     sharePathIntent(path, BuildConfig.APPLICATION_ID)
 }

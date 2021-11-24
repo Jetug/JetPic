@@ -1,8 +1,18 @@
 package com.jetug.gallery.pro.models.jetug
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.DocumentsContract
+import android.provider.Settings
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.jetug.gallery.pro.BuildConfig
+import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +20,8 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.File
+import java.net.URI
+import java.net.URL
 
 
 data class DirectoryConfig(@SerializedName("order")val order: ArrayList<String>, @SerializedName("group")val group: String){}
@@ -17,26 +29,43 @@ data class DirectoryConfig(@SerializedName("order")val order: ArrayList<String>,
 const val SORTING_FILE_NAME = "Sort.txt"
 const val GROUPING_FILE_NAME = "Group.txt"
 
-fun saveDirectoryGroup(directoryPath: String, groupName: String){
-    val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
+class FileSaver(val activity: AppCompatActivity){
+    fun saveDirectoryGroup(directoryPath: String, groupName: String){
 
-    if (!groupFile.exists()) {
-        groupFile.createNewFile()
-    }
+        activity.requireFileAccessPermission()
 
-    groupFile.printWriter().use {
-        it.println(groupName)
+        val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
+        //val uri2 = directoryPath.toUri()
+
+        if (!groupFile.exists()) {
+            //activity.createFile(uri2, GROUPING_FILE_NAME)
+            groupFile.createNewFile()
+        }
+
+        groupFile.printWriter().use {
+            it.println(groupName)
+        }
     }
 }
+
+
 
 fun getDirectoryGroup(directoryPath: String): String{
     val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
-    if (!groupFile.exists()) {
+    if (!groupFile.exists())  {
         return ""
     }
 
-    return groupFile.bufferedReader().readLine()
+    var line = ""
+     groupFile.bufferedReader().forEachLine {
+         line = it
+    }
+
+    return line
 }
+
+
+
 
 fun saveImagePositions(medias:ArrayList<Medium>){
     if(medias.isNotEmpty()) {
@@ -51,24 +80,6 @@ fun saveImagePositions(medias:ArrayList<Medium>){
             writePositionsToFile(sortingFile, medias)
         }
     }
-
-//    val jsonObject = JSONTokener(response).nextValue() as JSONObject
-//
-//// ID
-//    val id = jsonObject.getString("id")
-//    Log.i("ID: ", id)
-//
-//// Employee Name
-//    val employeeName = jsonObject.getString("employee_name")
-//    Log.i("Employee Name: ", employeeName)
-//
-//// Employee Salary
-//    val employeeSalary = jsonObject.getString("employee_salary")
-//    Log.i("Employee Salary: ", employeeSalary)
-//
-//// Employee Age
-//    val employeeAge = jsonObject.getString("employee_age")
-//    Log.i("Employee Age: ", employeeAge)
 }
 
 fun getCustomMediaList(source: ArrayList<Medium>): ArrayList<Medium>{

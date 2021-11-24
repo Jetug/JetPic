@@ -16,8 +16,12 @@ class ConfirmationAdvancedDialog(activity: Activity, message: String = "", messa
         view.message.text = if (message.isEmpty()) activity.resources.getString(messageId) else message
 
         dialog = AlertDialog.Builder(activity)
-                .setPositiveButton(positive) { dialog, which -> positivePressed() }
-                .setNegativeButton(negative) { dialog, which -> negativePressed() }
+                .setPositiveButton(positive) { _, _ ->
+                    positivePressed()
+                }
+//                .setNegativeButton(negative) { _, _ ->
+//                    negativePressed()
+//                }
                 .create().apply {
                     activity.setupDialogStuff(view, this)
                 }

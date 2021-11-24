@@ -193,6 +193,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
     else {
         val groups = mutableMapOf<String, DirectoryGroup>()
 
+
         dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
 
         dirs.forEach{dir ->

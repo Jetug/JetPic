@@ -1,5 +1,6 @@
 package com.jetug.gallery.pro.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.content.ClipData
@@ -7,17 +8,21 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
+import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.jetug.commons.dialogs.ConfirmationAdvancedDialog
 import com.jetug.commons.dialogs.ConfirmationDialog
 import com.jetug.commons.dialogs.CreateNewFolderDialog
 import com.jetug.commons.dialogs.FilePickerDialog
@@ -52,6 +57,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private val PICK_MEDIA = 2
     private val PICK_WALLPAPER = 3
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
+    private val MANAGE_STORAGE_RC = 201
 
     private val rvPosition = arrayListOf<Pair<Int,Int>>()
     private val layoutManager get() = directories_grid.layoutManager as MyGridLayoutManager
@@ -94,6 +100,14 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        ////Jet
+        //requireFileAccessPermission()
+        if (savedInstanceState == null) {
+            handleStoragePermission {}
+        }
+        //////////////////
+
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
 
@@ -117,7 +131,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         directories_refresh_layout.setOnRefreshListener { getDirectories() }
         storeStateVariables()
-        checkWhatsNewDialog()
+        //checkWhatsNewDialog()
 
         mIsPasswordProtectionPending = config.isAppPasswordProtectionOn
         setupLatestMediaId()
@@ -153,13 +167,77 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
 
         // just request the permission, tryLoadGallery will then trigger in onResume
-        handlePermission(PERMISSION_WRITE_STORAGE) {
-            if (!it) {
-                toast(R.string.no_storage_permissions)
-                finish()
+//        handlePermission(PERMISSION_WRITE_STORAGE) {
+//            if (!it) {
+//                toast(R.string.no_storage_permissions)
+//                finish()
+//            }
+//        }
+
+
+    }
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
+    private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
+        actionOnPermission = null
+        if (hasStoragePermission()) {
+            callback(true)
+        } else {
+            if (isRPlus()) {
+//                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
+//                    if (success ) {
+                        isAskingPermissions = true
+                        actionOnPermission = callback
+                        try {
+                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                            intent.addCategory("android.intent.category.DEFAULT")
+                            intent.data = Uri.parse("package:$packageName")
+                            startActivityForResult(intent, MANAGE_STORAGE_RC)
+                        } catch (e: Exception) {
+                            showErrorToast(e)
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                            startActivityForResult(intent, MANAGE_STORAGE_RC)
+                        }
+//                    } else {
+//                        finish()
+//                    }
+//                }
+            } else {
+                handlePermission(PERMISSION_WRITE_STORAGE, callback)
             }
         }
     }
+
+    @SuppressLint("NewApi")
+    private fun hasStoragePermission(): Boolean {
+        return if (isRPlus()) {
+            Environment.isExternalStorageManager()
+        } else {
+            hasPermission(PERMISSION_WRITE_STORAGE)
+        }
+    }
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
+//    class MySecondActivityContract : ActivityResultContract<String, Int?>() {
+//        override fun createIntent(context: Context, input: String?): Intent {
+//            return Intent(context, SecondActivity::class.java)
+//                .putExtra("my_input_key", input)
+//        }
+//
+//        override fun parseResult(resultCode: Int, intent: Intent?): Int? = when {
+//            resultCode != Activity.RESULT_OK -> null
+//            else -> intent?.getIntExtra("my_result_key", 42)
+//        }
+//
+//        override fun getSynchronousResult(context: Context, input: String?): SynchronousResult<Int?>? {
+//            return if (input.isNullOrEmpty()) SynchronousResult(42) else null
+//        }
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -170,6 +248,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         super.onResume()
         ///Jet
         makeTranslucentBars()
+        setTopPaddingToActionBarsHeight(directories_grid)
         setTopMarginToActionBarsHeight(directories_vertical_fastscroller)
         setTopMarginToActionBarsHeight(directories_switch_searching)
 

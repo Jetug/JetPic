@@ -44,7 +44,6 @@
                 android:visibility="gone" />
 
             <com.jetug.commons.views.MyRecyclerView
-                android:paddingTop="60dp"
                 android:clipToPadding="false"
                 android:id="@+id/directories_grid"
                 android:layout_width="match_parent"

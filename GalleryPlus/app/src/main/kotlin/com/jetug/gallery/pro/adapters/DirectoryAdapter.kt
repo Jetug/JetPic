@@ -4,22 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
-import android.os.Build
 import android.text.TextUtils
 import android.util.Log
-import android.util.TypedValue
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.view.children
-import androidx.core.view.marginTop
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -38,9 +31,7 @@ import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.models.*
-import com.jetug.gallery.pro.models.jetug.saveDirectoryGroup
-import com.jetug.gallery.pro.models.jetug.sortDirs
-import com.jetug.gallery.pro.models.jetug.sortMedia
+import com.jetug.gallery.pro.models.jetug.*
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
@@ -57,7 +48,6 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.math.round
 
 @SuppressLint("NotifyDataSetChanged")
 class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
@@ -70,6 +60,8 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     private val config = activity.config
     private val isListViewType = config.viewTypeFolders == VIEW_TYPE_LIST
+    private val fileSaver = FileSaver(activity)
+
     private var pinnedFolders = config.pinnedFolders
     private var scrollHorizontally = config.scrollHorizontally
     private var animateGifs = config.animateGifs
@@ -103,7 +95,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         setupDragListener(true)
         fillLockedFolders()
 
-        activity.setTopPaddingToActionBarsHeight(recyclerView)
+
 
 //        if(config.scrollHorizontally) {
 //            activity.setTopPaddingToActionBarsHeight(recyclerView)
@@ -275,7 +267,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                     item.groupName = name
                     //activity.updateDBDirectory(item)
 
-                    saveDirectoryGroup(item.path, name)
+                    fileSaver.saveDirectoryGroup(item.path, name)
                 }
             }
 
@@ -300,7 +292,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         if(item is DirectoryGroup) {
             item.innerDirs.forEach{
                 //activity.updateDBDirectory(it)
-                saveDirectoryGroup(item.path, "")
+                fileSaver.saveDirectoryGroup(item.path, "")
             }
 
             dirs.remove(item)
