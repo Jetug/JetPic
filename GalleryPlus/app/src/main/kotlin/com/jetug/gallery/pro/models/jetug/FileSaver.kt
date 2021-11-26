@@ -23,11 +23,8 @@ val MainScope = CoroutineScope(Dispatchers.Main)
 class FileSaver(val activity: AppCompatActivity){}
 
 fun Context.saveDirectoryGroup(path: String, groupName: String) = IOScope.launch {
-    var settings = folderSettingsDao.getByPath(path)
-    if(settings != null)
-        settings.group = groupName
-    else
-        settings = FolderSettings(null, path, groupName, arrayListOf())
+    val settings = IOScope.async { getOrCreateFolderSettings(path) }.await()
+    settings.group = groupName
     folderSettingsDao.insert(settings)
 
     if(hasStoragePermission){
@@ -35,24 +32,14 @@ fun Context.saveDirectoryGroup(path: String, groupName: String) = IOScope.launch
     }
 }
 
-fun saveDirectoryGroupToFile(directoryPath: String, groupName: String){
+private fun saveDirectoryGroupToFile(directoryPath: String, groupName: String){
     val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
-
-    if (!groupFile.exists()) {
-        groupFile.createNewFile()
-    }
-
+    if (!groupFile.exists()) groupFile.createNewFile()
     groupFile.printWriter().use {
         it.println(groupName)
     }
 }
 
-fun Context.getOrCreateFolderSettings(path: String): FolderSettings{
-    var settings: FolderSettings? = folderSettingsDao.getByPath(path)
-    if(settings == null)
-        settings = FolderSettings(null, path, "", arrayListOf())
-    return settings
-}
 
 fun Context.getDirectoryGroup(path: String): String{
     val settings: FolderSettings = runBlocking { IOScope.async { getOrCreateFolderSettings(path) }.await() }
@@ -61,14 +48,17 @@ fun Context.getDirectoryGroup(path: String): String{
     if(settings.group == "" && hasStoragePermission){
         groupName = getDirectoryGroupFromFile(path)
         IOScope.launch {
-            if(groupName != "") folderSettingsDao.insert(settings)
+            if(groupName != "") {
+                settings.group = groupName
+                folderSettingsDao.insert(settings)
+            }
         }
     }
 
     return groupName
 }
 
-fun getDirectoryGroupFromFile(directoryPath: String): String{
+private fun getDirectoryGroupFromFile(directoryPath: String): String{
     val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
     if (!groupFile.exists()) return ""
 
@@ -101,6 +91,7 @@ private fun saveImagePositionsToFile(path: String, medias:ArrayList<String>){
     writePositionsToFile(sortingFile, medias)
 }
 
+
 fun Context.getCustomMediaList(source: ArrayList<Medium>){
     if (source.isEmpty())
         return
@@ -108,14 +99,20 @@ fun Context.getCustomMediaList(source: ArrayList<Medium>){
     val path = source[0].parentPath
     val settings: FolderSettings = runBlocking { IOScope.async { getOrCreateFolderSettings(path) }.await() }
     var order = settings.order
-    if(order.isEmpty()){
-        order = getCustomMediaListFromFile(path)
-    }
 
+    if(order.isEmpty() && hasStoragePermission){
+        order = getCustomMediaListFromFile(path)
+        IOScope.launch {
+            if(order.isNotEmpty()) {
+                settings.order = order
+                folderSettingsDao.insert(settings)
+            }
+        }
+    }
     sortAs(source, order)
 }
 
-fun getCustomMediaListFromFile(path: String): ArrayList<String>{
+private fun getCustomMediaListFromFile(path: String): ArrayList<String>{
     val customSortingFileName = "Sort.txt"
     val customSortingFile = File(File(path),customSortingFileName)
     val order = arrayListOf<String>()
@@ -129,7 +126,14 @@ fun getCustomMediaListFromFile(path: String): ArrayList<String>{
     return order
 }
 
-fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
+private fun Context.getOrCreateFolderSettings(path: String): FolderSettings{
+    var settings: FolderSettings? = folderSettingsDao.getByPath(path)
+    if(settings == null)
+        settings = FolderSettings(null, path, "", arrayListOf())
+    return settings
+}
+
+private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
     if (source.isEmpty())
         return
 
