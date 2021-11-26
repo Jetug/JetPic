@@ -49,6 +49,9 @@ import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_media.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
+import kotlinx.coroutines.async
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -101,9 +104,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
 
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
@@ -166,10 +166,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         //if (savedInstanceState == null) {
         handleStoragePermission {
             //checkOTGPath()
-            if (!it) {
-                toast(R.string.no_storage_permissions)
-                finish()
-            }
+            //if (!it) {
+                //toast(R.string.no_storage_permissions)
+                //finish()
+            //}
         }
         //}
         //////////////////
@@ -200,9 +200,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 finish()
             }
         }
-
-
     }
+
+    suspend fun test() = ""
 
     ////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
@@ -228,9 +228,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                             intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
                             startActivityForResult(intent, MANAGE_STORAGE_RC)
                         }
-                    } else {
-                        finish()
                     }
+//                    else {
+//                        finish()
+//                    }
                 }
             } else {
                 handlePermission(PERMISSION_WRITE_STORAGE, callback)
@@ -1395,6 +1396,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     }
 
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
+        //ensureBackgroundThread {
         val currAdapter = getRecyclerAdapter()
         val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
         val sortedDirs: ArrayList<FolderItem> = if(mOpendGroups.isEmpty()) getSortedDirectories(distinctDirs)
@@ -1423,6 +1425,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.postDelayed({
             directories_grid.scrollBy(0, 0)
         }, 500)
+        //}
     }
 
     private fun setupScrollDirection() {

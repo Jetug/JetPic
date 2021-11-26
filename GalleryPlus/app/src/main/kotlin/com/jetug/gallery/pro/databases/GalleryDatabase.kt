@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jetug.gallery.pro.interfaces.*
 import com.jetug.gallery.pro.models.*
 
-@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class], version = 9)
+@TypeConverters(JsonToStringConverter::class)
+@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class, FolderSettings::class], version = 9)
 abstract class GalleryDatabase : RoomDatabase() {
 
     abstract fun DirectoryDao(): DirectoryDao
@@ -21,6 +23,8 @@ abstract class GalleryDatabase : RoomDatabase() {
     abstract fun DateTakensDao(): DateTakensDao
 
     abstract fun FavoritesDao(): FavoritesDao
+
+    abstract fun FolderSettingsDao(): FolderSettingsDao
 
     companion object {
         private var db: GalleryDatabase? = null
@@ -36,6 +40,7 @@ abstract class GalleryDatabase : RoomDatabase() {
                             .addMigrations(MIGRATION_6_7)
                             .addMigrations(MIGRATION_7_8)
                             .addMigrations(MIGRATION_8_9)
+                            //.allowMainThreadQueries()
                             .build()
                     }
                 }

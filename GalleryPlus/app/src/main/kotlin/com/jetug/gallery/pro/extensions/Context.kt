@@ -34,13 +34,11 @@ import com.jetug.gallery.pro.databases.GalleryDatabase
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.*
 import com.jetug.gallery.pro.models.*
-import com.jetug.gallery.pro.models.jetug.getDirectoryGroup
+import com.jetug.gallery.pro.models.jetug.*
 import com.jetug.gallery.pro.svg.SvgSoftwareLayerSetter
 import com.jetug.gallery.pro.views.MySquareImageView
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import pl.droidsonroids.gif.GifDrawable
 import java.io.File
 import java.io.FileInputStream
@@ -75,6 +73,8 @@ val Context.directoryDao: DirectoryDao get() = GalleryDatabase.getInstance(appli
 val Context.favoritesDB: FavoritesDao get() = GalleryDatabase.getInstance(applicationContext).FavoritesDao()
 
 val Context.dateTakensDB: DateTakensDao get() = GalleryDatabase.getInstance(applicationContext).DateTakensDao()
+
+val Context.folderSettingsDao: FolderSettingsDao get() = GalleryDatabase.getInstance(applicationContext).FolderSettingsDao()
 
 val Context.recycleBin: File get() = filesDir
 
@@ -167,7 +167,7 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
 }
 
 //Jet
-fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String = "", dirGroup: String = ""): ArrayList<FolderItem> {
+fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String = "", dirGroup: String = ""): ArrayList<FolderItem>{
     var result = arrayListOf<FolderItem>()
 
     if (config.groupDirectSubfolders) {
@@ -196,8 +196,20 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
 
         dirs.forEach{dir ->
+            var settings: FolderSettings? = null
+            settings = runBlocking {CoroutineScope(Dispatchers.IO).async { folderSettingsDao.getByPath(dir.path) }.await() }
+
             var groupName = ""
-            if(hasStoragePermission) groupName = getDirectoryGroup(dir.path)
+
+            if(settings != null){
+                groupName = settings!!.group
+            }
+            else{
+                if(hasStoragePermission)
+                    groupName = getDirectoryGroup(dir.path)
+                settings = FolderSettings(null, dir.path, groupName, arrayListOf())
+                folderSettingsDao.insert(settings!!)
+            }
 
             if(groupName == "" || dir.groupName == groupName){
                 result.add(dir)

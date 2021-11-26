@@ -235,7 +235,7 @@ open class MediaAdapterBase (
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
 
     private fun dragAndDroppingEnded(){
-        saveImagePositions(itemList.getMediums())
+        activity.saveImagePositions(itemList.getMediums())
         config.saveCustomSorting(path, SORT_BY_CUSTOM)
     }
 
