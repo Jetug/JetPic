@@ -32,9 +32,11 @@ import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.models.*
 import com.jetug.gallery.pro.models.jetug.*
+import com.jetug.gallery.pro.views.MySquareImageView
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
+import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_drag_handle_wrapper
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_location
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_lock
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_name
@@ -44,6 +46,7 @@ import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
+import kotlinx.android.synthetic.main.item_dir_group.view.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -115,9 +118,9 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     override fun getActionMenuId() = R.menu.cab_directories
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var layoutType = 0
-        layoutType = when {
+        val layoutType = when {
             isListViewType -> R.layout.directory_item_list
+            viewType == ITEM_DIRECTORY_GROUP -> R.layout.item_dir_group
             folderStyle == FOLDER_STYLE_SQUARE -> R.layout.directory_item_grid_square
             else -> R.layout.directory_item_grid_rounded_corners
         }
@@ -127,26 +130,11 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val dir = dirs.getOrNull(position) ?: return
-        //@Test$ (1) (1) (1)
-
-        val name = dir.name
-        val str1 = "Camera"
-        val str2 = "@Test$ (1) (1) (1)"
-        val b = name.equals(str1)
-
-        var i = 0
-        if (name.equals(str2)){
-            Log.d("Jet", name)
-            Log.d("Jet", (dir as Directory).groupName)
-            //throw NoSuchFieldException("хуй")
-        }
 
         holder.bindView(dir, true, !isPickIntent) { itemView, adapterPosition ->
             if(dir is Directory || dir is DirectoryGroup )
                 setupView(itemView, dir, holder, position)
         }
-
-
 
         bindViewHolder(holder)
     }
@@ -847,14 +835,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     private fun setupView(view: View, directory: FolderItem, holder: ViewHolder, position: Int) {
         val isSelected = selectedKeys.contains(directory.path.hashCode())
         view.apply {
-            ///Jet
-//            dir_holder.setMargin(0)
-//            if(!config.scrollHorizontally) {
-//                if (position in 0 until config.dirColumnCnt) {
-//                    activity.setTopMarginToActionBarsHeight(dir_holder)
-//                }
-//            }
-            ///
             dir_path?.text = "${directory.path.substringBeforeLast("/")}/"
             val thumbnailType = when {
                 directory.tmb.isVideoFast() -> TYPE_VIDEOS
@@ -904,7 +884,40 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                     else -> ROUNDED_CORNERS_BIG
                 }
 
-                activity.loadImage(thumbnailType, directory.tmb, dir_thumbnail, scrollHorizontally, animateGifs, cropThumbnails, roundedCorners, directory.getKey())
+                ///Jet
+                fun setupTmb(dir: FolderItem, view: MySquareImageView){
+                    val tmbType = when {
+                        dir.tmb.isVideoFast() -> TYPE_VIDEOS
+                        dir.tmb.isGif() -> TYPE_GIFS
+                        dir.tmb.isRawFast() -> TYPE_RAWS
+                        dir.tmb.isSvg() -> TYPE_SVGS
+                        else -> TYPE_IMAGES
+                    }
+
+                    activity.loadImage(tmbType, dir.tmb, view, scrollHorizontally, animateGifs, cropThumbnails, roundedCorners, dir.getKey())
+                }
+
+                if (directory is Directory || isListViewType) {
+                    setupTmb(directory, dir_thumbnail)
+                }
+                else if(directory is DirectoryGroup && !isListViewType){
+                    val innerDirs = directory.innerDirs
+                    val size = innerDirs.size
+
+                    setupTmb(innerDirs[0], dir_thumbnail2)
+
+                    if(size >= 1){
+                        setupTmb(innerDirs[0], dir_thumbnail)
+                    }
+                    if(size == 2){
+                        setupTmb(innerDirs[1], dir_thumbnail3)
+                    }
+                    else if(size >= 3){
+                        setupTmb(innerDirs[1], dir_thumbnail2)
+                        setupTmb(innerDirs[2], dir_thumbnail3)
+                    }
+                }
+                ///
             }
 
             dir_pin.beVisibleIf(pinnedFolders.contains(directory.path))
@@ -967,6 +980,11 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
                     false
                 }
             }
+        }
+    }
+    private fun setupViewColors(view: View){
+        view.apply {
+
         }
     }
 }
