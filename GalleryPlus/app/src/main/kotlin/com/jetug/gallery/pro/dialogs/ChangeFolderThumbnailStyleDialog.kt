@@ -100,7 +100,7 @@ class ChangeFolderThumbnailStyleDialog(val activity: BaseSimpleActivity, val cal
 
             val options = RequestOptions().centerCrop()
             var builder = Glide.with(activity)
-                .load(R.drawable.sample_logo)
+                .load(R.drawable.black_rounded_background)
                 .apply(options)
 
             if (useRoundedCornersLayout) {
