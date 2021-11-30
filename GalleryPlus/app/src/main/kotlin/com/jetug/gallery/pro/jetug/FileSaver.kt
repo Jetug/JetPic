@@ -67,7 +67,7 @@ fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = IOScope.launch{
         folderSettingsDao.insert(settings)
 
         if(hasStoragePermission)
-            saveMediaOrderToFile(path, names)
+            writeSettingsToFile(path, settings)
 
     }
 }
