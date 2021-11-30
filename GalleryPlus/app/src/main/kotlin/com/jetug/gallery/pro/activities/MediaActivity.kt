@@ -40,6 +40,7 @@ import com.jetug.gallery.pro.dialogs.FilterMediaDialog
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
+import com.jetug.gallery.pro.jetug.*
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
@@ -194,7 +195,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             invalidateOptionsMenu()
         }
 
-        if (mMedia.isEmpty() || config.getFolderSorting(mPath) and SORT_BY_RANDOM == 0) {
+        if (mMedia.isEmpty() || this.getFolderSorting(mPath) and SORT_BY_RANDOM == 0) {
             if (shouldSkipAuthentication()) {
                 tryLoadGallery()
             } else {
@@ -484,7 +485,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         media_horizontal_fastscroller.isHorizontal = true
         media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = config.getFolderSorting(if (mShowAll) SHOW_ALL else mPath)
+        val sorting = this.getFolderSorting(if (mShowAll) SHOW_ALL else mPath)
         if (allowHorizontalScroll) {
             media_horizontal_fastscroller.setViews(media_grid, media_refresh_layout) {
                 media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))
@@ -506,7 +507,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun checkLastMediaChanged() {
-        if (isDestroyed || config.getFolderSorting(mPath) and SORT_BY_RANDOM != 0) {
+        if (isDestroyed || this.getFolderSorting(mPath) and SORT_BY_RANDOM != 0) {
             return
         }
 

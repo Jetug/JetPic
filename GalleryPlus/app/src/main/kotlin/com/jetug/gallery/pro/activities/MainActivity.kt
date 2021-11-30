@@ -42,6 +42,7 @@ import com.jetug.gallery.pro.dialogs.FilterMediaDialog
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
+import com.jetug.gallery.pro.jetug.*
 import com.jetug.gallery.pro.jobs.NewPhotoFetcher
 import com.jetug.gallery.pro.models.Directory
 import com.jetug.gallery.pro.models.DirectoryGroup
@@ -1098,7 +1099,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                     return
                 }
 
-                val sorting = config.getFolderSorting(directory.path)
+                val sorting = this.getFolderSorting(directory.path)
                 val grouping = config.getFolderGrouping(directory.path)
                 val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                     sorting and SORT_BY_DATE_TAKEN != 0 ||
@@ -1199,7 +1200,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 return
             }
 
-            val sorting = config.getFolderSorting(folder)
+            val sorting = this.getFolderSorting(folder)
             val grouping = config.getFolderGrouping(folder)
             val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                 sorting and SORT_BY_DATE_TAKEN != 0 ||

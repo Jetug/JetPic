@@ -1,4 +1,4 @@
-package com.jetug.gallery.pro.models.jetug
+package com.jetug.gallery.pro.jetug
 
 import org.joda.time.DateTime
 import java.io.File

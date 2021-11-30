@@ -11,6 +11,7 @@ import com.jetug.commons.helpers.*
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.extensions.config
 import com.jetug.gallery.pro.helpers.SHOW_ALL
+import com.jetug.gallery.pro.jetug.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
 class ChangeSortingDialog(val activity: BaseSimpleActivity, val isDirectorySorting: Boolean, val showFolderCheckbox: Boolean,
@@ -22,7 +23,7 @@ class ChangeSortingDialog(val activity: BaseSimpleActivity, val isDirectorySorti
     private var view: View
 
     init {
-        currSorting = if (isDirectorySorting) config.directorySorting else config.getFolderSorting(pathToUse)
+        currSorting = if (isDirectorySorting) config.directorySorting else activity.getFolderSorting(pathToUse)
         view = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null).apply {
             use_for_this_folder_divider.beVisibleIf(showFolderCheckbox || (currSorting and SORT_BY_NAME != 0 || currSorting and SORT_BY_PATH != 0))
 
@@ -34,7 +35,6 @@ class ChangeSortingDialog(val activity: BaseSimpleActivity, val isDirectorySorti
             sorting_dialog_bottom_note.beVisibleIf(!isDirectorySorting)
             sorting_dialog_radio_path.beVisibleIf(isDirectorySorting)
             sorting_dialog_radio_custom.beVisibleIf(true)
-
         }
 
         AlertDialog.Builder(activity)

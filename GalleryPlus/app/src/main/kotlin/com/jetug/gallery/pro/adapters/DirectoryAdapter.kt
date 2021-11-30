@@ -31,7 +31,7 @@ import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.models.*
-import com.jetug.gallery.pro.models.jetug.*
+import com.jetug.gallery.pro.jetug.*
 import com.jetug.gallery.pro.views.MySquareImageView
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*

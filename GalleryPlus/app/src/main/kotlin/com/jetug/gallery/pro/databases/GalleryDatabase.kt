@@ -11,7 +11,7 @@ import com.jetug.gallery.pro.interfaces.*
 import com.jetug.gallery.pro.models.*
 
 @TypeConverters(JsonToStringConverter::class)
-@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class, FolderSettings::class], version = 9)
+@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class, FolderSettings::class], version = 10)
 abstract class GalleryDatabase : RoomDatabase() {
 
     abstract fun DirectoryDao(): DirectoryDao
@@ -40,7 +40,7 @@ abstract class GalleryDatabase : RoomDatabase() {
                             .addMigrations(MIGRATION_6_7)
                             .addMigrations(MIGRATION_7_8)
                             .addMigrations(MIGRATION_8_9)
-                            //.allowMainThreadQueries()
+                            .allowMainThreadQueries()
                             .build()
                     }
                 }

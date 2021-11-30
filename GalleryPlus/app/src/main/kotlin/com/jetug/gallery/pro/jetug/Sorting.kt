@@ -1,7 +1,6 @@
-package com.jetug.gallery.pro.models.jetug
+package com.jetug.gallery.pro.jetug
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import com.jetug.commons.helpers.*
 import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium

@@ -34,7 +34,7 @@ import com.jetug.gallery.pro.databases.GalleryDatabase
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.*
 import com.jetug.gallery.pro.models.*
-import com.jetug.gallery.pro.models.jetug.*
+import com.jetug.gallery.pro.jetug.*
 import com.jetug.gallery.pro.svg.SvgSoftwareLayerSetter
 import com.jetug.gallery.pro.views.MySquareImageView
 import com.squareup.picasso.Picasso

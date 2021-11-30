@@ -33,7 +33,7 @@ import com.jetug.gallery.pro.interfaces.MediaOperationsListener
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
-import com.jetug.gallery.pro.models.jetug.saveImagePositions
+import com.jetug.gallery.pro.jetug.saveCustomMediaOrder
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.photo_item_grid.view.*
@@ -44,10 +44,8 @@ import kotlinx.android.synthetic.main.video_item_grid.view.medium_check
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_name
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_thumbnail
 import kotlinx.android.synthetic.main.photo_item_grid.view.media_drag_handle
-import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.reflect.typeOf
 
 open class MediaAdapterBase (
     activity: BaseSimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
@@ -235,7 +233,7 @@ open class MediaAdapterBase (
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
 
     private fun dragAndDroppingEnded(){
-        activity.saveImagePositions(itemList.getMediums())
+        activity.saveCustomMediaOrder(itemList.getMediums())
         config.saveCustomSorting(path, SORT_BY_CUSTOM)
     }
 

@@ -18,7 +18,7 @@ import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
-import com.jetug.gallery.pro.models.jetug.getCustomMediaList
+import com.jetug.gallery.pro.jetug.getCustomMediaOrder
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -613,7 +613,7 @@ class MediaFetcher(val context: Context) {
             media.shuffle()
             return
         }else if(sorting and SORT_BY_CUSTOM != 0){
-            context.getCustomMediaList(media)
+            context.getCustomMediaOrder(media)
         }
 
         media.sortWith { o1, o2 ->
