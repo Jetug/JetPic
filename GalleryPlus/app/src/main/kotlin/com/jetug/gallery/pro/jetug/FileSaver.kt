@@ -111,7 +111,7 @@ fun Context.getFolderSorting(path: String): Int{
             IOScope.launch {
                 if(sorting != 0) {
                     settings.sorting = sorting
-                    config.saveCustomSorting(sorting)
+                    config.saveCustomSorting(path, sorting)
                     folderSettingsDao.insert(settings)
                 }
             }
