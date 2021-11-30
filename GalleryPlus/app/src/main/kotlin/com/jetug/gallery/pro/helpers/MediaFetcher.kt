@@ -19,6 +19,7 @@ import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
 import com.jetug.gallery.pro.jetug.getCustomMediaOrder
+import com.jetug.gallery.pro.jetug.getFolderSorting
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,7 +47,7 @@ class MediaFetcher(val context: Context) {
             curMedia.addAll(newMedia)
         }
 
-        sortMedia(curMedia, context.config.getFolderSorting(curPath))
+        sortMedia(curMedia, context.getFolderSorting(curPath))
 
         return curMedia
     }

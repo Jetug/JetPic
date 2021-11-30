@@ -55,6 +55,7 @@ import com.jetug.gallery.pro.fragments.PhotoFragment
 import com.jetug.gallery.pro.fragments.VideoFragment
 import com.jetug.gallery.pro.fragments.ViewPagerFragment
 import com.jetug.gallery.pro.helpers.*
+import com.jetug.gallery.pro.jetug.getFolderSorting
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import kotlinx.android.synthetic.main.activity_medium.*
@@ -1126,7 +1127,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun refreshViewPager() {
-        if (config.getFolderSorting(mDirectory) and SORT_BY_RANDOM == 0) {
+        if (this.getFolderSorting(mDirectory) and SORT_BY_RANDOM == 0) {
             GetMediaAsynctask(applicationContext, mDirectory, false, false, mShowAll) {
                 gotMedia(it)
             }.execute()

@@ -788,7 +788,7 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
         }) as ArrayList<Medium>
 
         val pathToUse = if (path.isEmpty()) SHOW_ALL else path
-        mediaFetcher.sortMedia(media, config.getFolderSorting(pathToUse))
+        mediaFetcher.sortMedia(media, getFolderSorting(pathToUse))
         val grouped = mediaFetcher.groupMedia(media, pathToUse)
         callback(grouped.clone() as ArrayList<ThumbnailItem>)
         val OTGPath = config.OTGPath
@@ -1088,7 +1088,7 @@ fun Context.updateDirectoryPath(path: String) {
     val includedFolders = config.includedFolders
     val noMediaFolders = getNoMediaFoldersSync()
 
-    val sorting = config.getFolderSorting(path)
+    val sorting = getFolderSorting(path)
     val grouping = config.getFolderGrouping(path)
     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
         sorting and SORT_BY_DATE_TAKEN != 0 ||

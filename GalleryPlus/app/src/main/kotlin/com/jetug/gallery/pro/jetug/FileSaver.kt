@@ -18,7 +18,7 @@ data class DirectoryConfig(@SerializedName("order")val order: ArrayList<String>,
 
 const val SORTING_FILE_NAME = "Sort.txt"
 const val GROUPING_FILE_NAME = "Group.txt"
-const val SETTINGS_FILE_NAME = ".settings.txt"
+const val SETTINGS_FILE_NAME = "settings.txt"
 
 val IOScope = CoroutineScope(Dispatchers.IO)
 val DefaultScope = CoroutineScope(Dispatchers.Default)
@@ -66,9 +66,8 @@ fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = IOScope.launch{
         settings.order = names
         folderSettingsDao.insert(settings)
 
-        if(hasStoragePermission){
+        if(hasStoragePermission)
             saveMediaOrderToFile(path, names)
-        }
 
     }
 }
@@ -93,12 +92,12 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
     sortAs(source, order)
 }
 
-fun Context.saveFolderSorting(path: String, sorting: Int) = launchIO{
+fun Context.saveCustomSorting(path: String, sorting: Int) = launchIO{
     val settings = getFolderSettings(path)
     settings.sorting = sorting
     config.saveCustomSorting(path, sorting)
     folderSettingsDao.insert(settings)
-    writeSettingsToFile(path, settings)
+    if(hasStoragePermission) writeSettingsToFile(path, settings)
 }
 
 fun Context.getFolderSorting(path: String): Int{
@@ -129,6 +128,8 @@ private fun Context.getFolderSettings(path: String): FolderSettings{
         settings = FolderSettings(null, path, "", arrayListOf())
     return settings
 }
+
+////
 
 private fun saveDirectoryGroupToFile(directoryPath: String, groupName: String){
     val groupFile = File(File(directoryPath), GROUPING_FILE_NAME)
@@ -204,12 +205,14 @@ private fun writeSettingsToFile(path: String, settings: FolderSettings){
 
 private fun readSettingsFromFile(path: String): FolderSettings?{
     val file = getSettingsFile(path)
+    var settings: FolderSettings? = null
     if(file.exists()) {
         val json = file.readText()
         val type: Type = object : TypeToken<Settings?>() {}.type
-        return Gson().fromJson(json, type)
+        settings = Gson().fromJson(json, type)
+        settings?.path = path
     }
-    return null
+    return settings
 }
 
 private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){

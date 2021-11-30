@@ -10,6 +10,7 @@ import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
+import com.jetug.gallery.pro.jetug.getFolderSorting
 import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.ThumbnailItem
 import java.util.ArrayList
@@ -38,7 +39,7 @@ class MediaAdapter(
     private fun showDateEditionDialog(){
         val paths = getSelectedPaths()
         val dialog = DateEditingDialog(paths) {_,_->
-            val sorting = config.getFolderSorting(path)
+            val sorting = activity.getFolderSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 mediaActivity.getMedia()
             }

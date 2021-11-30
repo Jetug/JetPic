@@ -34,6 +34,7 @@ import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
 import com.jetug.gallery.pro.jetug.saveCustomMediaOrder
+import com.jetug.gallery.pro.jetug.saveCustomSorting
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.photo_item_grid.view.*
@@ -234,7 +235,7 @@ open class MediaAdapterBase (
 
     private fun dragAndDroppingEnded(){
         activity.saveCustomMediaOrder(itemList.getMediums())
-        config.saveCustomSorting(path, SORT_BY_CUSTOM)
+        activity.saveCustomSorting(path, SORT_BY_CUSTOM)
     }
 
     @SuppressLint("ClickableViewAccessibility")

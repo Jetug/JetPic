@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 
 
 @Entity(tableName = "settings", indices = [Index(value = ["path"], unique = true)])
-class FolderSettings (
+data class FolderSettings (
     @PrimaryKey(autoGenerate = true) var id: Long? = null,
     @ColumnInfo(name = "path") var path: String = "",
     @ColumnInfo(name = "group") var group: String = "",
