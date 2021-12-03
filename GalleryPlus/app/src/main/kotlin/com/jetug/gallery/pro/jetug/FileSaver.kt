@@ -1,6 +1,7 @@
 package com.jetug.gallery.pro.jetug
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jetug.commons.extensions.hasStoragePermission
@@ -44,11 +45,12 @@ fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = IOScope.launch{
         val settings = getFolderSettings(path)
         val names = medias.names
         settings.order = names
-        folderSettingsDao.insert(settings)
+        //folderSettingsDao.insert(settings)
 
-        if(hasStoragePermission)
+        //if(hasStoragePermission)
             writeSettingsToFile(path, settings)
 
+        Log.e("Jet", "save ${settings.order[0]}; ${settings.order[1]}; ${settings.order[2]},")
     }
 }
 
@@ -56,19 +58,33 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
     if (source.isEmpty()) return
 
     val path = source[0].parentPath
-    var settings: FolderSettings? = runBlocking { IOScope.async { getFolderSettings(path) }.await() }
-    var order = settings!!.order
+//    var settings: FolderSettings? = runBlocking { IOScope.async { getFolderSettings(path) }.await() }
+//    var order = settings!!.order
 
-    if(order.isEmpty() && hasStoragePermission){
-        settings = runBlocking { IOScope.async {readSettingsFromFile(path) }.await() }
-        if(settings != null && settings.order.isNotEmpty()) {
-            order = settings.order
-            IOScope.launch {
-                folderSettingsDao.insert(settings)
-            }
-        }
+    //if (order.isNotEmpty())
+
+//    if(order.isEmpty() && hasStoragePermission){
+//        settings = runBlocking { IOScope.async { readSettingsFromFile(path) }.await() }
+//        if(settings != null && settings.order.isNotEmpty()) {
+//            order = settings.order
+//            IOScope.launch {
+//                folderSettingsDao.insert(settings)
+//            }
+//        }
+//    }
+
+    val settings = readSettingsFromFile(path)
+
+    if (settings != null) {
+        val order = settings.order
+        sortAs(source, order)
+        if(order.isNotEmpty())
+            Log.e("Jet", "get ${order[0]}; ${order[1]}; ${order[2]}; ")
+        else
+            Log.e("Jet", "get empty")
+
     }
-    sortAs(source, order)
+
 }
 
 fun Context.saveCustomSorting(path: String, sorting: Int) = launchIO{
@@ -76,7 +92,7 @@ fun Context.saveCustomSorting(path: String, sorting: Int) = launchIO{
     settings.sorting = sorting
     config.saveCustomSorting(path, sorting)
     folderSettingsDao.insert(settings)
-    if(hasStoragePermission) writeSettingsToFile(path, settings)
+    //if(hasStoragePermission) writeSettingsToFile(path, settings)
 }
 
 fun Context.getFolderSorting(path: String): Int{
@@ -117,10 +133,16 @@ private fun getSettingsFile(path: String) = File(path, SETTINGS_FILE_NAME)
 ////
 
 private fun writeSettingsToFile(path: String, settings: FolderSettings){
+    if(settings.order.size > 2)
+        Log.e("Jet", "write ${settings.order[0]}; ${settings.order[1]}; ${settings.order[2]},")
+
     val json: String = Gson().toJson(settings)
     getCreateSettingsFile(path).printWriter().use {
         it.println(json)
     }
+
+    Log.e("Jet", json)
+
 }
 
 private fun readSettingsFromFile(path: String): FolderSettings?{

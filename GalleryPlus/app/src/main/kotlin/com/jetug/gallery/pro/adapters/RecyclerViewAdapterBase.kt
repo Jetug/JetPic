@@ -20,7 +20,7 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity, recyclerVie
     MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract
 {
     protected var startReorderDragListener: StartReorderDragListener? = null
-
+    protected open fun onItemMoved(fromPosition: Int, toPosition: Int){}
     protected open fun onDragAndDroppingEnded(){}
     open val itemList: ArrayList<*> = arrayListOf<Any>()
 
@@ -34,16 +34,17 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity, recyclerVie
 
     override fun onRowMoved(fromPosition: Int, toPosition: Int) {
         if(selectedKeys.size < 2)
-            moveItem(fromPosition, toPosition)
+            onItemMoved(fromPosition, toPosition)
         else{
             var toPos = toPosition
             selectedKeys.forEach{ key ->
                 val pos = getItemKeyPosition(key)
-                moveItem(pos, toPos)
+                onItemMoved(pos, toPos)
                 toPos+=1
             }
         }
     }
+
 
     private fun moveItem(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {

@@ -217,7 +217,6 @@ open class MediaAdapterBase (
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
     override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
     override fun onActionModeCreated() {}
-    override fun onDragAndDroppingEnded() = dragAndDroppingEnded()
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -232,11 +231,6 @@ open class MediaAdapterBase (
     }
 
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
-
-    private fun dragAndDroppingEnded(){
-        activity.saveCustomMediaOrder(itemList.getMediums())
-        activity.saveCustomSorting(path, SORT_BY_CUSTOM)
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, holder: ViewHolder, position: Int){

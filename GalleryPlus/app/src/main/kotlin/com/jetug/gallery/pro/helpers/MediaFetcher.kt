@@ -615,6 +615,7 @@ class MediaFetcher(val context: Context) {
             return
         }else if(sorting and SORT_BY_CUSTOM != 0){
             context.getCustomMediaOrder(media)
+            return
         }
 
         media.sortWith { o1, o2 ->
