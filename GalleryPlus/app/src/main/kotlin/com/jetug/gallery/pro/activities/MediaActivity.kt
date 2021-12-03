@@ -1,5 +1,6 @@
 package com.jetug.gallery.pro.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.app.WallpaperManager
@@ -153,11 +154,11 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             mTimeFormat = getTimeFormat()
 
             if (mStoredAnimateGifs != config.animateGifs) {
-                getMediaAdapter()?.updateAnimateGifs(config.animateGifs)
+                mediaAdapter?.updateAnimateGifs(config.animateGifs)
             }
 
             if (mStoredCropThumbnails != config.cropThumbnails) {
-                getMediaAdapter()?.updateCropThumbnails(config.cropThumbnails)
+                mediaAdapter?.updateCropThumbnails(config.cropThumbnails)
             }
 
             if (mStoredScrollHorizontally != config.scrollHorizontally) {
@@ -167,16 +168,16 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             }
 
             if (mStoredShowFileTypes != config.showThumbnailFileTypes) {
-                getMediaAdapter()?.updateShowFileTypes(config.showThumbnailFileTypes)
+                mediaAdapter?.updateShowFileTypes(config.showThumbnailFileTypes)
             }
 
             if (mStoredTextColor != config.textColor) {
-                getMediaAdapter()?.updateTextColor(config.textColor)
+                mediaAdapter?.updateTextColor(config.textColor)
             }
 
             val adjustedPrimaryColor = getAdjustedPrimaryColor()
             if (mStoredAdjustedPrimaryColor != adjustedPrimaryColor) {
-                getMediaAdapter()?.updatePrimaryColor(config.primaryColor)
+                mediaAdapter?.updatePrimaryColor(config.primaryColor)
                 media_horizontal_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
                 media_vertical_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
             }
@@ -295,7 +296,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.cab_change_order -> getMediaAdapter()?.changeOrder()
+            R.id.cab_change_order -> mediaAdapter?.changeOrder()
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterMediaDialog()
             R.id.empty_recycle_bin -> emptyRecycleBin()
@@ -403,7 +404,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                     }
 
                     handleGridSpacing(grouped)
-                    getMediaAdapter()?.updateMedia(grouped)
+                    mediaAdapter?.updateMedia(grouped)
                     measureRecyclerViewContent(grouped)
                 }
             } catch (ignored: Exception) {
@@ -430,7 +431,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }
     }
 
-    private fun getMediaAdapter() = media_grid.adapter as? MediaAdapter
+    private val mediaAdapter get() = media_grid.adapter as? MediaAdapter
 
     private fun saveRVPosition(){
         val ox = media_grid.computeHorizontalScrollOffset()
@@ -446,6 +447,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun setupAdapter() {
+        Log.e("Jet", "Setup Adapter")
         if (!mShowAll && isDirEmpty()) {
             return
         }
@@ -505,7 +507,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun getBubbleTextItem(index: Int, sorting: Int): String {
         var realIndex = index
-        val mediaAdapter = getMediaAdapter()
+        val mediaAdapter = mediaAdapter
         if (mediaAdapter?.isASectionTitle(index) == true) {
             realIndex++
         }
@@ -535,11 +537,21 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }, LAST_MEDIA_CHECK_PERIOD)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showSortingDialog() {
         ChangeSortingDialog(this, false, true, mPath) {
-            mLoadedInitialPhotos = false
-            media_grid.adapter = null
-            getMedia()
+
+            val adapter = mediaAdapter
+            if(adapter != null) {
+                getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {
+                    adapter.media = it
+                    launchMain { adapter.notifyDataSetChanged() }
+                }
+            }
+
+//            mLoadedInitialPhotos = false
+//            media_grid.adapter = null
+//            getMedia()
         }
     }
 
@@ -580,7 +592,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun toggleFilenameVisibility() {
         config.displayFileNames = !config.displayFileNames
-        getMediaAdapter()?.updateDisplayFilenames(config.displayFileNames)
+        mediaAdapter?.updateDisplayFilenames(config.displayFileNames)
     }
 
     private fun switchToFolderView() {
@@ -643,6 +655,23 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         mLoadedInitialPhotos = true
     }
 
+    fun isMediasEquals(newMedia: ArrayList<ThumbnailItem>): Boolean {
+        val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
+
+        if(newMedia.size == oldMedia.size) return false
+
+        for(i in 0 until newMedia.size){
+            val old = oldMedia[i]
+            val new = newMedia[i]
+
+            if(old is Medium && new is Medium && new.name != old.name)
+                return false
+        }
+
+        return true
+    }
+
+
     private fun startAsyncTask() {
         mCurrAsyncTask?.stopFetching()
         mCurrAsyncTask = GetMediaAsynctask2(applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
@@ -650,12 +679,15 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             ensureBackgroundThread {
                 val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
                 val newMedia = it
-                try {
-                    gotMedia(newMedia, false)
-                    oldMedia.filter { !newMedia.contains(it) }.mapNotNull { it as? Medium }.filter { !getDoesFilePathExist(it.path) }.forEach {
-                        mediaDB.deleteMediumPath(it.path)
+                if(isMediasEquals(newMedia))
+                {
+                    try {
+                        gotMedia(newMedia, false)
+                        oldMedia.filter { !newMedia.contains(it) }.mapNotNull { it as? Medium }.filter { !getDoesFilePathExist(it.path) }.forEach {
+                            mediaDB.deleteMediumPath(it.path)
+                        }
+                    } catch (e: Exception) {
                     }
-                } catch (e: Exception) {
                 }
             }
         },
@@ -746,7 +778,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }
 
         layoutManager.spanCount = config.mediaColumnCnt
-        val adapter = getMediaAdapter()
+        val adapter = mediaAdapter
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.isASectionTitle(position) == true) {
@@ -836,14 +868,14 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 override fun zoomIn() {
                     if (layoutManager.spanCount > 1) {
                         reduceColumnCount()
-                        getMediaAdapter()?.finishActMode()
+                        mediaAdapter?.finishActMode()
                     }
                 }
 
                 override fun zoomOut() {
                     if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
                         increaseColumnCount()
-                        getMediaAdapter()?.finishActMode()
+                        mediaAdapter?.finishActMode()
                     }
                 }
             }
@@ -880,7 +912,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private fun columnCountChanged() {
         handleGridSpacing()
         invalidateOptionsMenu()
-        getMediaAdapter()?.apply {
+        mediaAdapter?.apply {
             notifyItemRangeChanged(0, media.size)
             measureRecyclerViewContent(media)
         }
@@ -959,8 +991,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
-
-
         mIsGettingMedia = false
         checkLastMediaChanged()
         mMedia = media

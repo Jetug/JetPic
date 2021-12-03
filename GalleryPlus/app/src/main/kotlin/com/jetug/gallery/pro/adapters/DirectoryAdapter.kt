@@ -208,7 +208,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
     fun sort(){
-        dirs = sortDirs(dirs, config.directorySorting)
+        dirs = activity.getSortedDirectories(dirs) //sortDirs(dirs, config.directorySorting)
         notifyDataSetChanged()
     }
 
