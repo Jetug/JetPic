@@ -109,7 +109,7 @@ fun Context.movePinnedDirectoriesToFront(dirs: ArrayList<FolderItem>): ArrayList
     }
     return dirs
 }
-
+//
 @Suppress("UNCHECKED_CAST")
 fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<FolderItem> {
     val sorting = config.directorySorting
