@@ -88,10 +88,12 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
 }
 
 fun Context.saveCustomSorting(path: String, sorting: Int) = launchIO{
-    val settings = getFolderSettings(path)
+    val settings = getFolderSettingsFromFile(path)
     settings.sorting = sorting
     config.saveCustomSorting(path, sorting)
     folderSettingsDao.insert(settings)
+
+    Log.e("Jet", "sorting ${settings.order.toString()}")
     //if(hasStoragePermission) writeSettingsToFile(path, settings)
 }
 
@@ -115,6 +117,17 @@ fun Context.getFolderSorting(path: String): Int{
 }
 
 ////////////////////////////
+
+private fun Context.getFolderSettingsFromFile(path: String): FolderSettings{
+    var settings: FolderSettings? = null
+    if(hasStoragePermission){
+        settings = readSettingsFromFile(path)
+    }
+    if(settings == null)
+        settings = getFolderSettings(path)
+    return settings
+}
+
 private fun Context.getFolderSettings(path: String): FolderSettings{
     var settings: FolderSettings? = folderSettingsDao.getByPath(path)
     if(settings == null)
