@@ -139,22 +139,21 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
         var result = when {
             sorting and SORT_BY_NAME != 0 -> {
                 if (sorting and SORT_USE_NUMERIC_VALUE != 0) {
-                    AlphanumericComparator().compare(o1.sortValue.toLowerCase(), o2.sortValue.toLowerCase())
+                    AlphanumericComparator().compare(o1.name.toLowerCase(), o2.name.toLowerCase())
                 } else {
-                    o1.sortValue.toLowerCase().compareTo(o2.sortValue.toLowerCase())
+                    o1.name.toLowerCase().compareTo(o2.name.toLowerCase())
                 }
             }
             sorting and SORT_BY_PATH != 0 -> {
                 if (sorting and SORT_USE_NUMERIC_VALUE != 0) {
-                    AlphanumericComparator().compare(o1.sortValue.toLowerCase(), o2.sortValue.toLowerCase())
+                    AlphanumericComparator().compare(o1.path.toLowerCase(), o2.path.toLowerCase())
                 } else {
-                    o1.sortValue.toLowerCase().compareTo(o2.sortValue.toLowerCase())
+                    o1.path.toLowerCase().compareTo(o2.path.toLowerCase())
                 }
             }
-            sorting and SORT_BY_PATH != 0 -> AlphanumericComparator().compare(o1.sortValue.toLowerCase(), o2.sortValue.toLowerCase())
-            sorting and SORT_BY_SIZE != 0 -> (o1.sortValue.toLongOrNull() ?: 0).compareTo(o2.sortValue.toLongOrNull() ?: 0)
-            sorting and SORT_BY_DATE_MODIFIED != 0 -> (o1.sortValue.toLongOrNull() ?: 0).compareTo(o2.sortValue.toLongOrNull() ?: 0)
-            else -> (o1.sortValue.toLongOrNull() ?: 0).compareTo(o2.sortValue.toLongOrNull() ?: 0)
+            sorting and SORT_BY_SIZE != 0 -> (o1.size).compareTo(o2.size)
+            sorting and SORT_BY_DATE_MODIFIED != 0 -> (o1.modified).compareTo(o2.modified)
+            else -> (o1.taken).compareTo(o2.taken)
         }
 
         if (sorting and SORT_DESCENDING != 0) {
@@ -167,7 +166,7 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
 }
 
 //Jet
-fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory>, currentPathPrefix: String = "", dirGroup: String = ""): ArrayList<FolderItem>{
+fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directory> = arrayListOf(), currentPathPrefix: String = "", dirGroup: String = ""): ArrayList<FolderItem>{
     var result = arrayListOf<FolderItem>()
 
     if (config.groupDirectSubfolders) {
@@ -180,7 +179,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         updateSubfolderCounts(dirs, parentDirs)
 
         // show the current folder as an available option too, not just subfolders
-        if (currentPathPrefix.isNotEmpty()) {
+        if (currentPathPrefix.isNotEmpty() && allDirs.isNotEmpty()) {
             val currentFolder = allDirs.firstOrNull { parentDirs.firstOrNull { it.path == currentPathPrefix } == null && it.path == currentPathPrefix }
             currentFolder?.apply {
                 subfoldersCount = 1
@@ -1049,34 +1048,8 @@ fun Context.createDirectoryFromMedia(path: String, curMedia: ArrayList<Medium>, 
     val dateTaken = if (isSortingAscending) Math.min(firstItem.taken, lastItem.taken) else Math.max(firstItem.taken, lastItem.taken)
     val size = if (getProperFileSize) curMedia.sumByLong { it.size } else 0L
     val mediaTypes = curMedia.getDirMediaTypes()
-    val sortValue = getDirectorySortingValue(curMedia, path, dirName, size)
+    val sortValue = "" //getDirectorySortingValue(curMedia, path, dirName, size)
     return Directory(null, path, thumbnail!!, dirName, curMedia.size, lastModified, dateTaken, size, getPathLocation(path), mediaTypes, sortValue)
-}
-
-fun Context.getDirectorySortingValue(media: ArrayList<Medium>, path: String, name: String, size: Long): String {
-    val sorting = config.directorySorting
-    val sorted = when {
-        sorting and SORT_BY_NAME != 0 -> return name
-        sorting and SORT_BY_PATH != 0 -> return path
-        sorting and SORT_BY_SIZE != 0 -> return size.toString()
-        sorting and SORT_BY_DATE_MODIFIED != 0 -> media.sortedBy { it.modified }
-        sorting and SORT_BY_DATE_TAKEN != 0 -> media.sortedBy { it.taken }
-        else -> media
-    }
-
-    val relevantMedium = if (sorting.isSortingAscending()) {
-        sorted.firstOrNull() ?: return ""
-    } else {
-        sorted.lastOrNull() ?: return ""
-    }
-
-    val result: Any = when {
-        sorting and SORT_BY_DATE_MODIFIED != 0 -> relevantMedium.modified
-        sorting and SORT_BY_DATE_TAKEN != 0 -> relevantMedium.taken
-        else -> 0
-    }
-
-    return result.toString()
 }
 
 fun Context.updateDirectoryPath(path: String) {

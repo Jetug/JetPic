@@ -658,7 +658,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     fun isMediasEquals(newMedia: ArrayList<ThumbnailItem>): Boolean {
         val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
 
-        if(newMedia.size == oldMedia.size) return false
+        //if(newMedia.size == oldMedia.size) return false
 
         for(i in 0 until newMedia.size){
             val old = oldMedia[i]
@@ -679,8 +679,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             ensureBackgroundThread {
                 val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
                 val newMedia = it
-                if(isMediasEquals(newMedia))
-                {
+                //if(isMediasEquals(newMedia)){
                     try {
                         gotMedia(newMedia, false)
                         oldMedia.filter { !newMedia.contains(it) }.mapNotNull { it as? Medium }.filter { !getDoesFilePathExist(it.path) }.forEach {
@@ -688,7 +687,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                         }
                     } catch (e: Exception) {
                     }
-                }
+                //}
             }
         },
         {

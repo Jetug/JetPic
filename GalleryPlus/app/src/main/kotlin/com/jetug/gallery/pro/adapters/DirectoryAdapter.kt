@@ -6,6 +6,7 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
+import android.icu.text.CaseMap
 import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
@@ -47,6 +48,10 @@ import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import kotlinx.android.synthetic.main.item_dir_group.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,7 +67,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     private val ITEM_DIRECTORY_GROUP = 2
 
     private val config = activity.config
-    private val isListViewType = config.viewTypeFolders == VIEW_TYPE_LIST
+    private val isListViewType get() = config.viewTypeFolders == VIEW_TYPE_LIST
 
     private var pinnedFolders = config.pinnedFolders
     private var scrollHorizontally = config.scrollHorizontally
@@ -84,11 +89,11 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     init {
 
 
-        dirs.forEach(){
-            if (it.name == "@Test$ (1) (1) (1)"){
-                Log.d("Jet", it.name)
-            }
-        }
+//        dirs.forEach(){
+//            if (it.name == "@Test$ (1) (1) (1)"){
+//                Log.d("Jet", it.name)
+//            }
+//        }
 
 //        val p = object : FolderItem(0, "","","",0,0,0,0,0,0,"",0) {}
 //        p.placeholder = true
@@ -202,16 +207,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
     }
 
-    fun changeDirs(newDirs: ArrayList<FolderItem>){
-        dirs = newDirs
-        notifyDataSetChanged()
-    }
-
-    fun sort(){
-        dirs = activity.getSortedDirectories(dirs) //sortDirs(dirs, config.directorySorting)
-        notifyDataSetChanged()
-    }
-
     override fun getSelectableItemCount() = dirs.size
     override fun getIsItemSelectable(position: Int) = true
     override fun getItemSelectionKey(position: Int) = dirs.getOrNull(position)?.path?.hashCode()
@@ -230,6 +225,73 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             Glide.with(activity).clear(holder.itemView.dir_thumbnail!!)
         }
     }
+
+    /////////Public
+    fun changeDirs(directories: ArrayList<FolderItem>) {
+        val newDirs = directories.clone() as ArrayList<FolderItem>
+        val size = dirs.size
+        dirs.clear()
+        notifyItemRangeRemoved(0, size)
+        dirs = newDirs
+        notifyDataSetChanged()
+    }
+
+    fun sort() {
+        dirs = activity.getSortedDirectories(dirs) //sortDirs(dirs, config.directorySorting)
+        notifyDataSetChanged()
+    }
+
+    fun add(items: ArrayList<FolderItem>){
+        dirs.addAll(items)
+        getDirsToShow()
+    }
+
+    fun add(item: FolderItem){
+        dirs.add(item)
+        getDirsToShow()
+    }
+
+    private fun getDirsToShow(){
+        dirs = activity.getDirsToShow(dirs.getDirectories())
+        dirs = activity.getSortedDirectories(dirs)
+        notifyDataSetChanged()
+    }
+
+    fun updateDirs(newDirs: ArrayList<FolderItem>){
+
+//        val newDirs = directories.clone() as ArrayList<FolderItem>
+//        val size = dirs.size
+//        dirs.clear()
+//        withContext(Dispatchers.Main) {
+//            notifyItemRangeRemoved(0, size - 1)
+//        }
+//        recyclerView.getRecycledViewPool().clear()
+//        //delay(5000)
+//        dirs = newDirs
+//        withContext(Dispatchers.Main) {
+//            notifyDataSetChanged()
+//        }
+
+        val directories = newDirs.clone() as ArrayList<FolderItem>
+        if (directories.hashCode() != currentDirectoriesHash) {
+            currentDirectoriesHash = directories.hashCode()
+            dirs = directories
+            fillLockedFolders()
+            notifyDataSetChanged()
+            finishActMode()
+        }
+    }
+
+    fun updateAnimateGifs(animateGifs: Boolean) {
+        this.animateGifs = animateGifs
+        notifyDataSetChanged()
+    }
+
+    fun updateCropThumbnails(cropThumbnails: Boolean) {
+        this.cropThumbnails = cropThumbnails
+        notifyDataSetChanged()
+    }
+/////////////////////////////////
 
     private fun sortMedias(){
 
@@ -808,28 +870,6 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
     }
 
-    fun updateDirs(newDirs: ArrayList<FolderItem>) {
-        val directories = newDirs.clone() as ArrayList<FolderItem>
-        if (directories.hashCode() != currentDirectoriesHash) {
-            currentDirectoriesHash = directories.hashCode()
-            dirs = directories
-            fillLockedFolders()
-            notifyDataSetChanged()
-            finishActMode()
-        }
-    }
-
-    fun updateAnimateGifs(animateGifs: Boolean) {
-        this.animateGifs = animateGifs
-        notifyDataSetChanged()
-    }
-
-    fun updateCropThumbnails(cropThumbnails: Boolean) {
-        this.cropThumbnails = cropThumbnails
-        notifyDataSetChanged()
-    }
-
-
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     private fun setupView(view: View, directory: FolderItem, holder: ViewHolder, position: Int) {
         val isSelected = selectedKeys.contains(directory.path.hashCode())
@@ -960,12 +1000,12 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
             }
 
             if (isListViewType) {
-                dir_path.setTextColor(textColor)
+                dir_path?.setTextColor(textColor)
                 dir_pin.applyColorFilter(textColor)
-                dir_location.applyColorFilter(textColor)
+                dir_location?.applyColorFilter(textColor)
                 dir_drag_handle.beVisibleIf(isDragAndDropping)
             } else {
-                dir_drag_handle_wrapper.beVisibleIf(isDragAndDropping)
+                dir_drag_handle_wrapper?.beVisibleIf(isDragAndDropping)
             }
 
             if (isDragAndDropping) {

@@ -13,14 +13,42 @@ import java.lang.reflect.Type
 
 const val SETTINGS_FILE_NAME = "settings.txt"
 
-fun Context.saveDirectoryGroup(path: String, groupName: String) = IOScope.launch {
-    val settings = IOScope.async { getFolderSettings(path) }.await()
-    settings.group = groupName
-    folderSettingsDao.insert(settings)
 
-    if(hasStoragePermission){
-        writeSettingsToFile(path, settings)
+class Synchronisator{
+    val pool: ArrayList<()->Any> = arrayListOf()
+
+    var isAlreadyRunning: Boolean = false
+
+    fun <T:Any> launch(block: ()->T)/*: T*/ {
+        //lateinit var res: T
+        if(isAlreadyRunning){
+            pool.add(block)
+        }
+        else{
+            isAlreadyRunning = true
+            block()
+            isAlreadyRunning = false
+            if (pool.isNotEmpty()){
+                val savedBlock = pool.takeLast()
+                launch{savedBlock}
+            }
+        }
+        //return res
     }
+}
+
+val sync = Synchronisator()
+
+fun Context.saveDirectoryGroup(path: String, groupName: String) = IOScope.launch {
+    //sync.launch{
+        val settings = IOScope.async { getFolderSettings(path) }.await()
+        settings.group = groupName
+        folderSettingsDao.insert(settings)
+
+        if (hasStoragePermission) {
+            writeSettingsToFile(path, settings)
+        }
+    //}
 }
 
 fun Context.getDirectoryGroup(path: String): String{
@@ -40,17 +68,19 @@ fun Context.getDirectoryGroup(path: String): String{
 }
 
 fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>){
-    if(medias.isNotEmpty()) {
-        val path: String = medias[0].parentPath
-        val settings = getFolderSettingsFromFile(path)
-        val names = medias.names
-        settings.order = names
-        folderSettingsDao.insert(settings)
+    sync.launch{
+        if (medias.isNotEmpty()) {
+            val path: String = medias[0].parentPath
+            val settings = getFolderSettingsFromFile(path)
+            val names = medias.names
+            settings.order = names
+            folderSettingsDao.insert(settings)
 
-        if(hasStoragePermission)
-            writeSettingsToFile(path, settings)
+            if (hasStoragePermission)
+                writeSettingsToFile(path, settings)
 
-        Log.e("Jet", "save ${settings.order[0]}; ${settings.order[1]}; ${settings.order[2]},")
+            Log.e("Jet", "save ${settings.order[0]}; ${settings.order[1]}; ${settings.order[2]},")
+        }
     }
 }
 
@@ -91,13 +121,15 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
 }
 
 fun Context.saveCustomSorting(path: String, sorting: Int){
-    val settings = getFolderSettingsFromFile(path)
-    settings.sorting = sorting
-    config.saveCustomSorting(path, sorting)
-    folderSettingsDao.insert(settings)
+    sync.launch {
+        val settings = getFolderSettingsFromFile(path)
+        settings.sorting = sorting
+        config.saveCustomSorting(path, sorting)
+        folderSettingsDao.insert(settings)
 
-    Log.e("Jet", "sorting ${settings.order.toString()}")
-    if(hasStoragePermission) writeSettingsToFile(path, settings)
+        Log.e("Jet", "sorting ${settings.order.toString()}")
+        if (hasStoragePermission) writeSettingsToFile(path, settings)
+    }
 }
 
 fun Context.getFolderSorting(path: String): Int{
