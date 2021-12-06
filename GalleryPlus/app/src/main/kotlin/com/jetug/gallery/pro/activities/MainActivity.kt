@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
@@ -95,8 +96,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mSearchMenuItem: MenuItem? = null
     private var mLastMediaFetcher: MediaFetcher? = null
 
+
     private var mDirs = ArrayList<FolderItem>()
     private var allDirs = ArrayList<FolderItem>()
+    private var publicDirs = ArrayList<FolderItem>()
 
     private var mStoredAnimateGifs = true
     private var mStoredCropThumbnails = true
@@ -687,10 +690,13 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private fun tryToggleTemporarilyShowHidden() {
         if (config.temporarilyShowHidden) {
             toggleTemporarilyShowHidden(false)
-            setupAdapter(mDirs)
+            setupAdapter(publicDirs)
+//            directories_grid.adapter = null
+            getDirectories()
         } else {
             handleHiddenFolderPasswordProtection {
                 toggleTemporarilyShowHidden(true)
+                publicDirs = mDirs.clone() as ArrayList<FolderItem>
                 if (allDirs.isNotEmpty())
                     setupAdapter(allDirs)
             }
@@ -1377,7 +1383,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     }
 
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
-        //launchDefault{
+        Log.e("Jet", "setup ${mDirs.size}")
+        launchDefault{
             val currAdapter = getRecyclerAdapter()
             val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
             val sortedDirs = if (mOpendGroups.isEmpty())
@@ -1390,9 +1397,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             if (currAdapter == null || forceRecreate) {
                 initZoomListener()
                 ///Jet
-                //withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main){
                     initAdapter(dirsToShow)
-                //}
+                }
                 ///
                 measureRecyclerViewContent(dirsToShow)
             } else {
@@ -1411,7 +1418,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             directories_grid.postDelayed({
                 directories_grid.scrollBy(0, 0)
             }, 500)
-        //}
+        }
     }
 
     private fun initAdapter(dirsToShow:ArrayList<FolderItem>) {
