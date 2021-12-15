@@ -3,6 +3,9 @@ package com.jetug.gallery.pro.activities
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Color
@@ -93,6 +96,14 @@ class EditActivity : SimpleActivity(), CropImageView.OnCropImageCompleteListener
     private var filterInitialBitmap: Bitmap? = null
     private var originalUri: Uri? = null
 
+    private val screenOrientation: Int get(){
+        return when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> SCREEN_ORIENTATION_PORTRAIT
+            Configuration.ORIENTATION_LANDSCAPE -> SCREEN_ORIENTATION_LANDSCAPE
+            else -> SCREEN_ORIENTATION_PORTRAIT
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
@@ -100,8 +111,9 @@ class EditActivity : SimpleActivity(), CropImageView.OnCropImageCompleteListener
         if (checkAppSideloading()) {
             return
         }
-
         initEditActivity()
+
+        requestedOrientation = screenOrientation
     }
 
     override fun onResume() {

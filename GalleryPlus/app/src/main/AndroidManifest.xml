@@ -82,7 +82,7 @@
 
         <activity
             android:name="com.jetug.gallery.pro.activities.MediaActivity"
-            android:theme="@style/AppTheme.ActionBar.Transparent"
+            android:theme="@style/AppTheme.ActionBar.Transparent.NoAnimation"
             android:parentActivityName="com.jetug.gallery.pro.activities.MainActivity">
 
             <meta-data

@@ -1041,18 +1041,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         resultIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
-    private fun itemClicked(path: String) {
-        handleLockedFolderOpening(path) { success ->
-            if (success) {
-                Intent(this, MediaActivity::class.java).apply {
-                    putExtra(SKIP_AUTHENTICATION, true)
-                    putExtra(DIRECTORY, path)
-                    handleMediaIntent(this)
-                }
-            }
-        }
-    }
-
     private fun handleMediaIntent(intent: Intent) {
         intent.apply {
             if (mIsSetWallpaperIntent) {
@@ -1457,6 +1445,20 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             mOpenedSubfolders.add(path)
             saveRVPosition()
             setupAdapter(mDirs, "")
+        }
+    }
+
+
+
+    private fun itemClicked(path: String) {
+        handleLockedFolderOpening(path) { success ->
+            if (success) {
+                Intent(this, MediaActivity::class.java).apply {
+                    putExtra(SKIP_AUTHENTICATION, true)
+                    putExtra(DIRECTORY, path)
+                    handleMediaIntent(this)
+                }
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import com.jetug.gallery.pro.models.*
 import kotlinx.coroutines.*
 import java.io.File
 import java.lang.reflect.Type
+import java.util.zip.ZipInputStream
 
 const val SETTINGS_FILE_NAME = "settings.txt"
 
@@ -37,7 +38,11 @@ class Synchronisator{
     }
 }
 
-val sync = Synchronisator()
+private val sync = Synchronisator()
+
+fun readZip(){
+
+}
 
 fun Context.saveDirectoryGroup(path: String, groupName: String) = IOScope.launch {
     //sync.launch{
