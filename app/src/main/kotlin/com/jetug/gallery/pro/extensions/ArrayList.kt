@@ -37,6 +37,7 @@ fun ArrayList<ThumbnailItem>.getMediums(): ArrayList<Medium>{
     return ArrayList(result)
 }
 
+///Jet
 fun ArrayList<FolderItem>.getDirectories(): ArrayList<Directory>{
     val result = arrayListOf<Directory>()
     this.forEach{ item ->
@@ -51,8 +52,14 @@ fun ArrayList<FolderItem>.getDirectories(): ArrayList<Directory>{
     return result
 }
 
+val ArrayList<Medium>.names: ArrayList<String> get(){
+    return ArrayList(this.map { it.name })
+}
+
+
 fun <T>ArrayList<T>.takeLast(): T{
     val item = this.last()
     this.removeAt(this.size - 1)
     return item
 }
+//////

@@ -87,9 +87,9 @@ fun Activity.appLaunched(appId: String) {
     }
 
     baseConfig.appRunCount++
-    if (baseConfig.appRunCount % 30 == 0 && !isAProApp()) {
-        showDonateOrUpgradeDialog()
-    }
+//    if (baseConfig.appRunCount % 30 == 0 && !isAProApp()) {
+//        showDonateOrUpgradeDialog()
+//    }
 
     //Jetug
 //    if (baseConfig.appRunCount % 40 == 0 && !baseConfig.wasAppRated) {

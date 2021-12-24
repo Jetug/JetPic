@@ -15,6 +15,7 @@ import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.extensions.config
 import com.jetug.gallery.pro.extensions.getCachedMedia
 import com.jetug.gallery.pro.helpers.SHOW_ALL
+import com.jetug.gallery.pro.jetug.getFolderSorting
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import kotlinx.android.synthetic.main.dialog_medium_picker.view.*
@@ -74,7 +75,7 @@ class PickMediumDialog(val activity: BaseSimpleActivity, val path: String, val c
         }
 
         val scrollHorizontally = activity.config.scrollHorizontally && isGridViewType
-        val sorting = activity.config.getFolderSorting(if (path.isEmpty()) SHOW_ALL else path)
+        val sorting = activity.getFolderSorting(if (path.isEmpty()) SHOW_ALL else path)
         val dateFormat = activity.config.dateFormat
         val timeFormat = activity.getTimeFormat()
         view.apply {

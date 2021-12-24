@@ -1,5 +1,6 @@
 package com.jetug.gallery.pro.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.app.WallpaperManager
@@ -9,6 +10,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -31,6 +33,7 @@ import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.adapters.MediaAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
+import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask2
 import com.jetug.gallery.pro.databases.GalleryDatabase
 import com.jetug.gallery.pro.dialogs.ChangeGroupingDialog
 import com.jetug.gallery.pro.dialogs.ChangeSortingDialog
@@ -39,15 +42,20 @@ import com.jetug.gallery.pro.dialogs.FilterMediaDialog
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
+import com.jetug.gallery.pro.jetug.*
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_media.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.system.measureTimeMillis
 
 class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
@@ -67,7 +75,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private var mLatestMediaDateId = 0L
     private var mLastMediaHandler = Handler()
     private var mTempShowHiddenHandler = Handler()
-    private var mCurrAsyncTask: GetMediaAsynctask? = null
+    private var mCurrAsyncTask: GetMediaAsynctask2? = null
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
 
@@ -88,116 +96,127 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_media)
+        val elapsedTime = measureTimeMillis {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_media)
 
-        intent.apply {
-            mIsGetImageIntent = getBooleanExtra(GET_IMAGE_INTENT, false)
-            mIsGetVideoIntent = getBooleanExtra(GET_VIDEO_INTENT, false)
-            mIsGetAnyIntent = getBooleanExtra(GET_ANY_INTENT, false)
-            mAllowPickingMultiple = getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+            intent.apply {
+                mIsGetImageIntent = getBooleanExtra(GET_IMAGE_INTENT, false)
+                mIsGetVideoIntent = getBooleanExtra(GET_VIDEO_INTENT, false)
+                mIsGetAnyIntent = getBooleanExtra(GET_ANY_INTENT, false)
+                mAllowPickingMultiple = getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+            }
+
+            media_refresh_layout.isEnabled = IS_SWIPEREFRESH_ENABLED
+            media_refresh_layout.setOnRefreshListener { getMedia() }
+            try {
+                mPath = intent.getStringExtra(DIRECTORY) ?: ""
+            } catch (e: Exception) {
+                showErrorToast(e)
+                finish()
+                return
+            }
+
+            storeStateVariables()
+
+            if (mShowAll) {
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                registerFileUpdateListener()
+            }
+
+            media_empty_text_placeholder_2.setOnClickListener {
+                showFilterMediaDialog()
+            }
+
+            updateWidgets()
         }
-
-        media_refresh_layout.isEnabled = IS_SWIPEREFRESH_ENABLED
-        media_refresh_layout.setOnRefreshListener { getMedia() }
-        try {
-            mPath = intent.getStringExtra(DIRECTORY) ?: ""
-        } catch (e: Exception) {
-            showErrorToast(e)
-            finish()
-            return
-        }
-
-        storeStateVariables()
-
-        if (mShowAll) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            registerFileUpdateListener()
-        }
-
-        media_empty_text_placeholder_2.setOnClickListener {
-            showFilterMediaDialog()
-        }
-
-        updateWidgets()
+        Log.e("Jet","Media on Create $elapsedTime ms")
     }
 
     override fun onStart() {
         super.onStart()
+        //restoreRVPosition()
         mTempShowHiddenHandler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
-        super.onResume()
+        val elapsedTime = measureTimeMillis {
+            super.onResume()
+            ///Jet
+            makeTranslucentBars()
+            restoreRVPosition()
+            setTopPaddingToActionBarsHeight(media_grid)
+            setTopMarginToActionBarsHeight(media_vertical_fastscroller)
 
-        makeTranslucentBars()
-        setTopMarginToActionBarsHeight(media_vertical_fastscroller)
+            ///
 
-        mDateFormat = config.dateFormat
-        mTimeFormat = getTimeFormat()
+            mDateFormat = config.dateFormat
+            mTimeFormat = getTimeFormat()
 
-        if (mStoredAnimateGifs != config.animateGifs) {
-            getMediaAdapter()?.updateAnimateGifs(config.animateGifs)
-        }
+            if (mStoredAnimateGifs != config.animateGifs) {
+                mediaAdapter?.updateAnimateGifs(config.animateGifs)
+            }
 
-        if (mStoredCropThumbnails != config.cropThumbnails) {
-            getMediaAdapter()?.updateCropThumbnails(config.cropThumbnails)
-        }
+            if (mStoredCropThumbnails != config.cropThumbnails) {
+                mediaAdapter?.updateCropThumbnails(config.cropThumbnails)
+            }
 
-        if (mStoredScrollHorizontally != config.scrollHorizontally) {
-            mLoadedInitialPhotos = false
-            media_grid.adapter = null
-            getMedia()
-        }
+            if (mStoredScrollHorizontally != config.scrollHorizontally) {
+                mLoadedInitialPhotos = false
+                media_grid.adapter = null
+                getMedia()
+            }
 
-        if (mStoredShowFileTypes != config.showThumbnailFileTypes) {
-            getMediaAdapter()?.updateShowFileTypes(config.showThumbnailFileTypes)
-        }
+            if (mStoredShowFileTypes != config.showThumbnailFileTypes) {
+                mediaAdapter?.updateShowFileTypes(config.showThumbnailFileTypes)
+            }
 
-        if (mStoredTextColor != config.textColor) {
-            getMediaAdapter()?.updateTextColor(config.textColor)
-        }
+            if (mStoredTextColor != config.textColor) {
+                mediaAdapter?.updateTextColor(config.textColor)
+            }
 
-        val adjustedPrimaryColor = getAdjustedPrimaryColor()
-        if (mStoredAdjustedPrimaryColor != adjustedPrimaryColor) {
-            getMediaAdapter()?.updatePrimaryColor(config.primaryColor)
-            media_horizontal_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
-            media_vertical_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
-        }
+            val adjustedPrimaryColor = getAdjustedPrimaryColor()
+            if (mStoredAdjustedPrimaryColor != adjustedPrimaryColor) {
+                mediaAdapter?.updatePrimaryColor(config.primaryColor)
+                media_horizontal_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
+                media_vertical_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
+            }
 
-        if (mStoredThumbnailSpacing != config.thumbnailSpacing) {
-            media_grid.adapter = null
-            setupAdapter()
-        }
+            if (mStoredThumbnailSpacing != config.thumbnailSpacing) {
+                media_grid.adapter = null
+                setupAdapter()
+            }
 
-        if (mStoredRoundedCorners != config.fileRoundedCorners) {
-            media_grid.adapter = null
-            setupAdapter()
-        }
+            if (mStoredRoundedCorners != config.fileRoundedCorners) {
+                media_grid.adapter = null
+                setupAdapter()
+            }
 
-        media_horizontal_fastscroller.updateBubbleColors()
-        media_vertical_fastscroller.updateBubbleColors()
-        media_refresh_layout.isEnabled = config.enablePullToRefresh
-        media_empty_text_placeholder.setTextColor(config.textColor)
-        media_empty_text_placeholder_2.setTextColor(getAdjustedPrimaryColor())
+            media_horizontal_fastscroller.updateBubbleColors()
+            media_vertical_fastscroller.updateBubbleColors()
+            media_refresh_layout.isEnabled = config.enablePullToRefresh
+            media_empty_text_placeholder.setTextColor(config.textColor)
+            media_empty_text_placeholder_2.setTextColor(getAdjustedPrimaryColor())
 
-        if (!mIsSearchOpen) {
-            invalidateOptionsMenu()
-        }
+            if (!mIsSearchOpen) {
+                invalidateOptionsMenu()
+            }
 
-        if (mMedia.isEmpty() || config.getFolderSorting(mPath) and SORT_BY_RANDOM == 0) {
-            if (shouldSkipAuthentication()) {
-                tryLoadGallery()
-            } else {
-                handleLockedFolderOpening(mPath) { success ->
-                    if (success) {
-                        tryLoadGallery()
-                    } else {
-                        finish()
+            if (mMedia.isEmpty() || this.getFolderSorting(mPath) and SORT_BY_RANDOM == 0) {
+                if (shouldSkipAuthentication()) {
+                    tryLoadGallery()
+                } else {
+                    handleLockedFolderOpening(mPath) { success ->
+                        if (success) {
+                            tryLoadGallery()
+                        } else {
+                            finish()
+                        }
                     }
                 }
             }
         }
+        Log.e("Jet","Media on Resume $elapsedTime ms")
     }
 
     override fun onPause() {
@@ -210,6 +229,9 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         if (!mMedia.isEmpty()) {
             mCurrAsyncTask?.stopFetching()
         }
+
+        ///Jet
+        saveRVPosition()
     }
 
     override fun onStop() {
@@ -274,7 +296,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.cab_change_order -> getMediaAdapter()?.changeOrder()
+            R.id.cab_change_order -> mediaAdapter?.changeOrder()
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterMediaDialog()
             R.id.empty_recycle_bin -> emptyRecycleBin()
@@ -382,7 +404,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                     }
 
                     handleGridSpacing(grouped)
-                    getMediaAdapter()?.updateMedia(grouped)
+                    mediaAdapter?.updateMedia(grouped)
                     measureRecyclerViewContent(grouped)
                 }
             } catch (ignored: Exception) {
@@ -409,9 +431,23 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }
     }
 
-    private fun getMediaAdapter() = media_grid.adapter as? MediaAdapter
+    private val mediaAdapter get() = media_grid.adapter as? MediaAdapter
+
+    private fun saveRVPosition(){
+        val ox = media_grid.computeHorizontalScrollOffset()
+        val oy = media_grid.computeVerticalScrollOffset()
+        mediaScrollPositions[mPath] = Pair(ox, oy)
+    }
+
+    private fun restoreRVPosition(){
+        val pos = mediaScrollPositions[mPath]
+        if (pos != null) {
+            (media_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(pos.first, -pos.second)
+        }
+    }
 
     private fun setupAdapter() {
+        Log.e("Jet", "Setup Adapter")
         if (!mShowAll && isDirEmpty()) {
             return
         }
@@ -419,9 +455,9 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         val currAdapter = media_grid.adapter
         if (currAdapter == null) {
             initZoomListener()
-            val fastscroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
+            val fastScroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
             MediaAdapter(this, mMedia.clone() as ArrayList<ThumbnailItem>, this, mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent,
-                mAllowPickingMultiple, mPath, media_grid, fastscroller, media_refresh_layout) {
+                mAllowPickingMultiple, mPath, media_grid, fastScroller, media_refresh_layout) {
                 if (it is Medium && !isFinishing) {
                     itemClicked(it.path)
                 }
@@ -445,7 +481,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         } else {
             searchQueryChanged(mLastSearchedText)
         }
-
         setupScrollDirection()
     }
 
@@ -458,7 +493,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         media_horizontal_fastscroller.isHorizontal = true
         media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = config.getFolderSorting(if (mShowAll) SHOW_ALL else mPath)
+        val sorting = this.getFolderSorting(if (mShowAll) SHOW_ALL else mPath)
         if (allowHorizontalScroll) {
             media_horizontal_fastscroller.setViews(media_grid, media_refresh_layout) {
                 media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))
@@ -472,7 +507,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun getBubbleTextItem(index: Int, sorting: Int): String {
         var realIndex = index
-        val mediaAdapter = getMediaAdapter()
+        val mediaAdapter = mediaAdapter
         if (mediaAdapter?.isASectionTitle(index) == true) {
             realIndex++
         }
@@ -480,7 +515,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun checkLastMediaChanged() {
-        if (isDestroyed || config.getFolderSorting(mPath) and SORT_BY_RANDOM != 0) {
+        if (isDestroyed || this.getFolderSorting(mPath) and SORT_BY_RANDOM != 0) {
             return
         }
 
@@ -502,11 +537,21 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }, LAST_MEDIA_CHECK_PERIOD)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showSortingDialog() {
         ChangeSortingDialog(this, false, true, mPath) {
-            mLoadedInitialPhotos = false
-            media_grid.adapter = null
-            getMedia()
+
+            val adapter = mediaAdapter
+            if(adapter != null) {
+                getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {
+                    adapter.media = it
+                    launchMain { adapter.notifyDataSetChanged() }
+                }
+            }
+
+//            mLoadedInitialPhotos = false
+//            media_grid.adapter = null
+//            getMedia()
         }
     }
 
@@ -547,7 +592,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun toggleFilenameVisibility() {
         config.displayFileNames = !config.displayFileNames
-        getMediaAdapter()?.updateDisplayFilenames(config.displayFileNames)
+        mediaAdapter?.updateDisplayFilenames(config.displayFileNames)
     }
 
     private fun switchToFolderView() {
@@ -610,21 +655,47 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         mLoadedInitialPhotos = true
     }
 
+    fun isMediasEquals(newMedia: ArrayList<ThumbnailItem>): Boolean {
+        val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
+
+        //if(newMedia.size == oldMedia.size) return false
+
+        for(i in 0 until newMedia.size){
+            val old = oldMedia[i]
+            val new = newMedia[i]
+
+            if(old is Medium && new is Medium && new.name != old.name)
+                return false
+        }
+
+        return true
+    }
+
+
     private fun startAsyncTask() {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsynctask(applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
+        mCurrAsyncTask = GetMediaAsynctask2(applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
+            //restoreRVPosition()
             ensureBackgroundThread {
                 val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
                 val newMedia = it
-                try {
-                    gotMedia(newMedia, false)
-                    oldMedia.filter { !newMedia.contains(it) }.mapNotNull { it as? Medium }.filter { !getDoesFilePathExist(it.path) }.forEach {
-                        mediaDB.deleteMediumPath(it.path)
+                //if(isMediasEquals(newMedia)){
+                    try {
+                        gotMedia(newMedia, false)
+                        oldMedia.filter { !newMedia.contains(it) }.mapNotNull { it as? Medium }.filter { !getDoesFilePathExist(it.path) }.forEach {
+                            mediaDB.deleteMediumPath(it.path)
+                        }
+                    } catch (e: Exception) {
                     }
-                } catch (e: Exception) {
-                }
+                //}
             }
-        }
+        },
+        {
+
+            ///Jet
+
+            ///
+        })
 
         mCurrAsyncTask!!.execute()
     }
@@ -706,7 +777,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         }
 
         layoutManager.spanCount = config.mediaColumnCnt
-        val adapter = getMediaAdapter()
+        val adapter = mediaAdapter
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.isASectionTitle(position) == true) {
@@ -796,14 +867,14 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 override fun zoomIn() {
                     if (layoutManager.spanCount > 1) {
                         reduceColumnCount()
-                        getMediaAdapter()?.finishActMode()
+                        mediaAdapter?.finishActMode()
                     }
                 }
 
                 override fun zoomOut() {
                     if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
                         increaseColumnCount()
-                        getMediaAdapter()?.finishActMode()
+                        mediaAdapter?.finishActMode()
                     }
                 }
             }
@@ -840,7 +911,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private fun columnCountChanged() {
         handleGridSpacing()
         invalidateOptionsMenu()
-        getMediaAdapter()?.apply {
+        mediaAdapter?.apply {
             notifyItemRangeChanged(0, media.size)
             measureRecyclerViewContent(media)
         }
@@ -859,65 +930,71 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun itemClicked(path: String) {
-        if (isSetWallpaperIntent()) {
-            toast(R.string.setting_wallpaper)
+        val elapsedTime = measureTimeMillis {
 
-            val wantedWidth = wallpaperDesiredMinimumWidth
-            val wantedHeight = wallpaperDesiredMinimumHeight
-            val ratio = wantedWidth.toFloat() / wantedHeight
+            if (isSetWallpaperIntent()) {
+                toast(R.string.setting_wallpaper)
 
-            val options = RequestOptions()
-                .override((wantedWidth * ratio).toInt(), wantedHeight)
-                .fitCenter()
+                val wantedWidth = wallpaperDesiredMinimumWidth
+                val wantedHeight = wallpaperDesiredMinimumHeight
+                val ratio = wantedWidth.toFloat() / wantedHeight
 
-            Glide.with(this)
-                .asBitmap()
-                .load(File(path))
-                .apply(options)
-                .into(object : SimpleTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        try {
-                            WallpaperManager.getInstance(applicationContext).setBitmap(resource)
-                            setResult(Activity.RESULT_OK)
-                        } catch (ignored: IOException) {
+                val options = RequestOptions()
+                    .override((wantedWidth * ratio).toInt(), wantedHeight)
+                    .fitCenter()
+
+                Glide.with(this)
+                    .asBitmap()
+                    .load(File(path))
+                    .apply(options)
+                    .into(object : SimpleTarget<Bitmap>() {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            try {
+                                WallpaperManager.getInstance(applicationContext).setBitmap(resource)
+                                setResult(Activity.RESULT_OK)
+                            } catch (ignored: IOException) {
+                            }
+
+                            finish()
                         }
-
-                        finish()
-                    }
-                })
-        } else if (mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent) {
-            Intent().apply {
-                data = Uri.parse(path)
-                setResult(Activity.RESULT_OK, this)
-            }
-            finish()
-        } else {
-            val isVideo = path.isVideoFast()
-            if (isVideo) {
-                val extras = HashMap<String, Boolean>()
-                extras[SHOW_FAVORITES] = mPath == FAVORITES
-
-                if (shouldSkipAuthentication()) {
-                    extras[SKIP_AUTHENTICATION] = true
+                    })
+            } else if (mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent) {
+                Intent().apply {
+                    data = Uri.parse(path)
+                    setResult(Activity.RESULT_OK, this)
                 }
-                openPath(path, false, extras)
+                finish()
             } else {
-                Intent(this, ViewPagerActivity::class.java).apply {
-                    putExtra(SKIP_AUTHENTICATION, shouldSkipAuthentication())
-                    putExtra(PATH, path)
-                    putExtra(SHOW_ALL, mShowAll)
-                    putExtra(SHOW_FAVORITES, mPath == FAVORITES)
-                    putExtra(SHOW_RECYCLE_BIN, mPath == RECYCLE_BIN)
-                    startActivity(this)
+                val isVideo = path.isVideoFast()
+                if (isVideo) {
+                    val extras = HashMap<String, Boolean>()
+                    extras[SHOW_FAVORITES] = mPath == FAVORITES
+
+                    if (shouldSkipAuthentication()) {
+                        extras[SKIP_AUTHENTICATION] = true
+                    }
+                    openPath(path, false, extras)
+                } else {
+                    Intent(this, ViewPagerActivity::class.java).apply {
+                        putExtra(SKIP_AUTHENTICATION, shouldSkipAuthentication())
+                        putExtra(PATH, path)
+                        putExtra(SHOW_ALL, mShowAll)
+                        putExtra(SHOW_FAVORITES, mPath == FAVORITES)
+                        putExtra(SHOW_RECYCLE_BIN, mPath == RECYCLE_BIN)
+                        startActivity(this)
+                    }
                 }
             }
         }
+        Log.e("Jet","Media on Click $elapsedTime ms")
     }
 
     private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
         mIsGettingMedia = false
         checkLastMediaChanged()
         mMedia = media
+
+
 
         runOnUiThread {
             media_refresh_layout.isRefreshing = false
@@ -947,6 +1024,7 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 }
             }.start()
         }
+
     }
 
     override fun tryDeleteFiles(fileDirItems: ArrayList<FileDirItem>) {

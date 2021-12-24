@@ -264,6 +264,17 @@ private fun isExternalStorageDocument(uri: Uri) = uri.authority == "com.android.
 
 fun Context.hasPermission(permId: Int) = ContextCompat.checkSelfPermission(this, getPermissionString(permId)) == PackageManager.PERMISSION_GRANTED
 
+////Jet
+val Context.hasStoragePermission: Boolean
+    get(){
+        return if (isRPlus()) {
+            Environment.isExternalStorageManager()
+        } else {
+            hasPermission(PERMISSION_WRITE_STORAGE)
+        }
+    }
+///////
+
 fun Context.getPermissionString(id: Int) = when (id) {
     PERMISSION_READ_STORAGE -> Manifest.permission.READ_EXTERNAL_STORAGE
     PERMISSION_WRITE_STORAGE -> Manifest.permission.WRITE_EXTERNAL_STORAGE

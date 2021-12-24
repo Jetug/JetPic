@@ -235,6 +235,7 @@ open class BaseConfig(val context: Context) {
         get() = prefs.getInt(SORT_ORDER, context.resources.getInteger(R.integer.default_sorting))
         set(sorting) = prefs.edit().putInt(SORT_ORDER, sorting).apply()
 
+    ///Jet Sorting
     fun saveCustomSorting(path: String, value: Int) {
         if (path.isEmpty()) {
             sorting = value

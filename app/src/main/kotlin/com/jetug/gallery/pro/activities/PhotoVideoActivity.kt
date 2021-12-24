@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.bottom_actions.*
 import kotlinx.android.synthetic.main.fragment_holder.*
 import java.io.File
 import java.io.FileInputStream
+import kotlin.system.measureTimeMillis
 
 open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentListener {
     private var mMedium: Medium? = null
@@ -37,37 +39,45 @@ open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentList
     var mIsVideo = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_holder)
+        val elapsedTime = measureTimeMillis {
 
-        if (checkAppSideloading()) {
-            return
-        }
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.fragment_holder)
 
-        handlePermission(PERMISSION_WRITE_STORAGE) {
-            if (it) {
-                checkIntent(savedInstanceState)
-            } else {
-                toast(R.string.no_storage_permissions)
-                finish()
+            if (checkAppSideloading()) {
+                return
+            }
+
+            handlePermission(PERMISSION_WRITE_STORAGE) {
+                if (it) {
+                    checkIntent(savedInstanceState)
+                } else {
+                    toast(R.string.no_storage_permissions)
+                    finish()
+                }
             }
         }
+        Log.e("Jet","Photo on Create $elapsedTime ms")
     }
 
     override fun onResume() {
-        super.onResume()
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.statusBarColor = Color.TRANSPARENT
+        val elapsedTime = measureTimeMillis {
 
-        if (config.bottomActions) {
-            window.navigationBarColor = Color.TRANSPARENT
-        } else {
-            setTranslucentNavigation()
-        }
+            super.onResume()
+            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.statusBarColor = Color.TRANSPARENT
 
-        if (config.blackBackground) {
-            updateStatusbarColor(Color.BLACK)
+            if (config.bottomActions) {
+                window.navigationBarColor = Color.TRANSPARENT
+            } else {
+                setTranslucentNavigation()
+            }
+
+            if (config.blackBackground) {
+                updateStatusbarColor(Color.BLACK)
+            }
         }
+        Log.e("Jet","Photo on Resume $elapsedTime ms")
     }
 
     private fun checkIntent(savedInstanceState: Bundle? = null) {

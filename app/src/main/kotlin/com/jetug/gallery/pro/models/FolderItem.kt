@@ -12,7 +12,7 @@ abstract class FolderItem(open var id: Long?,
                           open var path: String,
                           open var tmb: String,
                           open var name: String,
-                          mediaCnt_: Int,
+                          open var mediaCnt: Int,
                           open var modified: Long,
                           open var taken: Long,
                           open var size: Long,
@@ -24,23 +24,10 @@ abstract class FolderItem(open var id: Long?,
                           @Ignore open var subfoldersMediaCount: Int = 0,
                           @Ignore open var containsMediaFilesDirectly: Boolean = true,) {
 
-    open var mediaCnt: Int = 0
-        get(){
-            if(this is DirectoryGroup) {
-                var cnt =0
-                innerDirs.forEach { cnt += it.mediaCnt }
-                return cnt
-            }
-            else return field
-        }
-        set(value){
-            field = value
-        }
 
-    @Ignore var placeholder: Boolean = false
+    @Ignore var isHidden: Boolean = false
 
     init {
-        mediaCnt = mediaCnt_
     }
 
     fun areFavorites() = path == FAVORITES

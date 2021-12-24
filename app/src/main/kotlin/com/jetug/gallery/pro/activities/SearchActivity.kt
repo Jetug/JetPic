@@ -23,6 +23,7 @@ import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
+import com.jetug.gallery.pro.jetug.getFolderSorting
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
@@ -239,7 +240,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
         media_horizontal_fastscroller.isHorizontal = true
         media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = config.getFolderSorting(SHOW_ALL)
+        val sorting = this.getFolderSorting(SHOW_ALL)
         if (allowHorizontalScroll) {
             media_horizontal_fastscroller.setViews(media_grid) {
                 media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))

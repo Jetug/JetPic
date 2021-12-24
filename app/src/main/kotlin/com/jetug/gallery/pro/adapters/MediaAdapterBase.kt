@@ -33,7 +33,8 @@ import com.jetug.gallery.pro.interfaces.MediaOperationsListener
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import com.jetug.gallery.pro.models.ThumbnailSection
-import com.jetug.gallery.pro.models.jetug.saveImagePositions
+import com.jetug.gallery.pro.jetug.saveCustomMediaOrder
+import com.jetug.gallery.pro.jetug.saveCustomSorting
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.photo_item_grid.view.*
@@ -44,10 +45,8 @@ import kotlinx.android.synthetic.main.video_item_grid.view.medium_check
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_name
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_thumbnail
 import kotlinx.android.synthetic.main.photo_item_grid.view.media_drag_handle
-import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.reflect.typeOf
 
 open class MediaAdapterBase (
     activity: BaseSimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
@@ -85,7 +84,6 @@ open class MediaAdapterBase (
     init {
         setupDragListener(true)
         enableInstantLoad()
-        //activity.makeTranslucentBars()
     }
 
     override fun getActionMenuId() = R.menu.cab_media
@@ -219,7 +217,6 @@ open class MediaAdapterBase (
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
     override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
     override fun onActionModeCreated() {}
-    override fun onDragAndDroppingEnded() = dragAndDroppingEnded()
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -235,29 +232,26 @@ open class MediaAdapterBase (
 
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
 
-    private fun dragAndDroppingEnded(){
-        saveImagePositions(itemList.getMediums())
-        config.saveCustomSorting(path, SORT_BY_CUSTOM)
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, holder: ViewHolder, position: Int){
         view.apply {
             ///Jet
-            val item: View
-            var endId: Int = 0
-            if (holder.itemViewType == ITEM_SECTION) {
-                item = thumbnail_section
-            } else {
-                item = media_item_holder
-                endId = config.mediaColumnCnt
-            }
-            if(media[0] is ThumbnailSection) endId = 1
-
-            item?.setMargin(0)
-            if(position in 0 until endId){
-                activity.setTopMarginToActionBarsHeight(item)
-            }
+//            val item: View
+//            var endId: Int = 0
+//            if(!config.scrollHorizontally) {
+//                if (holder.itemViewType == ITEM_SECTION) {
+//                    item = thumbnail_section
+//                } else {
+//                    item = media_item_holder
+//                    endId = config.mediaColumnCnt
+//                }
+//                if (media[0] is ThumbnailSection) endId = 1
+//
+//                item?.setMargin(0)
+//                if (position in 0 until endId) {
+//                    activity.setTopMarginToActionBarsHeight(item)
+//                }
+//            }
             ///
             if (media_drag_handle != null) {
                 media_drag_handle.beVisibleIf(isDragAndDropping)

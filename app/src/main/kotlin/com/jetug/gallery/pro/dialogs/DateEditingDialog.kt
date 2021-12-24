@@ -12,7 +12,7 @@ import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.jetug.gallery.pro.R
-import com.jetug.gallery.pro.models.jetug.changeFileDate
+import com.jetug.gallery.pro.jetug.changeFileDate
 import org.joda.time.*
 import java.util.ArrayList
 
