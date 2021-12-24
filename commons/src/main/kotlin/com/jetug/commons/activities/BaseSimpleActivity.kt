@@ -66,23 +66,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
-//        if (!packageName.startsWith("com.simplemobiletools.", true)) {
-//            if ((0..50).random() == 10 || baseConfig.appRunCount % 100 == 0) {
-//                val label = "You are using a fake version of the app. For your own safety download the original one from www.simplemobiletools.com. Thanks"
-//                ConfirmationDialog(this, label, positive = R.string.ok, negative = 0) {
-//                    launchViewIntent("https://play.google.com/store/apps/dev?id=9070296388022589266")
-//                }
-//            }
-//        }
-        
-
     }
 
     fun makeTranslucentBars(){
-        this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        this.getWindow().setStatusBarColor(Color.argb(166, 0, 0, 0));
+        this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        this.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        this.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        this.window.statusBarColor = getColor(R.color.color_action_bar_main)
     }
 
     override fun onResume() {

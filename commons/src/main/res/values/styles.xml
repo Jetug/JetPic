@@ -13,6 +13,10 @@
 <!--        <item name="android:statusBarColor">@color/md_teal</item>-->
     </style>
 
+    <style name="AppTheme.ActionBar.Transparent.NoAnimation" parent="AppTheme.ActionBar.Transparent">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
     <style name="AppTheme.Base" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/color_action_bar_main</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>

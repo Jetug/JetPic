@@ -11,6 +11,7 @@ import com.jetug.commons.helpers.*
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.extensions.config
 import com.jetug.gallery.pro.helpers.SHOW_ALL
+import com.jetug.gallery.pro.jetug.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
 class MultiChangeSortingDialog(val activity: BaseSimpleActivity, val showFolderCheckbox: Boolean, val pathList: ArrayList<String>, val callback: () -> Unit) :
@@ -79,7 +80,7 @@ class MultiChangeSortingDialog(val activity: BaseSimpleActivity, val showFolderC
 
         pathList.forEach {path ->
             if (view.sorting_dialog_use_for_this_folder.isChecked) {
-                config.saveCustomSorting(path, sorting)
+                activity.saveCustomSorting(path, sorting)
             } else {
                 config.removeCustomSorting(path)
                 config.sorting = sorting
