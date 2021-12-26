@@ -57,6 +57,7 @@ import kotlinx.coroutines.async
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.system.measureTimeMillis
 
 
 class MainActivity : SimpleActivity(), DirectoryOperationsListener {
@@ -1077,6 +1078,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         var isPlaceholderVisible = dirs.isEmpty()
 
+        val elapsedTime = measureTimeMillis {
         runOnUiThread {
             checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
 
@@ -1087,6 +1089,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             //Jet
             setupAdapter(dirs.clone() as ArrayList<FolderItem>)
         }
+        }
+        Log.e("Jet", "RunUI $elapsedTime")
 
         // cached folders have been loaded, recheck folders one by one starting with the first displayed
         mLastMediaFetcher?.shouldStop = true
