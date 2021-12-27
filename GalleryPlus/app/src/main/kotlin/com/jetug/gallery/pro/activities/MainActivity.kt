@@ -170,35 +170,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             launchSearchActivity()
         }
 
-        //if (savedInstanceState == null) {
-        handleStoragePermission{} //{
-            //checkOTGPath()
-            //if (!it) {
-                //toast(R.string.no_storage_permissions)
-                //finish()
-            //}
-        //}
-        //}
-        //////////////////
-
-
-
-        ////Jet
-        //requireFileAccessPermission()
-//        while(true){
-//            var flag = false
-//            handleStoragePermission {
-//                flag = it
-//            }
-//
-//            if (flag) {
-//                break
-//            }
-//            else{
-//                toast(R.string.no_storage_permissions)
-//                finish()
-//            }
-//        }
+        if (!packageName.startsWith("com.jetugapps.gallery.plus")) {
+            handleStoragePermission {}
+        }
 
         // just request the permission, tryLoadGallery will then trigger in onResume
         handlePermission(PERMISSION_WRITE_STORAGE) {
@@ -208,11 +182,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             }
         }
     }
-
-    suspend fun test() = ""
-
-    ////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////
 
     private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
         actionOnPermission = null
