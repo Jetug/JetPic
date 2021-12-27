@@ -170,9 +170,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             launchSearchActivity()
         }
 
-        if (!packageName.startsWith("com.jetugapps.gallery.plus")) {
-            handleStoragePermission {}
-        }
+//        if (!packageName.startsWith("com.jetugapps.gallery.plus")) {
+//            handleStoragePermission {}
+//        }
 
         // just request the permission, tryLoadGallery will then trigger in onResume
         handlePermission(PERMISSION_WRITE_STORAGE) {
@@ -190,7 +190,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         } else {
             if (isRPlus()) {
                 ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
-                    if (success ) {
+                    if (success) {
                         isAskingPermissions = true
                         actionOnPermission = callback
                         try {

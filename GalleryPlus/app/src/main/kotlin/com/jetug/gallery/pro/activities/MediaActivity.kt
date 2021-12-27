@@ -931,7 +931,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun itemClicked(path: String) {
         val elapsedTime = measureTimeMillis {
-
             if (isSetWallpaperIntent()) {
                 toast(R.string.setting_wallpaper)
 

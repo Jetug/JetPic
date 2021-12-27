@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.provider.Settings
 import android.telecom.TelecomManager
 import android.view.Menu
@@ -283,7 +284,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         applicationContext.contentResolver.takePersistableUriPermission(treeUri!!, takeFlags)
     }
 
-    private fun isProperSDFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
+    ///Jet
+    private fun isProperSDFolder(uri: Uri) = isExternalStorageDocument(uri) /*&& isRootUri(uri)*/ && !isInternalStorage(uri)
 
     private fun isProperOTGFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
 
@@ -343,10 +345,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     // synchronous return value determines only if we are showing the SAF dialog, callback result tells if the SD or OTG permission has been granted
     fun handleSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
         //isShowingSAFDialog(path)
-        return if (!packageName.startsWith("com.")) {
-            callback(true)
-            false
-        } else if (isShowingSAFDialog(path) || isShowingOTGDialog(path)) {
+        return if (isShowingSAFDialog(path) || isShowingOTGDialog(path)) {
             funAfterSAFPermission = callback
             true
         } else {
@@ -397,7 +396,6 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
                 copyMoveListener.copyFailed()
                 return@handleSAFDialog
             }
-
             copyMoveCallback = callback
             var fileCountToCopy = fileDirItems.size
             if (isCopyOperation) {
@@ -478,6 +476,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
             val text = String.format(getString(R.string.no_space), sumToCopy.formatSize(), availableSpace.formatSize())
             toast(text, Toast.LENGTH_LONG)
         }
+
     }
 
     fun checkConflicts(files: ArrayList<FileDirItem>, destinationPath: String, index: Int, conflictResolutions: LinkedHashMap<String, Int>,
