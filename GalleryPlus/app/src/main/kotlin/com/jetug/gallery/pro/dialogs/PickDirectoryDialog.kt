@@ -125,7 +125,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
             } else {
                 currentPathPrefix = path
                 openedSubfolders.add(path)
-                gotDirectories(allDirectories as ArrayList<FolderItem>)
+                gotDirectories(allDirectories)
             }
         }
 
