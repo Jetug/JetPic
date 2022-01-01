@@ -49,12 +49,31 @@ class PickDirectoryActivity : SimpleActivity() {
         setupAdapter(mDirs)
     }
 
+    override fun onBackPressed() {
+        if (config.groupDirectSubfolders) {
+            if (currentPathPrefix.isEmpty()) {
+                super.onBackPressed()
+            } else {
+                rvPosition.restoreRVPosition()
+                openedSubfolders.removeAt(openedSubfolders.size - 1)
+                currentPathPrefix = openedSubfolders.last()
+                setupAdapter(mDirs)
+            }
+        } else if(mOpenedGroups.isNotEmpty()){
+            rvPosition.restoreRVPosition()
+            setupAdapter(mDirs)
+        }
+        else{
+            super.onBackPressed()
+        }
+    }
+
     private fun setupAdapter(dirs: ArrayList<FolderItem>) {
         if (dirs.hashCode() == shownDirectories.hashCode())
             return
         shownDirectories = dirs
 
-        val adapter = DirectoryAdapter(this, dirs.clone() as ArrayList<FolderItem>, null, view.directories_grid, true) {
+        val adapter = DirectoryAdapter(this, dirs.clone() as ArrayList<FolderItem>, null, directories_grid, true) {
             val clickedDir = it as FolderItem
             val path = clickedDir.path
             if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
@@ -107,22 +126,7 @@ class PickDirectoryActivity : SimpleActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (config.groupDirectSubfolders) {
-            if (currentPathPrefix.isEmpty()) {
-                super.onBackPressed()
-            } else {
-                rvPosition.restoreRVPosition()
-                openedSubfolders.removeAt(openedSubfolders.size - 1)
-                currentPathPrefix = openedSubfolders.last()
-                setupAdapter(mDirs)
-            }
-        } else if(mOpenedGroups.isNotEmpty()){
-            rvPosition.restoreRVPosition()
-            setupAdapter(mDirs)
-        }
-        else{
-            super.onBackPressed()
-        }
+    private fun callback(path: String){
+
     }
 }
