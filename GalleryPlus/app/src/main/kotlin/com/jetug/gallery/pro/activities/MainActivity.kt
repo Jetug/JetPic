@@ -1,6 +1,5 @@
 package com.jetug.gallery.pro.activities
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.content.ClipData
@@ -8,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
@@ -19,7 +17,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -51,9 +48,7 @@ import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_media.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.*
-import kotlinx.coroutines.async
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -66,7 +61,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
     private val MANAGE_STORAGE_RC = 201
 
-    private val rvPosition = RecyclerViewPosition(directories_grid)
+    private var rvPosition = RecyclerViewPosition(null)
 
     private var mIsPickImageIntent = false
     private var mIsPickVideoIntent = false
@@ -87,7 +82,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mLatestMediaDateId = 0L
     private var mCurrentPathPrefix = ""                 // used at "Group direct subfolders" for navigation
     private var mOpenedSubfolders = arrayListOf("")     // used at "Group direct subfolders" for navigating Up with the back button
-    private var mOpendGroups = arrayListOf<DirectoryGroup>()
+    private var mOpenedGroups = arrayListOf<DirectoryGroup>()
     private var mDateFormat = ""
     private var mTimeFormat = ""
     private var mLastMediaHandler = Handler()
@@ -109,6 +104,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
+
+        rvPosition = RecyclerViewPosition(directories_grid)
 
         if (savedInstanceState == null) {
             config.temporarilyShowHidden = false
@@ -362,8 +359,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 mCurrentPathPrefix = mOpenedSubfolders.last()
                 setupAdapter(mDirs)
             }
-        } else if(mOpendGroups.isNotEmpty()){
-            val group = mOpendGroups.takeLast()
+        } else if(mOpenedGroups.isNotEmpty()){
+            val group = mOpenedGroups.takeLast()
             //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
             rvPosition.restoreRVPosition()
             if(mDirs.size == 0){
@@ -1330,10 +1327,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         launchDefault{
             val currAdapter = getRecyclerAdapter()
             val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
-            val sortedDirs = if (mOpendGroups.isEmpty())
+            val sortedDirs = if (mOpenedGroups.isEmpty())
                 getDirsToShow(distinctDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
             else
-                mOpendGroups.last().innerDirs as ArrayList<FolderItem>
+                mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
 
             var dirsToShow = getSortedDirectories(sortedDirs)
 
@@ -1388,7 +1385,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         val path = clickedDir.path
         if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
             if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
-                mOpendGroups.add(clickedDir)
+                mOpenedGroups.add(clickedDir)
                 rvPosition.saveRVPosition()
                 setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
             }

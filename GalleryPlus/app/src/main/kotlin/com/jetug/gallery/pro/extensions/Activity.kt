@@ -22,6 +22,7 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.exifinterface.media.ExifInterface
@@ -38,11 +39,13 @@ import com.jetug.commons.models.FileDirItem
 import com.jetug.gallery.pro.BuildConfig
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.SimpleActivity
+import com.jetug.gallery.pro.activities.contracts.PickDirectoryContract
 import com.jetug.gallery.pro.dialogs.PickDirectoryDialog
 import com.jetug.gallery.pro.helpers.RECYCLE_BIN
 import com.jetug.gallery.pro.models.DateTaken
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.directory_item_list.view.*
+import okhttp3.internal.readFieldOrNull
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -269,6 +272,10 @@ fun BaseSimpleActivity.toggleFileVisibility(oldPath: String, hide: Boolean, call
     }
 }
 
+///////////
+
+///////
+
 fun BaseSimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, isCopyOperation: Boolean, callback: (destinationPath: String) -> Unit) {
     if (fileDirItems.isEmpty()) {
         toast(R.string.unknown_error_occurred)
@@ -276,14 +283,25 @@ fun BaseSimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, 
     }
 
     val source = fileDirItems[0].getParentPath()
-    PickDirectoryDialog(this, source, true, false) {
-        val destination = it
-        handleSAFDialog(source) {
-            if (it) {
-                copyMoveFilesTo(fileDirItems, source.trimEnd('/'), destination, isCopyOperation, true, config.shouldShowHidden, callback)
+
+    activityLauncher = registerForActivityResult(PickDirectoryContract()) { destination ->
+        if(destination != null)
+            handleSAFDialog(source) {
+                if (it) {
+                    copyMoveFilesTo(fileDirItems, source.trimEnd('/'), destination, isCopyOperation, true, config.shouldShowHidden, callback)
+                }
             }
-        }
     }
+    activityLauncher.launch(source)
+
+//    PickDirectoryDialog(this, source, true, false) {
+//        val destination = it
+//        handleSAFDialog(source) {
+//            if (it) {
+//                copyMoveFilesTo(fileDirItems, source.trimEnd('/'), destination, isCopyOperation, true, config.shouldShowHidden, callback)
+//            }
+//        }
+//    }
 }
 
 fun BaseSimpleActivity.tryDeleteFileDirItem(
