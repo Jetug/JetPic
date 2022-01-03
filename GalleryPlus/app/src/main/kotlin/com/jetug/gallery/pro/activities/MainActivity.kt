@@ -240,9 +240,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         setTopPaddingToActionBarsHeight(directories_grid)
         setTopMarginToActionBarsHeight(directories_vertical_fastscroller)
         setTopMarginToActionBarsHeight(directories_switch_searching)
-
-
-
         //setTopMarginToActionBarsHeight(manager)
 
         directories_switch_searching.height = topBarsHeight
@@ -1363,10 +1360,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     private fun initAdapter(dirsToShow:ArrayList<FolderItem>) {
         val fastScroller = if (config.scrollHorizontally) directories_horizontal_fastscroller else directories_vertical_fastscroller
-        DirectoryAdapter(this, dirsToShow, this, directories_grid,
-            isPickIntent(intent) || isGetAnyContentIntent(intent), directories_refresh_layout, fastScroller)
-        {
-            onItemClicked(it)
+        DirectoryAdapter(this, dirsToShow, this, directories_grid,isPickIntent(intent) || isGetAnyContentIntent(intent),
+            directories_refresh_layout, fastScroller){
+                onItemClicked(it)
         }.apply {
             setupZoomListener(mZoomListener)
             runOnUiThread {

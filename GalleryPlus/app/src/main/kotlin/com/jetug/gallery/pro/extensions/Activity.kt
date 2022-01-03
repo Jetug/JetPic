@@ -276,7 +276,7 @@ fun BaseSimpleActivity.toggleFileVisibility(oldPath: String, hide: Boolean, call
 
 ///////
 
-fun BaseSimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, isCopyOperation: Boolean, callback: (destinationPath: String) -> Unit) {
+fun SimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, isCopyOperation: Boolean, callback: (destinationPath: String) -> Unit) {
     if (fileDirItems.isEmpty()) {
         toast(R.string.unknown_error_occurred)
         return
@@ -284,7 +284,7 @@ fun BaseSimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, 
 
     val source = fileDirItems[0].getParentPath()
 
-    activityLauncher = registerForActivityResult(PickDirectoryContract()) { destination ->
+    pickDirectoryCallBack = { destination ->
         if(destination != null)
             handleSAFDialog(source) {
                 if (it) {

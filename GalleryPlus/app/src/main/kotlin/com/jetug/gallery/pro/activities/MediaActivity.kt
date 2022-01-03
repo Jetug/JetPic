@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,6 +32,7 @@ import com.jetug.commons.models.FileDirItem
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
+import com.jetug.gallery.pro.activities.contracts.PickDirectoryContract
 import com.jetug.gallery.pro.adapters.MediaAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask2
@@ -88,6 +90,11 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private var mStoredAdjustedPrimaryColor = 0
     private var mStoredThumbnailSpacing = 0
 
+
+    //////
+    //lateinit var activityLauncher: ActivityResultLauncher<String>
+    //////
+
     var mIsGetImageIntent = false
     var mIsGetVideoIntent = false
 
@@ -95,10 +102,21 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
         var mMedia = ArrayList<ThumbnailItem>()
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val elapsedTime = measureTimeMillis {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_media)
+
+//            activityLauncher = registerForActivityResult(PickDirectoryContract()) { destination ->
+//                if(destination != null)
+//                    handleSAFDialog(source) {
+//                        if (it) {
+//                            copyMoveFilesTo(fileDirItems, source.trimEnd('/'), destination, isCopyOperation, true, config.shouldShowHidden, callback)
+//                        }
+//                    }
+//            }
 
             intent.apply {
                 mIsGetImageIntent = getBooleanExtra(GET_IMAGE_INTENT, false)

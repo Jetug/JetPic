@@ -27,6 +27,7 @@ import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
+import com.jetug.gallery.pro.activities.SimpleActivity
 import com.jetug.gallery.pro.dialogs.*
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
@@ -58,7 +59,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @SuppressLint("NotifyDataSetChanged")
-class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
+class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
                        private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
@@ -664,7 +665,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
         }
 
         val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-        activity.tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
+        (activity as SimpleActivity).tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
             val destinationPath = it
             val newPaths = fileDirItems.map { "$destinationPath/${it.name}" }.toMutableList() as java.util.ArrayList<String>
             activity.fixDateTaken(newPaths, false)
@@ -822,7 +823,7 @@ class DirectoryAdapter(activity: BaseSimpleActivity, var dirs: ArrayList<FolderI
     }
 
     private fun pickMediumFrom(targetFolder: String, path: String) {
-        PickMediumDialog(activity, path) {
+        PickMediumDialog(activity as SimpleActivity, path) {
             if (File(it).isDirectory) {
                 pickMediumFrom(targetFolder, it)
             } else {

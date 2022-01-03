@@ -9,16 +9,16 @@
     <RelativeLayout
         android:id="@+id/directories_grid_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/activity_margin">
+        android:layout_height="wrap_content">
 
         <com.jetug.commons.views.MyRecyclerView
+            android:clipToPadding="false"
             android:id="@+id/directories_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
             app:layoutManager="com.jetug.commons.views.MyGridLayoutManager"
-            app:spanCount="@integer/directory_columns_vertical_scroll"/>
+            app:spanCount="@integer/directory_columns_vertical_scroll" />
 
         <com.jetug.commons.views.FastScroller
             android:id="@+id/directories_vertical_fastscroller"

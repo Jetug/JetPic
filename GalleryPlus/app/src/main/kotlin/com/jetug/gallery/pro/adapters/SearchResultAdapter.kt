@@ -5,11 +5,12 @@ import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
+import com.jetug.gallery.pro.activities.SimpleActivity
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
 import com.jetug.gallery.pro.models.ThumbnailItem
 import java.util.ArrayList
 
-class SearchResultAdapter(activity: BaseSimpleActivity, media: ArrayList<ThumbnailItem>,
+class SearchResultAdapter(activity: SimpleActivity, media: ArrayList<ThumbnailItem>,
                           listener: MediaOperationsListener?, isAGetIntent: Boolean,
                           allowMultiplePicks: Boolean, path: String, recyclerView: MyRecyclerView,
                           fastScroller: FastScroller? = null, itemClick: (Any) -> Unit):

@@ -52,10 +52,6 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     var checkedDocumentPath = ""
     var configItemsToExport = LinkedHashMap<String, Any>()
 
-    //////
-    lateinit var activityLauncher: ActivityResultLauncher<String>
-    //////
-
     private val GENERIC_PERM_HANDLER = 100
 
     companion object {

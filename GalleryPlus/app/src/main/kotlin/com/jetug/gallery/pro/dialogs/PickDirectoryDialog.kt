@@ -3,19 +3,19 @@ package com.jetug.gallery.pro.dialogs
 import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.dialogs.FilePickerDialog
 import com.jetug.commons.extensions.*
 import com.jetug.commons.helpers.VIEW_TYPE_GRID
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
+import com.jetug.gallery.pro.activities.SimpleActivity
 import com.jetug.gallery.pro.adapters.DirectoryAdapter
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
 import kotlinx.android.synthetic.main.dialog_directory_picker.view.*
 
-class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: String, showOtherFolderButton: Boolean, val showFavoritesBin: Boolean,
+class PickDirectoryDialog(val activity: SimpleActivity, val sourcePath: String, showOtherFolderButton: Boolean, val showFavoritesBin: Boolean,
                           val callback: (path: String) -> Unit) {
     private var dialog: AlertDialog
     private var shownDirectories = ArrayList<FolderItem>()
@@ -26,7 +26,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
     private var showHidden = activity.config.shouldShowHidden
     private var currentPathPrefix = ""
 
-    private var mOpendGroups = arrayListOf<DirectoryGroup>()
+    private var mOpenedGroups = arrayListOf<DirectoryGroup>()
 
     init {
         (view.directories_grid.layoutManager as MyGridLayoutManager).apply {
@@ -110,7 +110,7 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
                     return@DirectoryAdapter
                 } else {
                     if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
-                        mOpendGroups.add(clickedDir)
+                        mOpenedGroups.add(clickedDir)
                         gotDirectories(clickedDir.innerDirs as ArrayList<FolderItem>)
                     }
                     else {
@@ -164,8 +164,8 @@ class PickDirectoryDialog(val activity: BaseSimpleActivity, val sourcePath: Stri
                 gotDirectories(allDirectories as ArrayList<FolderItem>)
             }
         }
-        else if(mOpendGroups.isNotEmpty()){
-            mOpendGroups.takeLast()
+        else if(mOpenedGroups.isNotEmpty()){
+            mOpenedGroups.takeLast()
             gotDirectories(allDirectories as ArrayList<FolderItem>)
         }
         else {

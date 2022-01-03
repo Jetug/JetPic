@@ -1,4 +1,4 @@
-package com.jetug.gallery.pro
+package com.jetug.gallery.pro.activities
 
 import android.app.Activity
 import android.os.Bundle
@@ -19,25 +19,26 @@ import com.jetug.gallery.pro.activities.MainActivity
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import com.jetug.commons.helpers.VIEW_TYPE_GRID
+import com.jetug.gallery.pro.R
 
 
 class PickDirectoryActivity : SimpleActivity() {
 
     private var rvPosition = RecyclerViewPosition(null)
-    private var isGridViewType = config.viewTypeFolders == VIEW_TYPE_GRID
+    //private var isGridViewType = config.viewTypeFolders == VIEW_TYPE_GRID
 
     private val recyclerAdapter get() = directories_grid.adapter as? DirectoryAdapter
 
     private var mOpenedGroups = arrayListOf<DirectoryGroup>()
     private var shownDirectories = ArrayList<FolderItem>()
-    private var mDirs = ArrayList<FolderItem>()
+    //private var mDirs = ArrayList<FolderItem>()
     private var currentPathPrefix = ""
     private var openedSubfolders = arrayListOf("")
-    private val sourcePath: String
+    private val sourcePath: String = ""
 
     init{
-        val arguments = intent.extras
-        sourcePath = arguments!!["sourcePath"].toString()
+        //val arguments = intent.extras
+        //sourcePath = arguments!!["sourcePath"].toString()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,13 @@ class PickDirectoryActivity : SimpleActivity() {
         setContentView(R.layout.activity_pick_directory)
         rvPosition = RecyclerViewPosition(directories_grid)
         setupAdapter(mDirs)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        makeTranslucentBars()
+        setTopPaddingToActionBarsHeight(directories_grid)
+        setTopMarginToActionBarsHeight(directories_vertical_fastscroller)
     }
 
     override fun onBackPressed() {
@@ -74,7 +82,7 @@ class PickDirectoryActivity : SimpleActivity() {
 
         val clonedDirs = dirs.clone() as ArrayList<FolderItem>
         val adapter = DirectoryAdapter(this, clonedDirs, null, directories_grid, true, itemClick = ::onItemClicked)
-        val scrollHorizontally = config.scrollHorizontally && isGridViewType
+        val scrollHorizontally = config.scrollHorizontally //&& isGridViewType
         val sorting = config.directorySorting
         val dateFormat = config.dateFormat
         val timeFormat = getTimeFormat()
