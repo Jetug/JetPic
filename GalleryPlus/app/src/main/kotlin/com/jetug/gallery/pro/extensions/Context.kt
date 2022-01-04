@@ -195,20 +195,20 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         dirs.forEach {it.subfoldersMediaCount = it.mediaCnt}
 
         dirs.forEach{dir ->
-            var settings: FolderSettings? = null
-            settings = runBlocking {CoroutineScope(Dispatchers.IO).async { folderSettingsDao.getByPath(dir.path) }.await() }
+            //var settings: FolderSettings? = null
+            //settings = runBlocking {CoroutineScope(Dispatchers.IO).async { folderSettingsDao.getByPath(dir.path) }.await() }
 
             var groupName = ""
 
-            if(settings != null){
-                groupName = settings!!.group
-            }
-            else{
-                if(hasStoragePermission)
-                    groupName = getDirectoryGroup(dir.path)
-                settings = FolderSettings(null, dir.path, groupName, arrayListOf())
-                folderSettingsDao.insert(settings!!)
-            }
+//            if(settings != null){
+//                groupName = settings!!.group
+//            }
+//            else{
+                //if(hasStoragePermission)
+            groupName = getDirectoryGroup(dir.path)
+                //settings = FolderSettings(null, dir.path, groupName, arrayListOf())
+                //folderSettingsDao.insert(settings!!)
+            //}
 
             if(groupName == "" || dir.groupName == groupName){
                 result.add(dir)

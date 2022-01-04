@@ -37,7 +37,6 @@ open class SimpleActivity : BaseSimpleActivity() {
     //////
     lateinit var activityLauncher: ActivityResultLauncher<String>
     lateinit var pickDirectoryCallBack: (String?) -> Unit
-
     //////
 
 

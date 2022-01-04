@@ -90,8 +90,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mLastMediaFetcher: MediaFetcher? = null
-    private var allDirs = ArrayList<FolderItem>()
-    private var publicDirs = ArrayList<FolderItem>()
+
+
     private var mStoredAnimateGifs = true
     private var mStoredCropThumbnails = true
     private var mStoredScrollHorizontally = true
@@ -165,6 +165,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 //        if (!packageName.startsWith("com.jetugapps.gallery.plus")) {
 //            handleStoragePermission {}
 //        }
+
+        handleStoragePermission {}
 
         // just request the permission, tryLoadGallery will then trigger in onResume
         handlePermission(PERMISSION_WRITE_STORAGE) {
@@ -369,7 +371,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             super.onBackPressed()
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (mIsThirdPartyIntent) {
             menuInflater.inflate(R.menu.menu_main_intent, menu)
