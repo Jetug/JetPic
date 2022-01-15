@@ -465,7 +465,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     }
 
     private fun setupAdapter() {
-        Log.e("Jet", "Setup Adapter")
         if (!mShowAll && isDirEmpty()) {
             return
         }

@@ -61,7 +61,10 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
     private val MANAGE_STORAGE_RC = 201
 
+    ///Jet
     private var rvPosition = RecyclerViewPosition(null)
+    private var mDirsToShow  = ArrayList<FolderItem>()
+    ///
 
     private var mIsPickImageIntent = false
     private var mIsPickVideoIntent = false
@@ -244,6 +247,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         setTopMarginToActionBarsHeight(directories_switch_searching)
         //setTopMarginToActionBarsHeight(manager)
 
+
         directories_switch_searching.height = topBarsHeight
         ///
         config.isThirdPartyIntent = false
@@ -348,24 +352,31 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
+    private fun restoreRVPosition(){
+        (directories_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(0, -300)
+    }
+
     override fun onBackPressed() {
+        //restoreRVPosition()
         if (config.groupDirectSubfolders) {
             if (mCurrentPathPrefix.isEmpty()) {
                 super.onBackPressed()
             } else {
-                rvPosition.restoreRVPosition()
                 mOpenedSubfolders.removeAt(mOpenedSubfolders.size - 1)
                 mCurrentPathPrefix = mOpenedSubfolders.last()
+                rvPosition.restoreRVPosition()
                 setupAdapter(mDirs)
             }
         } else if(mOpenedGroups.isNotEmpty()){
             val group = mOpenedGroups.takeLast()
             //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
-            rvPosition.restoreRVPosition()
             if(mDirs.size == 0){
                 getDirectories()
             }
-            setupAdapter(mDirs)
+            //(directories_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(0, -300)
+            rvPosition.restoreRVPosition()
+            //setupAdapter(mDirs)
+            updateDirs(mDirsToShow)
         }
         else{
             super.onBackPressed()
@@ -1319,10 +1330,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         directories_grid.beVisibleIf(directories_empty_placeholder.isGone())
     }
 
-
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         Log.e("Jet", "setup ${mDirs.size}")
-        launchDefault{
+        //launchDefault{
             val currAdapter = getRecyclerAdapter()
             val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
             val sortedDirs = if (mOpenedGroups.isEmpty())
@@ -1331,13 +1341,15 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
 
             var dirsToShow = getSortedDirectories(sortedDirs)
+            if (mDirsToShow.isEmpty())
+                mDirsToShow = dirsToShow
 
             if (currAdapter == null || forceRecreate) {
                 initZoomListener()
                 ///Jet
-                withContext(Dispatchers.Main){
+                //withContext(Dispatchers.Main){
                     initAdapter(dirsToShow)
-                }
+                //}
                 ///
                 measureRecyclerViewContent(dirsToShow)
             } else {
@@ -1356,6 +1368,13 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             directories_grid.postDelayed({
                 directories_grid.scrollBy(0, 0)
             }, 500)
+        //}
+    }
+
+    private fun updateDirs(dirs: ArrayList<FolderItem>){
+        val currAdapter = getRecyclerAdapter()
+        if (currAdapter != null) {
+            currAdapter.updateDirs(dirs)
         }
     }
 
@@ -1380,10 +1399,11 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private fun onItemClicked(it: Any){
         val clickedDir = it as FolderItem
         val path = clickedDir.path
+        rvPosition.saveRVPosition()
         if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
             if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
                 mOpenedGroups.add(clickedDir)
-                rvPosition.saveRVPosition()
+                //rvPosition.saveRVPosition()
                 setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
             }
             else if (path != config.tempFolderPath) {
@@ -1392,7 +1412,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         } else {
             mCurrentPathPrefix = path
             mOpenedSubfolders.add(path)
-            rvPosition.saveRVPosition()
+            //rvPosition.saveRVPosition()
             setupAdapter(mDirs, "")
         }
     }

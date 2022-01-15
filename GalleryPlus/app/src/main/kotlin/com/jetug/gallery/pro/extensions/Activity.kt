@@ -292,6 +292,7 @@ fun SimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, isCo
                 }
             }
     }
+
     activityLauncher.launch(source)
 
 //    PickDirectoryDialog(this, source, true, false) {
