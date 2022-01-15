@@ -3,10 +3,12 @@ package com.jetug.commons.activities
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.Intent.*
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
+import android.view.View
 import androidx.core.net.toUri
 import com.jetug.commons.R
 import com.jetug.commons.dialogs.ConfirmationAdvancedDialog
@@ -35,6 +37,14 @@ class AboutActivity : BaseSimpleActivity() {
         setContentView(R.layout.activity_about)
         appName = intent.getStringExtra(APP_NAME) ?: ""
         linkColor = getAdjustedPrimaryColor()
+
+        ///Jet
+        about_help_us.visibility = View.GONE
+        about_help_us_holder.visibility = View.GONE
+        about_social.visibility = View.GONE
+        about_social_holder.visibility = View.GONE
+        about_more_apps_holder.visibility = View.GONE
+        ///
 
         arrayOf(
             about_faq_icon,
@@ -67,10 +77,10 @@ class AboutActivity : BaseSimpleActivity() {
         setupMoreApps()
         setupRateUs()
         setupInvite()
-        setupContributors()
+        //setupContributors()
         setupLicense()
-        setupFacebook()
-        setupReddit()
+        //setupFacebook()
+        //setupReddit()
         setupVersion()
     }
 
@@ -150,12 +160,12 @@ class AboutActivity : BaseSimpleActivity() {
         }
     }
 
-    private fun setupContributors() {
-        about_contributors_holder.setOnClickListener {
-            val intent = Intent(applicationContext, ContributorsActivity::class.java)
-            startActivity(intent)
-        }
-    }
+//    private fun setupContributors() {
+//        about_contributors_holder.setOnClickListener {
+//            val intent = Intent(applicationContext, ContributorsActivity::class.java)
+//            startActivity(intent)
+//        }
+//    }
 
     private fun setupRateUs() {
         about_rate_us_holder.setOnClickListener {
@@ -190,24 +200,24 @@ class AboutActivity : BaseSimpleActivity() {
         }
     }
 
-    private fun setupFacebook() {
-        about_facebook_holder.setOnClickListener {
-            var link = "https://www.facebook.com/simplemobiletools"
-            try {
-                packageManager.getPackageInfo("com.facebook.katana", 0)
-                link = "fb://page/150270895341774"
-            } catch (ignored: Exception) {
-            }
-
-            launchViewIntent(link)
-        }
-    }
-
-    private fun setupReddit() {
-        about_reddit_holder.setOnClickListener {
-            launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
-        }
-    }
+//    private fun setupFacebook() {
+//        about_facebook_holder.setOnClickListener {
+//            var link = "https://www.facebook.com/simplemobiletools"
+//            try {
+//                packageManager.getPackageInfo("com.facebook.katana", 0)
+//                link = "fb://page/150270895341774"
+//            } catch (ignored: Exception) {
+//            }
+//
+//            launchViewIntent(link)
+//        }
+//    }
+//
+//    private fun setupReddit() {
+//        about_reddit_holder.setOnClickListener {
+//            launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
+//        }
+//    }
 
     private fun setupVersion() {
         var version = intent.getStringExtra(APP_VERSION_NAME) ?: ""
@@ -228,7 +238,7 @@ class AboutActivity : BaseSimpleActivity() {
 
             clicksSinceFirstClick++
             if (clicksSinceFirstClick >= EASTER_EGG_REQUIRED_CLICKS) {
-                toast(R.string.hello)
+                toast("Hello :)")
                 firstVersionClickTS = 0L
                 clicksSinceFirstClick = 0
             }

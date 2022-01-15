@@ -879,4 +879,15 @@
 
     <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
     <string name="developer_description">A group of simple, open source Android apps with customizable widgets, without ads and unnecessary permissions.</string>
+    <string name="support">Support</string>
+    <string name="version_placeholder">Version %s</string>
+    <string name="other">Other</string>
+    <string name="help_us">Help us</string>
+    <string name="invite_friends">Invite friends</string>
+    <string name="contributors">Contributors</string>
+    <string name="social">Social</string>
+    <string name="facebook">facebook</string>
+    <string name="reddit">reddit</string>
+    <string name="more_apps_from_us">More apps from us</string>
+    <string name="rate_us">Rate us</string>
 </resources>
