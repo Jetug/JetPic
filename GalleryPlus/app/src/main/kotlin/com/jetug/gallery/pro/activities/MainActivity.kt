@@ -63,7 +63,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     ///Jet
     private var rvPosition = RecyclerViewPosition(null)
-    private var mDirsToShow  = ArrayList<FolderItem>()
+    private var mDirsToShow = ArrayList<FolderItem>()
+    private var openedDirs = ArrayList<ArrayList<FolderItem>>()
     ///
 
     private var mIsPickImageIntent = false
@@ -368,15 +369,15 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 setupAdapter(mDirs)
             }
         } else if(mOpenedGroups.isNotEmpty()){
-            val group = mOpenedGroups.takeLast()
+            mOpenedGroups.takeLast()
+            //val dirs = openedDirs.takeLast()
             //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
             if(mDirs.size == 0){
                 getDirectories()
             }
-            //(directories_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(0, -300)
             rvPosition.restoreRVPosition()
             //setupAdapter(mDirs)
-            updateDirs(mDirsToShow)
+            updateDirs(getSortedDirectories(mDirsToShow))
         }
         else{
             super.onBackPressed()
@@ -1331,17 +1332,19 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     }
 
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
-        Log.e("Jet", "setup ${mDirs.size}")
+        //Log.e("Jet", "setup ${mDirs.size}")
         //launchDefault{
             val currAdapter = getRecyclerAdapter()
             val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
-            val sortedDirs = if (mOpenedGroups.isEmpty())
+            var dirsToShow = if (mOpenedGroups.isEmpty())
                 getDirsToShow(distinctDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
             else
                 mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
 
-            var dirsToShow = getSortedDirectories(sortedDirs)
-            if (mDirsToShow.isEmpty())
+            dirsToShow = getSortedDirectories(dirsToShow)
+
+            //openedDirs.add(dirsToShow)
+            if (mOpenedGroups.isEmpty())
                 mDirsToShow = dirsToShow
 
             if (currAdapter == null || forceRecreate) {
@@ -1353,7 +1356,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 ///
                 measureRecyclerViewContent(dirsToShow)
             } else {
-                runOnUiThread {
+                launchMain {
                     if (textToSearch.isNotEmpty()) {
                         dirsToShow = dirsToShow.filter { it.name.contains(textToSearch, true) }.sortedBy { !it.name.startsWith(textToSearch, true) }
                             .toMutableList() as ArrayList
