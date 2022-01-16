@@ -39,45 +39,37 @@ open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentList
     var mIsVideo = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        val elapsedTime = measureTimeMillis {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_holder)
 
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.fragment_holder)
+        if (checkAppSideloading()) {
+            return
+        }
 
-            if (checkAppSideloading()) {
-                return
-            }
-
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    checkIntent(savedInstanceState)
-                } else {
-                    toast(R.string.no_storage_permissions)
-                    finish()
-                }
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (it) {
+                checkIntent(savedInstanceState)
+            } else {
+                toast(R.string.no_storage_permissions)
+                finish()
             }
         }
-        Log.e("Jet","Photo on Create $elapsedTime ms")
     }
 
     override fun onResume() {
-        val elapsedTime = measureTimeMillis {
+        super.onResume()
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window.statusBarColor = Color.TRANSPARENT
 
-            super.onResume()
-            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window.statusBarColor = Color.TRANSPARENT
-
-            if (config.bottomActions) {
-                window.navigationBarColor = Color.TRANSPARENT
-            } else {
-                setTranslucentNavigation()
-            }
-
-            if (config.blackBackground) {
-                updateStatusbarColor(Color.BLACK)
-            }
+        if (config.bottomActions) {
+            window.navigationBarColor = Color.TRANSPARENT
+        } else {
+            setTranslucentNavigation()
         }
-        Log.e("Jet","Photo on Resume $elapsedTime ms")
+
+        if (config.blackBackground) {
+            updateStatusbarColor(Color.BLACK)
+        }
     }
 
     private fun checkIntent(savedInstanceState: Bundle? = null) {
@@ -284,11 +276,11 @@ open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentList
     private fun isFileTypeVisible(path: String): Boolean {
         val filter = config.filterMedia
         return !(path.isImageFast() && filter and TYPE_IMAGES == 0 ||
-                path.isVideoFast() && filter and TYPE_VIDEOS == 0 ||
-                path.isGif() && filter and TYPE_GIFS == 0 ||
-                path.isRawFast() && filter and TYPE_RAWS == 0 ||
-                path.isSvg() && filter and TYPE_SVGS == 0 ||
-                path.isPortrait() && filter and TYPE_PORTRAITS == 0)
+            path.isVideoFast() && filter and TYPE_VIDEOS == 0 ||
+            path.isGif() && filter and TYPE_GIFS == 0 ||
+            path.isRawFast() && filter and TYPE_RAWS == 0 ||
+            path.isSvg() && filter and TYPE_SVGS == 0 ||
+            path.isPortrait() && filter and TYPE_PORTRAITS == 0)
     }
 
     private fun initBottomActions() {
@@ -307,7 +299,7 @@ open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentList
 
     private fun initBottomActionButtons() {
         arrayListOf(bottom_favorite, bottom_delete, bottom_rotate, bottom_properties, bottom_change_orientation, bottom_slideshow, bottom_show_on_map,
-                bottom_toggle_file_visibility, bottom_rename, bottom_copy, bottom_move, bottom_resize).forEach {
+            bottom_toggle_file_visibility, bottom_rename, bottom_copy, bottom_move, bottom_resize).forEach {
             it.beGone()
         }
 

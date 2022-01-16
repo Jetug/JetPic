@@ -58,7 +58,6 @@ class MediaAdapter(
         }
     }
 
-
     private fun showDateEditionDialog(){
         val paths = getSelectedPaths()
         val dialog = DateEditingDialog(paths) {_,_->

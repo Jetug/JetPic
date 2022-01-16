@@ -3,9 +3,11 @@ package com.jetug.gallery.pro.activities
 import android.annotation.SuppressLint
 import android.database.ContentObserver
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import android.view.WindowManager
+import androidx.activity.result.ActivityResultLauncher
 import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.dialogs.FilePickerDialog
 import com.jetug.commons.extensions.getParentPath
@@ -14,9 +16,9 @@ import com.jetug.commons.extensions.scanPathRecursively
 import com.jetug.commons.helpers.ensureBackgroundThread
 import com.jetug.commons.helpers.isPiePlus
 import com.jetug.gallery.pro.R
-import com.jetug.gallery.pro.extensions.addPathToDB
-import com.jetug.gallery.pro.extensions.config
-import com.jetug.gallery.pro.extensions.updateDirectoryPath
+import com.jetug.gallery.pro.activities.contracts.PickDirectoryContract
+import com.jetug.gallery.pro.extensions.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 open class SimpleActivity : BaseSimpleActivity() {
     val observer = object : ContentObserver(null) {
@@ -29,6 +31,19 @@ open class SimpleActivity : BaseSimpleActivity() {
             	    addPathToDB(path)
             	}
 	    }
+        }
+    }
+
+    //////
+    lateinit var activityLauncher: ActivityResultLauncher<String>
+    lateinit var pickDirectoryCallBack: (String?) -> Unit
+    //////
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityLauncher = registerForActivityResult(PickDirectoryContract()) { destination ->
+            pickDirectoryCallBack(destination)
         }
     }
 

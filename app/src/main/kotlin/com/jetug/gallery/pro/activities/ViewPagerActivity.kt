@@ -21,7 +21,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore.Images
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -64,7 +63,6 @@ import kotlinx.android.synthetic.main.bottom_actions.*
 import java.io.File
 import java.io.OutputStream
 import java.util.*
-import kotlin.system.measureTimeMillis
 
 class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, ViewPagerFragment.FragmentListener {
     private val REQUEST_VIEW_VIDEO = 1
@@ -90,76 +88,55 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     private var mIgnoredPaths = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val elapsedTime = measureTimeMillis {
+        useDynamicTheme = false
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_medium)
 
-            val time4 = measureTimeMillis {
-                useDynamicTheme = false
-                val time5 = measureTimeMillis {
-                    super.onCreate(savedInstanceState)
-                    setContentView(R.layout.activity_medium)
-                }
-                Log.e("Jet","sup $time5 ms")
-                window.decorView.setBackgroundColor(config.backgroundColor)
-                top_shadow.layoutParams.height = statusBarHeight + actionBarHeight
+        window.decorView.setBackgroundColor(config.backgroundColor)
+        top_shadow.layoutParams.height = statusBarHeight + actionBarHeight
+        checkNotchSupport()
+        (MediaActivity.mMedia.clone() as ArrayList<ThumbnailItem>).filter { it is Medium }.mapTo(mMediaFiles) { it as Medium }
 
-
-                checkNotchSupport()
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (it) {
+                initViewPager()
+            } else {
+                toast(R.string.no_storage_permissions)
+                finish()
             }
-            Log.e("Jet","1st half $time4 ms")
-
-            val time3 = measureTimeMillis {
-                (MediaActivity.mMedia.clone() as ArrayList<ThumbnailItem>).filter { it is Medium }.mapTo(mMediaFiles) { it as Medium }
-
-                handlePermission(PERMISSION_WRITE_STORAGE) {
-                    if (it) {
-                        val time2 = measureTimeMillis {
-                            initViewPager()
-                        }
-                        Log.e("Jet", "initViewPager() $time2 ms")
-                    } else {
-                        toast(R.string.no_storage_permissions)
-                        finish()
-                    }
-                }
-
-                initFavorites()
-            }
-            Log.e("Jet","2nd half $time3 ms")
         }
-        Log.e("Jet","ViewPager on Create $elapsedTime ms")
+
+        initFavorites()
     }
 
     override fun onResume() {
-        val elapsedTime = measureTimeMillis {
-            super.onResume()
-            if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
-                finish()
-                return
-            }
-
-            if (config.bottomActions) {
-                window.navigationBarColor = Color.TRANSPARENT
-            } else {
-                setTranslucentNavigation()
-            }
-
-            initBottomActions()
-
-            if (config.maxBrightness) {
-                val attributes = window.attributes
-                attributes.screenBrightness = 1f
-                window.attributes = attributes
-            }
-
-            setupOrientation()
-            invalidateOptionsMenu()
-
-            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val filename = getCurrentMedium()?.name ?: mPath.getFilenameFromPath()
-            supportActionBar?.title = filename
-            window.statusBarColor = Color.TRANSPARENT
+        super.onResume()
+        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
+            finish()
+            return
         }
-        Log.e("Jet", "ViewPager on Resume $elapsedTime ms")
+
+        if (config.bottomActions) {
+            window.navigationBarColor = Color.TRANSPARENT
+        } else {
+            setTranslucentNavigation()
+        }
+
+        initBottomActions()
+
+        if (config.maxBrightness) {
+            val attributes = window.attributes
+            attributes.screenBrightness = 1f
+            window.attributes = attributes
+        }
+
+        setupOrientation()
+        invalidateOptionsMenu()
+
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val filename = getCurrentMedium()?.name ?: mPath.getFilenameFromPath()
+        supportActionBar?.title = filename
+        window.statusBarColor = Color.TRANSPARENT
     }
 
     override fun onPause() {
@@ -1150,7 +1127,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun refreshViewPager() {
-        if (this.getFolderSorting(mDirectory) and SORT_BY_RANDOM == 0) {
+        if (getFolderSorting(mDirectory) and SORT_BY_RANDOM == 0) {
             GetMediaAsynctask(applicationContext, mDirectory, false, false, mShowAll) {
                 gotMedia(it)
             }.execute()

@@ -10,6 +10,7 @@ import com.jetug.commons.extensions.setupDialogStuff
 import com.jetug.commons.helpers.VIEW_TYPE_GRID
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
+import com.jetug.gallery.pro.activities.SimpleActivity
 import com.jetug.gallery.pro.adapters.SearchResultAdapter
 import com.jetug.gallery.pro.asynctasks.GetMediaAsynctask
 import com.jetug.gallery.pro.extensions.config
@@ -20,7 +21,7 @@ import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import kotlinx.android.synthetic.main.dialog_medium_picker.view.*
 
-class PickMediumDialog(val activity: BaseSimpleActivity, val path: String, val callback: (path: String) -> Unit) {
+class PickMediumDialog(val activity: SimpleActivity, val path: String, val callback: (path: String) -> Unit) {
     var dialog: AlertDialog
     var shownMedia = ArrayList<ThumbnailItem>()
     val view = activity.layoutInflater.inflate(R.layout.dialog_medium_picker, null)

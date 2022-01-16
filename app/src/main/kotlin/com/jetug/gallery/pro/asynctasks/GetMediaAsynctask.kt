@@ -6,6 +6,7 @@ import com.jetug.commons.helpers.*
 import com.jetug.gallery.pro.extensions.config
 import com.jetug.gallery.pro.extensions.getFavoritePaths
 import com.jetug.gallery.pro.helpers.*
+import com.jetug.gallery.pro.jetug.getFolderSorting
 import com.jetug.gallery.pro.models.Medium
 import com.jetug.gallery.pro.models.ThumbnailItem
 import java.util.*
@@ -18,7 +19,7 @@ class GetMediaAsynctask(val context: Context, val mPath: String, val isPickImage
     override fun doInBackground(vararg params: Void): ArrayList<ThumbnailItem> {
         val pathToUse = if (showAll) SHOW_ALL else mPath
         val folderGrouping = context.config.getFolderGrouping(pathToUse)
-        val fileSorting = context.config.getFolderSorting(pathToUse)
+        val fileSorting = context.getFolderSorting(pathToUse)
         val getProperDateTaken = fileSorting and SORT_BY_DATE_TAKEN != 0 ||
             folderGrouping and GROUP_BY_DATE_TAKEN_DAILY != 0 ||
             folderGrouping and GROUP_BY_DATE_TAKEN_MONTHLY != 0
@@ -42,7 +43,7 @@ class GetMediaAsynctask(val context: Context, val mPath: String, val isPickImage
                 media.addAll(newMedia)
             }
 
-            mediaFetcher.sortMedia(media, context.config.getFolderSorting(SHOW_ALL))
+            mediaFetcher.sortMedia(media, context.getFolderSorting(SHOW_ALL))
             media
         } else {
             mediaFetcher.getFilesFrom(mPath, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize, favoritePaths,
@@ -72,7 +73,7 @@ class GetMediaAsynctask2(val context: Context, val mPath: String, val isPickImag
     override fun doInBackground(vararg params: Void): ArrayList<ThumbnailItem> {
         val pathToUse = if (showAll) SHOW_ALL else mPath
         val folderGrouping = context.config.getFolderGrouping(pathToUse)
-        val fileSorting = context.config.getFolderSorting(pathToUse)
+        val fileSorting = context.getFolderSorting(pathToUse)
         val getProperDateTaken = fileSorting and SORT_BY_DATE_TAKEN != 0 ||
                 folderGrouping and GROUP_BY_DATE_TAKEN_DAILY != 0 ||
                 folderGrouping and GROUP_BY_DATE_TAKEN_MONTHLY != 0
@@ -98,7 +99,7 @@ class GetMediaAsynctask2(val context: Context, val mPath: String, val isPickImag
                 media.addAll(newMedia)
             }
 
-            mediaFetcher.sortMedia(media, context.config.getFolderSorting(SHOW_ALL))
+            mediaFetcher.sortMedia(media, context.getFolderSorting(SHOW_ALL))
             media
         } else {
             mediaFetcher.getFilesFrom(mPath, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize, favoritePaths,

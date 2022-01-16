@@ -25,6 +25,7 @@ import com.jetug.commons.models.FileDirItem
 import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
+import com.jetug.gallery.pro.activities.SimpleActivity
 import com.jetug.gallery.pro.activities.ViewPagerActivity
 import com.jetug.gallery.pro.dialogs.DeleteWithRememberDialog
 import com.jetug.gallery.pro.extensions.*
@@ -49,7 +50,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 open class MediaAdapterBase (
-    activity: BaseSimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
+    activity: SimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
     val allowMultiplePicks: Boolean, val path: String, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null, swipeRefreshLayout: SwipeRefreshLayout? = null, itemClick: (Any) -> Unit
 ) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick) {
@@ -421,7 +422,7 @@ open class MediaAdapterBase (
             return
         }
 
-        activity.tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
+        (activity as SimpleActivity).tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
             val destinationPath = it
             config.tempFolderPath = ""
             activity.applicationContext.rescanFolderMedia(destinationPath)

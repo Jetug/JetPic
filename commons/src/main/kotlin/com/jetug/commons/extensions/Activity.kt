@@ -330,7 +330,8 @@ fun Activity.setAsIntent(path: String, applicationId: String) {
 
 fun Activity.openEditorIntent(path: String, forceChooser: Boolean, applicationId: String) {
     ensureBackgroundThread {
-        val newUri = getFinalUriFromPath(path, applicationId) ?: return@ensureBackgroundThread
+        val newUri = getFinalUriFromPath(path, applicationId) ?:
+        return@ensureBackgroundThread
         Intent().apply {
             action = Intent.ACTION_EDIT
             setDataAndType(newUri, getUriMimeType(path, newUri))
