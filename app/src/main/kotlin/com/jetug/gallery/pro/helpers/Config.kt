@@ -5,10 +5,7 @@ import android.content.res.Configuration
 import android.os.Environment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jetug.commons.helpers.BaseConfig
-import com.jetug.commons.helpers.SORT_BY_DATE_MODIFIED
-import com.jetug.commons.helpers.SORT_DESCENDING
-import com.jetug.commons.helpers.VIEW_TYPE_GRID
+import com.jetug.commons.helpers.*
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.models.AlbumCover
 import java.util.*
@@ -19,7 +16,7 @@ class Config(context: Context) : BaseConfig(context) {
     }
 
     var directorySorting: Int
-        get(): Int = prefs.getInt(DIRECTORY_SORT_ORDER, SORT_BY_DATE_MODIFIED or SORT_DESCENDING)
+        get(): Int = prefs.getInt(DIRECTORY_SORT_ORDER, SORT_BY_NAME or SORT_DESCENDING)
         set(order) = prefs.edit().putInt(DIRECTORY_SORT_ORDER, order).apply()
 
     fun saveFolderGrouping(path: String, value: Int) {

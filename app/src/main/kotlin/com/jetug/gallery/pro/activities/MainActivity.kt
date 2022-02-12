@@ -661,32 +661,54 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     private fun tryToggleTemporarilyShowHidden() {
         if (config.temporarilyShowHidden) {
-            toggleTemporarilyShowHidden(false)
             setupAdapter(publicDirs)
-//            directories_grid.adapter = null
-            getDirectories()
+            toggleTemporarilyShowHidden(false)
         } else {
             handleHiddenFolderPasswordProtection {
-                toggleTemporarilyShowHidden(true)
                 publicDirs = mDirs.clone() as ArrayList<FolderItem>
                 if (allDirs.isNotEmpty())
                     setupAdapter(allDirs)
+                toggleTemporarilyShowHidden(true)
             }
         }
-//        handleHiddenFolderPasswordProtection {
-//            //directories_grid.adapter = null
-//            if (allDirs.isNotEmpty())
-//                setupAdapter(allDirs)
-//        }
     }
 
     private fun toggleTemporarilyShowHidden(show: Boolean) {
         mLoadedInitialPhotos = false
         config.temporarilyShowHidden = show
         //directories_grid.adapter = null
-        //getDirectories()
+        getDirectories()
         invalidateOptionsMenu()
     }
+
+//    private fun tryToggleTemporarilyShowHidden() {
+//        if (config.temporarilyShowHidden) {
+//            toggleTemporarilyShowHidden(false)
+//            setupAdapter(publicDirs)
+////            directories_grid.adapter = null
+//            getDirectories()
+//        } else {
+//            handleHiddenFolderPasswordProtection {
+//                toggleTemporarilyShowHidden(true)
+//                publicDirs = mDirs.clone() as ArrayList<FolderItem>
+//                if (allDirs.isNotEmpty())
+//                    setupAdapter(allDirs)
+//            }
+//        }
+////        handleHiddenFolderPasswordProtection {
+////            //directories_grid.adapter = null
+////            if (allDirs.isNotEmpty())
+////                setupAdapter(allDirs)
+////        }
+//    }
+
+//    private fun toggleTemporarilyShowHidden(show: Boolean) {
+//        mLoadedInitialPhotos = false
+//        config.temporarilyShowHidden = show
+//        //directories_grid.adapter = null
+//        //getDirectories()
+//        invalidateOptionsMenu()
+//    }
 
     override fun deleteFolders(folders: ArrayList<File>) {
         val fileDirItems = folders.asSequence().filter { it.isDirectory }.map { FileDirItem(it.absolutePath, it.name, true) }.toMutableList() as ArrayList<FileDirItem>
@@ -1044,22 +1066,22 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         val buff = getSortedDirectories(newDirs)
         val dirs = buff.getDirectories()
         //if (config.groupDirectSubfolders) {
-            mDirs = dirs.clone() as ArrayList<FolderItem>
+        mDirs = dirs.clone() as ArrayList<FolderItem>
         //}
 
         var isPlaceholderVisible = dirs.isEmpty()
 
         val elapsedTime = measureTimeMillis {
-        runOnUiThread {
-            checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
+            runOnUiThread {
+                checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
 
-            val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
-            directories_vertical_fastscroller.beVisibleIf(directories_grid.isVisible() && !allowHorizontalScroll)
-            directories_horizontal_fastscroller.beVisibleIf(directories_grid.isVisible() && allowHorizontalScroll)
+                val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
+                directories_vertical_fastscroller.beVisibleIf(directories_grid.isVisible() && !allowHorizontalScroll)
+                directories_horizontal_fastscroller.beVisibleIf(directories_grid.isVisible() && allowHorizontalScroll)
 
-            //Jet
-            setupAdapter(dirs.clone() as ArrayList<FolderItem>)
-        }
+                //Jet
+                setupAdapter(dirs.clone() as ArrayList<FolderItem>)
+            }
         }
         Log.e("Jet", "RunUI $elapsedTime")
 
@@ -1334,43 +1356,43 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
         //Log.e("Jet", "setup ${mDirs.size}")
         //launchDefault{
-            val currAdapter = getRecyclerAdapter()
-            val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
-            var dirsToShow = if (mOpenedGroups.isEmpty())
-                getDirsToShow(distinctDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
-            else
-                mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
+        val currAdapter = getRecyclerAdapter()
+        val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
+        var dirsToShow = if (mOpenedGroups.isEmpty())
+            getDirsToShow(distinctDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
+        else
+            mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
 
-            dirsToShow = getSortedDirectories(dirsToShow)
+        dirsToShow = getSortedDirectories(dirsToShow)
 
-            //openedDirs.add(dirsToShow)
-            if (mOpenedGroups.isEmpty())
-                mDirsToShow = dirsToShow
+        //openedDirs.add(dirsToShow)
+        if (mOpenedGroups.isEmpty())
+            mDirsToShow = dirsToShow
 
-            if (currAdapter == null || forceRecreate) {
-                initZoomListener()
-                ///Jet
-                //withContext(Dispatchers.Main){
-                    initAdapter(dirsToShow)
-                //}
-                ///
-                measureRecyclerViewContent(dirsToShow)
-            } else {
-                launchMain {
-                    if (textToSearch.isNotEmpty()) {
-                        dirsToShow = dirsToShow.filter { it.name.contains(textToSearch, true) }.sortedBy { !it.name.startsWith(textToSearch, true) }
-                            .toMutableList() as ArrayList
-                    }
-                    checkPlaceholderVisibility(dirsToShow)
-                    currAdapter.updateDirs(dirsToShow)
-                    measureRecyclerViewContent(dirsToShow)
+        if (currAdapter == null || forceRecreate) {
+            initZoomListener()
+            ///Jet
+            //withContext(Dispatchers.Main){
+            initAdapter(dirsToShow)
+            //}
+            ///
+            measureRecyclerViewContent(dirsToShow)
+        } else {
+            launchMain {
+                if (textToSearch.isNotEmpty()) {
+                    dirsToShow = dirsToShow.filter { it.name.contains(textToSearch, true) }.sortedBy { !it.name.startsWith(textToSearch, true) }
+                        .toMutableList() as ArrayList
                 }
+                checkPlaceholderVisibility(dirsToShow)
+                currAdapter.updateDirs(dirsToShow)
+                measureRecyclerViewContent(dirsToShow)
             }
+        }
 
-            // recyclerview sometimes becomes empty at init/update, triggering an invisible refresh like this seems to work fine
-            directories_grid.postDelayed({
-                directories_grid.scrollBy(0, 0)
-            }, 500)
+        // recyclerview sometimes becomes empty at init/update, triggering an invisible refresh like this seems to work fine
+        directories_grid.postDelayed({
+            directories_grid.scrollBy(0, 0)
+        }, 500)
         //}
     }
 
@@ -1385,7 +1407,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         val fastScroller = if (config.scrollHorizontally) directories_horizontal_fastscroller else directories_vertical_fastscroller
         DirectoryAdapter(this, dirsToShow, this, directories_grid,isPickIntent(intent) || isGetAnyContentIntent(intent),
             directories_refresh_layout, fastScroller){
-                onItemClicked(it)
+            onItemClicked(it)
         }.apply {
             setupZoomListener(mZoomListener)
             runOnUiThread {
