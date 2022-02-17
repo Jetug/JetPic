@@ -6,9 +6,7 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
-import android.icu.text.CaseMap
 import android.text.TextUtils
-import android.util.Log
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
@@ -17,7 +15,6 @@ import android.widget.RelativeLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.jetug.commons.activities.BaseSimpleActivity
 import com.jetug.commons.adapters.MyRecyclerViewAdapter
 import com.jetug.commons.dialogs.*
 import com.jetug.commons.extensions.*
@@ -26,8 +23,10 @@ import com.jetug.commons.models.FileDirItem
 import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
+import com.jetug.gallery.pro.activities.MainActivity
 import com.jetug.gallery.pro.activities.MediaActivity
 import com.jetug.gallery.pro.activities.SimpleActivity
+import com.jetug.gallery.pro.activities.mDirs
 import com.jetug.gallery.pro.dialogs.*
 import com.jetug.gallery.pro.extensions.*
 import com.jetug.gallery.pro.helpers.*
@@ -35,8 +34,7 @@ import com.jetug.gallery.pro.interfaces.DirectoryOperationsListener
 import com.jetug.gallery.pro.models.*
 import com.jetug.gallery.pro.jetug.*
 import com.jetug.gallery.pro.views.MySquareImageView
-import kotlinx.android.synthetic.main.activity_media.*
-import kotlinx.android.synthetic.main.directory_item_grid_square.view.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_drag_handle_wrapper
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_location
@@ -49,17 +47,13 @@ import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import kotlinx.android.synthetic.main.item_dir_group.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @SuppressLint("NotifyDataSetChanged")
-class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
+class DirectoryAdapter(activity: MainActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
                        private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
@@ -248,20 +242,6 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
     }
 
     fun updateDirs(newDirs: ArrayList<FolderItem>){
-
-//        val newDirs = directories.clone() as ArrayList<FolderItem>
-//        val size = dirs.size
-//        dirs.clear()
-//        withContext(Dispatchers.Main) {
-//            notifyItemRangeRemoved(0, size - 1)
-//        }
-//        recyclerView.getRecycledViewPool().clear()
-//        //delay(5000)
-//        dirs = newDirs
-//        withContext(Dispatchers.Main) {
-//            notifyDataSetChanged()
-//        }
-
         val directories = newDirs.clone() as ArrayList<FolderItem>
         if (directories.hashCode() != currentDirectoriesHash) {
             currentDirectoriesHash = directories.hashCode()
@@ -270,6 +250,11 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
             notifyDataSetChanged()
             finishActMode()
         }
+    }
+
+    fun reloadDirs(){
+        val rDirs = activity.getSortedDirectories(activity.getDirsToShow(dirs.getDirectories()))
+        updateDirs(rDirs)
     }
 
     fun updateAnimateGifs(animateGifs: Boolean) {
@@ -299,22 +284,33 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
 
     private fun groupDirs(){
         val items = selectedItems
+        val groups = selectedGroups
+
         fun group(name: String){
+            var d = dirs
             for (i in 0 until items.size){
                 val item = items[i]
                 if(item is Directory) {
                     item.groupName = name
                     //activity.updateDBDirectory(item)
-
+                    //dirs.remove(item)
                     activity.saveDirectoryGroup(item.path, name)
                 }
             }
 
-            dirs = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
+            d = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
+//            dirs.clear()
+//            notifyDataSetChanged()
+            dirs = d
+            mDirs = d
+//            var test = dirs
+//            updateDirs(d)
+//            test = dirs
+//            dirs.clear()
+            activity.directories_grid.adapter = null
+            (activity as MainActivity).setupAdapter(d)
             notifyDataSetChanged()
-            finishActMode()
         }
-        val groups = selectedGroups
 
         if(selectedGroups.size == 1){
             group(groups[0].name)
@@ -324,23 +320,29 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
                 group(name)
             }
         }
+        finishActMode()
     }
 
     private fun ungroupDirs(){
-        val item = selectedItems[0]
-        if(item is DirectoryGroup) {
-            item.innerDirs.forEach{
-                //activity.updateDBDirectory(it)
-                activity.saveDirectoryGroup(item.path, "")
+        if(selectedItems.isEmpty()) return
+        val items = selectedItems
+        for (item in items) {
+            if (!(item is DirectoryGroup))
+                continue
+
+            val innerDirs = item.innerDirs
+            innerDirs.forEach {
+                activity.saveDirectoryGroup(it.path, "")
             }
 
             dirs.remove(item)
-            dirs.addAll(item.innerDirs)
-
-            dirs = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
-            notifyDataSetChanged()
-            finishActMode()
+            innerDirs.forEach {it.groupName = "" }
+            dirs.addAll(innerDirs)
         }
+        dirs = activity.getDirsToShow(dirs.getDirectories())
+        mDirs = dirs
+        notifyDataSetChanged()
+        finishActMode()
     }
 
     private fun checkHideBtnVisibility(menu: Menu, selectedPaths: ArrayList<String>) {

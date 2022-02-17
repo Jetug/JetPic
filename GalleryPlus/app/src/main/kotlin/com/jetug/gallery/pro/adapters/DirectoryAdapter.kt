@@ -243,7 +243,7 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
 
     private fun getDirsToShow(){
         dirs = activity.getDirsToShow(dirs.getDirectories())
-        dirs = activity.getSortedDirectories(dirs)
+        //dirs = activity.getSortedDirectories(dirs)
         notifyDataSetChanged()
     }
 

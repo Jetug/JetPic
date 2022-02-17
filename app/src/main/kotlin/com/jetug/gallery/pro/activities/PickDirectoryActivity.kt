@@ -13,11 +13,6 @@ import kotlinx.android.synthetic.main.activity_pick_directory.directories_horizo
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import androidx.recyclerview.widget.RecyclerView
-import com.jetug.commons.helpers.VIEW_TYPE_GRID
 import com.jetug.commons.views.MyGridLayoutManager
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.dialogs.ChangeSortingDialog

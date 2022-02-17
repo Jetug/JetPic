@@ -95,7 +95,11 @@ class PickDirectoryDialog(val activity: SimpleActivity, val sourcePath: String, 
 
         val distinctDirs = newDirs.filter { showFavoritesBin || (!it.isRecycleBin() && !it.areFavorites()) }.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
         val sortedDirs = activity.getSortedDirectories(distinctDirs)
-        val dirs = activity.getDirsToShow(sortedDirs.getDirectories(), allDirectories.getDirectories(), currentPathPrefix).clone() as ArrayList<FolderItem>
+        val dirs = activity.getDirsToShow(
+            sortedDirs.getDirectories(),
+            allDirectories.getDirectories(),
+            currentPathPrefix
+        ).clone() as ArrayList<FolderItem>
         if (dirs.hashCode() == shownDirectories.hashCode()) {
             return
         }

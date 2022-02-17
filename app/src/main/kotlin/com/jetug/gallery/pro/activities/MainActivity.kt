@@ -47,13 +47,10 @@ import com.jetug.gallery.pro.models.DirectoryGroup
 import com.jetug.gallery.pro.models.FolderItem
 import com.jetug.gallery.pro.models.Medium
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_media.*
-import kotlinx.coroutines.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
-
 
 class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private val PICK_MEDIA = 2
@@ -1363,7 +1360,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         else
             mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
 
-        dirsToShow = getSortedDirectories(dirsToShow)
+        //dirsToShow = getSortedDirectories(dirsToShow)
 
         //openedDirs.add(dirsToShow)
         if (mOpenedGroups.isEmpty())
