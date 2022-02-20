@@ -28,7 +28,10 @@ import java.util.regex.Pattern
 // http://stackoverflow.com/a/40582634/1967672
 fun Context.getSDCardPath(): String {
     val directories = getStorageDirectories().filter {
-        !it.equals(getInternalStoragePath()) && !it.equals("/storage/emulated/0", true) && (baseConfig.OTGPartition.isEmpty() || !it.endsWith(baseConfig.OTGPartition))
+        !it.equals(getInternalStoragePath()) && !it.equals(
+            "/storage/emulated/0",
+            true
+        ) && (baseConfig.OTGPartition.isEmpty() || !it.endsWith(baseConfig.OTGPartition))
     }
 
     val fullSDpattern = Pattern.compile(SD_OTG_PATTERN)
@@ -117,12 +120,14 @@ fun Context.getStorageDirectories(): Array<String> {
 }
 
 fun Context.getHumanReadablePath(path: String): String {
-    return getString(when (path) {
-        "/" -> R.string.root
-        internalStoragePath -> R.string.internal
-        otgPath -> R.string.usb
-        else -> R.string.sd_card
-    })
+    return getString(
+        when (path) {
+            "/" -> R.string.root
+            internalStoragePath -> R.string.internal
+            otgPath -> R.string.usb
+            else -> R.string.sd_card
+        }
+    )
 }
 
 fun Context.humanizePath(path: String): String {
@@ -134,25 +139,26 @@ fun Context.humanizePath(path: String): String {
     }
 }
 
-fun Context.getInternalStoragePath() = if (File("/storage/emulated/0").exists()) "/storage/emulated/0" else Environment.getExternalStorageDirectory().absolutePath.trimEnd('/')
+fun Context.getInternalStoragePath() =
+    if (File("/storage/emulated/0").exists()) "/storage/emulated/0" else Environment.getExternalStorageDirectory().absolutePath.trimEnd('/')
 
 fun Context.isPathOnSD(path: String) = sdCardPath.isNotEmpty() && path.startsWith(sdCardPath)
 
 fun Context.isPathOnOTG(path: String) = otgPath.isNotEmpty() && path.startsWith(otgPath)
 
 // no need to use DocumentFile if an SD card is set as the default storage
-fun Context.needsStupidWritePermissions(path: String) = (isPathOnSD(path) || isPathOnOTG(path)) && !isSDCardSetAsDefaultStorage()
+fun Context.needsStupidWritePermissions(path: String) = !isRPlus() && (isPathOnSD(path) || isPathOnOTG(path)) && !isSDCardSetAsDefaultStorage()
 
 fun Context.isSDCardSetAsDefaultStorage() = sdCardPath.isNotEmpty() && Environment.getExternalStorageDirectory().absolutePath.equals(sdCardPath, true)
 
 fun Context.hasProperStoredTreeUri(isOTG: Boolean): Boolean {
-    val uri = if (isOTG) baseConfig.OTGTreeUri else baseConfig.treeUri
+    val uri = if (isOTG) baseConfig.OTGTreeUri else baseConfig.sdTreeUri
     val hasProperUri = contentResolver.persistedUriPermissions.any { it.uri.toString() == uri }
     if (!hasProperUri) {
         if (isOTG) {
             baseConfig.OTGTreeUri = ""
         } else {
-            baseConfig.treeUri = ""
+            baseConfig.sdTreeUri = ""
         }
     }
     return hasProperUri

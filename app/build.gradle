@@ -17,14 +17,14 @@ android {
 
 
     defaultConfig {
-        //applicationId "com.jetugapps.gallery.plus"
+        applicationId "com.jetugapps.gallery.plus"
         //applicationId "com.jetugapps.gallery"
-        applicationId "com.simplemobiletools.jetugapps.gallery"
+        //applicationId "com.simplemobiletools.jetugapps.gallery"
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 29
-        versionCode 21
-        versionName "1.2.3"
+        versionCode 22
+        versionName "1.2.4"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }

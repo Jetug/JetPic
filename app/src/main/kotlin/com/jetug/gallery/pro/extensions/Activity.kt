@@ -66,29 +66,29 @@ fun Activity.setTopPaddingToActionBarsHeight(view: View){
     view.setPadding(0,topBarsHeight,0,0)
 }
 
-fun Activity.createFile(pickerInitialUri: Uri, name: String) {
-    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-        addCategory(Intent.CATEGORY_OPENABLE)
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TITLE, name)
+//fun Activity.createFile(pickerInitialUri: Uri, name: String) {
+//    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+//        addCategory(Intent.CATEGORY_OPENABLE)
+//        type = "text/plain"
+//        putExtra(Intent.EXTRA_TITLE, name)
+//
+//        // При необходимости укажите URI для каталога, который должен быть открыт в системном средстве выбора файлов, прежде чем ваше приложение создаст документ.
+//        putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
+//    }
+//    startActivityForResult(intent, CREATE_FILE)
+//}
 
-        // При необходимости укажите URI для каталога, который должен быть открыт в системном средстве выбора файлов, прежде чем ваше приложение создаст документ.
-        putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
-    }
-    startActivityForResult(intent, CREATE_FILE)
-}
-
-fun Activity.requireFileAccessPermission(){
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        val uri = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
-        startActivity(
-            Intent(
-                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-                uri
-            )
-        )
-    }
-}
+//fun Activity.requireFileAccessPermission(){
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//        val uri = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+//        startActivity(
+//            Intent(
+//                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+//                uri
+//            )
+//        )
+//    }
+//}
 
 /////////////////////
 fun Activity.sharePath(path: String) {
@@ -261,7 +261,7 @@ fun BaseSimpleActivity.toggleFileVisibility(oldPath: String, hide: Boolean, call
     }
 
     val newPath = "$path/$filename"
-    renameFile(oldPath, newPath) {
+    renameFile(oldPath, newPath, false) { success, useAndroid30Way ->
         runOnUiThread {
             callback?.invoke(newPath)
         }
@@ -271,10 +271,6 @@ fun BaseSimpleActivity.toggleFileVisibility(oldPath: String, hide: Boolean, call
         }
     }
 }
-
-///////////
-
-///////
 
 fun SimpleActivity.tryCopyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, isCopyOperation: Boolean, callback: (destinationPath: String) -> Unit) {
     if (fileDirItems.isEmpty()) {
@@ -645,13 +641,11 @@ fun BaseSimpleActivity.saveRotatedImageToFile(oldPath: String, newPath: String, 
         if (showToasts) {
             toast(R.string.out_of_memory_error)
         }
-    }
-//    catch (e: Exception) {
-//        if (showToasts) {
-//            showErrorToast(e)
-//        }
-//    }
-    finally {
+    } catch (e: Exception) {
+        if (showToasts) {
+            showErrorToast(e)
+        }
+    } finally {
         tryDeleteFileDirItem(tmpFileDirItem, false, true)
     }
 }

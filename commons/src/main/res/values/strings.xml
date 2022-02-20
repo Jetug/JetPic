@@ -890,4 +890,7 @@
     <string name="reddit">reddit</string>
     <string name="more_apps_from_us">More apps from us</string>
     <string name="rate_us">Rate us</string>
+    <string name="copying_success_one">File copied successfully</string>
+    <string name="moving_success_one">File moved successfully</string>
+    <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
 </resources>

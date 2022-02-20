@@ -557,17 +557,6 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     @SuppressLint("NotifyDataSetChanged")
     private fun showSortingDialog() {
         ChangeSortingDialog(this, false, true, mPath) {
-
-//            mediaAdapter?.sort()
-
-//            val adapter = mediaAdapter
-//            if(adapter != null) {
-//                getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {
-//                    adapter.media = it
-//                    launchMain { adapter.notifyDataSetChanged() }
-//                }
-//            }
-
             mLoadedInitialPhotos = false
             media_grid.adapter = null
             getMedia()

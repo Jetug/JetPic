@@ -28,6 +28,10 @@ open class BaseConfig(val context: Context) {
         get() = prefs.getString(TREE_URI, "")!!
         set(uri) = prefs.edit().putString(TREE_URI, uri).apply()
 
+    var sdTreeUri: String
+        get() = prefs.getString(SD_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(SD_TREE_URI, uri).apply()
+
     var OTGTreeUri: String
         get() = prefs.getString(OTG_TREE_URI, "")!!
         set(OTGTreeUri) = prefs.edit().putString(OTG_TREE_URI, OTGTreeUri).apply()

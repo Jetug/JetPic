@@ -3,6 +3,7 @@ package com.jetug.commons.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.RecoverableSecurityException
 import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -80,22 +81,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (useDynamicTheme) {
-            //setTheme(getThemeId(showTransparentTop = showTransparentTop))
             updateBackgroundColor()
         }
-
-//        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        supportActionBar?.setSplitBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        supportActionBar?.setStackedBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        //setTheme(R.style.AppTheme_ActionBar_Transparent)
-
-//        if (showTransparentTop) {
-//            window.statusBarColor = Color.TRANSPARENT
-//        } else {
-//            updateActionbarColor()
-//        }
-
         updateRecentsAppIcon()
         updateNavigationBarColor()
     }
@@ -226,12 +213,61 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         } catch (e: Exception) {
             ""
         }
+
         val sdOtgPattern = Pattern.compile(SD_OTG_SHORT)
 
-        if (requestCode == OPEN_DOCUMENT_TREE) {
+        if (requestCode == OPEN_DOCUMENT_TREE_FOR_DELETE_SDK_30) {
             if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition).matches() || (sdOtgPattern.matcher(partition).matches() && resultData.dataString!!.contains(partition))
-                if (isProperSDFolder(resultData.data!!) && isProperPartition) {
+
+                val treeUri = resultData.data
+                val checkedUri = createFirstParentTreeUri(checkedDocumentPath)
+
+                if (treeUri != checkedUri) {
+                    toast(getString(R.string.wrong_folder_selected, checkedDocumentPath.getFirstParentPath(this)))
+                    return
+                }
+
+                val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                applicationContext.contentResolver.takePersistableUriPermission(treeUri, takeFlags)
+                funAfterSAFPermission?.invoke(true)
+                funAfterSAFPermission = null
+            } else {
+                funAfterSAFPermission?.invoke(false)
+            }
+
+        } else if (requestCode == OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB) {
+            if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+                if (isProperAndroidRoot(checkedDocumentPath, resultData.data!!)) {
+                    if (resultData.dataString == baseConfig.OTGTreeUri || resultData.dataString == baseConfig.sdTreeUri) {
+                        val pathToSelect = createAndroidDataOrObbPath(checkedDocumentPath)
+                        toast(getString(R.string.wrong_folder_selected, pathToSelect))
+                        return
+                    }
+
+                    val treeUri = resultData.data
+                    storeAndroidTreeUri(checkedDocumentPath, treeUri.toString())
+
+                    val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    applicationContext.contentResolver.takePersistableUriPermission(treeUri!!, takeFlags)
+                    funAfterSAFPermission?.invoke(true)
+                    funAfterSAFPermission = null
+                } else {
+                    toast(getString(R.string.wrong_folder_selected, createAndroidDataOrObbPath(checkedDocumentPath)))
+                    Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+                        if (isRPlus()) {
+                            putExtra(DocumentsContract.EXTRA_INITIAL_URI, createAndroidDataOrObbUri(checkedDocumentPath))
+                        }
+                        startActivityForResult(this, requestCode)
+                    }
+                }
+            } else {
+                funAfterSAFPermission?.invoke(false)
+            }
+        } else if (requestCode == OPEN_DOCUMENT_TREE_SD) {
+            if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition).matches() || (sdOtgPattern.matcher(partition)
+                    .matches() && resultData.dataString!!.contains(partition))
+                if (isProperSDRootFolder(resultData.data!!) && isProperPartition) {
                     if (resultData.dataString == baseConfig.OTGTreeUri) {
                         toast(R.string.sd_card_usb_same)
                         return
@@ -250,9 +286,10 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
             }
         } else if (requestCode == OPEN_DOCUMENT_TREE_OTG) {
             if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition).matches() || (sdOtgPattern.matcher(partition).matches() && resultData.dataString!!.contains(partition))
-                if (isProperOTGFolder(resultData.data!!) && isProperPartition) {
-                    if (resultData.dataString == baseConfig.treeUri) {
+                val isProperPartition = partition.isEmpty() || !sdOtgPattern.matcher(partition).matches() || (sdOtgPattern.matcher(partition)
+                    .matches() && resultData.dataString!!.contains(partition))
+                if (isProperOTGRootFolder(resultData.data!!) && isProperPartition) {
+                    if (resultData.dataString == baseConfig.sdTreeUri) {
                         funAfterSAFPermission?.invoke(false)
                         toast(R.string.sd_card_usb_same)
                         return
@@ -277,27 +314,59 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         } else if (requestCode == SELECT_EXPORT_SETTINGS_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
             val outputStream = contentResolver.openOutputStream(resultData.data!!)
             exportSettingsTo(outputStream, configItemsToExport)
+        } else if (requestCode == DELETE_FILE_SDK_30_HANDLER) {
+            funAfterDelete30File?.invoke(resultCode == Activity.RESULT_OK)
+        } else if (requestCode == RECOVERABLE_SECURITY_HANDLER) {
+            funRecoverableSecurity?.invoke(resultCode == Activity.RESULT_OK)
+            funRecoverableSecurity = null
+        } else if (requestCode == UPDATE_FILE_SDK_30_HANDLER) {
+            funAfterUpdate30File?.invoke(resultCode == Activity.RESULT_OK)
         }
     }
 
     private fun saveTreeUri(resultData: Intent) {
         val treeUri = resultData.data
-        baseConfig.treeUri = treeUri.toString()
+        baseConfig.sdTreeUri = treeUri.toString()
 
         val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         applicationContext.contentResolver.takePersistableUriPermission(treeUri!!, takeFlags)
     }
 
     ///Jet
-    private fun isProperSDFolder(uri: Uri) = isExternalStorageDocument(uri) /*&& isRootUri(uri)*/ && !isInternalStorage(uri)
+    //private fun isProperSDFolder(uri: Uri) = isExternalStorageDocument(uri) /*&& isRootUri(uri)*/ && !isInternalStorage(uri)
 
-    private fun isProperOTGFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
+    //private fun isProperOTGFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
 
-    private fun isRootUri(uri: Uri) = DocumentsContract.getTreeDocumentId(uri).endsWith(":")
+    //private fun isRootUri(uri: Uri) = DocumentsContract.getTreeDocumentId(uri).endsWith(":")
+
+    //private fun isInternalStorage(uri: Uri) = isExternalStorageDocument(uri) && DocumentsContract.getTreeDocumentId(uri).contains("primary")
+
+    //private fun isExternalStorageDocument(uri: Uri) = "com.android.externalstorage.documents" == uri.authority
+
+    ////
+
+    private fun isProperSDRootFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
+    private fun isProperSDFolder(uri: Uri) = isExternalStorageDocument(uri) && !isInternalStorage(uri)
+
+    private fun isProperOTGRootFolder(uri: Uri) = isExternalStorageDocument(uri) && isRootUri(uri) && !isInternalStorage(uri)
+    private fun isProperOTGFolder(uri: Uri) = isExternalStorageDocument(uri) && !isInternalStorage(uri)
+
+    private fun isRootUri(uri: Uri) = uri.lastPathSegment?.endsWith(":") ?: false
 
     private fun isInternalStorage(uri: Uri) = isExternalStorageDocument(uri) && DocumentsContract.getTreeDocumentId(uri).contains("primary")
+    private fun isAndroidDir(uri: Uri) = isExternalStorageDocument(uri) && DocumentsContract.getTreeDocumentId(uri).contains(":Android")
+    private fun isInternalStorageAndroidDir(uri: Uri) = isInternalStorage(uri) && isAndroidDir(uri)
+    private fun isOTGAndroidDir(uri: Uri) = isProperOTGFolder(uri) && isAndroidDir(uri)
+    private fun isSDAndroidDir(uri: Uri) = isProperSDFolder(uri) && isAndroidDir(uri)
+    private fun isExternalStorageDocument(uri: Uri) = EXTERNAL_STORAGE_PROVIDER_AUTHORITY == uri.authority
 
-    private fun isExternalStorageDocument(uri: Uri) = "com.android.externalstorage.documents" == uri.authority
+    private fun isProperAndroidRoot(path: String, uri: Uri): Boolean {
+        return when {
+            isPathOnOTG(path) -> isOTGAndroidDir(uri)
+            isPathOnSD(path) -> isSDAndroidDir(uri)
+            else -> isInternalStorageAndroidDir(uri)
+        }
+    }
 
     fun startAboutActivity(appNameId: Int, licenseMask: Int, versionName: String, faqItems: ArrayList<FAQItem>, showFAQBeforeMail: Boolean) {
         Intent(applicationContext, AboutActivity::class.java).apply {
@@ -348,8 +417,36 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     // synchronous return value determines only if we are showing the SAF dialog, callback result tells if the SD or OTG permission has been granted
     fun handleSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
-        //isShowingSAFDialog(path)
-        return if (isShowingSAFDialog(path) || isShowingOTGDialog(path)) {
+        return if (!packageName.startsWith("com.simplemobiletools")) {
+            callback(true)
+            false
+        } else if (isShowingSAFDialog(path) || isShowingOTGDialog(path)) {
+            funAfterSAFPermission = callback
+            true
+        } else {
+            callback(true)
+            false
+        }
+    }
+
+    fun handleSAFDeleteSdk30Dialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
+        return if (!packageName.startsWith("com.simplemobiletools")) {
+            callback(true)
+            false
+        } else if (isShowingSAFDialogForDeleteSdk30(path)) {
+            funAfterSAFPermission = callback
+            true
+        } else {
+            callback(true)
+            false
+        }
+    }
+
+    fun handleAndroidSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
+        return if (!packageName.startsWith("com.simplemobiletools")) {
+            callback(true)
+            false
+        } else if (isShowingAndroidSAFDialog(path)) {
             funAfterSAFPermission = callback
             true
         } else {
@@ -383,6 +480,52 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
+    fun deleteSDK30Uris(uris: List<Uri>, callback: (success: Boolean) -> Unit) {
+        if (isRPlus()) {
+            funAfterDelete30File = callback
+            try {
+                val deleteRequest = MediaStore.createDeleteRequest(contentResolver, uris).intentSender
+                startIntentSenderForResult(deleteRequest, DELETE_FILE_SDK_30_HANDLER, null, 0, 0, 0)
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
+        } else {
+            callback(false)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun updateSDK30Uris(uris: List<Uri>, callback: (success: Boolean) -> Unit) {
+        if (isRPlus()) {
+            funAfterUpdate30File = callback
+            try {
+                val writeRequest = MediaStore.createWriteRequest(contentResolver, uris).intentSender
+                startIntentSenderForResult(writeRequest, UPDATE_FILE_SDK_30_HANDLER, null, 0, 0, 0)
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
+        } else {
+            callback(false)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun handleRecoverableSecurityException(callback: (success: Boolean) -> Unit) {
+        try {
+            callback.invoke(true)
+        } catch (securityException: SecurityException) {
+            if (isQPlus()) {
+                funRecoverableSecurity = callback
+                val recoverableSecurityException = securityException as? RecoverableSecurityException ?: throw securityException
+                val intentSender = recoverableSecurityException.userAction.actionIntent.intentSender
+                startIntentSenderForResult(intentSender, RECOVERABLE_SECURITY_HANDLER, null, 0, 0, 0)
+            } else {
+                callback(false)
+            }
+        }
+    }
+
     fun copyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, source: String, destination: String, isCopyOperation: Boolean, copyPhotoVideoOnly: Boolean,
                         copyHidden: Boolean, callback: (destinationPath: String) -> Unit) {
         if (source == destination) {
@@ -405,7 +548,10 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
             if (isCopyOperation) {
                 startCopyMove(fileDirItems, destination, isCopyOperation, copyPhotoVideoOnly, copyHidden)
             } else {
-                if (isPathOnOTG(source) || isPathOnOTG(destination) || isPathOnSD(source) || isPathOnSD(destination) || fileDirItems.first().isDirectory) {
+                if (isPathOnOTG(source) || isPathOnOTG(destination) || isPathOnSD(source) || isPathOnSD(destination) || isRestrictedSAFOnlyRoot(source) || isRestrictedSAFOnlyRoot(
+                        destination
+                    ) || fileDirItems.first().isDirectory
+                ) {
                     handleSAFDialog(source) {
                         if (it) {
                             startCopyMove(fileDirItems, destination, isCopyOperation, copyPhotoVideoOnly, copyHidden)
@@ -441,9 +587,9 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
                                 runOnUiThread {
                                     if (updatedPaths.isEmpty()) {
-                                        copyMoveListener.copySucceeded(false, fileCountToCopy == 0, destination)
+                                        copyMoveListener.copySucceeded(false, fileCountToCopy == 0, destination, false)
                                     } else {
-                                        copyMoveListener.copySucceeded(false, fileCountToCopy <= updatedPaths.size, destination)
+                                        copyMoveListener.copySucceeded(false, fileCountToCopy <= updatedPaths.size, destination, updatedPaths.size == 1)
                                     }
                                 }
                             }
@@ -467,7 +613,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         return newFile
     }
 
-    private fun startCopyMove(files: ArrayList<FileDirItem>, destinationPath: String, isCopyOperation: Boolean, copyPhotoVideoOnly: Boolean, copyHidden: Boolean) {
+    private fun startCopyMove(
+        files: ArrayList<FileDirItem>,
+        destinationPath: String,
+        isCopyOperation: Boolean,
+        copyPhotoVideoOnly: Boolean,
+        copyHidden: Boolean
+    ) {
         val availableSpace = destinationPath.getAvailableStorageB()
         val sumToCopy = files.sumByLong { it.getProperSize(applicationContext, copyHidden) }
         if (availableSpace == -1L || sumToCopy < availableSpace) {
@@ -483,8 +635,10 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     }
 
-    fun checkConflicts(files: ArrayList<FileDirItem>, destinationPath: String, index: Int, conflictResolutions: LinkedHashMap<String, Int>,
-                       callback: (resolutions: LinkedHashMap<String, Int>) -> Unit) {
+    fun checkConflicts(
+        files: ArrayList<FileDirItem>, destinationPath: String, index: Int, conflictResolutions: LinkedHashMap<String, Int>,
+        callback: (resolutions: LinkedHashMap<String, Int>) -> Unit
+    ) {
         if (index == files.size) {
             callback(conflictResolutions)
             return
@@ -528,11 +682,31 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     val copyMoveListener = object : CopyMoveListener {
-        override fun copySucceeded(copyOnly: Boolean, copiedAll: Boolean, destinationPath: String) {
+        override fun copySucceeded(copyOnly: Boolean, copiedAll: Boolean, destinationPath: String, wasCopyingOneFileOnly: Boolean) {
             if (copyOnly) {
-                toast(if (copiedAll) R.string.copying_success else R.string.copying_success_partial)
+                toast(
+                    if (copiedAll) {
+                        if (wasCopyingOneFileOnly) {
+                            R.string.copying_success_one
+                        } else {
+                            R.string.copying_success
+                        }
+                    } else {
+                        R.string.copying_success_partial
+                    }
+                )
             } else {
-                toast(if (copiedAll) R.string.moving_success else R.string.moving_success_partial)
+                toast(
+                    if (copiedAll) {
+                        if (wasCopyingOneFileOnly) {
+                            R.string.moving_success_one
+                        } else {
+                            R.string.moving_success
+                        }
+                    } else {
+                        R.string.moving_success_partial
+                    }
+                )
             }
 
             copyMoveCallback?.invoke(destinationPath)
@@ -596,13 +770,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     private fun getExportSettingsFilename(): String {
-        var defaultFilename = baseConfig.lastExportedSettingsFile
-        if (defaultFilename.isEmpty()) {
-            val appName = baseConfig.appId.removeSuffix(".debug").removeSuffix(".pro").removePrefix("com.simplemobiletools.")
-            defaultFilename = "$appName-settings.txt"
-        }
-
-        return defaultFilename
+        val appName = baseConfig.appId.removeSuffix(".debug").removeSuffix(".pro").removeSuffix(".jetugapps").removePrefix("com.simplemobiletools.")
+        return "$appName-settings_${getCurrentFormattedDateTime()}.txt"
     }
 
     @SuppressLint("InlinedApi")

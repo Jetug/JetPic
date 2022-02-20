@@ -10,6 +10,8 @@ import com.jetug.commons.R
 import com.jetug.commons.overloads.times
 import java.util.*
 
+const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
+
 const val APP_NAME = "app_name"
 const val APP_LICENSES = "app_licenses"
 const val APP_FAQ = "app_faq"
@@ -62,6 +64,17 @@ const val PREFS_KEY = "Prefs"
 const val APP_RUN_COUNT = "app_run_count"
 const val LAST_VERSION = "last_version"
 const val TREE_URI = "tree_uri_2"
+
+//api30{
+const val SD_TREE_URI = "tree_uri_2"
+const val PRIMARY_ANDROID_DATA_TREE_URI = "primary_android_data_tree_uri_2"
+const val OTG_ANDROID_DATA_TREE_URI = "otg_android_data_tree__uri_2"
+const val SD_ANDROID_DATA_TREE_URI = "sd_android_data_tree_uri_2"
+const val PRIMARY_ANDROID_OBB_TREE_URI = "primary_android_obb_tree_uri_2"
+const val OTG_ANDROID_OBB_TREE_URI = "otg_android_obb_tree_uri_2"
+const val SD_ANDROID_OBB_TREE_URI = "sd_android_obb_tree_uri_2"
+//}
+
 const val OTG_TREE_URI = "otg_tree_uri_2"
 const val SD_CARD_PATH = "sd_card_path_2"
 const val OTG_REAL_PATH = "otg_real_path_2"
@@ -186,10 +199,20 @@ const val LICENSE_APNG = 268435456
 // global intents
 const val OPEN_DOCUMENT_TREE = 1000
 const val OPEN_DOCUMENT_TREE_OTG = 1001
-const val REQUEST_SET_AS = 1002
-const val REQUEST_EDIT_IMAGE = 1003
-const val SELECT_EXPORT_SETTINGS_FILE_INTENT = 1004
-const val REQUEST_CODE_SET_DEFAULT_DIALER = 1005
+//const val REQUEST_SET_AS = 1002
+//const val REQUEST_EDIT_IMAGE = 1003
+//const val SELECT_EXPORT_SETTINGS_FILE_INTENT = 1004
+//const val REQUEST_CODE_SET_DEFAULT_DIALER = 1005
+
+//api30{
+const val OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB = 1000
+const val OPEN_DOCUMENT_TREE_SD = 1002
+const val OPEN_DOCUMENT_TREE_FOR_DELETE_SDK_30 = 1003
+const val REQUEST_SET_AS = 1004
+const val REQUEST_EDIT_IMAGE = 1005
+const val SELECT_EXPORT_SETTINGS_FILE_INTENT = 1006
+const val REQUEST_CODE_SET_DEFAULT_DIALER = 1007
+//}
 
 // sorting
 const val SORT_ORDER = "sort_order"
