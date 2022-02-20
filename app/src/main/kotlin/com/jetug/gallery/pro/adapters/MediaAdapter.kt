@@ -10,8 +10,10 @@ import com.jetug.commons.views.FastScroller
 import com.jetug.commons.views.MyRecyclerView
 import com.jetug.gallery.pro.R
 import com.jetug.gallery.pro.activities.MediaActivity
+import com.jetug.gallery.pro.extensions.config
 import com.jetug.gallery.pro.extensions.getMediums
 import com.jetug.gallery.pro.extensions.launchIO
+import com.jetug.gallery.pro.helpers.MediaFetcher
 import com.jetug.gallery.pro.interfaces.MediaOperationsListener
 import com.jetug.gallery.pro.jetug.getFolderSorting
 import com.jetug.gallery.pro.jetug.saveCustomMediaOrder
@@ -56,6 +58,14 @@ class MediaAdapter(
             activity.saveCustomMediaOrder(media.getMediums())
             activity.saveCustomSorting(path, SORT_BY_CUSTOM)
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun sort(){
+        val mediaFetcher = MediaFetcher(activity)
+        val sorting = activity.getFolderSorting(path)
+        mediaFetcher.sortMedia(mediums, sorting)
+        notifyDataSetChanged()
     }
 
     private fun showDateEditionDialog(){

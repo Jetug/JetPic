@@ -828,7 +828,7 @@ fun Context.updateDBMediaPath(oldPath: String, newPath: String) {
     }
 }
 
-fun Context.updateDBDirectory(directory: FolderItem) {
+fun Context.updateDBDirectory(directory: Directory) {
 //    try {
     fun update(directory: Directory){
         CoroutineScope(Dispatchers.Default).launch{
@@ -847,11 +847,9 @@ fun Context.updateDBDirectory(directory: FolderItem) {
 
     if(directory is Directory)
         update(directory)
-    else if(directory is DirectoryGroup){
-        directory.innerDirs.forEach {
-            update(it)
-        }
-    }
+//    else if(directory is DirectoryGroup && directory.innerDirs.isNotEmpty()){
+//            update(directory.innerDirs.first())
+//    }
 
 //    } catch (ignored: Exception) {
 //        val r = 0

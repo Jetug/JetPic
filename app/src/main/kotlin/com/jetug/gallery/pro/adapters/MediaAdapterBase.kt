@@ -79,7 +79,7 @@ open class MediaAdapterBase (
 
     override val itemList = media
 
-    private val mediums: ArrayList<Medium>
+    val mediums: ArrayList<Medium>
         get() = propGetMediums()
 
     init {
@@ -194,10 +194,12 @@ open class MediaAdapterBase (
         }
     }
 
-    fun sort(sorting: Int){
-        //media = sortMedia(mediums, sorting)
-        //notifyDataSetChanged()
-    }
+    //Public
+//    fun sort(sorting: Int){
+//        val mediaFetcher = MediaFetcher(activity)
+//        media = mediaFetcher.sortMedia(mediums, sorting)
+//        //notifyDataSetChanged()
+//    }
 
     fun setDialogMatchParent(dialog: Dialog) {
         val wm = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -212,7 +214,7 @@ open class MediaAdapterBase (
         layoutParams.height = height;
         dialog.window!!.attributes = layoutParams;
     }
-
+    ///
     override fun getSelectableItemCount() = media.filter { it is Medium }.size
     override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()

@@ -558,6 +558,8 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
     private fun showSortingDialog() {
         ChangeSortingDialog(this, false, true, mPath) {
 
+//            mediaAdapter?.sort()
+
             val adapter = mediaAdapter
             if(adapter != null) {
                 getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {

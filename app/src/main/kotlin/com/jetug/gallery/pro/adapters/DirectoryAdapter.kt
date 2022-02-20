@@ -53,7 +53,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @SuppressLint("NotifyDataSetChanged")
-class DirectoryAdapter(activity: MainActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
+class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
                        private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
@@ -82,16 +82,6 @@ class DirectoryAdapter(activity: MainActivity, var dirs: ArrayList<FolderItem>, 
     override val itemList = dirs
 
     init {
-//        dirs.forEach(){
-//            if (it.name == "@Test$ (1) (1) (1)"){
-//                Log.d("Jet", it.name)
-//            }
-//        }
-
-//        val p = object : FolderItem(0, "","","",0,0,0,0,0,0,"",0) {}
-//        p.placeholder = true
-//        dirs.add(0, p)
-
         setupDragListener(true)
         fillLockedFolders()
     }
@@ -221,7 +211,7 @@ class DirectoryAdapter(activity: MainActivity, var dirs: ArrayList<FolderItem>, 
     }
 
     fun sort() {
-        dirs = activity.getSortedDirectories(dirs) //sortDirs(dirs, config.directorySorting)
+        dirs = activity.getSortedDirectories(dirs)
         notifyDataSetChanged()
     }
 
@@ -935,13 +925,11 @@ class DirectoryAdapter(activity: MainActivity, var dirs: ArrayList<FolderItem>, 
                     val innerDirs = directory.innerDirs
                     val size = innerDirs.size
 
-                    setupTmb(innerDirs[0], dir_thumbnail2)
-
                     if(size >= 1){
                         setupTmb(innerDirs[0], dir_thumbnail)
                     }
                     if(size == 2){
-                        setupTmb(innerDirs[1], dir_thumbnail3)
+                        setupTmb(innerDirs[1], dir_thumbnail2)
                     }
                     else if(size >= 3){
                         setupTmb(innerDirs[1], dir_thumbnail2)

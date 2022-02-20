@@ -130,7 +130,7 @@ fun Context.saveCustomSorting(path: String, sorting: Int){
         config.saveCustomSorting(path, sorting)
         folderSettingsDao.insert(settings)
 
-        Log.e("Jet", "sorting ${settings.order.toString()}")
+        Log.e("Jet", "sorting ${settings.order}")
         if (hasStoragePermission) writeSettingsToFile(path, settings)
     }
 }

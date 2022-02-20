@@ -16,7 +16,7 @@ class Config(context: Context) : BaseConfig(context) {
     }
 
     var directorySorting: Int
-        get(): Int = prefs.getInt(DIRECTORY_SORT_ORDER, SORT_BY_NAME or SORT_DESCENDING)
+        get(): Int = prefs.getInt(DIRECTORY_SORT_ORDER, SORT_BY_NAME)
         set(order) = prefs.edit().putInt(DIRECTORY_SORT_ORDER, order).apply()
 
     fun saveFolderGrouping(path: String, value: Int) {

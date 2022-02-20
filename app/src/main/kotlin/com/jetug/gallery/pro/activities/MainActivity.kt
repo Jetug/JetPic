@@ -53,17 +53,23 @@ import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
 
 class MainActivity : SimpleActivity(), DirectoryOperationsListener {
+    //Const
     private val PICK_MEDIA = 2
     private val PICK_WALLPAPER = 3
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
     private val MANAGE_STORAGE_RC = 201
 
-    ///Jet
+    ///Jet{
     private var rvPosition = RecyclerViewPosition(null)
     private var mDirsToShow = ArrayList<FolderItem>()
     private var openedDirs = ArrayList<ArrayList<FolderItem>>()
-    ///
 
+    //Properties
+    private val mAdapter get() = directories_grid.adapter as DirectoryAdapter?
+    private val currentlyDisplayedDirs get() = getRecyclerAdapter()?.dirs ?: ArrayList()
+    ///}
+
+    //Private
     private var mIsPickImageIntent = false
     private var mIsPickVideoIntent = false
     private var mIsGetImageContentIntent = false
@@ -91,8 +97,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mLastMediaFetcher: MediaFetcher? = null
-
-
     private var mStoredAnimateGifs = true
     private var mStoredCropThumbnails = true
     private var mStoredScrollHorizontally = true
@@ -611,16 +615,20 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     //Jet
     private fun showSortingDialog() {
         ChangeSortingDialog(this, true, false) {
+            //val adapter = directories_grid.adapter as DirectoryAdapter
+            mAdapter?.sort()
+
+            //setupAdapter(getSortedDirectories(currentlyDisplayedDirs))
 //            directories_grid.adapter = null
 //            if (config.directorySorting and SORT_BY_DATE_MODIFIED != 0 || config.directorySorting and SORT_BY_DATE_TAKEN != 0) {
 //                getDirectories()
-//            } else {
+//            }
+//            else {
 //                ensureBackgroundThread {
-//                    gotDirectories(getCurrentlyDisplayedDirs())
+//                    gotDirectories(currentlyDisplayedDirs)
 //                }
 //            }
-            val adapter = directories_grid.adapter as DirectoryAdapter
-            adapter.sort()
+//
         }
     }
 
@@ -894,7 +902,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         config.showRecycleBinAtFolders = show
         invalidateOptionsMenu()
         ensureBackgroundThread {
-            var dirs = getCurrentlyDisplayedDirs()
+            var dirs = currentlyDisplayedDirs
             if (!show) {
                 dirs = dirs.filter { it.path != RECYCLE_BIN } as ArrayList<FolderItem>
             }
@@ -907,7 +915,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             CreateNewFolderDialog(this, it) {
                 config.tempFolderPath = it
                 ensureBackgroundThread {
-                    gotDirectories(addTempFolderIfNeeded(getCurrentlyDisplayedDirs()))
+                    gotDirectories(addTempFolderIfNeeded(currentlyDisplayedDirs))
                 }
             }
         }
@@ -1519,7 +1527,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-    private fun getCurrentlyDisplayedDirs() = getRecyclerAdapter()?.dirs ?: ArrayList()
 
     private fun getBubbleTextItem(index: Int) = getRecyclerAdapter()?.dirs?.getOrNull(index)?.getBubbleText(config.directorySorting, this, mDateFormat, mTimeFormat)
         ?: ""
@@ -1642,7 +1649,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     override fun recheckPinnedFolders() {
         ensureBackgroundThread {
-            gotDirectories(movePinnedDirectoriesToFront(getCurrentlyDisplayedDirs()))
+            gotDirectories(movePinnedDirectoriesToFront(currentlyDisplayedDirs))
         }
     }
 
