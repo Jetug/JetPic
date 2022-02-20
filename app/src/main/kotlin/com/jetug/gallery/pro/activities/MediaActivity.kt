@@ -560,13 +560,13 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
 
 //            mediaAdapter?.sort()
 
-            val adapter = mediaAdapter
-            if(adapter != null) {
-                getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {
-                    adapter.media = it
-                    launchMain { adapter.notifyDataSetChanged() }
-                }
-            }
+//            val adapter = mediaAdapter
+//            if(adapter != null) {
+//                getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {
+//                    adapter.media = it
+//                    launchMain { adapter.notifyDataSetChanged() }
+//                }
+//            }
 
             mLoadedInitialPhotos = false
             media_grid.adapter = null
