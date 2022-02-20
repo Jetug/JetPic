@@ -568,9 +568,9 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
                 }
             }
 
-//            mLoadedInitialPhotos = false
-//            media_grid.adapter = null
-//            getMedia()
+            mLoadedInitialPhotos = false
+            media_grid.adapter = null
+            getMedia()
         }
     }
 

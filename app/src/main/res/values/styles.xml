@@ -7,8 +7,10 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-
-
-
     <style name="FullScreenTheme" parent="FullScreenTheme.Base"/>
+
+
+    <style name="Theme.SlideTest.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
+    <style name="Theme.SlideTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
 </resources>
