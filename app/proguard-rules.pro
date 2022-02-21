@@ -1,6 +1,7 @@
 -keep class com.jetug.** { *; }
 -dontwarn android.graphics.Canvas
 -dontwarn com.simplemobiletools.**
+-dontwarn com.jetugapps.**
 -dontwarn org.apache.**
 
 # Picasso

@@ -67,6 +67,7 @@ class CopyMoveTask(
             if (file.size == 0L) {
                 file.size = file.getProperSize(activity, copyHidden)
             }
+
             val newPath = "$mDestinationPath/${file.name}"
             val fileExists = activity.getDoesFilePathExist(newPath)
             if (getConflictResolution(conflictResolutions, newPath) != CONFLICT_SKIP || !fileExists) {
@@ -95,8 +96,7 @@ class CopyMoveTask(
                 }
 
                 copy(file, newFileDirItem)
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 activity.showErrorToast(e)
                 return false
             }
@@ -115,7 +115,7 @@ class CopyMoveTask(
         val listener = mListener?.get() ?: return
 
         if (success) {
-            listener.copySucceeded(copyOnly, mTransferredFiles.size >= mFileCountToCopy, mDestinationPath)
+            listener.copySucceeded(copyOnly, mTransferredFiles.size >= mFileCountToCopy, mDestinationPath, mTransferredFiles.size == 1)
         } else {
             listener.copyFailed()
         }
@@ -134,7 +134,7 @@ class CopyMoveTask(
         }
 
         mNotificationBuilder.setContentTitle(title)
-            .setSmallIcon(R.drawable.ic_copy)
+            .setSmallIcon(R.drawable.ic_copy_vector)
             .setChannelId(channelId)
     }
 
@@ -155,7 +155,7 @@ class CopyMoveTask(
         mProgressHandler.postDelayed({
             updateProgress()
 
-            if (mCurrentProgress / 1000 > mMaxSize) {
+            if (mCurrentProgress / 1000 >= mMaxSize) {
                 mIsTaskOver = true
             }
         }, PROGRESS_RECHECK_INTERVAL)
@@ -190,6 +190,21 @@ class CopyMoveTask(
                 copy(oldFileDirItem, newFileDirItem)
             }
             mTransferredFiles.add(source)
+        } else if (activity.isRestrictedSAFOnlyRoot(source.path)) {
+            activity.getAndroidSAFFileItems(source.path, true) { files ->
+                for (child in files) {
+                    val newPath = "$destinationPath/${child.name}"
+                    if (activity.getDoesFilePathExist(newPath)) {
+                        continue
+                    }
+
+                    val oldPath = "${source.path}/${child.name}"
+                    val oldFileDirItem = FileDirItem(oldPath, child.name, child.isDirectory, 0, child.size)
+                    val newFileDirItem = FileDirItem(newPath, child.name, child.isDirectory)
+                    copy(oldFileDirItem, newFileDirItem)
+                }
+                mTransferredFiles.add(source)
+            }
         } else {
             val children = File(source.path).list()
             for (child in children) {
@@ -228,6 +243,7 @@ class CopyMoveTask(
             if (!mDocuments.containsKey(directory) && activity.needsStupidWritePermissions(destination.path)) {
                 mDocuments[directory] = activity.getDocumentFile(directory)
             }
+
             out = activity.getFileOutputStreamSync(destination.path, source.path.getMimeType(), mDocuments[directory])
             inputStream = activity.getFileInputStreamSync(source.path)!!
 
@@ -245,7 +261,7 @@ class CopyMoveTask(
 
             if (source.size == copiedSize && activity.getDoesFilePathExist(destination.path)) {
                 mTransferredFiles.add(source)
-                if (copyOnly && destination.path.isAudioFast()) {
+                if (copyOnly) {
                     activity.rescanPath(destination.path) {
                         if (activity.baseConfig.keepLastModified) {
                             copyOldLastModified(source.path, destination.path)
@@ -260,7 +276,7 @@ class CopyMoveTask(
                 if (!copyOnly) {
                     inputStream.close()
                     out?.close()
-                    activity.deleteFileBg(source)
+                    activity.deleteFileBg(source, isDeletingMultipleFiles = false)
                     activity.deleteFromMediaStore(source.path)
                 }
             }

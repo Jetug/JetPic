@@ -893,4 +893,5 @@
     <string name="copying_success_one">File copied successfully</string>
     <string name="moving_success_one">File moved successfully</string>
     <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
+    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
 </resources>

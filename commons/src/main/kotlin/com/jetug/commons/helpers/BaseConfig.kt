@@ -28,6 +28,32 @@ open class BaseConfig(val context: Context) {
         get() = prefs.getString(TREE_URI, "")!!
         set(uri) = prefs.edit().putString(TREE_URI, uri).apply()
 
+    //api30{
+    var primaryAndroidDataTreeUri: String
+        get() = prefs.getString(PRIMARY_ANDROID_DATA_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(PRIMARY_ANDROID_DATA_TREE_URI, uri).apply()
+
+    var sdAndroidDataTreeUri: String
+        get() = prefs.getString(SD_ANDROID_DATA_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(SD_ANDROID_DATA_TREE_URI, uri).apply()
+
+    var otgAndroidDataTreeUri: String
+        get() = prefs.getString(OTG_ANDROID_DATA_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(OTG_ANDROID_DATA_TREE_URI, uri).apply()
+
+    var primaryAndroidObbTreeUri: String
+        get() = prefs.getString(PRIMARY_ANDROID_OBB_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(PRIMARY_ANDROID_OBB_TREE_URI, uri).apply()
+
+    var sdAndroidObbTreeUri: String
+        get() = prefs.getString(SD_ANDROID_OBB_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(SD_ANDROID_OBB_TREE_URI, uri).apply()
+
+    var otgAndroidObbTreeUri: String
+        get() = prefs.getString(OTG_ANDROID_OBB_TREE_URI, "")!!
+        set(uri) = prefs.edit().putString(OTG_ANDROID_OBB_TREE_URI, uri).apply()
+    //}
+
     var sdTreeUri: String
         get() = prefs.getString(SD_TREE_URI, "")!!
         set(uri) = prefs.edit().putString(SD_TREE_URI, uri).apply()
@@ -217,7 +243,8 @@ open class BaseConfig(val context: Context) {
 
     var wasCustomThemeSwitchDescriptionShown: Boolean
         get() = prefs.getBoolean(WAS_CUSTOM_THEME_SWITCH_DESCRIPTION_SHOWN, false)
-        set(wasCustomThemeSwitchDescriptionShown) = prefs.edit().putBoolean(WAS_CUSTOM_THEME_SWITCH_DESCRIPTION_SHOWN, wasCustomThemeSwitchDescriptionShown).apply()
+        set(wasCustomThemeSwitchDescriptionShown) = prefs.edit().putBoolean(WAS_CUSTOM_THEME_SWITCH_DESCRIPTION_SHOWN, wasCustomThemeSwitchDescriptionShown)
+            .apply()
 
     var wasSharedThemeForced: Boolean
         get() = prefs.getBoolean(WAS_SHARED_THEME_FORCED, false)
@@ -249,9 +276,9 @@ open class BaseConfig(val context: Context) {
     }
 
     fun getCustomFolderSorting(path: String) = prefs.getInt(SORT_FOLDER_PREFIX + path.toLowerCase(), sorting)
+    //fun getFolderSorting(path: String) = prefs.getInt(SORT_FOLDER_PREFIX + path.toLowerCase(), sorting)
 
     fun getRealFolderSorting(path: String) = prefs.getInt(SORT_FOLDER_PREFIX + path.toLowerCase(), 0)
-
 
     fun removeCustomSorting(path: String) {
         prefs.edit().remove(SORT_FOLDER_PREFIX + path.toLowerCase()).apply()
@@ -453,6 +480,15 @@ open class BaseConfig(val context: Context) {
 
     // color picker last used colors
     internal var colorPickerRecentColors: LinkedList<Int>
-        get() = LinkedList(prefs.getString(COLOR_PICKER_RECENT_COLORS, null)?.lines()?.map { it.toInt() } ?: emptyList())
+        get(): LinkedList<Int> {
+            val defaultList = arrayListOf(
+                context.resources.getColor(R.color.md_red_700),
+                context.resources.getColor(R.color.md_blue_700),
+                context.resources.getColor(R.color.md_green_700),
+                context.resources.getColor(R.color.md_yellow_700),
+                context.resources.getColor(R.color.md_orange_700)
+            )
+            return LinkedList(prefs.getString(COLOR_PICKER_RECENT_COLORS, null)?.lines()?.map { it.toInt() } ?: defaultList)
+        }
         set(recentColors) = prefs.edit().putString(COLOR_PICKER_RECENT_COLORS, recentColors.joinToString(separator = "\n")).apply()
 }

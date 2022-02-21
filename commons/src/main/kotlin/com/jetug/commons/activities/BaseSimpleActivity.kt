@@ -54,9 +54,15 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     var configItemsToExport = LinkedHashMap<String, Any>()
 
     private val GENERIC_PERM_HANDLER = 100
+    private val DELETE_FILE_SDK_30_HANDLER = 300
+    private val RECOVERABLE_SECURITY_HANDLER = 301
+    private val UPDATE_FILE_SDK_30_HANDLER = 302
 
     companion object {
         var funAfterSAFPermission: ((success: Boolean) -> Unit)? = null
+        var funAfterDelete30File: ((success: Boolean) -> Unit)? = null
+        var funAfterUpdate30File: ((success: Boolean) -> Unit)? = null
+        var funRecoverableSecurity: ((success: Boolean) -> Unit)? = null
     }
 
     abstract fun getAppIconIDs(): ArrayList<Int>
@@ -369,6 +375,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     fun startAboutActivity(appNameId: Int, licenseMask: Int, versionName: String, faqItems: ArrayList<FAQItem>, showFAQBeforeMail: Boolean) {
+        hideKeyboard()
         Intent(applicationContext, AboutActivity::class.java).apply {
             putExtra(APP_ICON_IDS, getAppIconIDs())
             putExtra(APP_LAUNCHER_NAME, getAppLauncherName())
@@ -417,7 +424,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     // synchronous return value determines only if we are showing the SAF dialog, callback result tells if the SD or OTG permission has been granted
     fun handleSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
-        return if (!packageName.startsWith("com.simplemobiletools")) {
+        return if (false/*!packageName.startsWith("com.simplemobiletools")*/) {
             callback(true)
             false
         } else if (isShowingSAFDialog(path) || isShowingOTGDialog(path)) {
@@ -430,7 +437,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     fun handleSAFDeleteSdk30Dialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
-        return if (!packageName.startsWith("com.simplemobiletools")) {
+        return if (false/*!packageName.startsWith("com.simplemobiletools")*/) {
             callback(true)
             false
         } else if (isShowingSAFDialogForDeleteSdk30(path)) {
@@ -443,7 +450,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     fun handleAndroidSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
-        return if (!packageName.startsWith("com.simplemobiletools")) {
+        return if (false/*!packageName.startsWith("com.simplemobiletools")*/) {
             callback(true)
             false
         } else if (isShowingAndroidSAFDialog(path)) {
