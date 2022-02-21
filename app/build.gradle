@@ -22,9 +22,9 @@ android {
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 22
-        versionName "1.2.4"
+        versionName "1.3.0"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
