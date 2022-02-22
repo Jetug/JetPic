@@ -103,7 +103,7 @@ dependencies {
     implementation 'com.squareup.okio:okio:2.10.0'
     implementation 'com.caverock:androidsvg-aar:1.4'
     implementation 'com.github.tibbi:gestureviews:a8e8fa8d27'
-    implementation 'com.github.tibbi:subsampling-scale-image-view:60fb7362d5'
+    //implementation 'com.github.tibbi:subsampling-scale-image-view:60fb7362d5'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.github.penfeizhou.android.animation:awebp:2.11.0'
     implementation 'com.github.penfeizhou.android.animation:apng:2.11.0'
@@ -136,6 +136,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(':commons')
+    implementation project(':library')
 }
 
 // Apply the PESDKPlugin
