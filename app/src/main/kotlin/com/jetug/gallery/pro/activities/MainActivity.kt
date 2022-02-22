@@ -167,11 +167,9 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             launchSearchActivity()
         }
 
-//        if (!packageName.startsWith("com.jetugapps.gallery.plus")) {
-//            handleStoragePermission {}
-//        }
-
-        handleStoragePermission {}
+        if (packageName.startsWith("com.jetugapps.gallery.plus")) {
+            handleStoragePermission {}
+        }
 
         // just request the permission, tryLoadGallery will then trigger in onResume
         handlePermission(PERMISSION_WRITE_STORAGE) {

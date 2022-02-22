@@ -5,7 +5,7 @@
     <color name="color_action_bar">#14141470</color>
 
     <color name="color_primary">#2E7C75</color>
-    <color name="color_primary_dark">@color/color_action_bar_main</color>
+    <color name="color_primary_dark">@color/color_accent</color>
     <color name="color_accent">@color/color_primary</color>
 
     <color name="pressed_item_foreground">#08000000</color>
