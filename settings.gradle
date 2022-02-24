@@ -1,2 +1,3 @@
 include ':app', ':commons'
 include ':library'
+include ':resources'

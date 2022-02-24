@@ -1,4 +1,4 @@
--keep class com.jetug.** { *; }
+-keep class com.simplemobiletools.** { *; }
 -dontwarn android.graphics.Canvas
 -dontwarn com.simplemobiletools.**
 -dontwarn com.jetugapps.**

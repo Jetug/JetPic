@@ -8,14 +8,14 @@
     android:focusable="true"
     android:padding="1px">
 
-    <com.jetug.gallery.pro.views.MySquareImageView
+    <com.simplemobiletools.gallery.pro.views.MySquareImageView
         android:id="@+id/dir_thumbnail3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"/>
 
-    <com.jetug.gallery.pro.views.MySquareImageView
+    <com.simplemobiletools.gallery.pro.views.MySquareImageView
         android:id="@+id/dir_thumbnail2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,7 +24,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"/>
 
-    <com.jetug.gallery.pro.views.MySquareImageView
+    <com.simplemobiletools.gallery.pro.views.MySquareImageView
         android:id="@+id/dir_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

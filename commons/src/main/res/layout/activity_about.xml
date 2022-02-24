@@ -45,7 +45,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_question_mark_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_faq"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -74,7 +74,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_mail_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -122,7 +122,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_star_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_rate_us"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -152,7 +152,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_add_person_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_invite"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -182,7 +182,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_face_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_contributors"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -213,7 +213,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_dollar_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_donate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -263,7 +263,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_facebook_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -295,7 +295,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_reddit_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_reddit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -343,7 +343,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_heart_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_more_apps"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -373,7 +373,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_article_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_licenses"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -403,7 +403,7 @@
                     android:padding="@dimen/medium_margin"
                     android:src="@drawable/ic_info_vector" />
 
-                <com.jetug.commons.views.MyTextView
+                <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/about_version"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

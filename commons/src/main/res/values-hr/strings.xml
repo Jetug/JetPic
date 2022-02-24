@@ -10,11 +10,13 @@
     <string name="an_error_occurred">Dogodila se greška: %s</string>
     <string name="open_with">Otvori s</string>
     <string name="edit_with">Uredi pomoću</string>
+    <string name="edit">Edit</string>
     <string name="no_app_found">Nema odgovarajuće aplikacije</string>
     <string name="set_as">Postavi kao</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="copy_number_to_clipboard">Copy number to clipboard</string>
     <string name="value_copied_to_clipboard">Vrijednost spremljena u međuspremnik</string>
+    <string name="value_copied_to_clipboard_show">Vrijednost spremljena u međuspremnik:\n%s</string>
     <string name="dial_number">Dial number</string>
     <string name="unknown">Nepoznato</string>
     <string name="always">Uvijek</string>
@@ -29,6 +31,7 @@
     <string name="select_a_different_color">Select a different color</string>
     <string name="download">Download</string>
     <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
     <string name="email">Email</string>
     <string name="previous">Prijašnja</string>
     <string name="playpause">Reproduciraj / Pauziraj</string>
@@ -37,12 +40,34 @@
     <string name="no_contacts_found">Nisu pronađeni kontakti</string>
     <string name="request_the_required_permissions">Zatraži potrebna dopuštenja</string>
     <string name="no_access_to_contacts">The app could not access your contacts</string>
+    <string name="no_phone_call_permission">App does not have the permission to initiate phone calls, please grant it in the device settings</string>
     <string name="insert_text_here">Insert text here</string>
     <string name="call_person">Nazovi %s</string>
-
+    <string name="zero">Zero</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
+    <string name="four">Four</string>
+    <string name="five">Five</string>
+    <string name="six">Six</string>
+    <string name="seven">Seven</string>
+    <string name="eight">Eight</string>
+    <string name="nine">Nine</string>
+    <string name="value_cannot_be_empty">Value cannot be empty</string>
+    <!-- Emails -->
+    <string name="home">Kućni</string>
+    <string name="work">Posao</string>
+    <!-- Phone numbers -->
+    <string name="mobile">Mobilni</string>
+    <string name="main_number">Glavni</string>
+    <string name="work_fax">Poslovni fax</string>
+    <string name="home_fax">Kućni fax</string>
+    <string name="pager">Pager</string>
+    <string name="no_phone_number_found">Nije pronađen nijedan telefonski broj</string>
     <!-- View types -->
     <string name="change_view_type">Promijeni vrstu prikaza</string>
     <string name="grid">Mreža</string>
+    <string name="uneven_grid">Uneven Grid</string>
     <string name="list">Lista</string>
     <string name="increase_column_count">Povećaj broj stupaca</string>
     <string name="reduce_column_count">Smanji broj stupaca</string>
@@ -106,6 +131,7 @@
     <string name="rename_date_time_pattern">%Y - year\n%M - month\n%D - day\n%h - hour\n%m - minute\n%s - second\n%i - number increasing from 1</string>
     <string name="filename_without_txt">Filename (without .txt)</string>
     <string name="filename_without_json">Filename (without .json)</string>
+    <string name="cannot_hide_files">Starting from Android 11 you cannot hide files and folders like that anymore</string>
 
     <!-- Copy / Move -->
     <string name="copy">Kopiraj</string>
@@ -123,9 +149,11 @@
     <string name="copy_failed">Nije moguće kopiranje datoteka</string>
     <string name="copying">Kopiranje…</string>
     <string name="copying_success">Datoteke uspješno kopirane</string>
+    <string name="copying_success_one">File copied successfully</string>
     <string name="copy_move_failed">Dogodila se greška</string>
     <string name="moving">Premještanje…</string>
     <string name="moving_success">Datoteke uspješno premještene</string>
+    <string name="moving_success_one">File moved successfully</string>
     <string name="moving_success_partial">Neke datoteke nije bilo moguće premjestiti</string>
     <string name="copying_success_partial">Neke datoteke nije bilo moguće kopirati</string>
     <string name="no_files_selected">Nema odabranih datoteka</string>
@@ -160,9 +188,12 @@
     <string name="select_folder">Odaberite mapu</string>
     <string name="select_file">Odaberite datoteku</string>
     <string name="confirm_storage_access_title">Potvrdite pristup vanjskom prostoru za pohranu</string>
+    <string name="confirm_folder_access_title">Confirm folder access</string>
     <string name="confirm_storage_access_text">Molimo odaberite root mapu SD kartice na sljedećem prozoru, da bi ste omogućili zapisivanje</string>
     <string name="confirm_storage_access_text_sd">Ukoliko ne vidite SD karticu, probajte ovo</string>
+    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
     <string name="confirm_selection">Potvrdi odabir</string>
+    <string name="loading">Loading…</string>
 
     <plurals name="items">
         <item quantity="one">%d stavka</item>
@@ -198,6 +229,7 @@
     <string name="sd_card_usb_same">Putanje SD kartice i USB uređaja ne mogu biti isti</string>
     <string name="app_on_sd_card">Čini se da je aplikacija instalirana na SD karticu, što čini widgete aplikacije nedostupnim. Nećete ih čak ni vidjeti na popisu dostupnih widgeta.
         To je ograničenje sustava, pa ako želite upotrebljavati widgete, morate vratiti aplikaciju na unutarnju pohranu..</string>
+    <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
 
     <!-- File properties -->
     <string name="properties">Svojstva</string>
@@ -253,6 +285,7 @@
     <!-- Themes -->
     <string name="light_theme">Svijetla</string>
     <string name="dark_theme">Tamna</string>
+    <string name="auto_theme">Auto</string>
     <string name="solarized">Solarizirana</string>
     <string name="dark_red">Tamno crvena</string>
     <string name="white">White</string>
@@ -291,6 +324,11 @@
     <string name="toggle_filename">Uključi prikaz naziva datoteka</string>
     <string name="move_to_top">Move to the top</string>
     <string name="move_to_bottom">Move to the bottom</string>
+    <string name="pin_item">Pin item</string>
+    <string name="unpin_item">Unpin item</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="send_email">Send email</string>
+    <string name="call">Call</string>
 
     <!-- Sorting -->
     <string name="sort_by">Sortiraj po</string>
@@ -541,11 +579,14 @@
     <!-- Settings -->
     <string name="settings">Postavke</string>
     <string name="purchase_simple_thank_you">Kupite Jednostavno Hvala</string>
+    <string name="general_settings">General</string>
+    <string name="color_customization">Color customization</string>
     <string name="customize_colors">Prilagodi boje</string>
     <string name="customize_colors_locked">Prilagodi boje (Locked)</string>
     <string name="customize_widget_colors">Prilagodi boje widgeta</string>
     <string name="customize_notifications">Customize notifications</string>
     <string name="use_english_language">Koristi Engleski jezik</string>
+    <string name="language">Language</string>
     <string name="show_hidden_items">Prikaži skrivene stavke</string>
     <string name="font_size">Veličina fonta</string>
     <string name="small">Malo</string>
@@ -589,6 +630,10 @@
     <string name="startup">Pokretanje</string>
     <string name="text">Tekst</string>
     <string name="migrating">Migrating</string>
+    <string name="quality">Quality</string>
+    <string name="main_screen">Main screen</string>
+    <string name="thumbnails">Thumbnails</string>
+    <string name="list_view">List view</string>
 
     <!-- Default tab to open -->
     <string name="manage_shown_tabs">Upravljaj prikazanim karticama</string>
@@ -628,6 +673,7 @@
     <string name="importing_some_entries_failed">Uvoz nekih unosa nije uspio</string>
     <string name="exporting_some_entries_failed">Izvoz nekih unosa nije uspio</string>
     <string name="no_entries_for_importing">No entries for importing have been found</string>
+    <string name="no_new_entries_for_importing">No new entries for importing have been found</string>
     <string name="no_entries_for_exporting">Nije pronađen nijedan unos za izvoz</string>
 
     <!-- OTG devices -->
@@ -698,21 +744,28 @@
 
     <!-- About -->
     <string name="about">O nama</string>
+    <string name="website">Website</string>
     <string name="website_label">Za pregled izvornog koda posjetite</string>
     <string name="email_label">Pošaljite nam povratne informacije ili prijedloge na</string>
     <string name="upgrade_to_pro">Upgrade to Pro</string>
-    <string name="more_apps_underlined"><u>Više aplikacija</u></string>
-    <string name="more_apps_from_us_underlined"><u>More apps from us</u></string>
-    <string name="third_party_licences_underlined"><u>Licence trećih strana</u></string>
-    <string name="invite_friends_underlined"><u>Pozovite prijatelje</u></string>
+    <string name="more_apps">Više aplikacija</string>
+    <string name="more_apps_from_us">More apps from us</string>
+    <string name="invite_friends">Pozovite prijatelje</string>
     <string name="share_text">Hej, posjeti nas na %1$s u %2$s</string>
     <string name="invite_via">Pozovite preko</string>
-    <string name="rate_us_underlined"><u>Ocijenite nas</u></string>
+    <string name="rate_us">Ocijenite nas</string>
     <string name="rate">Rate</string>
     <string name="donate">Donirajte</string>
     <string name="donate_underlined"><u>Donirajte</u></string>
     <string name="follow_us">Pratite nas</string>
     <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
+    <string name="support">Support</string>
+    <string name="help_us">Help us</string>
+    <string name="social">Social</string>
+    <string name="other">Other</string>
+    <string name="version_placeholder">Version %s</string>
+    <string name="hello">Hello :)</string>
+    <string name="about_footer">Made with &#10084;&#65039; in Slovakia</string>
     <string name="additional_info">Dodatne informacije</string>
     <string name="app_version">Verzija aplikacije: %s</string>
     <string name="device_os">OS uređaja: %s</string>
@@ -764,6 +817,7 @@
     <string name="simple_file_manager">Simple File Manager</string>
     <string name="simple_flashlight">Simple Flashlight</string>
     <string name="simple_gallery">Simple Gallery</string>
+    <string name="simple_keyboard">Simple Keyboard</string>
     <string name="simple_music_player">Simple Music Player</string>
     <string name="simple_notes">Simple Notes</string>
     <string name="simple_sms_messenger">Simple SMS Messenger</string>
@@ -781,6 +835,7 @@
     <string name="file_manager_short">Upravitelj datoteka</string>
     <string name="flashlight_short">Bljeskalica</string>
     <string name="gallery_short">Galerija</string>
+    <string name="keyboard_short">Keyboard</string>
     <string name="music_player_short">Glazbeni svirač</string>
     <string name="notes_short">Bilješke</string>
     <string name="sms_messenger_short">SMS Messenger</string>
@@ -800,8 +855,12 @@
     <string name="faq_1_text_commons">Najvjerojatnije zato jer ste premjestili aplikaciju na SD karticu. Postoji ograničenje Android sustava koje skriva dane widgete aplikacije u tom slučaju.
         Jedino je rješenje vratiti aplikaciju na internu pohranu putem postavki uređaja.</string>
     <string name="faq_2_title_commons">Želim Vam pomoći, ali ne mogu donirati novac. Ima li još nešto što mogu učiniti?</string>
-    <string name="faq_2_text_commons">Da naravno. Možete proširiti riječ o aplikacijama ili dati dobru povratnu informaciju i ocjene. Možete također pomoći prevođenjem aplikacija na novi jezik ili ažurirati neke postojeće prijevode.
-        Vodič možete pronaći na adresi https://github.com/SimpleMobileTools/General-Discussion , ili mi pošaljite poruku na hello@simplemobiletools.com ako Vam treba pomoć.</string>
+    <string name="faq_2_text_commons">
+        <![CDATA[
+            Yes, of course. You can spread the word about the apps or give good feedback and ratings. You can also help by translating the apps in a new language, or just update some existing translations.
+            The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+        ]]>
+    </string>
     <string name="faq_3_title_commons">Pogrešno sam izbrisao neke datoteke, kako ih mogu vratiti?</string>
     <string name="faq_3_text_commons">Nažalost, ne možete. Datoteke se brišu odmah nakon dijaloškog okvira za potvrdu, nema dostupnog koša za smeće.</string>
     <string name="faq_4_title_commons">Ne sviđa mi se boja widgeta, mogu li ih promijeniti?</string>
@@ -823,6 +882,64 @@
         want to select all items, just long press one item, then click at the selected item counter at the top left corner. That will select or unselect all everything.</string>
     <string name="faq_10_title_commons">I have purchased the app, but I cannot download it on another device.</string>
     <string name="faq_10_text_commons">Try clearing your Google Play app cache and restarting your device. It is some Google Play glitch, not really related to the app itself.</string>
+
+    <!-- Contributors -->
+    <string name="contributors">Contributors</string>
+    <string name="translation">Translation</string>
+    <string name="development">Development</string>
+    <string name="other_help">Other help</string>
+    <string name="contributors_label">
+        <![CDATA[
+            This list contains everyone that noticeably helped any app within the Simple Mobile Tools suite, not only this one. Translations are handled by volunteers,
+            let us know if you want to help too. The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+            Thanks to all contributors and other supporters!
+        ]]>
+    </string>
+
+    <string name="translation_arabic">Arabic</string>
+    <string name="translation_azerbaijani">Azerbaijani</string>
+    <string name="translation_bengali">Bengali</string>
+    <string name="translation_breton">Breton</string>
+    <string name="translation_catalan">Catalan</string>
+    <string name="translation_czech">Czech</string>
+    <string name="translation_welsh">Welsh</string>
+    <string name="translation_danish">Danish</string>
+    <string name="translation_english">English</string>
+    <string name="translation_german">German</string>
+    <string name="translation_greek">Greek</string>
+    <string name="translation_spanish">Spanish</string>
+    <string name="translation_basque">Basque</string>
+    <string name="translation_persian">Persian</string>
+    <string name="translation_finnish">Finnish</string>
+    <string name="translation_french">French</string>
+    <string name="translation_galician">Galician</string>
+    <string name="translation_hindi">Hindi</string>
+    <string name="translation_croatian">Croatian</string>
+    <string name="translation_hungarian">Hungarian</string>
+    <string name="translation_indonesian">Indonesian</string>
+    <string name="translation_italian">Italian</string>
+    <string name="translation_hebrew">Hebrew</string>
+    <string name="translation_japanese">Japanese</string>
+    <string name="translation_korean">Korean</string>
+    <string name="translation_lithuanian">Lithuanian</string>
+    <string name="translation_nepali">Nepali</string>
+    <string name="translation_norwegian">Norwegian</string>
+    <string name="translation_dutch">Dutch</string>
+    <string name="translation_polish">Polish</string>
+    <string name="translation_portuguese">Portuguese</string>
+    <string name="translation_romanian">Romanian</string>
+    <string name="translation_russian">Russian</string>
+    <string name="translation_slovak">Slovak</string>
+    <string name="translation_slovenian">Slovenian</string>
+    <string name="translation_serbian">Serbian</string>
+    <string name="translation_swedish">Swedish</string>
+    <string name="translation_tamil">Tamil</string>
+    <string name="translation_turkish">Turkish</string>
+    <string name="translation_ukrainian">Ukrainian</string>
+    <string name="translation_vietnamese">Vietnamese</string>
+    <string name="translation_chinese_hk">Chinese (Hong Kong)</string>
+    <string name="translation_chinese_cn">Chinese (Simplified)</string>
+    <string name="translation_chinese_tw">Chinese (Traditional)</string>
 
     <!-- Pro comparison (shown in the deprecated free apps) -->
     <string name="why_upgrade">Get the Pro version now!</string>

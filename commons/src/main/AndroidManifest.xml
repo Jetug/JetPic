@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jetug.commons">
+    package="com.simplemobiletools.commons">
 
     <queries>
-        <package android:name="com.jetug.thankyou.debug" />
-        <package android:name="com.jetug.thankyou" />
+        <package android:name="com.simplemobiletools.thankyou.debug" />
+        <package android:name="com.simplemobiletools.thankyou" />
     </queries>
 
     <uses-feature
@@ -22,7 +22,7 @@
 
     <application>
         <receiver
-            android:name="com.jetug.commons.receivers.SharedThemeReceiver"
+            android:name="com.simplemobiletools.commons.receivers.SharedThemeReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
