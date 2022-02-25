@@ -189,10 +189,11 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
             } catch (ignored: Exception) {
             }
         }
-
-        val drawableId = if (useCrossAsBack) R.drawable.ic_cross_vector else R.drawable.ic_arrow_left_vector
-        val icon = resources.getColoredDrawableWithColor(drawableId, color)
-        supportActionBar?.setHomeAsUpIndicator(icon)
+        if (useCrossAsBack) {
+            val drawableId = R.drawable.ic_cross_vector /*else R.drawable.ic_arrow_left_vector*/
+            val icon = resources.getColoredDrawableWithColor(drawableId, color)
+            supportActionBar?.setHomeAsUpIndicator(icon)
+        }
     }
 
     private fun getCurrentAppIconColorIndex(): Int {

@@ -16,8 +16,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.jetugapps.gallery.plus"
-        //applicationId "com.jetugapps.gallery"
+        //applicationId "com.jetugapps.gallery.plus"
+        applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion

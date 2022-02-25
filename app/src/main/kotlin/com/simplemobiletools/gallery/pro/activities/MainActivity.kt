@@ -112,14 +112,16 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Nav
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, 0,0)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navView = findViewById<NavigationView>(R.id.navView)
+        navView.setNavigationItemSelectedListener (::onNavigationItemSelected)
+        ///
 
         appLaunched(BuildConfig.APPLICATION_ID)
 
@@ -225,7 +227,13 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
         }
     }
 
-
+    private fun onNavigationItemSelected(item: MenuItem):Boolean{
+        when(item.itemId){
+            R.id.settings -> launchSettings()
+            R.id.about -> launchAbout()
+        }
+        return true
+    }
 
     ////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
@@ -248,7 +256,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
 
     override fun onStart() {
         super.onStart()
-        //mTempShowHiddenHandler.removeCallbacksAndMessages(null)
+        mTempShowHiddenHandler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {

@@ -39,8 +39,8 @@ class AboutActivity : BaseSimpleActivity() {
         linkColor = getAdjustedPrimaryColor()
 
         ///Jet
-        about_help_us.visibility = View.GONE
-        about_help_us_holder.visibility = View.GONE
+        //about_help_us.visibility = View.GONE
+        //about_help_us_holder.visibility = View.GONE
         about_social.visibility = View.GONE
         about_social_holder.visibility = View.GONE
         about_more_apps_holder.visibility = View.GONE
