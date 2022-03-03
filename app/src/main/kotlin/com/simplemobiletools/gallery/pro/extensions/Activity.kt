@@ -153,6 +153,14 @@ fun SimpleActivity.launchAbout() {
         FAQItem(R.string.faq_10_title_commons, R.string.faq_10_text_commons)
     )
 
+    if (isRPlus()) {
+        faqItems.add(0, FAQItem(R.string.faq_16_title, R.string.faq_16_text))
+        faqItems.add(1, FAQItem(R.string.faq_17_title, R.string.faq_17_text))
+        faqItems.removeIf { it.text == R.string.faq_7_text }
+        faqItems.removeIf { it.text == R.string.faq_14_text }
+        faqItems.removeIf { it.text == R.string.faq_8_text }
+    }
+
     startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
 }
 

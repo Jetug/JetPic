@@ -1,429 +1,936 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Basit Galeri</string>
-    <string name="app_launcher_name">Galeri</string>
+    <string name="ok">Tamam</string>
+    <string name="cancel">İptal</string>
+    <string name="nothing">Hiçbir şey</string>
+    <string name="later">Sonra</string>
+    <string name="save_as">Farklı kaydet</string>
+    <string name="file_saved">Dosya başarıyla kaydedildi</string>
+    <string name="invalid_file_format">Geçersiz dosya biçimi</string>
+    <string name="out_of_memory_error">Yetersiz hafıza hatası</string>
+    <string name="an_error_occurred">Bir hata oluştu: %s</string>
+    <string name="open_with">Birlikte aç</string>
+    <string name="edit_with">Şununla düzenle</string>
     <string name="edit">Düzenle</string>
-    <string name="open_camera">Kamerayı aç</string>
-    <string name="hidden">(gizli)</string>
-    <string name="excluded">(hariç)</string>
-    <string name="pin_folder">Klasörü sabitle</string>
-    <string name="unpin_folder">Klasörü ayır</string>
-    <string name="pin_to_the_top">Üste sabitle</string>
-    <string name="show_all">Tüm klasör içeriğini göster</string>
-    <string name="all_folders">Tüm klasörler</string>
-    <string name="folder_view">Klasör görünümüne geç</string>
-    <string name="other_folder">Diğer klasör</string>
-    <string name="show_on_map">Haritada göster</string>
-    <string name="unknown_location">Bilinmeyen konum</string>
-    <string name="volume">Ses</string>
-    <string name="brightness">Parlaklık</string>
-    <string name="lock_orientation">Yönü kilitle</string>
-    <string name="unlock_orientation">Yönün kilidini aç</string>
-    <string name="change_orientation">Yönü değiştir</string>
-    <string name="force_portrait">Dikeye zorla</string>
-    <string name="force_landscape">Yataya zorla</string>
-    <string name="use_default_orientation">Varsayılan yönü kullan</string>
-    <string name="fix_date_taken">Çekilen tarih değerini düzelt</string>
-    <string name="fixing">Düzeltiliyor…</string>
-    <string name="dates_fixed_successfully">Tarihler başarıyla düzeltildi</string>
-    <string name="no_date_takens_found">Çekilen Tarih bulunamadı</string>
-    <string name="share_resized">Yeniden boyutlandırılmış sürümü paylaş</string>
-    <string name="upgraded_from_free">Merhaba,\n\neski ücretsiz uygulamadan yükseltmiş gibisiniz. Artık uygulama ayarlarının en üst kısmında \'Pro\'ya Yükselt\' düğmesi olan eski sürümü kaldırabilirsiniz.\n\nYalnızca Geri Dönüşüm Kutusu öğelerinin silinmesi, sık kullanılanların işaretlerinin kaldırılması ve uygulama ayarlarınızı sıfırlamanız gerekir.\n\nTeşekkürler!</string>
-    <string name="switch_to_file_search">Tüm görünür klasörler arasında dosya aramaya geç</string>
-    <string name="set_as_default_folder">Varsayılan klasör olarak ayarla</string>
-    <string name="unset_as_default_folder">Varsayılan klasör olarak ayarlama</string>
-    <string name="reorder_by_dragging">Reorder folders by dragging</string>
-
-    <!-- Filter -->
-    <string name="filter_media">Medyayı filtrele</string>
-    <string name="images">Resimler</string>
-    <string name="videos">Videolar</string>
-    <string name="gifs">GIF\'ler</string>
-    <string name="raw_images">RAW resimler</string>
-    <string name="svgs">SVG\'ler</string>
-    <string name="portraits">Portreler</string>
-    <string name="no_media_with_filters">Seçilen filtrelerle hiçbir medya dosyası bulunamadı.</string>
-    <string name="change_filters_underlined"><u>Filtreleri değiştir</u></string>
-
-    <!-- Hide / Exclude -->
-    <string name="hide_folder_description">Bu işlev, klasöre bir \'.nomedia\' dosyası ekleyerek gizler, tüm alt klasörleri de gizler. Ayarlar\'dan \'Gizli öğeleri göster\' seçeneğini değiştirerek onları görebilirsiniz. Devam edilsin mi?</string>
-    <string name="exclude">Hariç tut</string>
-    <string name="excluded_folders">Hariç tutulan klasörler</string>
-    <string name="manage_excluded_folders">Hariç tutulan klasörleri yönet</string>
-    <string name="exclude_folder_description">Bu, alt klasörleriyle birlikte seçimi yalnızca Basit Galeriden hariç tutacaktır. Hariç tutulan klasörleri Ayarlar\'dan yönetebilirsiniz.</string>
-    <string name="exclude_folder_parent">Bunun yerine bir üst dizin hariç tutulsun mu?</string>
-    <string name="excluded_activity_placeholder">Klasörleri hariç tutmak, onları yalnızca Basit Galeri\'de gizlenen alt klasörleriyle bir araya getirecek, diğer uygulamalarda görünmeye devam edecektir.\n\nBunları diğer uygulamalardan gizlemek istiyorsanız, Gizle işlevini kullanın.</string>
-    <string name="remove_all">Tümünü kaldır</string>
-    <string name="remove_all_description">Tüm klasörler hariç tutulanlar listesinden kaldırılsın mı? Bu klasörleri silmez.</string>
-    <string name="hidden_folders">Gizli klasörler</string>
-    <string name="manage_hidden_folders">Gizli klasörleri yönet</string>
-    <string name="hidden_folders_placeholder">\".nomedia\" dosyasıyla gizlenmiş herhangi bir klasörünüz yok gibi görünüyor.</string>
-
-    <!-- Include folders -->
-    <string name="include_folders">Dahil edilen klasörler</string>
-    <string name="manage_included_folders">Dahil edilen klasörleri yönet</string>
-    <string name="add_folder">Klasör ekle</string>
-    <string name="included_activity_placeholder">Medya içeren, ancak uygulama tarafından tanınmayan bazı klasörleriniz varsa, bunları elle ekleyebilirsiniz.\n\nBuraya bazı öğeler eklemek başka bir klasörü hariç tutmaz.</string>
-    <string name="no_media_add_included">Hiçbir medya dosyası bulunamadı. Medya dosyalarını içeren klasörleri elle ekleyerek çözebilirsiniz.</string>
-
-    <!-- Resizing -->
-    <string name="resize">Yeniden boyutlandır</string>
-    <string name="resize_and_save">Seçimi yeniden boyutlandır ve kaydet</string>
-    <string name="width">Genişlik</string>
-    <string name="height">Yükseklik</string>
-    <string name="keep_aspect_ratio">En-boy oranını koru</string>
-    <string name="invalid_values">Lütfen geçerli bir çözünürlük girin</string>
-
-    <!-- Editor -->
-    <string name="editor">Düzenleyici</string>
-    <string name="rotate">Döndür</string>
-    <string name="invalid_image_path">Geçersiz resim yolu</string>
-    <string name="invalid_video_path">Geçersiz video yolu</string>
-    <string name="image_editing_failed">Resim düzenleme başarısız</string>
-    <string name="video_editing_failed">Video düzenleme başarısız</string>
-    <string name="image_editing_cancelled">Resim düzenleme iptal edildi</string>
-    <string name="video_editing_cancelled">Video düzenleme iptal edildi</string>
-    <string name="file_edited_successfully">Dosya başarıyla düzenlendi</string>
-    <string name="image_edited_successfully">Resim başarıyla düzenlendi</string>
-    <string name="video_edited_successfully">Video başarıyla düzenlendi</string>
-    <string name="edit_image_with">Resmi şununla düzenle:</string>
-    <string name="edit_video_with">Videoyu şununla düzenle:</string>
-    <string name="no_image_editor_found">Resim düzenleyici bulunamadı</string>
-    <string name="no_video_editor_found">Video düzenleyici bulunamadı</string>
-    <string name="unknown_file_location">Bilinmeyen dosya konumu</string>
-    <string name="error_saving_file">Kaynak dosyanın üzerine yazılamadı</string>
-    <string name="rotate_left">Sola döndür</string>
-    <string name="rotate_right">Sağa döndür</string>
-    <string name="rotate_one_eighty">180º döndür</string>
-    <string name="flip">Çevir</string>
-    <string name="flip_horizontally">Yatay olarak çevir</string>
-    <string name="flip_vertically">Dikey olarak çevir</string>
-    <string name="free_aspect_ratio">Serbest</string>               <!-- available as an option: 1:1, 4:3, 16:9, free -->
-    <string name="other_aspect_ratio">Diğer</string>                <!-- available as an option: 1:1, 4:3, 16:9, free, other -->
-
-    <!-- Set wallpaper -->
-    <string name="simple_wallpaper">Basit Duvar Kağıdı</string>
-    <string name="set_as_wallpaper">Duvar kağıdı olarak ayarla</string>
-    <string name="set_as_wallpaper_failed">Duvar kağıdı olarak ayarlanmadı</string>
-    <string name="set_as_wallpaper_with">Şununla duvar kağıdı olarak ayarla:</string>
-    <string name="setting_wallpaper">Duvar kağıdı ayarlanıyor&#8230;</string>
-    <string name="wallpaper_set_successfully">Duvar kağıdı başarıyla ayarlandı</string>
-    <string name="portrait_aspect_ratio">Dikey en boy oranı</string>
-    <string name="landscape_aspect_ratio">Yatay en boy oranı</string>
-    <string name="home_screen">Ana ekran</string>
-    <string name="lock_screen">Kilit ekranı</string>
-    <string name="home_and_lock_screen">Ana ve kilit ekranı</string>
-
-    <!-- Slideshow -->
-    <string name="slideshow">Slayt gösterisi</string>
-    <string name="interval">Süre (saniye):</string>
-    <string name="include_photos">Fotoğrafları dahil et</string>
-    <string name="include_videos">Videoları dahil et</string>
-    <string name="include_gifs">GIF\'leri dahil et</string>
-    <string name="random_order">Rastgele sırala</string>
-    <string name="move_backwards">Geriye doğru git</string>
-    <string name="loop_slideshow">Slayt gösterisini tekrarla</string>
-    <string name="animation">Animasyon</string>
-    <string name="no_animation">Hiçbiri</string>
-    <string name="fade">Karart</string>
-    <string name="slide">Kaydır</string>
-    <string name="slideshow_ended">Slayt gösterisi sona erdi</string>
-    <string name="no_media_for_slideshow">Slayt gösterisi için medya bulunamadı</string>
-
+    <string name="no_app_found">Geçerli bir uygulama bulunamadı</string>
+    <string name="set_as">Ayarla</string>
+    <string name="copy_to_clipboard">Panoya kopyala</string>
+    <string name="copy_number_to_clipboard">Numarayı panoya kopyala</string>
+    <string name="value_copied_to_clipboard">Değer panoya kopyalandı</string>
+    <string name="value_copied_to_clipboard_show">Değer panoya kopyalandı:\n%s</string>
+    <string name="dial_number">Numarayı çevir</string>
+    <string name="unknown">Bilinmeyen</string>
+    <string name="always">Her zaman</string>
+    <string name="never">Asla</string>
+    <string name="details">Ayrıntılar</string>
+    <string name="notes">Notlar</string>
+    <string name="deleting_folder">\'%s\' klasörü siliniyor</string>
+    <string name="none">Hiçbiri</string>
+    <string name="label">Etiket</string>
+    <string name="transparent">Şeffaf</string>
+    <string name="transparent_color">Şeffaf renk</string>
+    <string name="select_a_different_color">Farklı bir renk seçin</string>
+    <string name="download">İndir</string>
+    <string name="notification">Bildirim</string>
+    <string name="notifications">Bildirimler</string>
+    <string name="email">E-posta</string>
+    <string name="previous">Önceki</string>
+    <string name="playpause">Çal / Duraklat</string>
+    <string name="next">Sonraki</string>
+    <string name="number">Numara</string>
+    <string name="no_contacts_found">Kişi bulunamadı</string>
+    <string name="request_the_required_permissions">Gerekli izinleri iste</string>
+    <string name="no_access_to_contacts">Uygulama, kişilerinize erişemedi</string>
+    <string name="no_phone_call_permission">Uygulamanın telefon görüşmesi başlatma izni yok, lütfen aygıt ayarlarında izin verin</string>
+    <string name="insert_text_here">Metni buraya girin</string>
+    <string name="call_person">%s kişisini ara</string>
+    <string name="zero">Sıfır</string>
+    <string name="one">Bir</string>
+    <string name="two">İki</string>
+    <string name="three">Üç</string>
+    <string name="four">Dört</string>
+    <string name="five">Beş</string>
+    <string name="six">Altı</string>
+    <string name="seven">Yedi</string>
+    <string name="eight">Sekiz</string>
+    <string name="nine">Dokuz</string>
+    <string name="value_cannot_be_empty">Değer boş olamaz</string>
+    <!-- Emails -->
+    <string name="home">Ev</string>
+    <string name="work">İş</string>
+    <!-- Phone numbers -->
+    <string name="mobile">Cep</string>
+    <string name="main_number">Ana</string>
+    <string name="work_fax">İş Faksı</string>
+    <string name="home_fax">Ev Faksı</string>
+    <string name="pager">Çağrı Cihazı</string>
+    <string name="no_phone_number_found">Telefon numarası bulunamadı</string>
     <!-- View types -->
-    <string name="group_direct_subfolders">Doğrudan alt klasörleri gruplandır</string>
-
-    <!-- Grouping at media thumbnails -->
-    <string name="group_by">Gruplandırma</string>
-    <string name="do_not_group_files">Dosyaları gruplandırma</string>
-    <string name="by_folder">Klasör</string>
-    <string name="by_last_modified">Son değiştirilme</string>
-    <string name="by_last_modified_daily">Son değiştirilme (günlük)</string>
-    <string name="by_last_modified_monthly">Son değiştirilme (aylık)</string>
-    <string name="by_date_taken">Çekildiği tarih</string>
-    <string name="by_date_taken_daily">Çekildiği tarih (günlük)</string>
-    <string name="by_date_taken_monthly">Çekildiği tarih (aylık)</string>
-    <string name="by_file_type">Dosya türü</string>
-    <string name="by_extension">Uzantı</string>
-    <string name="grouping_and_sorting">Lütfen gruplandırmanın ve sıralamanın 2 bağımsız alan olduğunu unutmayın</string>
-
-    <!-- Widgets -->
-    <string name="folder_on_widget">Widget\'ta gösterilen klasör:</string>
-    <string name="show_folder_name">Klasör adını göster</string>
-
-    <!-- Settings -->
-    <string name="autoplay_videos">Videoları otomatik oynat</string>
-    <string name="remember_last_video_position">Son video oynatma konumunu hatırla</string>
-    <string name="loop_videos">Videoları tekrarla</string>
-    <string name="animate_gifs">Küçük resimlerdeki GIF\'leri hareketlendir</string>
-    <string name="max_brightness">Tam ekran medya görüntülerken maksimum parlaklık</string>
-    <string name="crop_thumbnails">Küçük resimleri karelere kırp</string>
-    <string name="show_thumbnail_video_duration">Video sürelerini göster</string>
-    <string name="screen_rotation_by">Tam ekran medyayı döndür</string>
-    <string name="screen_rotation_system_setting">Sistem ayarları</string>
-    <string name="screen_rotation_device_rotation">Cihaz yönü</string>
-    <string name="screen_rotation_aspect_ratio">En boy oranı</string>
-    <string name="black_background_at_fullscreen">Tam ekran medyada siyah arka plan ve durum çubuğu</string>
-    <string name="scroll_thumbnails_horizontally">Küçük resimleri yatay olarak kaydır</string>
-    <string name="hide_system_ui_at_fullscreen">Tam ekran medyada sistem arayüzünü otomatik gizle</string>
-    <string name="delete_empty_folders">İçeriğini sildikten sonra boş klasörleri sil</string>
-    <string name="allow_photo_gestures">Dikey hareketlerle fotoğraf parlaklığının kontrolüne izin ver</string>
-    <string name="allow_video_gestures">Video sesini ve parlaklığını dikey hareketlerle kontrol etmeye izin ver</string>
-    <string name="show_media_count">Ana görünümde klasör medya sayısını göster</string>
-    <string name="show_extended_details">Tam ekran medya üzerinde genişletilmiş ayrıntıları göster</string>
-    <string name="manage_extended_details">Genişletilmiş ayrıntıları yönet</string>
-    <string name="one_finger_zoom">Tam ekran medyalarda tek parmakla yakınlaştırmaya izin ver</string>
-    <string name="allow_instant_change">Ekran kenarlarına tıklayarak anında medya değiştirmeye izin ver</string>
-    <string name="allow_deep_zooming_images">Derin yakınlaştırma resimlerine izin ver</string>
-    <string name="hide_extended_details">Durum çubuğu gizlendiğinde genişletilmiş ayrıntıları gizle</string>
-    <string name="show_at_bottom">Ekranın alt kısmında bazı eylem düğmelerini göster</string>
-    <string name="show_recycle_bin">Geri dönüşüm kutusu\'nu klasörler ekranında gösterme</string>
-    <string name="deep_zoomable_images">Derin yakınlaştırılabilir resimler</string>
-    <string name="show_highest_quality">Resimleri mümkün olan en yüksek kalitede göster</string>
-    <string name="show_recycle_bin_last">Geri dönüşüm kutusu\'nu ana ekranda son öğe olarak göster</string>
-    <string name="allow_down_gesture">Tam ekran görünümünü aşağı hareketi ile kapatmaya izin ver</string>
-    <string name="allow_one_to_one_zoom">İki çift dokunuşla 1:1 yakınlaştırmaya izin ver</string>
-    <string name="open_videos_on_separate_screen">Videoları yeni yatay hareketlerle daima ayrı bir ekranda aç</string>
-    <string name="show_notch">Varsa bir çentik göster</string>
-    <string name="allow_rotating_gestures">Hareketlerle resimlerin döndürülmesine izin ver</string>
-    <string name="file_loading_priority">Dosya yükleme önceliği</string>
-    <string name="speed">Hız</string>
-    <string name="compromise">Ödünsüz</string>
-    <string name="avoid_showing_invalid_files">Geçersiz dosyaları göstermekten kaçın</string>
-    <string name="show_image_file_types">Resim dosyası türlerini göster</string>
-    <string name="allow_zooming_videos">Videoları iki kez dokunarak yakınlaştırmaya izin ver</string>
-    <string name="folder_thumbnail_style">Klasör küçük resim stili</string>
-    <string name="file_thumbnail_style">Dosya küçük resim stili</string>
-    <string name="thumbnail_spacing">Küçük resim aralığı</string>
-    <string name="show_file_count_line">Dosya sayısını ayrı bir satırda göster</string>
-    <string name="show_file_count_brackets">Dosya sayısını parantez içinde göster</string>
-    <string name="show_file_count_none">Dosya sayısını gösterme</string>
-    <string name="limit_folder_title">Uzun klasör başlıklarını 1 satırla sınırla</string>
-    <string name="square">Kare</string>
-    <string name="rounded_corners">Yuvarlatılmış köşeler</string>
-    <string name="export_favorite_paths">Export favorite file paths</string>
-
-    <!-- Setting sections -->
-    <string name="thumbnails">Küçük resimler</string>
-    <string name="fullscreen_media">Tam ekran medya</string>
-    <string name="extended_details">Genişletilmiş ayrıntılar</string>
-    <string name="bottom_actions">Alt eylemler</string>
-
-    <!-- Bottom actions -->
-    <string name="manage_bottom_actions">Görünür alt eylemleri yönet</string>
-    <string name="toggle_favorite">Favoriyi göster/gizle</string>
-    <string name="toggle_file_visibility">Dosya görünürlüğünü aç/kapat</string>
-
-    <!-- New editor strings -->
-    <string name="pesdk_transform_button_freeCrop">Özel</string>
-    <string name="pesdk_transform_button_resetCrop">Sıfırla</string>
-    <string name="pesdk_transform_button_squareCrop">Kare</string>
-    <string name="pesdk_transform_title_name">Dönüştür</string>
-    <string name="pesdk_filter_title_name">Filtre</string>
-    <string name="pesdk_filter_asset_none">Yok</string>
-    <string name="pesdk_adjustments_title_name">Ayarla</string>
-    <string name="pesdk_adjustments_button_shadowTool">Gölgeler</string>
-    <string name="pesdk_adjustments_button_exposureTool">Pozlama</string>
-    <string name="pesdk_adjustments_button_highlightTool">Vurgular</string>
-    <string name="pesdk_adjustments_button_brightnessTool">Parlaklık</string>
-    <string name="pesdk_adjustments_button_contrastTool">Kontrast</string>
-    <string name="pesdk_adjustments_button_saturationTool">Doygunluk</string>
-    <string name="pesdk_adjustments_button_clarityTool">Berraklık</string>
-    <string name="pesdk_adjustments_button_gammaTool">Gama</string>
-    <string name="pesdk_adjustments_button_blacksTool">Siyahlar</string>
-    <string name="pesdk_adjustments_button_whitesTool">Beyazlar</string>
-    <string name="pesdk_adjustments_button_temperatureTool">Sıcaklık</string>
-    <string name="pesdk_adjustments_button_sharpnessTool">Netlik</string>
-    <string name="pesdk_adjustments_button_reset">Sıfırla</string>
-    <string name="pesdk_focus_title_name">Odak</string>
-    <string name="pesdk_focus_title_disabled">Yok</string>
-    <string name="pesdk_focus_button_radial">Radyal</string>
-    <string name="pesdk_focus_button_linear">Doğrusal</string>
-    <string name="pesdk_focus_button_mirrored">Aynalı</string>
-    <string name="pesdk_focus_button_gaussian">Gauss</string>
-    <string name="pesdk_text_title_input">Add text</string>
-    <string name="pesdk_text_title_name">Metin</string>
-    <string name="pesdk_text_title_options">Metin Seçenekleri</string>
-    <string name="pesdk_text_title_textColor">Metin Rengi</string>
-    <string name="pesdk_text_title_font">Yazı Tipi</string>
-    <string name="pesdk_text_button_add">Ekle</string>
-    <string name="pesdk_text_button_edit">Düzenle</string>
-    <string name="pesdk_text_button_straighten">Düzle</string>
-    <string name="pesdk_text_button_font">Yazı Tipi</string>
-    <string name="pesdk_text_button_color">Renk</string>
-    <string name="pesdk_text_button_backgroundColor">Arka Renk</string>
-    <string name="pesdk_text_button_alignment">Hizalama</string>
-    <string name="pesdk_text_button_bringToFront">Öne</string>
-    <string name="pesdk_text_button_delete">Sil</string>
-    <string name="pesdk_text_text_editTextPlaceholder">Metniniz</string>
-    <string name="pesdk_brush_title_name">Fırça</string>
-    <string name="pesdk_brush_button_color">Renk</string>
-    <string name="pesdk_brush_button_size">Boyut</string>
-    <string name="pesdk_brush_button_hardness">Sertlik</string>
-    <string name="pesdk_brush_button_bringToFront">Öne</string>
-    <string name="pesdk_brush_button_delete">Sil</string>
-    <string name="pesdk_brush_title_brushColor">Fırça Rengi</string>
-    <string name="pesdk_editor_title_name">Editör</string>
-    <string name="pesdk_editor_title_closeEditorAlert">Editör kapatılsın mı?</string>
-    <string name="pesdk_editor_text_closeEditorAlert">Değişiklikleri gerçekten atmak istiyor musunuz?</string>
-    <string name="pesdk_editor_button_closeEditorAlertConfirmation">Evet</string>
-    <string name="pesdk_editor_button_closeEditorAlertCancelation">Hayır</string>
-    <string name="pesdk_editor_cancel">İptal</string>
-    <string name="pesdk_editor_accept">Kabul Et</string>
-    <string name="pesdk_editor_save">Kaydet</string>
-    <string name="pesdk_editor_text_exportProgressUnknown">Dışa aktarılıyor…</string>
-    <string name="pesdk_editor_text_exportProgress" formatted="false">%s dışa aktarılıyor.</string>
-    <string name="pesdk_sticker_title_name">Etiket</string>
-    <string name="pesdk_sticker_title_color">Etiket Rengi</string>
-    <string name="pesdk_sticker_title_options">Etiket Seçenekleri</string>
-    <string name="pesdk_sticker_button_add">Ekle</string>
-    <string name="pesdk_sticker_button_color">Renk</string>
-    <string name="pesdk_sticker_button_delete">Sil</string>
-    <string name="pesdk_sticker_button_bringToFront">Öne</string>
-    <string name="pesdk_sticker_button_straighten">Düzleştir</string>
-    <string name="pesdk_sticker_button_replace">Değiştir</string>
-    <string name="pesdk_sticker_button_opacity">Opaklık</string>
-    <string name="pesdk_sticker_button_contrast">Kontrast</string>
-    <string name="pesdk_sticker_button_saturation">Doygunluk</string>
-    <string name="pesdk_sticker_button_brightness">Parlaklık</string>
-    <string name="pesdk_sticker_category_name_custom">Yüklemeler</string>
-    <string name="pesdk_overlay_title_name">Kaplama</string>
-    <string name="pesdk_overlay_button_blendModeNormal">Normal</string>
-    <string name="pesdk_overlay_button_blendModeDarken">Karartma</string>
-    <string name="pesdk_overlay_button_blendModeScreen">Örtme</string>
-    <string name="pesdk_overlay_button_blendModeOverlay">Kaplama</string>
-    <string name="pesdk_overlay_button_blendModeLighten">Aydınlatma</string>
-    <string name="pesdk_overlay_button_blendModeMultiply">Çarpma</string>
-    <string name="pesdk_overlay_button_blendModeColorBurn">Renk Yanması</string>
-    <string name="pesdk_overlay_button_blendModeSoftLight">Hafif Aydınlık</string>
-    <string name="pesdk_overlay_button_blendModeHardLight">Şiddetli Aydınlık</string>
-    <string name="pesdk_overlay_asset_none">Hiçbiri</string>
-    <string name="pesdk_overlay_asset_golden">Altın</string>
-    <string name="pesdk_overlay_asset_lightleak1">Hafif Sızıntı 1</string>
-    <string name="pesdk_overlay_asset_mosaic">Mozaik</string>
-    <string name="pesdk_overlay_asset_paper">Kağıt</string>
-    <string name="pesdk_overlay_asset_rain">Yağmur</string>
-    <string name="pesdk_overlay_asset_vintage">Nostaljik</string>
-    <string name="pesdk_common_button_flipH">Yatay Çevir</string>
-    <string name="pesdk_common_button_flipV">Dikey Çevir</string>
-    <string name="pesdk_common_button_undo">Geri Al</string>
-    <string name="pesdk_common_button_redo">Yinele</string>
-    <string name="pesdk_common_title_colorPicker">Renk Seçici</string>
-    <string name="pesdk_common_title_transparentColor">Şeffaf</string>
-    <string name="pesdk_common_title_whiteColor">Beyaz</string>
-    <string name="pesdk_common_title_grayColor">Gri</string>
-    <string name="pesdk_common_title_blackColor">Siyah</string>
-    <string name="pesdk_common_title_lightBlueColor">Açık Mavi</string>
-    <string name="pesdk_common_title_blueColor">Mavi</string>
-    <string name="pesdk_common_title_purpleColor">Mor</string>
-    <string name="pesdk_common_title_orchidColor">Orkide</string>
-    <string name="pesdk_common_title_pinkColor">Pembe</string>
-    <string name="pesdk_common_title_redColor">Kırmızı</string>
-    <string name="pesdk_common_title_orangeColor">Turuncu</string>
-    <string name="pesdk_common_title_goldColor">Altın</string>
-    <string name="pesdk_common_title_yellowColor">Sarı</string>
-    <string name="pesdk_common_title_oliveColor">Zeytin</string>
-    <string name="pesdk_common_title_greenColor">Yeşil</string>
-    <string name="pesdk_common_title_aquamarinColor">Akuamarin</string>
-    <string name="pesdk_common_title_pipettableColor">Pipetlenebilir renk</string>
-    <string name="vesdk_video_trim_title_name">Kırp</string>
-
-    <!-- FAQ -->
-    <string name="faq_1_title">Basit Galeri\'yi nasıl varsayılan cihaz galerisi yapabilirim?</string>
-    <string name="faq_1_text">Önce cihaz ayarlarınızın Uygulamalar bölümünde varsayılan galeriyi bulmanız, \"Varsayılan olarak aç\" gibi bir şey söyleyen bir düğme aramanız, üzerine tıklamanız ve ardından \"Varsayılanları Temizle\"yi seçmeniz gerekir.
-        Gelecek sefer video veya resim açmayı denediğinizde, Basit Galeri\'yi seçip varsayılan uygulama haline getirebileceğiniz bir uygulama seçicisini görmelisiniz.</string>
-    <string name="faq_2_title">Uygulamayı bir şifre ile kilitledim ama unuttum. Ne yapabilirim?</string>
-    <string name="faq_2_text">Bunu 2 şekilde çözebilirsiniz. Uygulamayı yeniden yükleyebilir veya uygulamayı cihaz ayarlarınızdan bulabilir ve \"Verileri temizle\"yi seçebilirsiniz. Tüm ayarlarınızı sıfırlar, herhangi bir medya dosyasını kaldırmaz.</string>
-    <string name="faq_3_title">Bir albümün her zaman en üstte görünmesini nasıl sağlayabilirim?</string>
-    <string name="faq_3_text">İstediğiniz albüme uzunca basabilir ve eylem menüsündeki Sabitle simgesini seçebilirsiniz. Birden çok klasörü de sabitleyebilirsiniz, sabitlenmiş öğeler varsayılan sıralama yöntemine göre sıralanır.</string>
-    <string name="faq_4_title">Videoları nasıl hızlıca ileri sarabilirim?</string>
-    <string name="faq_4_text">Ekranın yan tarafına iki kez dokunarak veya arama çubuğunun yanındaki geçerli veya maksimum süre metinlerine dokunarak bunu yapabilirsiniz. Videoları uygulama ayarlarından ayrı bir ekranda açmayı etkinleştirirseniz yatay hareketleri de kullanabilirsiniz.</string>
-    <string name="faq_5_title">Klasörün gizlenmesi ve hariç tutulması arasındaki fark nedir?</string>
-    <string name="faq_5_text">Hariç tut, klasörü yalnızca Basit Galeri\'de görüntülemeyi engellerken, Gizle sistem genelinde çalışır ve klasörü diğer galerilerden de gizler. Verilen klasörde boş bir \".nomedia\" dosyası oluşturarak çalışır, daha sonra herhangi bir dosya yöneticisi ile kaldırabilirsiniz. Bazı cihazların Kamera, Ekran Görüntüleri ve İndirilenler gibi klasörlerin gizlenmesine izin vermediğini unutmayın.</string>
-    <string name="faq_6_title">Neden albüm resimlerini içeren klasörler görünüyor?</string>
-    <string name="faq_6_text">Bazı olağandışı albümlerin ortaya çıktığını göreceksiniz. Onları uzun süre basarak ve Hariç tut\'u seçerek kolayca hariç tutabilirsiniz. Bir sonraki iletişim kutusunda, üst klasörü seçebilirsiniz, ancak diğer ilgili albümlerin de gösterilmesini önleyecektir.</string>
-    <string name="faq_7_title">Resimler içeren bir klasör görünmüyor, ne yapabilirim?</string>
-    <string name="faq_7_text">Bunun birden fazla nedeni olabilir, ancak bunu çözmek kolaydır. Sadece Ayarlar -> Dahil Edilen Klasörleri Yönet\'e gidin, Artı\'yı seçin ve gerekli klasöre gidin.</string>
-    <string name="faq_8_title">Sadece birkaç belirli klasörün görünmesini istersem ne olur?</string>
-    <string name="faq_8_text">Dahil Edilen Klasörler\'e bir klasör eklemek otomatik olarak hiçbir şeyi hariç tutmaz. Yapabilecekleriniz Ayarlar -> Hariç Tutulan Klasörleri Yönet, kök klasörü \"/\" hariç tut, ardından Ayarlar -> Dahil Edilen Klasörleri Yönet.
-        Bu, hem hariç tutulan hem de dahil edilen olmak üzere, yalnızca seçilen klasörleri görünür hale getirir ve bir klasör her ikisi de hariç tutulur ve dahil edilirse, görünür.</string>
-    <string name="faq_10_title">Bu uygulamayla görüntüleri kırpabilir miyim?</string>
-    <string name="faq_10_text">Evet, görüntü köşelerini sürükleyerek resimleri düzenleyicide kırpabilirsiniz. Düzenleyiciye, bir resim küçük resmine uzun basıp Düzenle\'yi seçerek veya tam ekran görünümünden Düzenle\'yi seçerek ulaşabilirsiniz.</string>
-    <string name="faq_11_title">Medya dosyası küçük resimlerini bir şekilde gruplayabilir miyim?</string>
-    <string name="faq_11_text">Elbette, küçük resimler görünümünde \"Gruplandırma\" menü öğesini kullanın. Çekildiği Tarih de dahil olmak üzere dosyaları birçok kritere göre gruplayabilirsiniz. \"Tüm klasörleri göster\" işlevini kullanırsanız, bunları klasörlere göre de gruplayabilirsiniz.</string>
-    <string name="faq_12_title">Çekildiği Tarihe Göre Sıralama düzgün çalışmıyor gibi görünüyor, nasıl düzeltebilirim?</string>
-    <string name="faq_12_text">Büyük olasılıkla bir yerden kopyalanan dosyalardan kaynaklanır. Dosya küçük resimlerini seçip \"Çekilen tarih değerini düzelt\" seçeneğini seçerek düzeltebilirsiniz.</string>
-    <string name="faq_13_title">Görüntülerde renk şeritleri görüyorum. Kaliteyi nasıl arttırabilirim?</string>
-    <string name="faq_13_text">Görüntüleri görüntülemek için geçerli çözüm, vakaların büyük çoğunluğunda iyi çalışır, ama daha iyi görüntü kalitesi istiyorsanız, \"Derin yakınlaştırılabilir resimler\" bölümündeki uygulama ayarlarında \"Resimleri mümkün olan en yüksek kalitede göster\" seçeneğini etkinleştirebilirsiniz.</string>
-    <string name="faq_14_title">Bir dosya/klasör gizledim. Nasıl gösterebilirim?</string>
-    <string name="faq_14_text">Ana ekranda \"Geçici olarak gizli öğeleri göster\" menü öğesine veya gizli öğeyi görmek için uygulama ayarlarında \"Gizli öğeleri göster\" seçeneğine tıklayabilirsiniz. Göstermek isterseniz, sadece uzun basın ve \"Göster\"i seçin. Klasörler gizlenmiş bir \".nomedia\" dosyası ekleyerek gizlenir, dosyayı herhangi bir dosya yöneticisi ile de silebilirsiniz. Note that hiding works recursively though, so if you hide a folder, all subfolders will become hidden too. So for unhiding the subfolders you have to unhide the parent folder.</string>
-    <string name="faq_15_title">Uygulama neden bu kadar yer kaplıyor?</string>
-    <string name="faq_15_text">Uygulama önbelleği 250 MB\'a kadar çıkabilir, daha hızlı resim yüklemesini sağlar. Uygulama daha da fazla yer kaplıyorsa, büyük olasılıkla Geri Dönüşüm Kutusu\'nda öğe bulundurmanızdan kaynaklanmaktadır. Bu dosyalar uygulama boyutuna göre sayılır. Geri Dönüşüm Kutusu\'nu açarak ve tüm dosyaları silerek ya da uygulama ayarlarından temizleyebilirsiniz. Geri dönüşümdeki her dosya 30 gün sonra otomatik olarak silinir.</string>
-
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Basit Galeri Pro - Fotoğraf Yönetici, Düzenleyici</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Bu fotoğraf ve video galerisinde kesintisiz olarak anılarınıza göz atın</string>
-    <string name="app_long_description">
-        Basit Galeri Pro, özelleştirilebilir bir çevrimdışı galeridir. Fotoğraflarınızı düzenleyin ve organize edin, geri dönüşüm kutusuyla silinen dosyaları kurtarın, dosyaları koruyun ve gizleyin ve RAW, SVG ve çok daha fazlası dahil olmak üzere çok çeşitli fotoğraf ve video formatlarını görüntüleyin.
-
-        Uygulama hiçbir reklam ve gereksiz izinler içermez. Uygulama internet erişimi gerektirmediğinden gizliliğiniz de korunur.
-
-        -------------------------------------------------
-        <b>BASİT GALERİ PRO – ÖZELLİKLER</b>
-        -------------------------------------------------
-
-        • Reklamsız veya açılır penceresiz, çevrimdışı galeri
-        • Basit galeri fotoğraf editörü - kırpma, döndürme, yeniden boyutlandırma, çizim, filtreler ve daha fazlası
-        • İnternet erişimi gerekmez, size daha fazla gizlilik ve güvenlik sunar
-        • Gereksiz izinler gerekmez
-        • Resimleri, videoları ve dosyaları hızlıca arama
-        • Birçok farklı fotoğraf ve video türünü (RAW, SVG, panoramik vb.) açma ve görüntüleme
-        • Dosyaları kolayca düzenlemek ve organize etmek için çeşitli sezgisel hareketler
-        • Dosyaları filtrelemenin, gruplandırmanın ve sıralamanın birçok yolu
-        • Basit Galeri Pro\'nun görünümünü özelleştirme
-        • 32 dilde mevcut
-        • Hızlı erişim için dosyaları sık kullanılan olarak işaretleme
-        • Fotoğraflarınızı ve videolarınızı desen, pin veya parmak izi ile koruma
-        • Uygulama başlatılmasını veya belirli işlevleri de korumak için pin, desen ve parmak izi kullanma
-        • Silinen fotoğrafları ve videoları geri dönüşüm kutusundan kurtarma
-        • Fotoğrafları ve videoları gizlemek için dosyaların görünürlüğünü değiştirme
-        • Dosyalarınızın özelleştirilebilir bir slayt gösterisini oluşturma
-        • Dosyalarınızın ayrıntılı bilgilerini (çözünürlük, EXIF değerleri vb.) görüntüleme
-        • Basit Galeri Pro açık kaynak kodludur
-        … ve çok daha fazlası!
-
-        <b>FOTOĞRAF GALERİSİ EDİTÖRÜ</b>
-        Basit Galeri Pro, fotoğraflarınızı anında düzenlemenizi kolaylaştırır. Resimlerinizi kırpın, çevirin, döndürün ve yeniden boyutlandırın. Kendinizi biraz daha yaratıcı hissediyorsanız, filtre ekleyebilir ve resimlerinizi çizebilirsiniz!
-
-        <b>BİRÇOK DOSYA TÜRÜ İÇİN DESTEK</b>
-        Diğer galeri görüntüleyicilerinden ve fotoğraf düzenleyicilerinden farklı olarak, Basit Galeri Pro, JPEG, PNG, MP4, MKV, RAW, SVG, Panoramik fotoğraflar, Panoramik videolar ve daha pek çok farklı dosya türünü destekler.
-
-        <b>SON DERECE ÖZELLEŞTİRİLEBİLİR GALERİ YÖNETİCİSİ</b>
-        Kullanıcı arayüzünden alt araç çubuğundaki işlev düğmelerine kadar, Basit Galeri Pro oldukça özelleştirilebilirdir ve istediğiniz şekilde çalışır. Başka hiçbir galeri yöneticisi bu tür bir esnekliğe sahip değildir! Açık kaynak olması sayesinde 32 dilde de kullanıma hazırız!
-
-        <b>SİLİNEN FOTOĞRAFLARI VE VİDEOLARI KURTARIN</b>
-        Yanlışlıkla önemli bir fotoğrafı veya videoyu mu sildiniz? Endişelenmeyin! Basit Galeri Pro, silinmiş fotoğrafları ve videoları kolayca kurtarabileceğiniz kullanışlı bir geri dönüşüm kutusuna sahiptir.
-
-        <b>FOTOĞRAFLARI, VİDEOLARI VE DOSYALARI KORUYUN VE GİZLEYİN</b>
-        Pin, desen veya cihazınızın parmak izi tarayıcısını kullanarak fotoğrafları, videoları ve albümün tamamını koruyabilir ve gizleyebilirsiniz. Uygulamanın kendisini koruyabilir veya uygulamanın belirli işlevlerine kilitler yerleştirebilirsiniz. Örneğin, parmak izi taraması olmadan bir dosyayı silemez ve dosyalarınızı yanlışlıkla silmeye karşı korumaya yardımcı olabilirsiniz.
-
-        <b>Tüm Basit Araçlar paketini buradan inceleyin:</b>
-        https://www.simplemobiletools.com
-
-        <b>Basit Galeri Pro\'nun bağımsız web sitesi:</b>
-        https://www.simplemobiletools.com/gallery
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
+    <string name="change_view_type">Görünüm türünü değiştir</string>
+    <string name="grid">Izgara</string>
+    <string name="uneven_grid">Düzensiz Izgara</string>
+    <string name="list">Liste</string>
+    <string name="increase_column_count">Sütun sayısını artır</string>
+    <string name="reduce_column_count">Sütun sayısını azalt</string>
+    <string name="change_cover_image">Kapak resmini değiştir</string>
+    <string name="select_photo">Fotoğraf seç</string>
+    <!-- Blocked numbers -->
+    <string name="manage_blocked_numbers">Engellenen numaraları yönet</string>
+    <string name="not_blocking_anyone">Kimseyi engellemiyorsun.</string>
+    <string name="add_a_blocked_number">Engellenen numara ekle</string>
+    <string name="block_number">Numarayı engelle</string>
+    <string name="block_numbers">Numaraları engelle</string>
+    <string name="blocked_numbers">Engellenen numaralar</string>
+    <string name="export_blocked_numbers">Engellenen numaraları dışa aktar</string>
+    <string name="import_blocked_numbers">Engellenen numaraları içe aktar</string>
+    <string name="must_make_default_dialer">Engellenen numaraları kullanmak için bu uygulamayı varsayılan çevirici uygulaması yapmalısınız.</string>
+    <string name="set_as_default">Varsayılan olarak ayarla</string>
+    <string name="block_confirmation">\"%s\" gerçekten engellensin mi?</string>
+    <!-- Favorites -->
+    <string name="favorites">Favoriler</string>
+    <string name="add_favorites">Favori ekle</string>
+    <string name="add_to_favorites">Favorilere ekle</string>
+    <string name="remove_from_favorites">Favorilerden kaldır</string>
+    <!-- Search -->
+    <string name="search">Ara</string>
+    <string name="type_2_characters">Aramaya başlamak için en az 2 karakter yazın.</string>
+    <!-- Filters -->
+    <string name="filter">Filtre</string>
+    <string name="no_items_found">Hiçbir öge bulunamadı.</string>
+    <string name="change_filter">Filtreyi değiştir</string>
+    <!-- Permissions -->
+    <string name="no_storage_permissions">Depolama izni gerekiyor</string>
+    <string name="no_contacts_permission">Kişiler izni gerekiyor</string>
+    <string name="no_camera_permissions">Kamera izni gerekiyor</string>
+    <string name="no_audio_permissions">Ses izni gerekiyor</string>
+    <!-- Renaming -->
+    <string name="rename_file">Dosyayı yeniden adlandır</string>
+    <string name="rename_folder">Klasörü yeniden adlandır</string>
+    <string name="rename_file_error">Dosya yeniden adlandırılamıyor</string>
+    <string name="rename_folder_error">Klasör yeniden adlandırılamıyor</string>
+    <string name="rename_folder_empty">Klasör adı boş olamaz</string>
+    <string name="rename_folder_exists">Bu ada sahip bir klasör zaten var</string>
+    <string name="rename_folder_root">Depolama biriminin kök klasörü yeniden adlandıramaz</string>
+    <string name="rename_folder_ok">Klasör başarıyla yeniden adlandırıldı</string>
+    <string name="renaming_folder">Klasörü yeniden adlandırma</string>
+    <string name="filename_cannot_be_empty">Dosya adı boş olamaz</string>
+    <string name="filename_invalid_characters">Dosya adı geçersiz karakterler içeriyor</string>
+    <string name="filename_invalid_characters_placeholder">Dosya adı \'%s\' geçersiz karakterler içeriyor</string>
+    <string name="extension_cannot_be_empty">Uzantı boş olamaz</string>
+    <string name="source_file_doesnt_exist">%s kaynak dosyası mevcut değil</string>
+    <string name="prepend_filenames">Ön dosya adları</string>
+    <string name="append_filenames">Dosya adlarını ekle</string>
+    <string name="simple_renaming">Basit yeniden adlandırma</string>
+    <string name="pattern_renaming">Desen</string>
+    <string name="string_to_add">Eklenecek dize</string>
+    <string name="rename_date_time_pattern">%Y - yıl\n%M - ay\n%D - gün\n%h - saat\n%m - dakika\n%s - saniye\n%i - 1\'den artan sayı</string>
+    <string name="filename_without_txt">Dosya adı (.txt olmadan)</string>
+    <string name="filename_without_json">Dosya adı (.json olmadan)</string>
+    <string name="cannot_hide_files">Android 11\'den itibaren dosya ve klasörleri artık bu şekilde gizleyemezsiniz</string>
+    <!-- Copy / Move -->
+    <string name="copy">Kopyala</string>
+    <string name="move">Taşı</string>
+    <string name="copy_move">Kopyala / Taşı</string>
+    <string name="copy_to">Kopyala:</string>
+    <string name="move_to">Taşı:</string>
+    <string name="source">Kaynak</string>
+    <string name="destination">Hedef</string>
+    <string name="select_destination">Hedef seç</string>
+    <string name="click_select_destination">Hedef seçmek için buraya tıklayın</string>
+    <string name="invalid_destination">Seçilen hedefe yazılamadı</string>
+    <string name="please_select_destination">Lütfen bir hedef seçin</string>
+    <string name="source_and_destination_same">Kaynak ve hedef aynı olamaz</string>
+    <string name="copy_failed">Dosyalar kopyalanamadı</string>
+    <string name="copying">Kopyalanıyor…</string>
+    <string name="copying_success">Dosyalar başarıyla kopyalandı</string>
+    <string name="copying_success_one">Dosya başarıyla kopyalandı</string>
+    <string name="copy_move_failed">Bir hata oluştu</string>
+    <string name="moving">Taşınıyor…</string>
+    <string name="moving_success">Dosyalar başarıyla taşındı</string>
+    <string name="moving_success_one">Dosya başarıyla taşındı</string>
+    <string name="moving_success_partial">Bazı dosyalar taşınamadı</string>
+    <string name="copying_success_partial">Bazı dosyalar kopyalanamadı</string>
+    <string name="no_files_selected">Hiçbir dosya seçilmedi</string>
+    <string name="saving">Kaydediliyor…</string>
+    <string name="could_not_create_folder">%s klasörü oluşturulamıyor</string>
+    <string name="could_not_create_file">%s dosyası oluşturulamıyor</string>
+    <string name="no_new_items">Yeni öge bulunamadı</string>
+    <string name="no_space">Hedef yeterli alana sahip değil.\nGereken %1$s, kullanılabilir %2$s</string>
+    <!-- Create new -->
+    <string name="create_new">Yeni oluştur</string>
+    <string name="folder">Klasör</string>
+    <string name="file">Dosya</string>
+    <string name="create_new_folder">Yeni klasör oluştur</string>
+    <string name="name_taken">Bu ada sahip bir dosya veya klasör zaten var</string>
+    <string name="invalid_name">Ad, geçersiz karakterler içeriyor</string>
+    <string name="empty_name">Lütfen yeni bir ad girin</string>
+    <string name="unknown_error_occurred">Bilinmeyen bir hata oluştu</string>
+    <!-- File operation conflicts -->
+    <string name="file_already_exists">\"%s\" dosyası zaten var</string>
+    <string name="file_already_exists_overwrite">\"%s\" dosyası zaten var. Üzerine yazılsın mı?</string>
+    <string name="folder_already_exists">\"%s\" klasörü zaten var</string>
+    <string name="merge">Birleştir</string>
+    <string name="keep_both">İkisini de sakla</string>
+    <string name="overwrite">Üzerine yaz</string>
+    <string name="skip">Atla</string>
+    <string name="append">\'_1\' ile ekle</string>
+    <string name="apply_to_all">Tümüne uygula</string>
+    <!-- File picker -->
+    <string name="select_folder">Bir klasör seç</string>
+    <string name="select_file">Bir dosya seç</string>
+    <string name="confirm_storage_access_title">Harici depolama erişimini onayla</string>
+    <string name="confirm_folder_access_title">Klasör erişimini onayla</string>
+    <string name="confirm_storage_access_text">Yazma erişimi vermek için lütfen bir sonraki ekranda SD kartın kök klasörünü seçin</string>
+    <string name="confirm_storage_access_text_sd">SD kartı görmüyorsanız, bunu deneyin</string>
+    <string name="confirm_storage_access_android_text">Lütfen alttaki \'Bu klasörü kullan\' seçeneğine basarak uygulamanın seçilen depolama alanına erişmesine izin verin.</string>
+    <string name="confirm_selection">Seçimi onayla</string>
+    <string name="loading">Yükleniyor…</string>
+    <plurals name="items">
+        <item quantity="one">%d öge</item>
+        <item quantity="other">%d öge</item>
+    </plurals>
+    <!-- Are you sure you want to delete 5 items? -->
+    <plurals name="delete_items">
+        <item quantity="one">%d öge</item>
+        <item quantity="other">%d öge</item>
+    </plurals>
+    <plurals name="deleting_items">
+        <item quantity="one">%d öge siliniyor</item>
+        <item quantity="other">%d öge siliniyor</item>
+    </plurals>
+    <!-- Are you sure you want to delete 5 contacts? -->
+    <plurals name="delete_contacts">
+        <item quantity="one">%d kişi</item>
+        <item quantity="other">%d kişi</item>
+    </plurals>
+    <!-- Storages -->
+    <string name="select_storage">Depolama seç</string>
+    <string name="internal">Dahili</string>
+    <string name="sd_card">SD Kart</string>
+    <string name="root">Kök</string>
+    <string name="wrong_root_selected">Yanlış klasör seçildi, lütfen SD kartınızın kök klasörünü seçin</string>
+    <string name="sd_card_usb_same">SD kart ve USB cihaz yolları aynı olamaz</string>
+    <string name="app_on_sd_card">Uygulama, uygulama widget\'larını kullanılamaz hale getiren bir SD karta yüklenmiş görünüyor. Onları mevcut widget\'lar listesinde bile görmeyeceksiniz.
+        Bu bir sistem sınırlamasıdır, bu yüzden widget\'ları kullanmak istiyorsanız, uygulamayı dahili depolama birimine geri taşımalısınız.</string>
+    <string name="wrong_folder_selected">Yanlış klasör seçildi, lütfen \'%s\' yolunu seçin</string>
+    <!-- File properties -->
+    <string name="properties">Özellikler</string>
+    <string name="path">Yol</string>
+    <string name="items_selected">Seçilen ögeler</string>
+    <string name="direct_children_count">Alt öge sayısı</string>
+    <string name="files_count">Toplam dosya sayısı</string>
+    <string name="resolution">Çözünürlük</string>
+    <string name="duration">Süre</string>
+    <string name="artist">Sanatçı</string>
+    <string name="album">Albüm</string>
+    <string name="focal_length">Odak uzaklığı</string>
+    <string name="exposure_time">Pozlama süresi</string>
+    <string name="iso_speed">ISO hızı</string>
+    <string name="f_number">Diyafram</string>
+    <string name="camera">Kamera</string>
+    <string name="exif">EXIF</string>
+    <string name="song_title">Şarkı başlığı</string>
+    <string name="gps_coordinates">GPS koordinatları</string>
+    <string name="altitude">Rakım</string>
+    <!-- Color customization -->
+    <string name="background_color">Arka plan rengi</string>
+    <string name="text_color">Metin rengi</string>
+    <string name="primary_color">Ana renk</string>
+    <string name="accent_color_white">Beyaz temanın vurgu rengi</string>
+    <string name="accent_color_black_and_white">Siyah &amp; Beyaz temanın aksan rengi</string>
+    <string name="foreground_color">Ön plan rengi</string>
+    <string name="app_icon_color">Uygulama simgesi rengi</string>
+    <string name="bottom_navigation_bar_color">Alt gezinti çubuğu rengi</string>
+    <string name="restore_defaults">Varsayılanları geri yükle</string>
+    <string name="use_default">Varsayılanı kullan</string>
+    <string name="default_color">Varsayılan</string>
+    <string name="change_color">Rengi değiştir</string>
+    <string name="theme">Tema</string>
+    <string name="changing_color_description">Bir rengin değiştirilmesi, Özel temaya geçilmesini sağlayacaktır</string>
+    <string name="save">Kaydet</string>
+    <string name="discard">Çık</string>
+    <string name="undo_changes">Değişiklikleri geri al</string>
+    <string name="undo_changes_confirmation">Değişikliklerinizi geri almak istediğinizden emin misiniz?</string>
+    <string name="save_before_closing">Kaydedilmemiş değişiklikleriniz var. Çıkmadan önce kaydedilsin mi?</string>
+    <string name="apply_to_all_apps">Tüm Basit Uygulamalara renk uygula</string>
+    <string name="app_icon_color_warning">UYARI: Bazı başlatıcılar uygulama simgesi özelleştirmesini düzgün kullanamıyor. Simgenin kaybolması durumunda, uygulamayı Google Play\'den veya varsa bir widget kullanarak başlatmayı deneyin.
+        Başlatıldıktan sonra, sadece varsayılan turuncu simgeyi #F57C00 geri ayarlayın. En kötü durumda uygulamayı yeniden yüklemeniz gerekebilir.</string>
+    <string name="share_colors_success">"Renkler başarıyla güncellendi. 'Paylaşılan' adlı yeni bir Tema eklendi, lütfen gelecekte tüm uygulama renklerini güncellemek için onu kullanın."</string>
+    <string name="shared_theme_note">Pro uygulama sürümünü kullanıyor olsanız bile, teknik nedenlerden dolayı yine de Basit Teşekkürler\'e ihtiyacınız olduğunu unutmayın. Renk senkronizasyonunu o yapar.</string>
+    <string name="purchase_thank_you">
+        <![CDATA[
+            Bu işlevin kilidini açmak ve geliştirmeyi desteklemek için lütfen <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Basit Teşekkürler</a>\'i satın alın. Teşekkürler!
+        ]]>
     </string>
-
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
+    <!-- Themes -->
+    <string name="light_theme">Aydınlık</string>
+    <string name="dark_theme">Karanlık</string>
+    <string name="auto_theme">Otomatik</string>
+    <string name="solarized">Güneşte kalmış</string>
+    <string name="dark_red">Koyu Kırmızı</string>
+    <string name="white">Beyaz</string>
+    <string name="black_white">Siyah &amp; Beyaz</string>
+    <string name="custom">Özel</string>
+    <string name="shared">Paylaşılan</string>
+    <!-- What's new -->
+    <string name="whats_new">Yenilikler</string>
+    <string name="whats_new_disclaimer">* yalnızca büyük güncellemeler burada listelenmiştir; daima bazı küçük geliştirmeler de vardır</string>
+    <!-- Actionbar items -->
+    <string name="delete">Sil</string>
+    <string name="remove">Kaldır</string>
+    <string name="rename">Yeniden adlandır</string>
+    <string name="share">Paylaş</string>
+    <string name="share_via">Şununla paylaş</string>
+    <string name="select_all">Tümünü seç</string>
+    <string name="select_text">Metin seç</string>
+    <string name="hide">Gizle</string>
+    <string name="unhide">Göster</string>
+    <string name="hide_folder">Klasörü gizle</string>
+    <string name="unhide_folder">Klasörü göster</string>
+    <string name="temporarily_show_hidden">Geçici olarak gizliyi göster</string>
+    <string name="stop_showing_hidden">Gizli medyayı göstermeyi bırak</string>
+    <string name="maximum_share_reached">Bu kadar çok içeriği bir kerede paylaşamazsınız</string>
+    <string name="empty_and_disable_recycle_bin">Geri Dönüşüm Kutusu\'nu boşalt ve devre dışı bırak</string>
+    <string name="undo">Geri al</string>
+    <string name="redo">Yinele</string>
+    <string name="print">Yazdır</string>
+    <string name="create_shortcut">Kısayol oluştur</string>
+    <string name="add_number_to_contact">Kişiye numara ekle</string>
+    <string name="view_contact_details">İletişim bilgilerini görüntüle</string>
+    <string name="call_from_sim_1">SIM 1\'den ara</string>
+    <string name="call_from_sim_2">SIM 2\'den ara</string>
+    <string name="toggle_filename">Dosya adı görünürlüğünü aç/kapat</string>
+    <string name="move_to_top">Üste taşı</string>
+    <string name="move_to_bottom">Alta taşı</string>
+    <string name="pin_item">Ögeyi sabitle</string>
+    <string name="unpin_item">Ögenin sabitlemesini kaldır</string>
+    <string name="send_sms">SMS gönder</string>
+    <string name="send_email">E-posta gönder</string>
+    <string name="call">Ara</string>
+    <!-- Sorting -->
+    <string name="sort_by">Sıralama ölçütü</string>
+    <string name="name">Ad</string>
+    <string name="size">Boyut</string>
+    <string name="last_modified">Son değiştirilme</string>
+    <string name="date_created">Oluşturma tarihi</string>
+    <string name="date_taken">Alınan tarih</string>
+    <string name="title">Başlık</string>
+    <string name="filename">Dosya adı</string>
+    <string name="extension">Uzantı</string>
+    <string name="random">Rastgele</string>
+    <string name="sort_randomly">Rastgele sırala</string>
+    <string name="ascending">Artan</string>
+    <string name="descending">Azalan</string>
+    <string name="use_for_this_folder">Sadece bu klasör için kullan</string>
+    <string name="sort_numeric_parts">Sayısal parçaları gerçek değere göre sırala</string>
+    <string name="first_name">Adı</string>
+    <string name="middle_name">Göbek adı</string>
+    <string name="surname">Soyadı</string>
+    <string name="full_name">Tam adı</string>
+    <string name="use_custom_sorting">Özel sıralama kullan</string>
+    <string name="change_order">Düzeni değiştir</string>
+    <!-- Confirmation dialog -->
+    <string name="proceed_with_deletion">Silme işlemine devam etmek istediğinizden emin misiniz?</string>
+    <string name="deletion_confirmation">%s gerçekten silinsin mi?</string>
+    <!-- Are you sure you want to delete 5 items? -->
+    <string name="move_to_recycle_bin_confirmation">%s gerçekten Geri Dönüşüm Kutusuna taşınsın mı?</string>
+    <!-- Are you sure you want to move 3 items into the Recycle Bin? -->
+    <string name="are_you_sure_delete">Bu ögeyi silmek istediğinizden emin misiniz?</string>
+    <string name="are_you_sure_recycle_bin">Bu ögeyi Geri Dönüşüm Kutusu\'na taşımak istediğinizden emin misiniz?</string>
+    <string name="do_not_ask_again">Bu oturumda tekrar sorma</string>
+    <string name="do_not_show_again">Tekrar gösterme</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="maybe">Belki</string>
+    <plurals name="delete_warning">
+        <item quantity="one">UYARI: %d klasör siliyorsunuz</item>
+        <item quantity="other">UYARI: %d klasör siliyorsunuz</item>
+    </plurals>
+    <!-- Password protection -->
+    <string name="pin">PIN</string>
+    <string name="enter_pin">PIN\'i gir</string>
+    <string name="please_enter_pin">Lütfen PIN\'i girin</string>
+    <string name="wrong_pin">Yanlış PIN</string>
+    <string name="repeat_pin">PIN\'i tekrar gir</string>
+    <string name="pattern">Desen</string>
+    <string name="insert_pattern">Deseni çiz</string>
+    <string name="wrong_pattern">Yanlış desen</string>
+    <string name="repeat_pattern">Deseni tekrar çiz</string>
+    <string name="biometrics">Biyometri</string>
+    <string name="fingerprint">Parmak izi</string>
+    <string name="add_fingerprint">Parmak izi ekle</string>
+    <string name="place_finger">Lütfen parmağınızı parmak izi sensörüne yerleştirin</string>
+    <string name="open_biometric_dialog">Biyometrik kimlik doğrulama iletişim kutusunu aç</string>
+    <string name="authenticate">Kimlik doğrula</string>
+    <string name="authentication_failed">Kimlik doğrulama başarısız</string>
+    <string name="authentication_blocked">Kimlik doğrulama engellendi, lütfen birazdan tekrar deneyin</string>
+    <string name="no_fingerprints_registered">Parmak iziniz kayıtlı değil, lütfen cihazınızın Ayarlar bölümünden ekleyin</string>
+    <string name="go_to_settings">Ayarlar\'a git</string>
+    <string name="protection_setup_successfully">Parola kurulumu başarıyla yapıldı. Unutursanız lütfen uygulamayı yeniden yükleyin.</string>
+    <string name="fingerprint_setup_successfully">Koruma kurulumu başarıyla yapıldı. Sıfırlamayla ilgili sorun olursa lütfen uygulamayı yeniden yükleyin.</string>
+    <string name="lock_folder">Klasörü kilitle</string>
+    <string name="unlock_folder">Klasörün kilidini aç</string>
+    <string name="lock_folder_notice">Bu koruma yalnızca bu uygulamada çalışır, gerçek bir sistem çapında klasör şifrelemesinin yerini almaz.</string>
+    <!-- Times -->
+    <string name="yesterday">Dün</string>
+    <string name="today">Bugün</string>
+    <string name="tomorrow">Yarın</string>
+    <string name="hide_year">Yılı gizle</string>
+    <string name="seconds_raw">saniye</string>
+    <string name="minutes_raw">dakika</string>
+    <string name="hours_raw">saat</string>
+    <string name="days_raw">gün</string>
+    <string name="seconds_letter">sn</string>
+    <string name="minutes_letter">dk</string>
+    <string name="hours_letter">sa</string>
+    <plurals name="seconds">
+        <item quantity="one">%d saniye</item>
+        <item quantity="other">%d saniye</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d dakika</item>
+        <item quantity="other">%d dakika</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d saat</item>
+        <item quantity="other">%d saat</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%d gün</item>
+        <item quantity="other">%d gün</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="one">%d hafta</item>
+        <item quantity="other">%d hafta</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="one">%d ay</item>
+        <item quantity="other">%d ay</item>
+    </plurals>
+    <plurals name="years">
+        <item quantity="one">%d yıl</item>
+        <item quantity="other">%d yıl</item>
+    </plurals>
+    <!-- For example: I will be there in 5 minutes -->
+    <plurals name="in_seconds">
+        <item quantity="one">%d saniye</item>
+        <item quantity="other">%d saniye</item>
+    </plurals>
+    <plurals name="in_minutes">
+        <item quantity="one">%d dakika</item>
+        <item quantity="other">%d dakika</item>
+    </plurals>
+    <plurals name="in_hours">
+        <item quantity="one">%d saat</item>
+        <item quantity="other">%d saat</item>
+    </plurals>
+    <plurals name="in_days">
+        <item quantity="one">%d gün</item>
+        <item quantity="other">%d gün</item>
+    </plurals>
+    <plurals name="in_weeks">
+        <item quantity="one">%d hafta</item>
+        <item quantity="other">%d hafta</item>
+    </plurals>
+    <plurals name="in_months">
+        <item quantity="one">%d ay</item>
+        <item quantity="other">%d ay</item>
+    </plurals>
+    <plurals name="in_years">
+        <item quantity="one">%d yıl</item>
+        <item quantity="other">%d yıl</item>
+    </plurals>
+    <!-- For example: Event reminder: 3 minutes before -->
+    <plurals name="seconds_before">
+        <item quantity="one">%d saniye önce</item>
+        <item quantity="other">%d saniye önce</item>
+    </plurals>
+    <plurals name="minutes_before">
+        <item quantity="one">%d dakika önce</item>
+        <item quantity="other">%d dakika önce</item>
+    </plurals>
+    <plurals name="hours_before">
+        <item quantity="one">%d saat önce</item>
+        <item quantity="other">%d saat önce</item>
+    </plurals>
+    <plurals name="days_before">
+        <item quantity="one">%d gün önce</item>
+        <item quantity="other">%d gün önce</item>
+    </plurals>
+    <plurals name="weeks_before">
+        <item quantity="one">%d hafta önce</item>
+        <item quantity="other">%d hafta önce</item>
+    </plurals>
+    <plurals name="months_before">
+        <item quantity="one">%d ay önce</item>
+        <item quantity="other">%d ay önce</item>
+    </plurals>
+    <plurals name="years_before">
+        <item quantity="one">%d yıl önce</item>
+        <item quantity="other">%d yıl önce</item>
+    </plurals>
+    <!-- For example: Postpone reminder by 3 minutes -->
+    <plurals name="by_seconds">
+        <item quantity="one">%d saniye</item>
+        <item quantity="other">%d saniye</item>
+    </plurals>
+    <plurals name="by_minutes">
+        <item quantity="one">%d dakika</item>
+        <item quantity="other">%d dakika</item>
+    </plurals>
+    <plurals name="by_hours">
+        <item quantity="one">%d saat</item>
+        <item quantity="other">%d saat</item>
+    </plurals>
+    <plurals name="by_days">
+        <item quantity="one">%d gün</item>
+        <item quantity="other">%d gün</item>
+    </plurals>
+    <plurals name="by_weeks">
+        <item quantity="one">%d hafta</item>
+        <item quantity="other">%d hafta</item>
+    </plurals>
+    <plurals name="by_months">
+        <item quantity="one">%d ay</item>
+        <item quantity="other">%d ay</item>
+    </plurals>
+    <plurals name="by_years">
+        <item quantity="one">%d yıl</item>
+        <item quantity="other">%d yıl</item>
+    </plurals>
+    <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
+    <string name="alarm_goes_off_in">Alarmın çalmasına şu kadar kaldı:\n%s</string>
+    <string name="reminder_triggers_in">Hatırlatıcı tetiklenene kadar kalan süre:\n%s</string>
+    <string name="time_remaining">Kalan süre:\n%s</string>
+    <string name="alarm_warning">Lütfen alarma güvenmeden önce düzgün çalıştığından emin olun. Pil tasarrufu ile ilgili sistem kısıtlamaları nedeniyle yanlış davranabilir.</string>
+    <string name="reminder_warning">Lütfen hatırlatıcılara güvenmeden önce düzgün çalıştıklarından emin olun. Pil tasarrufu ile ilgili sistem kısıtlamaları nedeniyle yanlış davranabilirler.</string>
+    <string name="notifications_disabled">Bu uygulamanın bildirimleri devre dışı. Lütfen bunları etkinleştirmek için cihaz ayarlarınıza gidin.</string>
+    <!-- Alarms -->
+    <string name="alarm">Alarm</string>
+    <string name="snooze">Ertele</string>
+    <string name="dismiss">Kapat</string>
+    <string name="no_reminder">Hatırlatma yok</string>
+    <string name="at_start">Başlangıçta</string>
+    <string name="system_sounds">Sistem sesleri</string>
+    <string name="your_sounds">Sesleriniz</string>
+    <string name="add_new_sound">Yeni bir ses ekle</string>
+    <string name="no_sound">Ses yok</string>
+    <string name="during_day_at_hh_mm">Gün boyunca ss:dd</string>
+    <string name="during_day_at">Gün boyunca %02d:%02d</string>
+    <!-- Settings -->
+    <string name="settings">Ayarlar</string>
+    <string name="purchase_simple_thank_you">Basit Teşekkürler\'i Satın Al</string>
+    <string name="general_settings">Genel</string>
+    <string name="color_customization">Renk özelleştirme</string>
+    <string name="customize_colors">Renkleri özelleştir</string>
+    <string name="customize_colors_locked">Renkleri özelleştir (Kilitli)</string>
+    <string name="customize_widget_colors">Widget renklerini özelleştir</string>
+    <string name="customize_notifications">Bildirimleri özelleştir</string>
+    <string name="use_english_language">İngilizce dilini kullan</string>
+    <string name="language">Dil</string>
+    <string name="show_hidden_items">Gizli ögeleri göster</string>
+    <string name="font_size">Yazı tipi boyutu</string>
+    <string name="small">Küçük</string>
+    <string name="medium">Orta</string>
+    <string name="large">Büyük</string>
+    <string name="extra_large">Çok büyük</string>
+    <string name="password_protect_hidden_items">Gizli öge görünürlüğünü parola ile koru</string>
+    <string name="password_protect_whole_app">Tüm uygulamayı parola ile koru</string>
+    <string name="password_protect_file_deletion">Parola korumalı dosya silme ve taşıma</string>
+    <string name="keep_last_modified">Dosya işlemlerinde eski son değiştirme değerini koru</string>
+    <string name="show_info_bubble">Kaydırma çubuğunu sürükleyerek ögeleri kaydırırken bilgi balonunu göster</string>
+    <string name="prevent_phone_from_sleeping">Uygulama ön plandayken telefonun uykuya geçmesini önle</string>
+    <string name="skip_delete_confirmation">Her zaman silme onayı penceresini atla</string>
+    <string name="enable_pull_to_refresh">Üstten yenilemek için çekmeyi etkinleştir</string>
+    <string name="use_24_hour_time_format">24 saat biçimini kullan</string>
+    <string name="change_date_and_time_format">Tarih ve saat biçimini değiştir</string>
+    <string name="sunday_first">Pazar günü hafta başlangıcı</string>
+    <string name="widgets">Widget\'lar</string>
+    <string name="use_same_snooze">Her zaman aynı erteleme süresini kullan</string>
+    <string name="snooze_time">Erteleme süresi</string>
+    <string name="vibrate_on_button_press">Düğmeye basıldığında titret</string>
+    <string name="move_items_into_recycle_bin">Ögeleri silmek yerine Geri Dönüşüm Kutusuna taşı</string>
+    <string name="recycle_bin_cleaning_interval">Geri Dönüşüm Kutusu temizleme süresi</string>
+    <string name="empty_recycle_bin">Geri Dönüşüm Kutusunu boşalt</string>
+    <string name="force_portrait_mode">Dikey modu zorla</string>
+    <string name="export_settings">Ayarları dışa aktar</string>
+    <string name="import_settings">Ayarları içe aktar</string>
+    <string name="settings_exported_successfully">Ayarlar başarıyla dışa aktarıldı</string>
+    <string name="settings_imported_successfully">Ayarlar başarıyla içe aktarıldı</string>
+    <string name="start_name_with_surname">Soyadı ile başla</string>
+    <string name="clear_cache">Önbelleği temizle</string>
+    <string name="show_call_confirmation_dialog">Arama başlatmadan önce arama onayı penceresi göster</string>
+    <!-- Setting sections -->
+    <string name="visibility">Görünürlük</string>
+    <string name="security">Güvenlik</string>
+    <string name="scrolling">Kaydırma</string>
+    <string name="file_operations">Dosya işlemleri</string>
+    <string name="recycle_bin">Geri Dönüşüm Kutusu</string>
+    <string name="saving_label">Kaydetme</string>
+    <string name="startup">Başlangıç</string>
+    <string name="text">Metin</string>
+    <string name="migrating">Geçiş</string>
+    <string name="quality">Kalite</string>
+    <string name="main_screen">Ana ekran</string>
+    <string name="thumbnails">Küçük resimler</string>
+    <string name="list_view">Liste görünümü</string>
+    <!-- Default tab to open -->
+    <string name="manage_shown_tabs">Gösterilen sekmeleri yönet</string>
+    <string name="default_tab_to_open">Uygulama başlatıldığında açılacak sekme</string>
+    <string name="contacts_tab">Kişiler</string>
+    <string name="favorites_tab">Favoriler</string>
+    <string name="call_history_tab">Arama Geçmişi</string>
+    <string name="groups_tab">Gruplar</string>
+    <string name="last_used_tab">Son kullanılan</string>
+    <string name="files_tab">Dosyalar</string>
+    <string name="recent_files_tab">Son Dosyalar</string>
+    <!-- Recycle Bin -->
+    <string name="restore_this_file">Bu dosyayı geri yükle</string>
+    <string name="restore_selected_files">Seçilen dosyaları geri yükle</string>
+    <string name="restore_all_files">Tüm dosyaları geri yükle</string>
+    <string name="recycle_bin_emptied">Geri Dönüşüm Kutusu başarıyla boşaltıldı</string>
+    <string name="files_restored_successfully">Dosyalar başarıyla geri yüklendi</string>
+    <string name="empty_recycle_bin_confirmation">Geri Dönüşüm Kutusu\'nu boşaltmak istediğinizden emin misiniz? Dosyalar kalıcı olarak kaybolacak.</string>
+    <string name="recycle_bin_empty">Geri Dönüşüm Kutusu boş</string>
+    <string name="moving_recycle_bin_items_disabled">Geri Dönüşüm kutusu ögelerini taşıma devre dışı, lütfen Geri Yükle\'yi kullanın</string>
+    <string name="show_the_recycle_bin">Geri Dönüşüm Kutusunu göster</string>
+    <string name="hide_the_recycle_bin">Geri Dönüşüm Kutusunu gizle</string>
+    <plurals name="moving_items_into_bin">
+        <item quantity="one">%d öge Geri Dönüşüm Kutusu\'na taşınıyor</item>
+        <item quantity="other">%d öge Geri Dönüşüm Kutusu\'na taşınıyor</item>
+    </plurals>
+    <!-- Import / Export -->
+    <string name="importing">İçe aktarılıyor…</string>
+    <string name="exporting">Dışa aktarılıyor…</string>
+    <string name="importing_successful">İçe aktarma başarılı</string>
+    <string name="exporting_successful">Dışa aktarma başarılı</string>
+    <string name="importing_failed">İçe aktarılamadı</string>
+    <string name="exporting_failed">Dışa aktarılamadı</string>
+    <string name="importing_some_entries_failed">Bazı ögeler içe aktarılamadı</string>
+    <string name="exporting_some_entries_failed">Bazı ögeler dışa aktarılamadı</string>
+    <string name="no_entries_for_importing">İçe aktarılacak öge bulunamadı</string>
+    <string name="no_new_entries_for_importing">İçe aktarılacak yeni öge bulunamadı</string>
+    <string name="no_entries_for_exporting">Dışa aktarılacak öge bulunamadı</string>
+    <!-- OTG devices -->
+    <string name="usb">USB</string>
+    <string name="usb_detected">Cihazınıza takılı bir USB cihazınız var gibi görünüyor. Dosyalarının düzgün görünmesini sağlamak için ek izinler vermeniz gerekiyor.</string>
+    <string name="confirm_usb_storage_access_text">Erişim vermek için lütfen bir sonraki ekranda USB cihazının kök klasörünü seçin</string>
+    <string name="wrong_root_selected_usb">Yanlış klasör seçildi, lütfen USB cihazınızın kök klasörünü seçin</string>
+    <!-- Dates -->
+    <string name="january">Ocak</string>
+    <string name="february">Şubat</string>
+    <string name="march">Mart</string>
+    <string name="april">Nisan</string>
+    <string name="may">Mayıs</string>
+    <string name="june">Haziran</string>
+    <string name="july">Temmuz</string>
+    <string name="august">Ağustos</string>
+    <string name="september">Eylül</string>
+    <string name="october">Ekim</string>
+    <string name="november">Kasım</string>
+    <string name="december">Aralık</string>
+    <!-- in January -->
+    <string name="in_january">Ocak ayında</string>
+    <string name="in_february">Şubat ayında</string>
+    <string name="in_march">Mart ayında</string>
+    <string name="in_april">Nisan ayında</string>
+    <string name="in_may">Mayıs ayında</string>
+    <string name="in_june">Haziran ayında</string>
+    <string name="in_july">Temmuz ayında</string>
+    <string name="in_august">Ağustos ayında</string>
+    <string name="in_september">Eylül ayında</string>
+    <string name="in_october">Ekim ayında</string>
+    <string name="in_november">Kasım ayında</string>
+    <string name="in_december">Aralık ayında</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="thursday">Perşembe</string>
+    <string name="friday">Cuma</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="sunday">Pazar</string>
+    <string name="monday_letter">P</string>
+    <string name="tuesday_letter">S</string>
+    <string name="wednesday_letter">Ç</string>
+    <string name="thursday_letter">P</string>
+    <string name="friday_letter">C</string>
+    <string name="saturday_letter">C</string>
+    <string name="sunday_letter">P</string>
+    <string name="monday_short">Pzt</string>
+    <string name="tuesday_short">Sal</string>
+    <string name="wednesday_short">Çar</string>
+    <string name="thursday_short">Per</string>
+    <string name="friday_short">Cum</string>
+    <string name="saturday_short">Cmt</string>
+    <string name="sunday_short">Paz</string>
+    <!-- Pro version -->
+    <string name="upgrade_to_pro_long">Uygulama sürümünüz artık güncellenmeyecek. Yeni düzeltmeler ve diğer iyileştirmeleri almak için lütfen Pro sürümüne yükseltin.</string>
+    <string name="upgrade_to_pro_long_click">Uygulama sürümünüz artık güncellenmeyecek. Buraya tıklayarak yeni düzeltmeler ve diğer iyileştirmeleri almak için lütfen Pro sürümüne yükseltin.</string>
+    <string name="it_is_free">Şu süre kadar ücretsiz: %s. O zamana kadar indirirseniz, sonsuza dek ücretsiz olarak kullanabileceksiniz.</string>
+    <string name="more_info">Daha fazla bilgi</string>
+    <string name="upgrade">Yükselt</string>
+    <string name="upgrade_calendar">Yerel olarak depolanan etkinlikleri bir .ics dosyasına dışa aktarıp ardından içe aktarma yoluyla el ile geçirmeniz gerekir. Her iki dışa aktarma/içe aktarma düğmelerini ana ekran menüsünde bulabilirsiniz.</string>
+    <!-- About -->
+    <string name="about">Hakkında</string>
+    <string name="website">Web sitesi</string>
+    <string name="website_label">Kaynak kodları için ziyaret edin</string>
+    <string name="email_label">Görüşlerinizi veya önerilerinizi şuraya gönderin:</string>
+    <string name="upgrade_to_pro">Pro\'ya Yükselt</string>
+    <string name="more_apps">Daha fazla uygulama</string>
+    <string name="more_apps_from_us">Diğer uygulamalarımız</string>
+    <string name="invite_friends">Arkadaşlarınızı davet edin</string>
+    <string name="share_text">Selam, %1$s adlı harika bir uygulama buldum. %2$s adresinden indir</string>
+    <string name="invite_via">Şununla davet et</string>
+    <string name="rate_us">Bizi değerlendirin</string>
+    <string name="rate">Oyla</string>
+    <string name="donate">Bağış yap</string>
+    <string name="donate_underlined"><u>Bağış yapın</u></string>
+    <string name="follow_us">Bizi takip edin</string>
+    <string name="copyright">v %1$s\nTelif hakkı © Simple Mobile Tools %2$d</string>
+    <string name="support">Destek</string>
+    <string name="help_us">Bize yardım edin</string>
+    <string name="social">Sosyal</string>
+    <string name="other">Diğer</string>
+    <string name="version_placeholder">Sürüm %s</string>
+    <string name="hello">Merhaba :)</string>
+    <string name="about_footer">❤️ ile Slovakya\'da yapıldı</string>
+    <string name="additional_info">Ek bilgiler</string>
+    <string name="app_version">Uygulama sürümü: %s</string>
+    <string name="device_os">Cihaz İS: %s</string>
+    <string name="donate_please">
+        <![CDATA[
+            Merhaba,<br><br>
+            umarım uygulamadan memnunsunuzdur. Hiçbir reklam içermiyor, bu yüzden lütfen <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Basit Teşekkürler</a> uygulamasını satın alarak geliştirmeyi destekleyip, bu pencerenin tekrar görünmesini de önleyin.<br><br>
+            Teşekkürler!
+        ]]>
+    </string>
+    <string name="purchase">Satın al</string>
+    <string name="update_thank_you">Lütfen Basit Teşekkürler\'i son sürüme güncelleyin</string>
+    <string name="before_asking_question_read_faq">Bir soru sormadan önce, lütfen uygulama ayarlarını kontrol edin ve önce Sık Sorulan Sorular bölümünü okuyun. Belki çözüm oradadır.</string>
+    <string name="before_rate_read_faq">Bize puan vermeden önce lütfen uygulama ayarlarını kontrol edin ve önce Sık Sorulan Sorular bölümünü okuyun. Herhangi bir sorunuz varsa, belki çözüm oradadır.</string>
+    <string name="make_sure_latest">Ayrıca uygulamanın en son sürümünü kullandığınızdan emin olun.</string>
+    <string name="read_it">Oku</string>
+    <string name="read_faq">SSS\'yi oku</string>
+    <string name="rate_us_prompt">Merhaba,\n\nzaten bir süredir bu uygulamayı kullanıyor gibi görünüyorsunuz ve gerçekten takdir ediyoruz.\n\nSizden bir iyilik isteyebilirsek, lütfen bizi Google Play\'de oylayın. Bu bize gerçekten çok yardımcı olacak.\n\nNasıl karar verirseniz verin, bu mesajı bir daha görmeyeceksiniz.\n\nTeşekkürler!</string>
+    <string name="rate_our_app">Lütfen uygulamamızı oylayın :)</string>
+    <string name="thank_you">Teşekkürler</string>
+    <string name="widget_locked_pro">Widget kilitli.\nKilidi açmak için lütfen Pro sürümüne yükseltin.</string>
+    <string name="widget_locked">
+        <![CDATA[
+            Widget kilitli.<br>Kilidini açmak için lütfen <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Basit Teşekkürler</a> uygulamasını satın alın.
+        ]]>
+    </string>
+    <!-- New app (do not translate anything on the 4th line) -->
+    <string name="new_app">
+        <![CDATA[
+            Selam,<br><br>
+            kısa bir süre önce yeni uygulamamın yayınlandığını bilmenizi istiyorum:<br><br>
+            <a href="%1$s">%2$s</a><br><br>
+            <a href="%3$s">%4$s</a><br><br>
+            <a href="%5$s">%6$s</a><br><br>
+            Başlığa basarak indirebilirsiniz.<br><br>
+            Teşekkürler
+        ]]>
+    </string>
+    <string name="simple_app_launcher">Basit Uygulama Başlatıcı</string>
+    <string name="simple_calculator">Basit Hesap Makinesi</string>
+    <string name="simple_calendar">Basit Takvim</string>
+    <string name="simple_camera">Basit Kamera</string>
+    <string name="simple_clock">Basit Saat</string>
+    <string name="simple_contacts">Basit Kişiler</string>
+    <string name="simple_dialer">Basit Çevirici</string>
+    <string name="simple_draw">Basit Çizim</string>
+    <string name="simple_file_manager">Basit Dosya Yöneticisi</string>
+    <string name="simple_flashlight">Basit Fener</string>
+    <string name="simple_gallery">Basit Galeri</string>
+    <string name="simple_keyboard">Basit Klavye</string>
+    <string name="simple_music_player">Basit Müzik Çalar</string>
+    <string name="simple_notes">Basit Notlar</string>
+    <string name="simple_sms_messenger">Basit SMS Messenger</string>
+    <string name="simple_thank_you">Basit Teşekkürler</string>
+    <string name="simple_voice_recorder">Basit Ses Kaydedici</string>
+    <string name="app_launcher_short">Uygulama Başlatıcı</string>
+    <string name="calculator_short">Hesap Makinesi</string>
+    <string name="calendar_short">Takvim</string>
+    <string name="camera_short">Kamera</string>
+    <string name="clock_short">Saat</string>
+    <string name="contacts_short">Kişiler</string>
+    <string name="dialer_short">Çevirici</string>
+    <string name="draw_short">Çizim</string>
+    <string name="file_manager_short">Dosya Yöneticisi</string>
+    <string name="flashlight_short">Fener</string>
+    <string name="gallery_short">Galeri</string>
+    <string name="keyboard_short">Klavye</string>
+    <string name="music_player_short">Müzik Çalar</string>
+    <string name="notes_short">Notlar</string>
+    <string name="sms_messenger_short">SMS Messenger</string>
+    <string name="thank_you_short">Teşekkürler</string>
+    <string name="voice_recorder_short">Ses Kaydedici</string>
+    <string name="sideloaded_app">
+        <![CDATA[
+            Uygulama sürümünüz bozuk görünüyor. Lütfen <a href="%s">buradan</a> orijinal sürümünü indirin.
+        ]]>
+    </string>
+    <!-- FAQ -->
+    <string name="frequently_asked_questions">Sık sorulan sorular</string>
+    <string name="before_asking_question">Bir soru sormadan önce, lütfen şurayı okuyun:</string>
+    <string name="faq_1_title_commons">Uygulamanın widget\'ını widget\'lar listesinde neden göremiyorum?</string>
+    <string name="faq_1_text_commons">Büyük olasılıkla uygulamayı SD karta taşıdığınız içindir. Bu durumda verilen uygulama widget\'larını gizleyen bir Android sistem sınırlaması var. Tek çözüm, cihaz ayarlarınızı kullanarak uygulamayı Dahili Depolama birimine geri taşımaktır.</string>
+    <string name="faq_2_title_commons">Seni desteklemek istiyorum ama para bağışlayamıyorum. Yapabileceğim başka bir şey var mı?</string>
+    <string name="faq_2_text_commons">
+        <![CDATA[
+            Evet tabi ki. Uygulamalar hakkında farkındalığı artırabilir veya iyi geri bildirim ve puanlar verebilirsiniz. Ayrıca, uygulamaları yeni bir dile çevirerek veya sadece mevcut çevirileri güncelleyerek de yardımcı olabilirsiniz.
+            Çeviri rehberi <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">bu sayfadadır</a> veya herhangi bir sorunuz varsa <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> adresinden bize ulaşın.
+        ]]>
+    </string>
+    <string name="faq_3_title_commons">Bazı dosyaları yanlışlıkla sildim, onları nasıl kurtarabilirim?</string>
+    <string name="faq_3_text_commons">Ne yazık ki, yapamazsınız. Onay penceresinden sonra dosyalar anında silinir, kullanılabilir çöp kutusu yoktur.</string>
+    <string name="faq_4_title_commons">Widget renklerini beğenmedim, değiştirebilir miyim?</string>
+    <string name="faq_4_text_commons">Evet, ana ekranınızda bir widget\'ı sürüklediğinizde, bir widget yapılandırma ekranı görünür. Sol alt köşede renkli kareler göreceksiniz, sadece yeni bir renk seçmek için onlara basın. Alfa\'yı da ayarlamak için kaydırıcıyı kullanabilirsiniz.</string>
+    <string name="faq_5_title_commons">Bir şekilde silinen dosyaları geri yükleyebilir miyim?</string>
+    <string name="faq_5_text_commons">Gerçekten silinmişlerse, yapamazsınız. Ancak, varsayılan olarak etkinleştirilmiş bir Geri Dönüşüm Kutusu vardır, dosyaların silinmek yerine depoya taşınmasına neden olur.</string>
+    <string name="faq_6_title_commons">Uygulama başlatıcısı simgesi kayboldu. Ne yapabilirim?</string>
+    <string name="faq_6_text_commons">Başlatıcınızın, simge özelleştirmesini doğru şekilde desteklememesi nedeniyle ortaya çıkar. Uygulamayı Google Play\'den veya varsa bir widget aracılığıyla başlatmayı deneyin.
+        Başlatıldıktan sonra, sadece varsayılan turuncu simgeyi #F57C00 geri ayarlayın. En kötü durumda uygulamayı yeniden yüklemeniz gerekebilir.</string>
+    <string name="faq_7_title_commons">Para banka hesabımdan düşüldü, ancak uygulamayı indiremiyorum. Ne yapabilirim?</string>
+    <string name="faq_7_text_commons">Ödemeler tamamen Google tarafından işlenir, zaman zaman sistemleri aksar. Sadece Google Play uygulama önbelleğinizi temizleyin ve cihazınızı yeniden başlatın, ardından yeniden indirmeyi deneyin.</string>
+    <string name="faq_8_title_commons">Neden Pro sürümüne yükseltmeliyim?</string>
+    <string name="faq_8_text_commons">Uygulama sürümünüz artık güncellenmediğinden, tespit ettiğiniz hatalar asla düzeltilmeyecektir. Ayrıca yeni işlevler eklenmeyecektir. Pro sürümünü Google Play\'den az miktarda para karşılığında satın alabilirsiniz.
+        Bir kerelik ödeme, yani bir kez satın aldığınızda, bir daha asla ödeme yapmanız gerekmeyeceği anlamına gelir. Yeni bir cihaz aldıktan sonra bile. Pro sürümünü beğenmediyseniz, birkaç saat içinde kaldırabilirsiniz ve paranızı otomatik olarak geri alırsınız.
+        Daha sonra istediğiniz zaman geri ödeme almak isterseniz, hello@simplemobiletools.com adresinden bizimle iletişime geçmeniz yeterlidir.</string>
+    <string name="faq_9_title_commons">Aynı anda birden çok ögeyi nasıl seçebilirim?</string>
+    <string name="faq_9_text_commons">Bunu yapmanın birçok yolu var. İlki, bir ögeye uzun süre basarak seçim modunu başlatmak, ardından diğerlerini seçmek için kısa tıklamaktır. İkinci yol, PC\'lerdeki ögeleri fareyle seçmeye benzer, yalnızca bir ögeye uzun basarak seçim modunu başlatın ve ardından parmağınızı aşağı doğru kaydırarak diğer ögelere sürükleyin. Birden fazla öge seçmenin üçüncü yolu, bir ögeye uzun süre basmak, ardından diğerine uzun basmaktır. Tüm ögeleri seçmek istiyorsanız, yalnızca bir ögeye uzun basın, ardından sol üst köşedeki seçili öge sayacına tıklayın. Bu, her şeyi seçecek veya seçimini kaldıracaktır.</string>
+    <string name="faq_10_title_commons">Uygulamayı satın aldım ancak başka bir cihaza indiremiyorum.</string>
+    <string name="faq_10_text_commons">Google Play uygulama önbelleğinizi temizlemeyi ve cihazınızı yeniden başlatmayı deneyin. Bazı Google Play aksaklıkları, gerçekten uygulamanın kendisiyle ilgili değil.</string>
+    <!-- Contributors -->
+    <string name="contributors">Katkıda bulunanlar</string>
+    <string name="translation">Çeviri</string>
+    <string name="development">Geliştirme</string>
+    <string name="other_help">Diğer yardımlar</string>
+    <string name="contributors_label">
+        <![CDATA[
+            Bu liste, yalnızca buna değil, Simple Mobile Tools paketindeki herhangi bir uygulamaya belirgin şekilde yardımcı olan herkesi içerir. Çeviriler gönüllüler tarafından yapılır,
+            siz de yardım etmek isterseniz bize bildirin. Çeviri rehberi <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">bu sayfadadır</a> veya herhangi bir sorunuz varsa <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> adresinden bize ulaşın.
+            Tüm katkıda bulunanlara ve diğer destekçilere teşekkürler!
+        ]]>
+    </string>
+    <string name="translation_arabic">Arapça</string>
+    <string name="translation_azerbaijani">Azerice</string>
+    <string name="translation_bengali">Bengalce</string>
+    <string name="translation_breton">Bretonca</string>
+    <string name="translation_catalan">Katalanca</string>
+    <string name="translation_czech">Çekce</string>
+    <string name="translation_welsh">Galce</string>
+    <string name="translation_danish">Danca</string>
+    <string name="translation_english">English</string>
+    <string name="translation_german">Almanca</string>
+    <string name="translation_greek">Yunanca</string>
+    <string name="translation_spanish">İspanyolca</string>
+    <string name="translation_basque">Baskça</string>
+    <string name="translation_persian">Farsça</string>
+    <string name="translation_finnish">Fince</string>
+    <string name="translation_french">Fransızca</string>
+    <string name="translation_galician">Galiçyaca</string>
+    <string name="translation_hindi">Hintçe</string>
+    <string name="translation_croatian">Hırvatça</string>
+    <string name="translation_hungarian">Macarca</string>
+    <string name="translation_indonesian">Endonezyaca</string>
+    <string name="translation_italian">İtalyanca</string>
+    <string name="translation_hebrew">İbranice</string>
+    <string name="translation_japanese">Japonca</string>
+    <string name="translation_korean">Korece</string>
+    <string name="translation_lithuanian">Litvanyaca</string>
+    <string name="translation_nepali">Nepalce</string>
+    <string name="translation_norwegian">Norveççe</string>
+    <string name="translation_dutch">Felemenkçe</string>
+    <string name="translation_polish">Lehçe</string>
+    <string name="translation_portuguese">Portekizce</string>
+    <string name="translation_romanian">Rumence</string>
+    <string name="translation_russian">Rusça</string>
+    <string name="translation_slovak">Slovakça</string>
+    <string name="translation_slovenian">Slovence</string>
+    <string name="translation_serbian">Sırpça</string>
+    <string name="translation_swedish">İsveççe</string>
+    <string name="translation_tamil">Tamilce</string>
+    <string name="translation_turkish">Türkçe</string>
+    <string name="translation_ukrainian">Ukraynaca</string>
+    <string name="translation_vietnamese">Vietnamca</string>
+    <string name="translation_chinese_hk">Çince (Hong Kong)</string>
+    <string name="translation_chinese_cn">Çince (Basitleştirilmiş)</string>
+    <string name="translation_chinese_tw">Çince (Geleneksel)</string>
+    <!-- Pro comparison (shown in the deprecated free apps) -->
+    <string name="why_upgrade">Pro sürümünü şimdi alın!</string>
+    <string name="why_upgrade_basic_version">Temel</string>
+    <string name="why_upgrade_pro_version">Pro</string>
+    <string name="why_upgrade_no_ads">Reklamsız</string>
+    <string name="why_upgrade_no_internet_access">İnternet erişimi yok</string>
+    <string name="why_upgrade_footer">+ %100 Para İadesi Garantisi</string>
+    <string name="why_upgrade_improved_design">Geliştirilmiş tasarım</string>
+    <!-- Gallery Pro -->
+    <string name="why_upgrade_advanced_photo_editor">Gelişmiş fotoğraf düzenleyici</string>
+    <string name="why_upgrade_heic_support">HEIC/HEIF dosya desteği</string>
+    <string name="why_upgrade_batch_renaming">Gelişmiş toplu dosya adlandırma</string>
+    <string name="why_upgrade_folder_locking">Kişisel klasör kilidi</string>
+    <string name="why_upgrade_printing_support">Yazıcı desteği</string>
+    <!-- Calendar Pro -->
+    <string name="why_upgrade_time_zone_support">Zaman dilimi desteği</string>
+    <string name="why_upgrade_attendees_emails">Toplantı ve e-posta hatırlatıcıları</string>
+    <string name="why_upgrade_easy_event_importing">Kolay etkinlik ekleme</string>
+    <string name="why_upgrade_new_widgets">Yeni widget\'lar</string>
+    <!-- Contacts Pro -->
+    <string name="why_upgrade_duplicate_contact_merging">Rehberde tekrarlanan kişilerin birleştirilmesi</string>
+    <string name="why_upgrade_font_size_customization">Metin boyutu kişiselleştirme</string>
+    <string name="why_upgrade_private_contact_sharing">Uygulamalarımız arasında tercihe bağlı rehber bilgileri paylaşma</string>
+    <string name="why_upgrade_customizable_contact_ringtones">Özelleştirilebilir kişi zil sesleri</string>
+    <string name="why_upgrade_contact_filtering">Kişi filtreleme</string>
+    <!-- Notes Pro -->
+    <string name="why_upgrade_checklists">Yapılacaklar listeleri</string>
+    <string name="why_upgrade_different_note_per_widget">Her araç için farklı not ve renkler</string>
+    <string name="why_upgrade_note_locking">Not kilitleme</string>
+    <!-- File Manager Pro -->
+    <string name="why_upgrade_date_and_time_format">Saat ve tarih formatını kişiselleştirme</string>
+    <string name="why_upgrade_shortcuts">Ana sayfada kısayollar</string>
+    <string name="why_upgrade_file_compression">Dosya sıkıştırma desteği</string>
+    <string name="why_upgrade_recents_tab">Son dosyaların bulunduğu sekme</string>
+    <!-- Draw Pro -->
+    <string name="why_upgrade_background_color_customization">Arka plan renklerini kişiselleştirme</string>
+    <string name="why_upgrade_file_importing">Dosya ekleme desteği</string>
+    <string name="why_upgrade_zooming">Yakınlaştırma</string>
+    <!-- License -->
+    <string name="notice">Bu uygulama hayatımı kolaylaştırmak için aşağıdaki üçüncü taraf kitaplıklarını kullanır. Teşekkürler.</string>
+    <string name="third_party_licences">Üçüncü taraf lisansları</string>
+    <string name="kotlin_title">Kotlin (programlama dili)</string>
+    <string name="subsampling_title">Subsampling Scale Image View (yakınlaştırılabilir görüntü görünümleri)</string>
+    <string name="glide_title">Glide (görüntü yükleme ve önbellekleme)</string>
+    <string name="picasso_title">Picasso (görüntü yükleme ve önbellekleme)</string>
+    <string name="cropper_title">Android Image Cropper (görüntü kırpma ve döndürme)</string>
+    <string name="rtl_viewpager_title">RtlViewPager (sağdan sola  kaydırma)</string>
+    <string name="joda_title">Joda-Time (Java tarih değiştirme)</string>
+    <string name="stetho_title">Stetho (hata ayıklama veritabanları)</string>
+    <string name="otto_title">Otto (etkinlik veri yolu)</string>
+    <string name="photoview_title">PhotoView (yakınlaştırılabilir GIF\'ler)</string>
+    <string name="pattern_title">PatternLockView (desen koruması)</string>
+    <string name="reprint_title">Reprint (parmak izi koruması)</string>
+    <string name="gif_drawable_title">Gif Drawable (GIF\'leri yükleme)</string>
+    <string name="autofittextview_title">AutoFitTextView (metin boyutunu değiştirme)</string>
+    <string name="robolectric_title">Robolectric (test çerçevesi)</string>
+    <string name="espresso_title">Espresso (test yardımcısı)</string>
+    <string name="gson_title">Gson (JSON ayrıştırıcısı)</string>
+    <string name="leak_canary_title">Leak Canary (bellek sızıntısı dedektörü)</string>
+    <string name="number_picker_title">Number Picker (özelleştirilebilir numara seçici)</string>
+    <string name="exoplayer_title">ExoPlayer (video oynatıcı)</string>
+    <string name="panorama_view_title">VR Panorama View (panorama görüntüleme)</string>
+    <string name="sanselan_title">Apache Sanselan (görüntü meta verileri okuma)</string>
+    <string name="filters_title">Android Photo Filters (görüntü filtreleri)</string>
+    <string name="gesture_views_title">Gesture Views (yakınlaştırılabilir görüntüler)</string>
+    <string name="indicator_fast_scroll_title">Indicator Fast Scroll (kaydırma çubuğundaki harfler)</string>
+    <string name="event_bus_title">Event Bus (uygulama içi iletişim)</string>
+    <string name="audio_record_view_title">Audio Record View (ses görselleştirme)</string>
+    <string name="sms_mms_title">SMS MMS (SMS ve MMS yönetimi)</string>
+    <string name="apng_title">APNG Android (hareketli WebP desteği)</string>
+    <!-- Google Play listing -->
+    <string name="deprecated_app">Kullanımdan kaldırıldı: Uygulamanın bu sürümü artık sağlanmıyor, Pro sürümünü şuradan indirin: https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>
+    <string name="pro_app_refund">Ücretli herhangi bir uygulamayı 2 saat içinde kaldırırsanız, otomatik olarak iade edileceğini unutmayın. İstediğiniz zaman geri ödeme almak isterseniz, hello@simplemobiletools.com adresinden bizimle iletişime geçmeniz yeterli olacaktır. Bu denemeyi kolaylaştırır :)</string>
+    <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
+    <string name="developer_description">Özelleştirilebilir widget\'lara sahip, reklamlar ve gereksiz izinler içermeyen bir grup basit, açık kaynaklı Android uygulaması.</string>
 </resources>

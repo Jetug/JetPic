@@ -56,11 +56,11 @@
                         android:visibility="gone" />
 
                     <com.simplemobiletools.commons.views.MyRecyclerView
-                        android:clipToPadding="false"
                         android:id="@+id/directories_grid"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/directories_empty_placeholder_2"
+                        android:clipToPadding="false"
                         android:layoutAnimation="@anim/layout_animation"
                         android:scrollbars="none"
                         app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
@@ -108,13 +108,15 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/nav_menu_main"
-        android:id="@+id/navView">
-    </com.google.android.material.navigation.NavigationView>
+        android:id="@+id/navView"
+        android:background="@color/color_action_bar_main"
+        app:theme="@style/NavigationDrawerStyle"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

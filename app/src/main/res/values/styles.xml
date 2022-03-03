@@ -7,9 +7,13 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">16sp</item><!-- text size in menu-->
+        <item name="android:textStyle">normal</item><!-- text size in menu-->
+<!--        <item name="android:listPreferredItemHeightSmall">40dp</item>&lt;!&ndash; item size in menu&ndash;&gt;-->
+    </style>
+
     <style name="FullScreenTheme" parent="FullScreenTheme.Base"/>
-
-
     <style name="Theme.SlideTest.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
     <style name="Theme.SlideTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

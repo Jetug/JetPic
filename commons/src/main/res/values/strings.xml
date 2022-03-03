@@ -734,7 +734,7 @@
     <string name="simple_draw">Simple Draw</string>
     <string name="simple_file_manager">Simple File Manager</string>
     <string name="simple_flashlight">Simple Flashlight</string>
-    <string name="simple_gallery">Simple Gallery</string>
+    <string name="simple_gallery">JetPic Gallery</string>
     <string name="simple_music_player">Simple Music Player</string>
     <string name="simple_notes">Simple Notes</string>
     <string name="simple_sms_messenger">Simple SMS Messenger</string>
@@ -894,4 +894,5 @@
     <string name="moving_success_one">File moved successfully</string>
     <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
     <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
+    <string name="github">GitHub</string>
 </resources>

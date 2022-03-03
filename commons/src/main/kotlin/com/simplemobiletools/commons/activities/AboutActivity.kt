@@ -41,6 +41,8 @@ class AboutActivity : BaseSimpleActivity() {
         ///Jet
         //about_help_us.visibility = View.GONE
         //about_help_us_holder.visibility = View.GONE
+        about_donate_holder.visibility = View.GONE
+        about_contributors_holder.visibility = View.GONE
         about_social.visibility = View.GONE
         about_social_holder.visibility = View.GONE
         about_more_apps_holder.visibility = View.GONE
@@ -81,6 +83,7 @@ class AboutActivity : BaseSimpleActivity() {
         setupLicense()
         //setupFacebook()
         //setupReddit()
+        setupGitHub()
         setupVersion()
     }
 
@@ -218,6 +221,12 @@ class AboutActivity : BaseSimpleActivity() {
 //            launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
 //        }
 //    }
+
+    private fun setupGitHub() {
+        about_github_holder.setOnClickListener {
+            launchViewIntent(GITHUB_LINK)
+        }
+    }
 
     private fun setupVersion() {
         var version = intent.getStringExtra(APP_VERSION_NAME) ?: ""

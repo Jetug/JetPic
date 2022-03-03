@@ -12,6 +12,10 @@ import java.util.*
 
 const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
 
+//Jet{
+const val GITHUB_LINK = "https://github.com/Jetug/JetPic "
+//}
+
 const val APP_NAME = "app_name"
 const val APP_LICENSES = "app_licenses"
 const val APP_FAQ = "app_faq"
