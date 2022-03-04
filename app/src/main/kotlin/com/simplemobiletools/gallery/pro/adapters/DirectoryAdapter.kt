@@ -46,15 +46,24 @@ import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
+import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.item_dir_group.view.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+interface MainActivityControl{
+    fun recreateAdapter(dirs: ArrayList<FolderItem>)
+}
+
+val empty = object : MainActivityControl{
+    override fun recreateAdapter(dirs: ArrayList<FolderItem>) { }
+}
+
 @SuppressLint("NotifyDataSetChanged")
 class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
-                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, itemClick: (Any) -> Unit) :
+                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, val controls: MainActivityControl = empty, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     private val ITEM_PLACEHOLDER = 0
@@ -289,16 +298,11 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
             }
 
             d = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
-//            dirs.clear()
-//            notifyDataSetChanged()
             dirs = d
             mDirs = d
-//            var test = dirs
-//            updateDirs(d)
-//            test = dirs
-//            dirs.clear()
             activity.directories_grid.adapter = null
-            (activity as MainActivity).setupAdapter(d)
+            controls.recreateAdapter(d)
+            //(activity as MainActivity).setupAdapter(d)
             notifyDataSetChanged()
         }
 
