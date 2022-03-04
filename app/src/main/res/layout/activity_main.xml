@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:id="@+id/drawerLayout">
 
-    <include  android:id="@+id/directories"
-        layout="@layout/fragment_directory"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

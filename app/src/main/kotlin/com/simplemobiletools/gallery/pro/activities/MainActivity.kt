@@ -1,5 +1,6 @@
 package com.simplemobiletools.gallery.pro.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.content.ClipData
@@ -41,6 +42,7 @@ import com.simplemobiletools.gallery.pro.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.dialogs.FilterMediaDialog
 import com.simplemobiletools.gallery.pro.extensions.*
+import com.simplemobiletools.gallery.pro.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.helpers.*
 import com.simplemobiletools.gallery.pro.interfaces.DirectoryOperationsListener
 import com.simplemobiletools.gallery.pro.jetug.*
@@ -55,13 +57,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
 
+var mWasProtectionHandled = false
+
 class MainActivity : SimpleActivity() {
+    private val MANAGE_STORAGE_RC = 201
+
     private lateinit var toggle: ActionBarDrawerToggle
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         //Nav
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, 0,0)
@@ -72,6 +78,66 @@ class MainActivity : SimpleActivity() {
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener (::onNavigationItemSelected)
         ///
+
+        val fragment = DirectoryFragment()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment)
+            //.addToBackStack(null)
+            .commit()
+
+        appLaunched(BuildConfig.APPLICATION_ID)
+
+        updateWidgets()
+        registerFileUpdateListener()
+
+        if (packageName.startsWith("com.jetugapps.gallery.plus")) {
+            handleStoragePermission {}
+        }
+
+        // just request the permission, tryLoadGallery will then trigger in onResume
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (!it) {
+                toast(R.string.no_storage_permissions)
+                finish()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!isChangingConfigurations) {
+            config.temporarilyShowHidden = false
+            config.tempSkipDeleteConfirmation = false
+            unregisterFileUpdateListener()
+
+            if (!config.showAll) {
+                GalleryDatabase.destroyInstance()
+            }
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(WAS_PROTECTION_HANDLED, mWasProtectionHandled)
+    }
+
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        mWasProtectionHandled = savedInstanceState.getBoolean(WAS_PROTECTION_HANDLED, false)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun onNavigationItemSelected(item: MenuItem):Boolean{
@@ -82,6 +148,37 @@ class MainActivity : SimpleActivity() {
         return true
     }
 
+    private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
+        actionOnPermission = null
+        if (hasStoragePermission) {
+            callback(true)
+        } else {
+            if (isRPlus()) {
+                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
+                    if (success) {
+                        isAskingPermissions = true
+                        actionOnPermission = callback
+                        try {
+                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                            intent.addCategory("android.intent.category.DEFAULT")
+                            intent.data = Uri.parse("package:$packageName")
+                            startActivityForResult(intent, MANAGE_STORAGE_RC)
+                        } catch (e: Exception) {
+                            showErrorToast(e)
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                            startActivityForResult(intent, MANAGE_STORAGE_RC)
+                        }
+                    }
+//                    else {
+//                        finish()
+//                    }
+                }
+            } else {
+                handlePermission(PERMISSION_WRITE_STORAGE, callback)
+            }
+        }
+    }
 }
 
 //class MainActivity : SimpleActivity(), DirectoryOperationsListener {

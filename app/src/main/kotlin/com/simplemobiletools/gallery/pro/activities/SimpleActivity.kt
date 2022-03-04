@@ -101,7 +101,7 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
-    protected fun showAddIncludedFolderDialog(callback: () -> Unit) {
+    fun showAddIncludedFolderDialog(callback: () -> Unit) {
         FilePickerDialog(this, config.lastFilepickerPath, false, config.shouldShowHidden, false, true) {
             config.lastFilepickerPath = it
             config.addIncludedFolder(it)
