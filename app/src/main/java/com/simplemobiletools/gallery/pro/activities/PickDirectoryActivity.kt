@@ -13,11 +13,8 @@ import kotlinx.android.synthetic.main.activity_pick_directory.directories_horizo
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
-import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.dialogs.ChangeSortingDialog
-import com.simplemobiletools.gallery.pro.dialogs.ChangeViewTypeDialog
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class PickDirectoryActivity : SimpleActivity() {

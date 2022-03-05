@@ -18,7 +18,6 @@ import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.contracts.PickDirectoryContract
 import com.simplemobiletools.gallery.pro.extensions.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 open class SimpleActivity : BaseSimpleActivity() {
     val observer = object : ContentObserver(null) {
@@ -86,7 +85,7 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
-    protected fun registerFileUpdateListener() {
+    fun registerFileUpdateListener() {
         try {
             contentResolver.registerContentObserver(Images.Media.EXTERNAL_CONTENT_URI, true, observer)
             contentResolver.registerContentObserver(Video.Media.EXTERNAL_CONTENT_URI, true, observer)
@@ -94,7 +93,7 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
-    protected fun unregisterFileUpdateListener() {
+    public fun unregisterFileUpdateListener() {
         try {
             contentResolver.unregisterContentObserver(observer)
         } catch (ignored: Exception) {

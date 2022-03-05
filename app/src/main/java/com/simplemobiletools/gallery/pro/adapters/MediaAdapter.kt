@@ -10,7 +10,7 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.MediaActivity
-import com.simplemobiletools.gallery.pro.extensions.config
+import com.simplemobiletools.gallery.pro.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.extensions.getMediums
 import com.simplemobiletools.gallery.pro.extensions.launchIO
 import com.simplemobiletools.gallery.pro.helpers.MediaFetcher
@@ -22,13 +22,21 @@ import com.simplemobiletools.gallery.pro.models.FolderItem
 import com.simplemobiletools.gallery.pro.models.ThumbnailItem
 import java.util.*
 
+interface MediaAdapterControls{
+    fun recreateAdapter()
+}
+
+val mediaEmpty = object : MediaAdapterControls{
+    override fun recreateAdapter() { }
+}
 
 @SuppressLint("ClickableViewAccessibility")
 class MediaAdapter(
-    private val mediaActivity: MediaActivity, media: ArrayList<ThumbnailItem>,
+    private val mediaActivity: SimpleActivity, media: ArrayList<ThumbnailItem>,
     listener: MediaOperationsListener?, isAGetIntent: Boolean,
     allowMultiplePicks: Boolean, path: String, recyclerView: MyRecyclerView,
-    fastScroller: FastScroller? = null, swipeRefreshLayout : SwipeRefreshLayout? = null, itemClick: (Any) -> Unit):
+    fastScroller: FastScroller? = null, swipeRefreshLayout : SwipeRefreshLayout? = null,
+    val controls: MediaAdapterControls = mediaEmpty, itemClick: (Any) -> Unit):
     MediaAdapterBase(mediaActivity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView,fastScroller, swipeRefreshLayout, itemClick){
 
     override fun actionItemPressed(id: Int) {
@@ -73,7 +81,8 @@ class MediaAdapter(
         val dialog = DateEditingDialog(paths) {_,_->
             val sorting = activity.getFolderSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
-                mediaActivity.getMedia()
+                controls.recreateAdapter()
+                //mediaActivity.getMedia()
             }
             val s = sorting and SORT_BY_DATE_MODIFIED
             val d = sorting and SORT_BY_DATE_TAKEN

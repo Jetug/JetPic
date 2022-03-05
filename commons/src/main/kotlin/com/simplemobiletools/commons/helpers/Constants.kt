@@ -14,6 +14,10 @@ const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.doc
 
 //Jet{
 const val GITHUB_LINK = "https://github.com/Jetug/JetPic "
+
+//val marketLink = "market://details?id=${packageName.removeSuffix(".debug")}"
+val marketLink = "https://play.google.com/store/apps/details?id=com.jetugapps.gallery"
+
 //}
 
 const val APP_NAME = "app_name"

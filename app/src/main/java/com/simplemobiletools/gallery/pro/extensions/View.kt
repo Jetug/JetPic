@@ -1,12 +1,10 @@
 package com.simplemobiletools.gallery.pro.extensions
 
-import android.app.Activity
 import android.graphics.Rect
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import com.simplemobiletools.commons.extensions.actionBarHeight
 
 fun View.sendFakeClick(x: Float, y: Float) {
     val uptime = SystemClock.uptimeMillis()

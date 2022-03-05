@@ -1,61 +1,22 @@
 package com.simplemobiletools.gallery.pro.activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.SearchManager
-import android.content.ClipData
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.provider.MediaStore
-import android.provider.MediaStore.Images
-import android.provider.MediaStore.Video
 import android.provider.Settings
-import android.util.Log
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
-import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.models.Release
-import com.simplemobiletools.commons.views.MyGridLayoutManager
-import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.adapters.DirectoryAdapter
 import com.simplemobiletools.gallery.pro.databases.GalleryDatabase
-import com.simplemobiletools.gallery.pro.dialogs.ChangeSortingDialog
-import com.simplemobiletools.gallery.pro.dialogs.ChangeViewTypeDialog
-import com.simplemobiletools.gallery.pro.dialogs.FilterMediaDialog
 import com.simplemobiletools.gallery.pro.extensions.*
 import com.simplemobiletools.gallery.pro.fragments.DirectoryFragment
-import com.simplemobiletools.gallery.pro.helpers.*
-import com.simplemobiletools.gallery.pro.interfaces.DirectoryOperationsListener
-import com.simplemobiletools.gallery.pro.jetug.*
-import com.simplemobiletools.gallery.pro.jobs.NewPhotoFetcher
-import com.simplemobiletools.gallery.pro.models.Directory
-import com.simplemobiletools.gallery.pro.models.DirectoryGroup
-import com.simplemobiletools.gallery.pro.models.FolderItem
-import com.simplemobiletools.gallery.pro.models.Medium
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.*
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false
 
@@ -63,7 +24,6 @@ class MainActivity : SimpleActivity() {
     private val MANAGE_STORAGE_RC = 201
 
     private lateinit var toggle: ActionBarDrawerToggle
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

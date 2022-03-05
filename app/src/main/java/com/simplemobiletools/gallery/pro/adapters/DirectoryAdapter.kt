@@ -23,7 +23,6 @@ import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.MainActivity
 import com.simplemobiletools.gallery.pro.activities.MediaActivity
 import com.simplemobiletools.gallery.pro.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.activities.mDirs
@@ -34,7 +33,6 @@ import com.simplemobiletools.gallery.pro.interfaces.DirectoryOperationsListener
 import com.simplemobiletools.gallery.pro.models.*
 import com.simplemobiletools.gallery.pro.jetug.*
 import com.simplemobiletools.gallery.pro.views.MySquareImageView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_drag_handle_wrapper
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_location
@@ -53,17 +51,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-interface MainActivityControl{
+interface DirectoryAdapterControls{
     fun recreateAdapter(dirs: ArrayList<FolderItem>)
 }
 
-val empty = object : MainActivityControl{
+val empty = object : DirectoryAdapterControls{
     override fun recreateAdapter(dirs: ArrayList<FolderItem>) { }
 }
 
 @SuppressLint("NotifyDataSetChanged")
 class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
-                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, val controls: MainActivityControl = empty, itemClick: (Any) -> Unit) :
+                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, val controls: DirectoryAdapterControls = empty, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     private val ITEM_PLACEHOLDER = 0

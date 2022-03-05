@@ -14,7 +14,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.dialogs.RenameDialog
@@ -34,10 +33,6 @@ import com.simplemobiletools.gallery.pro.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.models.Medium
 import com.simplemobiletools.gallery.pro.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.models.ThumbnailSection
-import com.simplemobiletools.gallery.pro.jetug.saveCustomMediaOrder
-import com.simplemobiletools.gallery.pro.jetug.saveCustomSorting
-import kotlinx.android.synthetic.main.activity_media.*
-import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.photo_item_grid.view.*
 import kotlinx.android.synthetic.main.thumbnail_section.view.*
 import kotlinx.android.synthetic.main.video_item_grid.view.*
@@ -46,7 +41,6 @@ import kotlinx.android.synthetic.main.video_item_grid.view.medium_check
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_name
 import kotlinx.android.synthetic.main.video_item_grid.view.medium_thumbnail
 import kotlinx.android.synthetic.main.photo_item_grid.view.media_drag_handle
-import java.util.*
 import kotlin.collections.ArrayList
 
 open class MediaAdapterBase (

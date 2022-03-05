@@ -27,8 +27,6 @@ import com.simplemobiletools.gallery.pro.jetug.getFolderSorting
 import com.simplemobiletools.gallery.pro.models.Medium
 import com.simplemobiletools.gallery.pro.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.models.ThumbnailSection
-import kotlinx.android.synthetic.main.activity_media.*
-import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.activity_search.media_empty_text_placeholder
 import kotlinx.android.synthetic.main.activity_search.media_grid
 import kotlinx.android.synthetic.main.activity_search.media_horizontal_fastscroller

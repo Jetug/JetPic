@@ -1,7 +1,6 @@
 package com.simplemobiletools.gallery.pro.adapters
 
 import android.view.Menu
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R

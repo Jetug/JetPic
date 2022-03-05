@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.adapters.MainActivityControl
+import com.simplemobiletools.gallery.pro.adapters.DirectoryAdapterControls
 import com.simplemobiletools.gallery.pro.models.FolderItem
 import android.app.Activity
 import android.app.SearchManager
@@ -19,23 +19,16 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
-import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.MenuItemCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
-import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
@@ -46,7 +39,6 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.activities.*
 import com.simplemobiletools.gallery.pro.adapters.DirectoryAdapter
-import com.simplemobiletools.gallery.pro.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.dialogs.FilterMediaDialog
@@ -58,7 +50,6 @@ import com.simplemobiletools.gallery.pro.jobs.NewPhotoFetcher
 import com.simplemobiletools.gallery.pro.models.Directory
 import com.simplemobiletools.gallery.pro.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.models.Medium
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.fragment_directory.view.*
 import java.io.*
@@ -121,7 +112,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     private var mStoredAdjustedPrimaryColor = 0
     private var mStoredStyleString = ""
 
-    val controls = object : MainActivityControl {
+    val controls = object : DirectoryAdapterControls {
         override fun recreateAdapter(dirs: ArrayList<FolderItem>) {
             setupAdapter(dirs)
         }
@@ -129,29 +120,26 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
         activity = getActivity() as SimpleActivity
         config = activity.config
         intent = activity.intent
-        //gatActivity();
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        ///Jet{
+        val view = inflater.inflate(R.layout.fragment_directory, container, false)
+
         setHasOptionsMenu(true)
 
-        val onBackPressedCallback = object : OnBackPressedCallback(true){
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 onBackPressed()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        val inf = inflater.inflate(R.layout.fragment_directory, container, false)
-
         rvPosition = RecyclerViewPosition(directories_grid)
-
+        ///}
         if (savedInstanceState == null) {
             config.temporarilyShowHidden = false
             config.tempSkipDeleteConfirmation = false
@@ -170,7 +158,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent || mIsGetVideoContentIntent ||
             mIsGetAnyContentIntent || mIsSetWallpaperIntent
 
-        inf.directories_refresh_layout.setOnRefreshListener { getDirectories() }
+        view.directories_refresh_layout.setOnRefreshListener { getDirectories() }
         storeStateVariables()
         //checkWhatsNewDialog()
 
@@ -203,11 +191,11 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 //        updateWidgets()
 //        registerFileUpdateListener()
 
-        inf.directories_switch_searching.setOnClickListener {
+        view.directories_switch_searching.setOnClickListener {
             launchSearchActivity()
         }
 
-        return inf
+        return view
     }
 
     override fun onStart() {

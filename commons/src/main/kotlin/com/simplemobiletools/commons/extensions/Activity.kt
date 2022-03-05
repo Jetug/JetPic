@@ -95,9 +95,9 @@ fun Activity.appLaunched(appId: String) {
 //    }
 
     //Jetug
-//    if (baseConfig.appRunCount % 40 == 0 && !baseConfig.wasAppRated) {
-//        RateStarsDialog(this)
-//    }
+    if (baseConfig.appRunCount % 40 == 0 && !baseConfig.wasAppRated) {
+        RateStarsDialog(this)
+    }
 
     if (baseConfig.navigationBarColor == INVALID_NAVIGATION_BAR_COLOR && (window.attributes.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN == 0)) {
         baseConfig.defaultNavigationBarColor = window.navigationBarColor
@@ -283,7 +283,7 @@ fun Activity.launchViewIntent(url: String) {
 //Jetug
 fun Activity.redirectToRateUs() {
     try {
-        launchViewIntent("market://details?id=${packageName.removeSuffix(".debug")}")
+        launchViewIntent(marketLink)
     } catch (ignored: ActivityNotFoundException) {
         launchViewIntent(getStoreUrl())
     }
