@@ -33,7 +33,7 @@ import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.activities.SimpleActivity
-import com.simplemobiletools.gallery.pro.helpers.RECYCLE_BIN
+import com.simplemobiletools.gallery.pro.helpers.*
 import com.simplemobiletools.gallery.pro.models.DateTaken
 import com.squareup.picasso.Picasso
 import java.io.File
@@ -55,6 +55,8 @@ fun Activity.setTopMarginToActionBarsHeight(view: View){
 fun Activity.setTopPaddingToActionBarsHeight(view: View){
     view.setPadding(0,topBarsHeight,0,0)
 }
+
+
 
 //fun Activity.createFile(pickerInitialUri: Uri, name: String) {
 //    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {

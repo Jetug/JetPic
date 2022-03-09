@@ -2,56 +2,69 @@ package com.simplemobiletools.gallery.pro.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.MenuCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.extensions.appLaunched
+import com.simplemobiletools.commons.extensions.handleLockedFolderOpening
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.helpers.FAVORITES
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.WAS_PROTECTION_HANDLED
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.databases.GalleryDatabase
-import com.simplemobiletools.gallery.pro.extensions.*
+import com.simplemobiletools.gallery.pro.extensions.config
+import com.simplemobiletools.gallery.pro.extensions.launchAbout
+import com.simplemobiletools.gallery.pro.extensions.launchSettings
+import com.simplemobiletools.gallery.pro.extensions.updateWidgets
 import com.simplemobiletools.gallery.pro.fragments.DirectoryFragment
+import com.simplemobiletools.gallery.pro.fragments.MediaFragment
+import com.simplemobiletools.gallery.pro.helpers.*
 
 var mWasProtectionHandled = false
+var mIsThirdPartyIntent = false
+var mIsPickImageIntent = false
+var mIsPickVideoIntent = false
+var mIsGetImageContentIntent = false
+var mIsGetVideoContentIntent = false
+var mIsGetAnyContentIntent = false
+var mIsSetWallpaperIntent = false
+var mAllowPickingMultiple = false
 
 class MainActivity : SimpleActivity() {
-    private val MANAGE_STORAGE_RC = 201
-
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         //Nav
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
-        toggle = ActionBarDrawerToggle(this, drawerLayout, 0,0)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupDrawerLayout()
+        if(savedInstanceState == null){
+            setupFragment()
+        }
 
-        val navView = findViewById<NavigationView>(R.id.navView)
-        navView.setNavigationItemSelectedListener (::onNavigationItemSelected)
-        ///
-
-        val fragment = DirectoryFragment()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment)
-            //.addToBackStack(null)
-            .commit()
+        mIsPickImageIntent = isPickImageIntent(intent)
+        mIsPickVideoIntent = isPickVideoIntent(intent)
+        mIsGetImageContentIntent = isGetImageContentIntent(intent)
+        mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
+        mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
+        mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
+        mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+        mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent || mIsGetVideoContentIntent ||
+            mIsGetAnyContentIntent || mIsSetWallpaperIntent
 
         appLaunched(BuildConfig.APPLICATION_ID)
 
         updateWidgets()
         registerFileUpdateListener()
 
-        if (packageName.startsWith("com.jetugapps.gallery.plus")) {
+        if (packageName.startsWith(PACKAGE_NAME_PRO)) {
             handleStoragePermission {}
         }
 
@@ -62,10 +75,27 @@ class MainActivity : SimpleActivity() {
                 finish()
             }
         }
+
     }
+
+    private fun setupDrawerLayout(){
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+        toggle = ActionBarDrawerToggle(this, drawerLayout, 0,0)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val navView = findViewById<NavigationView>(R.id.navView)
+        navView.setNavigationItemSelectedListener (::onNavigationItemSelected)
+    }
+
+
 
     override fun onResume() {
         super.onResume()
+//        if (config.showAll) {
+//            showAllMedia()
+//        }
     }
 
     override fun onDestroy() {
@@ -87,11 +117,15 @@ class MainActivity : SimpleActivity() {
         outState.putBoolean(WAS_PROTECTION_HANDLED, mWasProtectionHandled)
     }
 
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         mWasProtectionHandled = savedInstanceState.getBoolean(WAS_PROTECTION_HANDLED, false)
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        MenuCompat.setGroupDividerEnabled(menu, true);
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
@@ -104,38 +138,85 @@ class MainActivity : SimpleActivity() {
         when(item.itemId){
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
+//            R.id.all_images -> openFolder("")//showAllImagesFragment()
+//            R.id.favorites -> openFolder(FAVORITES)//showFavoritesFragment()
+//            R.id.recycle_bin -> openFolder(RECYCLE_BIN)//showRecyclerBinFragment()
+            R.id.folders -> setupFragment()
+            R.id.all_images -> showAllImagesFragment()
+            R.id.favorites -> showFavoritesFragment()
+            R.id.recycle_bin -> showRecyclerBinFragment()
         }
         return true
     }
 
-    private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
-        actionOnPermission = null
-        if (hasStoragePermission) {
-            callback(true)
-        } else {
-            if (isRPlus()) {
-                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
-                    if (success) {
-                        isAskingPermissions = true
-                        actionOnPermission = callback
-                        try {
-                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                            intent.addCategory("android.intent.category.DEFAULT")
-                            intent.data = Uri.parse("package:$packageName")
-                            startActivityForResult(intent, MANAGE_STORAGE_RC)
-                        } catch (e: Exception) {
-                            showErrorToast(e)
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                            startActivityForResult(intent, MANAGE_STORAGE_RC)
-                        }
-                    }
-//                    else {
-//                        finish()
-//                    }
+    private fun openFolder(path: String) {
+        handleLockedFolderOpening(path) { success ->
+            if (success) {
+                Intent(this, MediaActivity::class.java).apply {
+                    putExtra(SKIP_AUTHENTICATION, true)
+                    putExtra(DIRECTORY, path)
+                    //handleMediaIntent(this)
+                    startActivity(this)
                 }
-            } else {
-                handlePermission(PERMISSION_WRITE_STORAGE, callback)
+            }
+        }
+    }
+
+    private fun showAllImagesFragment(){
+        config.showAll = true
+        val fragment = MediaFragment()
+        val bundle = Bundle()
+        bundle.putString(DIRECTORY, "")
+        fragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun showFavoritesFragment(){
+        val fragment = MediaFragment()
+
+        intent.putExtra(DIRECTORY, FAVORITES)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun showRecyclerBinFragment(){
+        val fragment = MediaFragment()
+//        val bundle = Bundle()
+//        bundle.putString(DIRECTORY, RECYCLE_BIN)
+//        bundle.putBoolean(SKIP_AUTHENTICATION, true)
+//
+//        fragment.arguments = bundle
+
+        intent.putExtra(DIRECTORY, RECYCLE_BIN)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun setupFragment(){
+        val fragment = DirectoryFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
+            .commit()
+    }
+
+    private fun showAllMedia() {
+        config.showAll = true
+        Intent(this, MediaActivity::class.java).apply {
+            putExtra(DIRECTORY, "")
+
+            if (!mIsThirdPartyIntent) {
+                startActivity(this)
+                finish()
             }
         }
     }

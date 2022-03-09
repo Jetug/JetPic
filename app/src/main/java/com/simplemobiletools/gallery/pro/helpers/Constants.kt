@@ -2,6 +2,10 @@ package com.simplemobiletools.gallery.pro.helpers
 
 import com.simplemobiletools.commons.helpers.MONTH_SECONDS
 
+//Jetug
+const val MANAGE_STORAGE_RC = 201
+const val PACKAGE_NAME_PRO = "com.jetugapps.gallery.plus"
+
 // shared preferences
 const val DIRECTORY_SORT_ORDER = "directory_sort_order"
 const val GROUP_FOLDER_PREFIX = "group_folder_"

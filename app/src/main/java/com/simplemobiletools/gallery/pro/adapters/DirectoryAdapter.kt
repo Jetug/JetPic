@@ -61,7 +61,8 @@ val empty = object : DirectoryAdapterControls{
 
 @SuppressLint("NotifyDataSetChanged")
 class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
-                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null, val controls: DirectoryAdapterControls = empty, itemClick: (Any) -> Unit) :
+                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null
+                       , val controls: DirectoryAdapterControls = empty, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     private val ITEM_PLACEHOLDER = 0

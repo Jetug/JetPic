@@ -1,23 +1,27 @@
 package com.simplemobiletools.gallery.pro.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
+import android.provider.Settings
 import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.getParentPath
-import com.simplemobiletools.commons.extensions.getRealPathFromURI
-import com.simplemobiletools.commons.extensions.scanPathRecursively
+import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isPiePlus
+import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.contracts.PickDirectoryContract
 import com.simplemobiletools.gallery.pro.extensions.*
+import com.simplemobiletools.gallery.pro.helpers.MANAGE_STORAGE_RC
 
 open class SimpleActivity : BaseSimpleActivity() {
     val observer = object : ContentObserver(null) {
@@ -85,6 +89,35 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
+    fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
+        actionOnPermission = null
+        if (hasStoragePermission) {
+            callback(true)
+        } else {
+            if (isRPlus()) {
+                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
+                    if (success) {
+                        isAskingPermissions = true
+                        actionOnPermission = callback
+                        try {
+                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                            intent.addCategory("android.intent.category.DEFAULT")
+                            intent.data = Uri.parse("package:$packageName")
+                            startActivityForResult(intent, MANAGE_STORAGE_RC)
+                        } catch (e: Exception) {
+                            showErrorToast(e)
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                            startActivityForResult(intent, MANAGE_STORAGE_RC)
+                        }
+                    }
+                }
+            } else {
+                handlePermission(PERMISSION_WRITE_STORAGE, callback)
+            }
+        }
+    }
+
     fun registerFileUpdateListener() {
         try {
             contentResolver.registerContentObserver(Images.Media.EXTERNAL_CONTENT_URI, true, observer)
@@ -93,7 +126,7 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
-    public fun unregisterFileUpdateListener() {
+    fun unregisterFileUpdateListener() {
         try {
             contentResolver.unregisterContentObserver(observer)
         } catch (ignored: Exception) {

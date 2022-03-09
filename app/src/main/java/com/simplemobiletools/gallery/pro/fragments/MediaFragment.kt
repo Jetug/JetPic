@@ -107,9 +107,20 @@ class MediaFragment : Fragment(), MediaOperationsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         activity = getActivity() as SimpleActivity
         config = activity.config
         intent = activity.intent
+
+        try {
+            //mPath = intent.getStringExtra(DIRECTORY) ?: ""
+            mPath = arguments?.getString(DIRECTORY) ?: ""
+
+        } catch (e: Exception) {
+            activity.showErrorToast(e)
+            activity.finish()
+            return
+        }
 
         intent.apply {
             mIsGetImageIntent = getBooleanExtra(GET_IMAGE_INTENT, false)
@@ -118,20 +129,12 @@ class MediaFragment : Fragment(), MediaOperationsListener {
             mAllowPickingMultiple = getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
         }
 
-        try {
-            mPath = intent.getStringExtra(DIRECTORY) ?: ""
-        } catch (e: Exception) {
-            activity.showErrorToast(e)
-            activity.finish()
-            return
-        }
-
         storeStateVariables()
 
-        if (mShowAll) {
-            activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            activity.registerFileUpdateListener()
-        }
+//        if (mShowAll) {
+//            activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+//            activity.registerFileUpdateListener()
+//        }
 
         activity.updateWidgets()
     }
@@ -271,6 +274,9 @@ class MediaFragment : Fragment(), MediaOperationsListener {
 
         mTempShowHiddenHandler.removeCallbacksAndMessages(null)
         mMedia.clear()
+
+        //Jet
+        config.showAll = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
