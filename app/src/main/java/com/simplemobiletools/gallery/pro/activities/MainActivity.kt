@@ -68,6 +68,8 @@ class MainActivity : SimpleActivity() {
             handleStoragePermission {}
         }
 
+        config.showAll = false
+
         // just request the permission, tryLoadGallery will then trigger in onResume
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (!it) {

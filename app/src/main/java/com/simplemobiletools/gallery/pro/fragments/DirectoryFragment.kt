@@ -187,16 +187,16 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 
     override fun onResume() {
         super.onResume()
-        ///Jet
+        ///Jet{
         activity.makeTranslucentBars()
         activity.setTopPaddingToActionBarsHeight(binding.directories_grid)
         activity.setTopMarginToActionBarsHeight(binding.directories_vertical_fastscroller)
         activity.setTopMarginToActionBarsHeight(binding.directories_switch_searching)
         //setTopMarginToActionBarsHeight(manager)
-
+        activity.updateActionBarTitle(resources.getString(R.string.gallery_short))
 
         binding.directories_switch_searching.height = activity.topBarsHeight
-        ///
+        ///}
         config.isThirdPartyIntent = false
         mDateFormat = config.dateFormat
         mTimeFormat = activity.getTimeFormat()
@@ -1296,7 +1296,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             binding.directories_grid.beVisibleIf(binding.directories_empty_placeholder.isGone())
         }
         catch (e:IllegalStateException){
-
+            Log.d("Jet", "error checkPlaceholderVisibility() IllegalStateException")
         }
     }
 

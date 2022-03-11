@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.8"
                 android:gravity="center_horizontal"
+                android:layout_marginTop="100dp"
                 android:paddingStart="@dimen/activity_margin"
                 android:paddingTop="@dimen/activity_margin"
                 android:paddingEnd="@dimen/activity_margin"
