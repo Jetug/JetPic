@@ -3,10 +3,8 @@ package com.simplemobiletools.gallery.pro.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.MenuCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.simplemobiletools.commons.extensions.appLaunched
@@ -36,6 +34,8 @@ var mIsGetAnyContentIntent = false
 var mIsSetWallpaperIntent = false
 var mAllowPickingMultiple = false
 
+var currentMediaFragment: MediaFragment? = null
+
 class MainActivity : SimpleActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
@@ -46,7 +46,7 @@ class MainActivity : SimpleActivity() {
         //Nav
         setupDrawerLayout()
         if(savedInstanceState == null){
-            setupFragment()
+            setupGalleryFragment()
         }
 
         mIsPickImageIntent = isPickImageIntent(intent)
@@ -143,7 +143,7 @@ class MainActivity : SimpleActivity() {
 //            R.id.all_images -> openFolder("")//showAllImagesFragment()
 //            R.id.favorites -> openFolder(FAVORITES)//showFavoritesFragment()
 //            R.id.recycle_bin -> openFolder(RECYCLE_BIN)//showRecyclerBinFragment()
-            R.id.folders -> setupFragment()
+            R.id.folders -> setupGalleryFragment()
             R.id.all_images -> showAllImagesFragment()
             R.id.favorites -> showFavoritesFragment()
             R.id.recycle_bin -> showRecyclerBinFragment()
@@ -164,11 +164,20 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun showAllImagesFragment(){
-        config.showAll = true
+    private fun setupGalleryFragment(){
+        val fragment = DirectoryFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
+            .commit()
+    }
+
+    private fun showMediaFragment(folderName: String){
+        //mMedia.clear()
         val fragment = MediaFragment()
+        currentMediaFragment = fragment
+
         val bundle = Bundle()
-        bundle.putString(DIRECTORY, "")
+        bundle.putString(DIRECTORY, folderName)
         fragment.arguments = bundle
 
         supportFragmentManager.beginTransaction()
@@ -177,39 +186,23 @@ class MainActivity : SimpleActivity() {
             .commit()
     }
 
+    private fun showAllImagesFragment(){
+        config.showAll = true
+        currentMediaFragment?.clearAdapter()
+        showMediaFragment("")
+    }
+
     private fun showFavoritesFragment(){
-        val fragment = MediaFragment()
-
-        intent.putExtra(DIRECTORY, FAVORITES)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment)
-            .addToBackStack(null)
-            .commit()
+        config.showAll = false
+        showMediaFragment(FAVORITES)
     }
 
     private fun showRecyclerBinFragment(){
-        val fragment = MediaFragment()
-//        val bundle = Bundle()
-//        bundle.putString(DIRECTORY, RECYCLE_BIN)
-//        bundle.putBoolean(SKIP_AUTHENTICATION, true)
-//
-//        fragment.arguments = bundle
-
-        intent.putExtra(DIRECTORY, RECYCLE_BIN)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment)
-            .addToBackStack(null)
-            .commit()
+        config.showAll = false
+        showMediaFragment(RECYCLE_BIN)
     }
 
-    private fun setupFragment(){
-        val fragment = DirectoryFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
-            .commit()
-    }
+
 
     private fun showAllMedia() {
         config.showAll = true

@@ -58,7 +58,11 @@ import kotlinx.android.synthetic.main.fragment_media.*
 import kotlinx.android.synthetic.main.fragment_media.view.*
 import kotlin.collections.ArrayList
 
-class MediaFragment : Fragment(), MediaOperationsListener {
+interface FragmentControls{
+    fun clearAdapter()
+}
+
+class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
     private val IS_SWIPEREFRESH_ENABLED = false
 
@@ -139,13 +143,27 @@ class MediaFragment : Fragment(), MediaOperationsListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         binding = inflater.inflate(R.layout.fragment_media, container, false)
+
         setHasOptionsMenu(true)
+        clearAdapter()
 
         binding.media_refresh_layout.isEnabled = IS_SWIPEREFRESH_ENABLED
         binding.media_refresh_layout.setOnRefreshListener { getMedia() }
         binding.media_empty_text_placeholder_2.setOnClickListener {
             showFilterMediaDialog()
         }
+
+        if(mPath != "")
+            config.showAll = false
+
+        val dirName = when {
+            mPath == FAVORITES -> getString(R.string.favorites)
+            mPath == RECYCLE_BIN -> getString(R.string.recycle_bin)
+            mPath == config.OTGPath -> getString(R.string.usb)
+            else -> activity.getHumanizedFilename(mPath)
+        }
+        activity.updateActionBarTitle(if (mShowAll) resources.getString(R.string.all_folders) else dirName)
+
         return binding
     }
 
@@ -431,16 +449,6 @@ class MediaFragment : Fragment(), MediaOperationsListener {
     private fun tryLoadGallery() {
         activity.handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
-                if(mPath != "")
-                    config.showAll = false
-
-                val dirName = when {
-                    mPath == FAVORITES -> getString(R.string.favorites)
-                    mPath == RECYCLE_BIN -> getString(R.string.recycle_bin)
-                    mPath == config.OTGPath -> getString(R.string.usb)
-                    else -> activity.getHumanizedFilename(mPath)
-                }
-                activity.updateActionBarTitle(if (mShowAll) resources.getString(R.string.all_folders) else dirName)
                 getMedia()
                 setupLayoutManager()
             } else {
@@ -467,6 +475,15 @@ class MediaFragment : Fragment(), MediaOperationsListener {
 
     val mediaControls = object : MediaAdapterControls {
         override fun recreateAdapter() { getMedia() }
+    }
+
+    val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? get() = binding.media_grid.adapter
+
+    override fun clearAdapter(){
+        val size = mMedia.size
+        mMedia.clear()
+        adapter?.notifyItemRangeChanged(0, size)
+        //binding.media_grid.adapter = null
     }
 
     private fun setupAdapter() {
