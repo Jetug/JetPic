@@ -157,9 +157,9 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             config.showAll = false
 
         val dirName = when {
-            mPath == FAVORITES -> getString(R.string.favorites)
-            mPath == RECYCLE_BIN -> getString(R.string.recycle_bin)
-            mPath == config.OTGPath -> getString(R.string.usb)
+            mPath == FAVORITES -> activity.getString(R.string.favorites)
+            mPath == RECYCLE_BIN -> activity.getString(R.string.recycle_bin)
+            mPath == config.OTGPath -> activity.getString(R.string.usb)
             else -> activity.getHumanizedFilename(mPath)
         }
         activity.updateActionBarTitle(if (mShowAll) resources.getString(R.string.all_folders) else dirName)
@@ -431,7 +431,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 val grouped = MediaFetcher(activity.applicationContext).groupMedia(filtered as ArrayList<Medium>, mPath)
                 activity.runOnUiThread {
                     if (grouped.isEmpty()) {
-                        binding.media_empty_text_placeholder.text = getString(R.string.no_items_found)
+                        binding.media_empty_text_placeholder.text = activity.getString(R.string.no_items_found)
                         binding.media_empty_text_placeholder.beVisible()
                     } else {
                         binding.media_empty_text_placeholder.beGone()
@@ -706,7 +706,8 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         mCurrAsyncTask?.stopFetching()
         mCurrAsyncTask = GetMediaAsynctask2(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
             //restoreRVPosition()
-            ensureBackgroundThread {
+            //ensureBackgroundThread {
+            launchDefault {
                 val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
                 val newMedia = it
                 //if(isMediasEquals(newMedia)){
@@ -1030,7 +1031,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 binding.media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
 
                 if (binding.media_empty_text_placeholder.isVisible()) {
-                    binding.media_empty_text_placeholder.text = getString(R.string.no_media_with_filters)
+                    binding.media_empty_text_placeholder.text = activity.getString(R.string.no_media_with_filters)
                 }
                 binding.media_grid.beVisibleIf(binding.media_empty_text_placeholder.isGone())
 

@@ -165,6 +165,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun setupGalleryFragment(){
+        config.showAll = false
         val fragment = DirectoryFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainContent, fragment) //.addToBackStack(null)
@@ -182,7 +183,7 @@ class MainActivity : SimpleActivity() {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainContent, fragment)
-            .addToBackStack(null)
+            //.addToBackStack(null)
             .commit()
     }
 
@@ -201,8 +202,6 @@ class MainActivity : SimpleActivity() {
         config.showAll = false
         showMediaFragment(RECYCLE_BIN)
     }
-
-
 
     private fun showAllMedia() {
         config.showAll = true
