@@ -53,6 +53,7 @@ import kotlinx.android.synthetic.main.fragment_directory.view.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.reflect.typeOf
 import kotlin.system.measureTimeMillis
 
 class DirectoryFragment : Fragment(), DirectoryOperationsListener {
@@ -296,29 +297,24 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     }
 
     fun onBackPressed() {
-        //restoreRVPosition()
         if (config.groupDirectSubfolders) {
             if (mCurrentPathPrefix.isEmpty()) {
-                activity.onBackPressed()
+                activity.finish()
             } else {
                 mOpenedSubfolders.removeAt(mOpenedSubfolders.size - 1)
                 mCurrentPathPrefix = mOpenedSubfolders.last()
                 rvPosition.restoreRVPosition()
                 setupAdapter(mDirs)
             }
-        } else if(mOpenedGroups.isNotEmpty()){
+        } else if (mOpenedGroups.isNotEmpty()) {
             mOpenedGroups.takeLast()
-            //val dirs = openedDirs.takeLast()
-            //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
-            if(mDirs.size == 0){
+            if (mDirs.size == 0) {
                 getDirectories()
             }
             rvPosition.restoreRVPosition()
-            //setupAdapter(mDirs)
             updateDirs(activity.getSortedDirectories(mDirsToShow))
-        }
-        else{
-            activity.onBackPressed()
+        } else {
+            activity.finish()
         }
     }
 

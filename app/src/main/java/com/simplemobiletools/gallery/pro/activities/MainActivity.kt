@@ -168,7 +168,7 @@ class MainActivity : SimpleActivity() {
         config.showAll = false
         val fragment = DirectoryFragment()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
+            .replace(R.id.mainContent, fragment)//.addToBackStack(null)
             .commit()
     }
 
@@ -535,7 +535,6 @@ class MainActivity : SimpleActivity() {
 //    }
 //
 //    override fun onBackPressed() {
-//        //restoreRVPosition()
 //        if (config.groupDirectSubfolders) {
 //            if (mCurrentPathPrefix.isEmpty()) {
 //                super.onBackPressed()
@@ -547,13 +546,10 @@ class MainActivity : SimpleActivity() {
 //            }
 //        } else if(mOpenedGroups.isNotEmpty()){
 //            mOpenedGroups.takeLast()
-//            //val dirs = openedDirs.takeLast()
-//            //setupAdapter(group.innerDirs as ArrayList<FolderItem>)
 //            if(mDirs.size == 0){
 //                getDirectories()
 //            }
 //            rvPosition.restoreRVPosition()
-//            //setupAdapter(mDirs)
 //            updateDirs(getSortedDirectories(mDirsToShow))
 //        }
 //        else{
