@@ -432,8 +432,9 @@
     <string name="ungroup_dirs">Ungroup</string>
     <string-array name="signs">
         <item>+</item>
-        <item>-</item>
+        <item>−</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="divider">:</string>
 </resources>

@@ -7,9 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.simplemobiletools.commons.extensions.appLaunched
-import com.simplemobiletools.commons.extensions.handleLockedFolderOpening
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.FAVORITES
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.WAS_PROTECTION_HANDLED
@@ -37,7 +35,7 @@ var mAllowPickingMultiple = false
 var currentMediaFragment: MediaFragment? = null
 
 class MainActivity : SimpleActivity() {
-    private lateinit var toggle: ActionBarDrawerToggle
+    private var toggle: ActionBarDrawerToggle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +43,8 @@ class MainActivity : SimpleActivity() {
 
         //Nav
         setupDrawerLayout()
+        //disableSlideMenu()
+
         if(savedInstanceState == null){
             setupGalleryFragment()
         }
@@ -80,18 +80,25 @@ class MainActivity : SimpleActivity() {
 
     }
 
+    fun disableSlideMenu(){
+        toggle = null
+        val color = baseConfig.primaryColor.getContrastColor()
+        val drawableId = R.drawable.ic_arrow_left_vector
+        val icon = resources.getColoredDrawableWithColor(drawableId, color)
+        supportActionBar?.setHomeAsUpIndicator(icon)
+        //        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
     private fun setupDrawerLayout(){
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, 0,0)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        drawerLayout.addDrawerListener(toggle!!)
+        toggle!!.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener (::onNavigationItemSelected)
     }
-
-
 
     override fun onResume() {
         super.onResume()
@@ -130,7 +137,7 @@ class MainActivity : SimpleActivity() {
 //    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
+        if(toggle != null && toggle!!.onOptionsItemSelected(item)){
             return true
         }
         return super.onOptionsItemSelected(item)

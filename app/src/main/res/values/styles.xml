@@ -1,13 +1,12 @@
 <resources>
 
     <style name="AppTheme" parent="AppTheme.Base">
-        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
+<!--        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>-->
     </style>
 
     <style name="PopupMenuListView" parent="@style/Widget.AppCompat.ListView.DropDown">
-        <item name="android:divider">#CC0C0C</item>
-        <item name="android:dividerHeight">15dp</item>
-        <item name="android:dividerPadding">10dp</item>
+        <item name="android:divider">#404040</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
 
     <style name="FullScreenTheme.Base" parent="AppTheme">

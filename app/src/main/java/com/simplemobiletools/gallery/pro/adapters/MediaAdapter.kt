@@ -3,6 +3,7 @@ package com.simplemobiletools.gallery.pro.adapters
 import android.annotation.SuppressLint
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.unipicdev.views.dialogs.DateEditingDialog
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.commons.helpers.SORT_BY_DATE_MODIFIED
 import com.simplemobiletools.commons.helpers.SORT_BY_DATE_TAKEN
@@ -15,9 +16,7 @@ import com.simplemobiletools.gallery.pro.extensions.getMediums
 import com.simplemobiletools.gallery.pro.extensions.launchIO
 import com.simplemobiletools.gallery.pro.helpers.MediaFetcher
 import com.simplemobiletools.gallery.pro.interfaces.MediaOperationsListener
-import com.simplemobiletools.gallery.pro.jetug.getFolderSorting
-import com.simplemobiletools.gallery.pro.jetug.saveCustomMediaOrder
-import com.simplemobiletools.gallery.pro.jetug.saveCustomSorting
+import com.simplemobiletools.gallery.pro.jetug.*
 import com.simplemobiletools.gallery.pro.models.FolderItem
 import com.simplemobiletools.gallery.pro.models.ThumbnailItem
 import java.util.*
@@ -44,7 +43,14 @@ class MediaAdapter(
 
         when (id) {
             R.id.editDate -> showDateEditionDialog()
+            R.id.saveDateToExif -> saveDateToExif()
+            R.id.exifDate -> exifDate()
         }
+    }
+
+    private fun exifDate() {
+        val path = getSelectedPaths()[0]
+        activity.toast(getDateFromExif(path) ?: "")
     }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int){
@@ -78,15 +84,19 @@ class MediaAdapter(
 
     private fun showDateEditionDialog(){
         val paths = getSelectedPaths()
-        val dialog = DateEditingDialog(paths) {_,_->
+         DateEditingDialog(activity, paths) {_,_->
             val sorting = activity.getFolderSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 controls.recreateAdapter()
-                //mediaActivity.getMedia()
             }
-            val s = sorting and SORT_BY_DATE_MODIFIED
-            val d = sorting and SORT_BY_DATE_TAKEN
         }
-        createDialog(dialog, "")
+        //createDialog(dialog, "")
+    }
+
+    private fun saveDateToExif() {
+        val paths = getSelectedPaths()
+        activity.saveDateTakenToExif(paths, true){
+            listener?.refreshItems()
+        }
     }
 }

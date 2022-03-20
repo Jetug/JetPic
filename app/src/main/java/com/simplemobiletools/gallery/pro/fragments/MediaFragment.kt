@@ -307,7 +307,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             findItem(R.id.empty_disable_recycle_bin).isVisible = mPath == RECYCLE_BIN
             findItem(R.id.restore_all_files).isVisible = mPath == RECYCLE_BIN
 
-            findItem(R.id.folder_view).isVisible = mShowAll
+            //findItem(R.id.folder_view).isVisible = mShowAll
             findItem(R.id.open_camera).isVisible = mShowAll
             findItem(R.id.about).isVisible = mShowAll
             findItem(R.id.create_new_folder).isVisible = !mShowAll && mPath != RECYCLE_BIN && mPath != FAVORITES
@@ -338,7 +338,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             R.id.restore_all_files -> restoreAllFiles()
             R.id.toggle_filename -> toggleFilenameVisibility()
             R.id.open_camera -> activity.launchCamera()
-            R.id.folder_view -> switchToFolderView()
+            // R.id.folder_view -> switchToFolderView()
             R.id.change_view_type -> changeViewType()
             R.id.group -> showGroupByDialog()
             R.id.create_new_folder -> createNewFolder()

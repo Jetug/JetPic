@@ -17,9 +17,10 @@
         android:title="@string/share"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/editDate"
-        android:title="@string/edit_date"
-        app:showAsAction="never"/>
+        android:id="@+id/cab_properties"
+        android:icon="@drawable/ic_info"
+        android:title="@string/properties"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/cab_rotate"
         android:icon="@drawable/ic_rotate_right_vector"
@@ -38,10 +39,17 @@
         </menu>
     </item>
     <item
-        android:id="@+id/cab_properties"
-        android:icon="@drawable/ic_info"
-        android:title="@string/properties"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/editDate"
+        android:title="@string/edit_date"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/saveDateToExif"
+        android:title="Save date to EXIF"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/exifDate"
+        android:title="EXIF date"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/cab_rename"
         android:icon="@drawable/ic_rename_new"

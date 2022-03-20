@@ -56,8 +56,6 @@ fun Activity.setTopPaddingToActionBarsHeight(view: View){
     view.setPadding(0,topBarsHeight,0,0)
 }
 
-
-
 //fun Activity.createFile(pickerInitialUri: Uri, name: String) {
 //    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
 //        addCategory(Intent.CATEGORY_OPENABLE)
@@ -487,6 +485,8 @@ fun Activity.hasNavBar(): Boolean {
 
     return (realDisplayMetrics.widthPixels - displayMetrics.widthPixels > 0) || (realDisplayMetrics.heightPixels - displayMetrics.heightPixels > 0)
 }
+
+
 
 fun AppCompatActivity.fixDateTaken(
     paths: ArrayList<String>,

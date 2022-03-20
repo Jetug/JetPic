@@ -1,6 +1,9 @@
 package com.simplemobiletools.gallery.pro.dialogs
 
+import android.content.Context
 import android.view.KeyEvent
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
@@ -13,10 +16,13 @@ import com.simplemobiletools.gallery.pro.adapters.DirectoryAdapter
 import com.simplemobiletools.gallery.pro.extensions.*
 import com.simplemobiletools.gallery.pro.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.models.FolderItem
+import kotlinx.android.synthetic.main.dialog_date_editing.view.*
 import kotlinx.android.synthetic.main.dialog_directory_picker.view.*
 
-class PickDirectoryDialog(val activity: SimpleActivity, val sourcePath: String, showOtherFolderButton: Boolean, val showFavoritesBin: Boolean,
-                          val callback: (path: String) -> Unit) {
+class PickDirectoryDialog(val activity: SimpleActivity,
+                          val sourcePath: String, showOtherFolderButton: Boolean,
+                          val showFavoritesBin: Boolean,
+                          val callback: (path: String) -> Unit){
     private var dialog: AlertDialog
     private var shownDirectories = ArrayList<FolderItem>()
     private var allDirectories = ArrayList<FolderItem>()
@@ -50,18 +56,22 @@ class PickDirectoryDialog(val activity: SimpleActivity, val sourcePath: String, 
 
         dialog = builder.create().apply {
             activity.setupDialogStuff(view, this, R.string.select_destination) {
-                view.directories_show_hidden.beVisibleIf(!context.config.shouldShowHidden)
-                view.directories_show_hidden.setOnClickListener {
-                    activity.handleHiddenFolderPasswordProtection {
-                        view.directories_show_hidden.beGone()
-                        showHidden = true
-                        fetchDirectories(true)
-                    }
-                }
+                onCreate(context)
             }
         }
 
         fetchDirectories(false)
+    }
+
+    private fun onCreate(context: Context){
+        view.directories_show_hidden.beVisibleIf(!context.config.shouldShowHidden)
+        view.directories_show_hidden.setOnClickListener {
+            activity.handleHiddenFolderPasswordProtection {
+                view.directories_show_hidden.beGone()
+                showHidden = true
+                fetchDirectories(true)
+            }
+        }
     }
 
     private fun fetchDirectories(forceShowHidden: Boolean) {

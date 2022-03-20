@@ -68,7 +68,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     lateinit var config: Config
     lateinit var intent: Intent
 
-    private var rvPosition = RecyclerViewPosition(null)
+    private lateinit var rvPosition: RecyclerViewPosition// = RecyclerViewPosition(null)
     private var mDirsToShow = ArrayList<FolderItem>()
     private var openedDirs = ArrayList<ArrayList<FolderItem>>()
 
@@ -131,7 +131,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        rvPosition = RecyclerViewPosition(directories_grid)
+        rvPosition = RecyclerViewPosition(binding.directories_grid)
         ///}
         if (savedInstanceState == null) {
             config.temporarilyShowHidden = false
@@ -292,10 +292,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
     }
 
-    private fun restoreRVPosition(){
-        (binding.directories_grid.layoutManager as MyGridLayoutManager).scrollToPositionWithOffset(0, -300)
-    }
-
     fun onBackPressed() {
         if (config.groupDirectSubfolders) {
             if (mCurrentPathPrefix.isEmpty()) {
@@ -371,7 +367,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterMediaDialog()
             R.id.open_camera -> activity.launchCamera()
-            R.id.show_all -> showAllMedia()
+            //R.id.show_all -> showAllMedia()
             R.id.change_view_type -> changeViewType()
             R.id.temporarily_show_hidden -> tryToggleTemporarilyShowHidden()
             R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
@@ -1372,7 +1368,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
             if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
                 mOpenedGroups.add(clickedDir)
-                //rvPosition.saveRVPosition()
                 setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
             }
             else if (path != config.tempFolderPath) {
@@ -1381,7 +1376,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         } else {
             mCurrentPathPrefix = path
             mOpenedSubfolders.add(path)
-            //rvPosition.saveRVPosition()
             setupAdapter(mDirs, "")
         }
     }

@@ -1,20 +1,19 @@
 package com.simplemobiletools.gallery.pro.activities
 
-import android.os.Bundle
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.gallery.pro.adapters.*
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.models.DirectoryGroup
-import com.simplemobiletools.gallery.pro.models.FolderItem
-import com.simplemobiletools.gallery.pro.helpers.*
-import kotlinx.android.synthetic.main.activity_pick_directory.directories_grid
-import kotlinx.android.synthetic.main.activity_pick_directory.directories_vertical_fastscroller
-import kotlinx.android.synthetic.main.activity_pick_directory.directories_horizontal_fastscroller
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.adapters.*
 import com.simplemobiletools.gallery.pro.dialogs.ChangeSortingDialog
+import com.simplemobiletools.gallery.pro.extensions.*
+import com.simplemobiletools.gallery.pro.helpers.*
+import com.simplemobiletools.gallery.pro.models.DirectoryGroup
+import com.simplemobiletools.gallery.pro.models.FolderItem
+import kotlinx.android.synthetic.main.activity_pick_directory.*
 
 
 class PickDirectoryActivity : SimpleActivity() {
@@ -192,49 +191,4 @@ class PickDirectoryActivity : SimpleActivity() {
         config.temporarilyShowHidden = show
         invalidateOptionsMenu()
     }
-
-//    private fun changeViewType() {
-//        ChangeViewTypeDialog(this, true) {
-//            invalidateOptionsMenu()
-//            setupLayoutManager()
-//            directories_grid.adapter = null
-//            setupAdapter(mDirs)
-//        }
-//    }
-//
-//    private fun setupLayoutManager() {
-//        if (config.viewTypeFolders == VIEW_TYPE_GRID) {
-//            setupGridLayoutManager()
-//        } else {
-//            setupListLayoutManager()
-//        }
-//    }
-//
-//    private fun setupGridLayoutManager() {
-//        val layoutManager = directories_grid.layoutManager as MyGridLayoutManager
-//        (directories_grid.layoutParams as RelativeLayout.LayoutParams).apply {
-//            topMargin = 0
-//            bottomMargin = 0
-//        }
-//
-//        if (config.scrollHorizontally) {
-//            layoutManager.orientation = RecyclerView.HORIZONTAL
-//        } else {
-//            layoutManager.orientation = RecyclerView.VERTICAL
-//        }
-//
-//        layoutManager.spanCount = config.dirColumnCnt
-//    }
-//
-//    private fun setupListLayoutManager() {
-//        val layoutManager = directories_grid.layoutManager as MyGridLayoutManager
-//        layoutManager.spanCount = 1
-//        layoutManager.orientation = RecyclerView.VERTICAL
-//
-//        val smallMargin = resources.getDimension(R.dimen.small_margin).toInt()
-//        (directories_grid.layoutParams as RelativeLayout.LayoutParams).apply {
-//            topMargin = smallMargin
-//            bottomMargin = smallMargin
-//        }
-//    }
 }
