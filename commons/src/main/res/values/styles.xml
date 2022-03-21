@@ -3,6 +3,10 @@
     <!--Jet-->
     <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.Base">
 <!--        <item name="android:windowContentOverlay">@null</item>-->
+
+<!--        <item name="android:divider">#F41313</item>-->
+<!--        <item name="android:dividerHeight">1dp</item>-->
+
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimary">@color/color_action_bar_main</item>
         <item name="colorPrimaryDark">@color/color_action_bar_main</item>
@@ -12,6 +16,8 @@
         <item name="android:colorPrimaryDark">@color/color_action_bar_main</item>
 <!--        <item name="android:statusBarColor">@color/md_teal</item>-->
     </style>
+
+    <!-- -->
 
     <style name="AppTheme.ActionBar.Transparent.NoAnimation" parent="AppTheme.ActionBar.Transparent">
         <item name="android:windowAnimationStyle">@null</item>

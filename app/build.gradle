@@ -16,14 +16,14 @@ android {
     compileSdk 31
 
     defaultConfig {
-        //applicationId "com.jetugapps.gallery.plus"
-        applicationId "com.jetugapps.gallery"
+        applicationId "com.jetugapps.gallery.plus"
+        //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
 
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 30
+        targetSdkVersion 29
         versionCode 24
         versionName "1.4.1"
         setProperty("archivesBaseName", "gallery-$versionCode")

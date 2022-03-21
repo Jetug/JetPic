@@ -2,15 +2,41 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:showIn="navigation_view">
-    <item
-        android:id="@+id/settings"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_settings_cog_vector"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/about"
-        android:title="@string/about"
-        android:icon="@drawable/ic_info_vector"
-        app:showAsAction="never" />
+    tools:showIn="navigation_view"
+    tools:ignore="AlwaysShowAction">
+    <group android:id="@+id/main">
+        <item
+            android:id="@+id/folders"
+            android:title="@string/gallery_short"
+            android:icon="@drawable/ic_baseline_image_24"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/all_images"
+            android:title="@string/images"
+            android:icon="@drawable/ic_menu_gallery"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/favorites"
+            android:title="@string/favorites"
+            android:icon="@drawable/ic_star_vector"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/recycle_bin"
+            android:title="@string/recycle_bin"
+            android:icon="@drawable/ic_delete_vector"
+            app:showAsAction="always" />
+    </group>
+    <group android:id="@+id/misc">
+        <item
+            android:id="@+id/settings"
+            android:title="@string/settings"
+            android:icon="@drawable/ic_settings_cog_vector"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/about"
+            android:title="@string/about"
+            android:icon="@drawable/ic_info_vector"
+            app:showAsAction="always" />
+    </group>
+
 </menu>
