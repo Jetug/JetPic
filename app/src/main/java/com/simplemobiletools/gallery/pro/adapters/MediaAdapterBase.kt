@@ -55,7 +55,7 @@ open class MediaAdapterBase (
     private val ITEM_MEDIUM_VIDEO_PORTRAIT = 1
     private val ITEM_MEDIUM_PHOTO = 2
 
-    val config = activity.config
+    private val config = activity.config
     private val viewType = config.getFolderViewType(if (config.showAll) SHOW_ALL else path)
     private val isListViewType = viewType == VIEW_TYPE_LIST
     private var visibleItemPaths = ArrayList<String>()

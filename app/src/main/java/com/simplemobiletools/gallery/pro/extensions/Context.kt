@@ -649,7 +649,7 @@ fun Context.tryLoadingWithPicasso(path: String, view: MySquareImageView, cropThu
 
 //Jet
 fun Context.getCachedDirectories(getVideosOnly: Boolean = false, getImagesOnly: Boolean = false, forceShowHidden: Boolean = false, callback: (ArrayList<Directory>) -> Unit) {
-    ensureBackgroundThread {
+    launchDefault {//ensureBackgroundThread {
         try {
             Process.setThreadPriority(Process.THREAD_PRIORITY_MORE_FAVORABLE)
         } catch (ignored: Exception) {

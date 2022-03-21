@@ -140,6 +140,16 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     }
 
     private lateinit var binding: View
+    val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? get() {
+        try{
+            return binding.media_grid.adapter
+        }
+        catch (e: UninitializedPropertyAccessException){
+            return null
+        }
+
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         binding = inflater.inflate(R.layout.fragment_media, container, false)
@@ -477,7 +487,6 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         override fun recreateAdapter() { getMedia() }
     }
 
-    val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? get() = binding.media_grid.adapter
 
     override fun clearAdapter(){
         val size = mMedia.size

@@ -450,7 +450,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             val newFolder = File(config.tempFolderPath)
             if (activity.getDoesFilePathExist(newFolder.absolutePath) && newFolder.isDirectory) {
                 if (newFolder.list()?.isEmpty() == true && newFolder.getProperSize(true) == 0L && newFolder.getFileCount(true) == 0) {
-                    activity.toast(String.format(getString(R.string.deleting_folder), config.tempFolderPath), Toast.LENGTH_LONG)
+                    activity.toast(String.format(activity.getString(R.string.deleting_folder), config.tempFolderPath), Toast.LENGTH_LONG)
                     activity.tryDeleteFileDirItem(newFolder.toFileDirItem(activity.applicationContext), true, true)
                 }
             }
@@ -662,7 +662,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             fileDirItems.isEmpty() -> return
             fileDirItems.size == 1 -> {
                 try {
-                    activity.toast(String.format(getString(R.string.deleting_folder), fileDirItems.first().name))
+                    activity.toast(String.format(activity.getString(R.string.deleting_folder), fileDirItems.first().name))
                 } catch (e: Exception) {
                     activity.showErrorToast(e)
                 }
@@ -1000,7 +1000,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         var isPlaceholderVisible = dirs.isEmpty()
 
         val elapsedTime = measureTimeMillis {
-            //activity.runOnUiThread
+            //activity.runOnUiThread{
             launchMain{
                 checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
 
@@ -1019,7 +1019,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         mLastMediaFetcher = MediaFetcher(activity.applicationContext)
         val getImagesOnly = mIsPickImageIntent || mIsGetImageContentIntent
         val getVideosOnly = mIsPickVideoIntent || mIsGetVideoContentIntent
-        val hiddenString = getString(R.string.hidden)
+        val hiddenString = activity.getString(R.string.hidden)
         val albumCovers = config.parseAlbumCovers()
         val includedFolders = config.includedFolders
         val noMediaFolders = activity.getNoMediaFoldersSync()
@@ -1031,6 +1031,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         val dateTakens = mLastMediaFetcher!!.getDateTakens()
 
         try {
+
             for (directory in dirs) {
                 if (mShouldStopFetching || activity.isDestroyed || activity.isFinishing) {
                     return
@@ -1106,7 +1107,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     }
                 }
             }
-
 
             if (dirPathsToRemove.isNotEmpty()) {
                 val dirsToRemove = dirs.filter { dirPathsToRemove.contains(it.path) }
@@ -1264,11 +1264,11 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             binding.directories_empty_placeholder_2.beVisibleIf(dirs.isEmpty() && mLoadedInitialPhotos)
 
             if (mIsSearchOpen) {
-                binding.directories_empty_placeholder.text = getString(R.string.no_items_found)
+                binding.directories_empty_placeholder.text = activity.getString(R.string.no_items_found)
                 binding.directories_empty_placeholder_2.beGone()
             } else if (dirs.isEmpty() && config.filterMedia == getDefaultFileFilter()) {
-                directories_empty_placeholder.text = getString(R.string.no_media_add_included)
-                binding.directories_empty_placeholder_2.text = getString(R.string.add_folder)
+                directories_empty_placeholder.text = activity.getString(R.string.no_media_add_included)
+                binding.directories_empty_placeholder_2.text = activity.getString(R.string.add_folder)
 
                 binding.directories_empty_placeholder_2.setOnClickListener {
                     activity.showAddIncludedFolderDialog {
@@ -1276,8 +1276,8 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     }
                 }
             } else {
-                binding.directories_empty_placeholder.text = getString(R.string.no_media_with_filters)
-                binding.directories_empty_placeholder_2.text = getString(R.string.change_filters_underlined)
+                binding.directories_empty_placeholder.text = activity.getString(R.string.no_media_with_filters)
+                binding.directories_empty_placeholder_2.text = activity.getString(R.string.change_filters_underlined)
 
                 binding.directories_empty_placeholder_2.setOnClickListener {
                     showFilterMediaDialog()
