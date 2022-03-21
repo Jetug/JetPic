@@ -6,6 +6,17 @@
         android:icon="@drawable/ic_check_vector"
         android:title="@string/confirm_selection"
         app:showAsAction="ifRoom"/>
+
+<!--    <item-->
+<!--        android:id="@+id/j"-->
+<!--        android:icon="@drawable/ic_delete_vector"-->
+<!--        android:title="@string/delete"-->
+<!--        app:showAsAction="always">-->
+<!--        <menu>-->
+<!--            <item android:title="Удалить"/>-->
+<!--        </menu>-->
+<!--    </item>-->
+
     <item
         android:id="@+id/cab_delete"
         android:icon="@drawable/ic_delete_vector"

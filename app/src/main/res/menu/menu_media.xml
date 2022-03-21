@@ -6,17 +6,18 @@
         android:icon="@drawable/ic_search_vector"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/toggle_filename"
         android:icon="@drawable/ic_label_vector"
         android:title="@string/toggle_filename"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView|always"
+        />
     <item
         android:id="@+id/sort"
         android:icon="@drawable/ic_sort_vector"
         android:title="@string/sort_by"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView|always" />
     <item
         android:id="@+id/cab_change_order"
         android:icon="@drawable/ic_drag_handle_vector"
