@@ -14,10 +14,10 @@ class SearchResultAdapter(activity: SimpleActivity, media: ArrayList<ThumbnailIt
                           allowMultiplePicks: Boolean, path: String, recyclerView: MyRecyclerView,
                           fastScroller: FastScroller? = null, itemClick: (Any) -> Unit):
     MediaAdapterBase(activity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView,fastScroller, null, itemClick) {
-    override fun prepareActionMode(menu: Menu) {
-        super.prepareActionMode(menu)
-        menu.apply {
-            findItem(R.id.cab_change_order).isVisible = false
-        }
-    }
+//    override fun prepareActionMode(menu: Menu) {
+//        super.prepareActionMode(menu)
+//        menu.apply {
+//            //findItem(R.id.cab_change_order).isVisible = false
+//        }
+//    }
 }

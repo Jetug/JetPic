@@ -44,12 +44,13 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/saveDateToExif"
-        android:title="Save date to EXIF"
+        android:title="@string/write_date_to_exif"
         app:showAsAction="never"/>
     <item
         android:id="@+id/exifDate"
         android:title="EXIF date"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        android:visible="false"/>
     <item
         android:id="@+id/cab_rename"
         android:icon="@drawable/ic_rename_new"
@@ -112,5 +113,6 @@
         android:id="@+id/cab_select_all"
         android:icon="@drawable/ic_select_all_vector"
         android:title="@string/select_all"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 </menu>

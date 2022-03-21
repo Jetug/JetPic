@@ -437,4 +437,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="divider">:</string>
+    <string name="write_date_to_exif">Write date to EXIF</string>
 </resources>

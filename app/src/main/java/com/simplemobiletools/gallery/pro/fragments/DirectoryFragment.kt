@@ -1364,9 +1364,9 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     private fun onItemClicked(it: Any){
         val clickedDir = it as FolderItem
         val path = clickedDir.path
-        rvPosition.saveRVPosition()
         if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
             if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
+                rvPosition.saveRVPosition()
                 mOpenedGroups.add(clickedDir)
                 setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
             }
@@ -1376,6 +1376,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         } else {
             mCurrentPathPrefix = path
             mOpenedSubfolders.add(path)
+            rvPosition.saveRVPosition()
             setupAdapter(mDirs, "")
         }
     }

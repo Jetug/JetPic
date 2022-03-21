@@ -137,12 +137,13 @@ open class MediaAdapterBase (
 
     override fun prepareActionMode(menu: Menu) {
         val selectedItems = getSelectedItems()
-        if (selectedItems.isEmpty()) {
+        if (selectedItems.isEmpty())
             return
-        }
 
         val selectedPaths = selectedItems.map { it.path } as ArrayList<String>
         val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true
+        val isOneItemSelected = isOneItemSelected
+
         menu.apply {
             findItem(R.id.cab_rename).isVisible = !isInRecycleBin
             findItem(R.id.cab_add_to_favorites).isVisible = !isInRecycleBin
@@ -152,6 +153,9 @@ open class MediaAdapterBase (
             findItem(R.id.cab_confirm_selection).isVisible = isAGetIntent && allowMultiplePicks && selectedKeys.isNotEmpty()
             findItem(R.id.cab_restore_recycle_bin_files).isVisible = selectedPaths.all { it.startsWith(activity.recycleBinPath) }
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
+            findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
+            findItem(R.id.cab_edit).isVisible = isOneItemSelected
+            findItem(R.id.cab_set_as).isVisible = isOneItemSelected
 
             checkHideBtnVisibility(this, selectedItems)
             checkFavoriteBtnVisibility(this, selectedItems)
@@ -180,7 +184,7 @@ open class MediaAdapterBase (
             R.id.cab_copy_to -> copyMoveTo(true)
             R.id.cab_move_to -> moveFilesTo()
             R.id.cab_create_shortcut -> createShortcut()
-            R.id.cab_select_all -> selectAll()
+            //R.id.cab_select_all -> selectAll()
             R.id.cab_open_with -> openPath()
             R.id.cab_fix_date_taken -> fixDateTaken()
             R.id.cab_set_as -> setAs()
@@ -188,27 +192,6 @@ open class MediaAdapterBase (
         }
     }
 
-    //Public
-//    fun sort(sorting: Int){
-//        val mediaFetcher = MediaFetcher(activity)
-//        media = mediaFetcher.sortMedia(mediums, sorting)
-//        //notifyDataSetChanged()
-//    }
-
-    fun setDialogMatchParent(dialog: Dialog) {
-        val wm = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val dm = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(dm);
-        val width = dm.widthPixels
-        val height = dm.heightPixels
-        val density = dm.density
-        val densityDpi = dm.densityDpi
-        val layoutParams = dialog.window!!.attributes
-        layoutParams.width = width;
-        layoutParams.height = height;
-        dialog.window!!.attributes = layoutParams;
-    }
-    ///
     override fun getSelectableItemCount() = media.filter { it is Medium }.size
     override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
@@ -232,24 +215,6 @@ open class MediaAdapterBase (
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, holder: ViewHolder, position: Int){
         view.apply {
-            ///Jet
-//            val item: View
-//            var endId: Int = 0
-//            if(!config.scrollHorizontally) {
-//                if (holder.itemViewType == ITEM_SECTION) {
-//                    item = thumbnail_section
-//                } else {
-//                    item = media_item_holder
-//                    endId = config.mediaColumnCnt
-//                }
-//                if (media[0] is ThumbnailSection) endId = 1
-//
-//                item?.setMargin(0)
-//                if (position in 0 until endId) {
-//                    activity.setTopMarginToActionBarsHeight(item)
-//                }
-//            }
-            ///
             if (media_drag_handle != null) {
                 media_drag_handle.beVisibleIf(isDragAndDropping)
 
