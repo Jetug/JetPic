@@ -5,7 +5,9 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
+import com.simplemobiletools.commons.helpers.FAVORITES
 import com.simplemobiletools.gallery.pro.extensions.*
+import com.simplemobiletools.gallery.pro.helpers.RECYCLE_BIN
 import com.simplemobiletools.gallery.pro.models.*
 import kotlinx.coroutines.*
 import java.io.File
@@ -197,6 +199,8 @@ private fun writeSettingsToFile(path: String, settings: FolderSettings){
     Log.e("Jet", json)
 
 }
+
+val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
 private fun readSettingsFromFile(path: String): FolderSettings?{
     val file = getSettingsFile(path)

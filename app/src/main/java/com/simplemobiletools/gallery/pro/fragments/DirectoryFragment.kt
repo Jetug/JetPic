@@ -121,6 +121,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ///Jet{
         binding = inflater.inflate(R.layout.fragment_directory, container, false)
+        rvPosition = RecyclerViewPosition(binding.directories_grid)
 
         setHasOptionsMenu(true)
 
@@ -131,7 +132,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        rvPosition = RecyclerViewPosition(binding.directories_grid)
         ///}
         if (savedInstanceState == null) {
             config.temporarilyShowHidden = false
@@ -627,35 +627,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         invalidateOptionsMenu(activity)
     }
 
-//    private fun tryToggleTemporarilyShowHidden() {
-//        if (config.temporarilyShowHidden) {
-//            toggleTemporarilyShowHidden(false)
-//            setupAdapter(publicDirs)
-////            directories_grid.adapter = null
-//            getDirectories()
-//        } else {
-//            handleHiddenFolderPasswordProtection {
-//                toggleTemporarilyShowHidden(true)
-//                publicDirs = mDirs.clone() as ArrayList<FolderItem>
-//                if (allDirs.isNotEmpty())
-//                    setupAdapter(allDirs)
-//            }
-//        }
-////        handleHiddenFolderPasswordProtection {
-////            //directories_grid.adapter = null
-////            if (allDirs.isNotEmpty())
-////                setupAdapter(allDirs)
-////        }
-//    }
-
-//    private fun toggleTemporarilyShowHidden(show: Boolean) {
-//        mLoadedInitialPhotos = false
-//        config.temporarilyShowHidden = show
-//        //directories_grid.adapter = null
-//        //getDirectories()
-//        invalidateOptionsMenu()
-//    }
-
     override fun deleteFolders(folders: ArrayList<File>) {
         val fileDirItems = folders.asSequence().filter { it.isDirectory }.map { FileDirItem(it.absolutePath, it.name, true) }.toMutableList() as ArrayList<FileDirItem>
         when {
@@ -900,10 +871,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             }
         }
     }
-
-
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         if (resultCode == Activity.RESULT_OK) {

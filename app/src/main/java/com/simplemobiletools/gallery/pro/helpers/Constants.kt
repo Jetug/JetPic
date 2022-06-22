@@ -5,6 +5,7 @@ import com.simplemobiletools.commons.helpers.MONTH_SECONDS
 //Jetug
 const val MANAGE_STORAGE_RC = 201
 const val PACKAGE_NAME_PRO = "com.jetugapps.gallery.plus"
+const val JET = "Jet"
 
 // shared preferences
 const val DIRECTORY_SORT_ORDER = "directory_sort_order"

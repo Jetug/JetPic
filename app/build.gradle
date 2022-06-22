@@ -24,8 +24,8 @@ android {
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 29
-        versionCode 24
-        versionName "1.4.1"
+        versionCode 25
+        versionName "1.5.1"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
