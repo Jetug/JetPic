@@ -14,8 +14,8 @@ import com.google.vr.sdk.widgets.pano.VrPanoramaView
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.helpers.PATH
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.PATH
 import kotlinx.android.synthetic.main.activity_panorama_photo.*
 
 open class PanoramaPhotoActivity : SimpleActivity() {

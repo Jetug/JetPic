@@ -21,7 +21,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
-            android:text="Initial date"
+            android:textSize="@dimen/normal_text_size"
+            android:text="@string/initial_date"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,19 +51,20 @@
             android:layout_marginStart="-60dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/initialDatePicker">
-                <TimePicker
-                    android:id="@+id/initialTimePicker"
-                    android:layout_width="213dp"
-                    android:layout_height="145dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="0dp"
-                    android:scaleX="0.8"
-                    android:scaleY="0.9"
-                    android:timePickerMode="spinner"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
 
-                <NumberPicker
+            <TimePicker
+                android:id="@+id/initialTimePicker"
+                android:layout_width="213dp"
+                android:layout_height="145dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:scaleX="0.8"
+                android:scaleY="0.9"
+                android:timePickerMode="spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <NumberPicker
                     android:id="@+id/initSeconds"
                     android:layout_width="50dp"
                     android:layout_height="113dp"
@@ -80,7 +82,7 @@
             android:layout_width="5dp"
             android:layout_height="145dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="63dp"
             android:gravity="center"
             android:scaleX="0.9"
             android:scaleY="0.9"
@@ -89,20 +91,72 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Spinner
-        android:id="@+id/spinner"
+<!--    <Spinner-->
+<!--        android:id="@+id/spinner"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/initialDateTimeHolder"-->
+<!--        android:entries="@array/signs"/>-->
+
+    <RadioGroup
+        android:id="@+id/rg_operations"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="-25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/initialDateTimeHolder"
-        android:entries="@array/signs"/>
+        app:layout_constraintBottom_toBottomOf="@+id/initialDateTimeHolder"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/minus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:checked="true"
+            android:text="-"/>
+        <RadioButton
+            android:id="@+id/plus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:text="+"
+            android:textColorHighlight="@color/color_primary"/>
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rg_dates"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/initialDateTimeHolder"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb_current"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:text="@string/current"
+            android:textColorHighlight="@color/color_primary"/>
+        <RadioButton
+            android:id="@+id/rb_of_file"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:checked="true"
+            android:text="@string/of_file"/>
+    </RadioGroup>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/stepDateTimeHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/initialDateTimeHolder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -113,7 +167,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
-            android:text="Step date"
+            android:text="@string/step"
             android:textAlignment="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -250,7 +304,7 @@
             android:layout_width="5dp"
             android:layout_height="145dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="65dp"
             android:gravity="center"
             android:scaleX="0.9"
             android:scaleY="0.9"
@@ -258,5 +312,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

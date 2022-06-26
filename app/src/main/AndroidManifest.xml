@@ -474,14 +474,14 @@
         </provider>
 
         <receiver
-            android:name="com.simplemobiletools.gallery.pro.receivers.RefreshMediaReceiver"
+            android:name="com.simplemobiletools.gallery.pro.data.receivers.RefreshMediaReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.simplemobiletools.REFRESH_MEDIA" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.simplemobiletools.gallery.pro.helpers.MyWidgetProvider"
+            android:name="com.simplemobiletools.gallery.pro.data.helpers.MyWidgetProvider"
             android:icon="@drawable/img_widget_preview">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -492,7 +492,7 @@
                 android:resource="@xml/widget_info" />
         </receiver>
         <receiver
-            android:name="com.simplemobiletools.gallery.pro.receivers.BootCompletedReceiver"
+            android:name="com.simplemobiletools.gallery.pro.data.receivers.BootCompletedReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -502,7 +502,7 @@
         </receiver>
 
         <service
-            android:name="com.simplemobiletools.gallery.pro.jobs.NewPhotoFetcher"
+            android:name="com.simplemobiletools.gallery.pro.data.jobs.NewPhotoFetcher"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>

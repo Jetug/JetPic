@@ -14,14 +14,14 @@ import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.WAS_PROTECTION_HANDLED
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.databases.GalleryDatabase
-import com.simplemobiletools.gallery.pro.extensions.config
-import com.simplemobiletools.gallery.pro.extensions.launchAbout
-import com.simplemobiletools.gallery.pro.extensions.launchSettings
-import com.simplemobiletools.gallery.pro.extensions.updateWidgets
-import com.simplemobiletools.gallery.pro.fragments.DirectoryFragment
-import com.simplemobiletools.gallery.pro.fragments.MediaFragment
-import com.simplemobiletools.gallery.pro.helpers.*
+import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
+import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.launchAbout
+import com.simplemobiletools.gallery.pro.data.extensions.launchSettings
+import com.simplemobiletools.gallery.pro.data.extensions.updateWidgets
+import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
+import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
+import com.simplemobiletools.gallery.pro.data.helpers.*
 import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false

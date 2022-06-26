@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import com.simplemobiletools.gallery.pro.activities.*
-
-
+import com.simplemobiletools.gallery.pro.data.helpers.PICK_DIR_INPUT_PATH
+import com.simplemobiletools.gallery.pro.data.helpers.PICK_DIR_OUTPUT_PATH
 
 class PickDirectoryContract : ActivityResultContract<String, String?>() {
-
     override fun createIntent(context: Context, input: String?): Intent {
         return Intent(context, PickDirectoryActivity::class.java)
             .putExtra(PICK_DIR_INPUT_PATH, input)

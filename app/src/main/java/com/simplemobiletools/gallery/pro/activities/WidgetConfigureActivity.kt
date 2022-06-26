@@ -13,12 +13,12 @@ import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.dialogs.PickDirectoryDialog
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.helpers.MyWidgetProvider
-import com.simplemobiletools.gallery.pro.helpers.ROUNDED_CORNERS_NONE
-import com.simplemobiletools.gallery.pro.models.Directory
-import com.simplemobiletools.gallery.pro.models.Widget
+import com.simplemobiletools.gallery.pro.ui.dialogs.PickDirectoryDialog
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.MyWidgetProvider
+import com.simplemobiletools.gallery.pro.data.helpers.ROUNDED_CORNERS_NONE
+import com.simplemobiletools.gallery.pro.data.models.Directory
+import com.simplemobiletools.gallery.pro.data.models.Widget
 import kotlinx.android.synthetic.main.activity_widget_config.*
 
 class WidgetConfigureActivity : SimpleActivity() {

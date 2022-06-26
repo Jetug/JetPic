@@ -26,8 +26,8 @@ import com.google.android.exoplayer2.video.VideoListener
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.helpers.*
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.*
 import kotlinx.android.synthetic.main.activity_video_player.*
 import kotlinx.android.synthetic.main.bottom_video_time_holder.*
 

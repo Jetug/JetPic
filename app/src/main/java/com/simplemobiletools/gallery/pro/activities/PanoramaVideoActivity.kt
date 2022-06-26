@@ -14,9 +14,9 @@ import com.google.vr.sdk.widgets.video.VrVideoEventListener
 import com.google.vr.sdk.widgets.video.VrVideoView
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.helpers.MIN_SKIP_LENGTH
-import com.simplemobiletools.gallery.pro.helpers.PATH
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.MIN_SKIP_LENGTH
+import com.simplemobiletools.gallery.pro.data.helpers.PATH
 import kotlinx.android.synthetic.main.activity_panorama_video.*
 import kotlinx.android.synthetic.main.bottom_video_time_holder.*
 import java.io.File

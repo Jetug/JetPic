@@ -20,8 +20,8 @@ import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.contracts.PickDirectoryContract
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.helpers.MANAGE_STORAGE_RC
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.MANAGE_STORAGE_RC
 
 open class SimpleActivity : BaseSimpleActivity() {
     val observer = object : ContentObserver(null) {

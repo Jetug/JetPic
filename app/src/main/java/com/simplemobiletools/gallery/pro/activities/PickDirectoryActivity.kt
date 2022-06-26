@@ -4,15 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.adapters.*
-import com.simplemobiletools.gallery.pro.dialogs.ChangeSortingDialog
-import com.simplemobiletools.gallery.pro.extensions.*
-import com.simplemobiletools.gallery.pro.helpers.*
-import com.simplemobiletools.gallery.pro.models.DirectoryGroup
-import com.simplemobiletools.gallery.pro.models.FolderItem
+import com.simplemobiletools.gallery.pro.ui.adapters.*
+import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.*
+import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
+import com.simplemobiletools.gallery.pro.data.models.FolderItem
 import kotlinx.android.synthetic.main.activity_pick_directory.*
 
 

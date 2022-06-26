@@ -2,9 +2,8 @@ package com.simplemobiletools.gallery.pro.activities
 
 import android.os.Bundle
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.fragments.MediaFragment
-import com.simplemobiletools.gallery.pro.helpers.DIRECTORY
-import com.simplemobiletools.gallery.pro.helpers.SKIP_AUTHENTICATION
+import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
+import com.simplemobiletools.gallery.pro.data.helpers.DIRECTORY
 
 class MediaActivity : SimpleActivity() {
 

@@ -1,9 +1,6 @@
 package com.simplemobiletools.gallery.pro.activities
 
-import com.simplemobiletools.gallery.pro.models.FolderItem
-
-const val PICK_DIR_INPUT_PATH = "sourcePath"
-const val PICK_DIR_OUTPUT_PATH = "resultPath"
+import com.simplemobiletools.gallery.pro.data.models.FolderItem
 
 val mediaScrollPositions = mutableMapOf<String, Pair<Int,Int>>()
 var mDirs = ArrayList<FolderItem>()

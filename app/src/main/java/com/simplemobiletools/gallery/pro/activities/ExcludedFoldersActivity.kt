@@ -7,8 +7,8 @@ import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.adapters.ManageFoldersAdapter
-import com.simplemobiletools.gallery.pro.extensions.config
+import com.simplemobiletools.gallery.pro.ui.adapters.ManageFoldersAdapter
+import com.simplemobiletools.gallery.pro.data.extensions.config
 import kotlinx.android.synthetic.main.activity_manage_folders.*
 
 class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
