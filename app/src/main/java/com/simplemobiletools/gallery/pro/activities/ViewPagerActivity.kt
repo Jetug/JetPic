@@ -56,7 +56,7 @@ import com.simplemobiletools.gallery.pro.ui.fragments.PhotoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.VideoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.ViewPagerFragment
 import com.simplemobiletools.gallery.pro.data.helpers.*
-import com.simplemobiletools.gallery.pro.data.jetug.getFolderSorting
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import kotlinx.android.synthetic.main.activity_medium.*
@@ -1128,7 +1128,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun refreshViewPager() {
-        if (getFolderSorting(mDirectory) and SORT_BY_RANDOM == 0) {
+        if (getCustomSorting(mDirectory) and SORT_BY_RANDOM == 0) {
             GetMediaAsynctask(applicationContext, mDirectory, false, false, mShowAll) {
                 gotMedia(it)
             }.execute()

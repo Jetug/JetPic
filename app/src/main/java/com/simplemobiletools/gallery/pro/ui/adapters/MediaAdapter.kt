@@ -11,8 +11,8 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.SimpleActivity
-import com.simplemobiletools.gallery.pro.data.extensions.getMediums
-import com.simplemobiletools.gallery.pro.data.extensions.launchIO
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
+import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.MediaFetcher
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.*
@@ -75,7 +75,7 @@ class MediaAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun sort(){
         val mediaFetcher = MediaFetcher(activity)
-        val sorting = activity.getFolderSorting(path)
+        val sorting = activity.getCustomSorting(path)
         mediaFetcher.sortMedia(mediums, sorting)
         notifyDataSetChanged()
     }
@@ -83,12 +83,11 @@ class MediaAdapter(
     private fun showDateEditionDialog(){
         val paths = getSelectedPaths()
          DateEditingDialog(activity, paths) {_,_->
-            val sorting = activity.getFolderSorting(path)
+            val sorting = activity.getCustomSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 controls.recreateAdapter()
             }
         }
-        //createDialog(dialog, "")
     }
 
     private fun saveDateToExif() {

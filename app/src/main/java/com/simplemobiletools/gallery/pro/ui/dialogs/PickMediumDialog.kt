@@ -15,7 +15,7 @@ import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.extensions.config
 import com.simplemobiletools.gallery.pro.data.extensions.getCachedMedia
 import com.simplemobiletools.gallery.pro.data.helpers.SHOW_ALL
-import com.simplemobiletools.gallery.pro.data.jetug.getFolderSorting
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import kotlinx.android.synthetic.main.dialog_medium_picker.view.*
@@ -75,7 +75,7 @@ class PickMediumDialog(val activity: SimpleActivity, val path: String, val callb
         }
 
         val scrollHorizontally = activity.config.scrollHorizontally && isGridViewType
-        val sorting = activity.getFolderSorting(if (path.isEmpty()) SHOW_ALL else path)
+        val sorting = activity.getCustomSorting(if (path.isEmpty()) SHOW_ALL else path)
         val dateFormat = activity.config.dateFormat
         val timeFormat = activity.getTimeFormat()
         view.apply {

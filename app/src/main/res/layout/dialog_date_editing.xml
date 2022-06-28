@@ -65,16 +65,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <NumberPicker
-                    android:id="@+id/initSeconds"
-                    android:layout_width="50dp"
-                    android:layout_height="113dp"
-                    android:layout_marginTop="9.714dp"
-                    android:layout_marginStart="-40dp"
-                    android:scaleX="0.9"
-                    android:scaleY="0.9"
-                    app:layout_constraintStart_toEndOf="@+id/initialTimePicker"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/initSeconds"
+                android:layout_width="50dp"
+                android:layout_height="113dp"
+                android:layout_marginTop="9.714dp"
+                android:layout_marginStart="-40dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:layout_constraintStart_toEndOf="@+id/initialTimePicker"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

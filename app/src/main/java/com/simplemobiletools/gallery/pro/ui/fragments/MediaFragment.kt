@@ -1,62 +1,58 @@
 package com.simplemobiletools.gallery.pro.ui.fragments
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.SearchManager
-import android.app.WallpaperManager
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Bundle
-import android.os.Handler
-import android.util.Log
+import java.io.File
+import java.util.HashMap
+import java.io.IOException
+import kotlin.collections.ArrayList
+import kotlin.system.measureTimeMillis
+import kotlinx.android.synthetic.main.fragment_media.*
+import kotlinx.android.synthetic.main.fragment_media.view.*
+import android.os.*
+import android.app.*
 import android.view.*
+import android.net.Uri
+import android.util.Log
+import android.content.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.ViewGroup
+import android.graphics.Bitmap
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
-import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
+import android.annotation.SuppressLint
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.activities.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.*
 import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapter
-import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask2
+import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.*
+import com.simplemobiletools.gallery.pro.data.models.Medium
+import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
+import com.simplemobiletools.gallery.pro.data.models.ThumbnailSection
+import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
+import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeGroupingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.FilterMediaDialog
-import com.simplemobiletools.gallery.pro.data.extensions.*
-import com.simplemobiletools.gallery.pro.data.helpers.*
-import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
-import com.simplemobiletools.gallery.pro.data.jetug.getFolderSorting
-import com.simplemobiletools.gallery.pro.data.models.Medium
-import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
-import com.simplemobiletools.gallery.pro.data.models.ThumbnailSection
-import java.io.File
-import java.io.IOException
-import java.util.HashMap
-import kotlin.system.measureTimeMillis
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
 import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapterControls
-import kotlinx.android.synthetic.main.fragment_media.*
-import kotlinx.android.synthetic.main.fragment_media.view.*
-import kotlin.collections.ArrayList
+import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask2
+import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 
 interface FragmentControls{
     fun clearAdapter()
@@ -243,7 +239,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 invalidateOptionsMenu(activity)
             }
 
-            if (mMedia.isEmpty() || activity.getFolderSorting(mPath) and SORT_BY_RANDOM == 0) {
+            if (mMedia.isEmpty() || activity.getCustomSorting(mPath) and SORT_BY_RANDOM == 0) {
                 if (shouldSkipAuthentication()) {
                     tryLoadGallery()
                 } else {
@@ -540,7 +536,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         binding.media_horizontal_fastscroller.isHorizontal = true
         binding.media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = activity.getFolderSorting(if (mShowAll) SHOW_ALL else mPath)
+        val sorting = activity.getCustomSorting(if (mShowAll) SHOW_ALL else mPath)
         if (allowHorizontalScroll) {
             binding.media_horizontal_fastscroller.setViews(binding.media_grid, binding.media_refresh_layout) {
                 binding.media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))
@@ -562,7 +558,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     }
 
     private fun checkLastMediaChanged() {
-        if (activity.isDestroyed || activity.getFolderSorting(mPath) and SORT_BY_RANDOM != 0) {
+        if (activity.isDestroyed || activity.getCustomSorting(mPath) and SORT_BY_RANDOM != 0) {
             return
         }
 

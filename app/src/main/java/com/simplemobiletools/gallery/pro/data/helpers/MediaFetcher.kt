@@ -18,8 +18,7 @@ import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailSection
-import com.simplemobiletools.gallery.pro.data.jetug.getCustomMediaOrder
-import com.simplemobiletools.gallery.pro.data.jetug.getFolderSorting
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -47,7 +46,7 @@ class MediaFetcher(val context: Context) {
             curMedia.addAll(newMedia)
         }
 
-        sortMedia(curMedia, context.getFolderSorting(curPath))
+        sortMedia(curMedia, context.getCustomSorting(curPath))
 
         return curMedia
     }

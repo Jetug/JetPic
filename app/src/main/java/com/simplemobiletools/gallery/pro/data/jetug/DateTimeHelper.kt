@@ -12,10 +12,6 @@ import org.joda.time.DateTime
 import java.io.File
 import kotlin.collections.ArrayList
 
-//fun changeFileDate(file: File, date: DateTime){
-//    file.setLastModified(date.toDate().time)
-//}
-
 fun File.setLastModified(date: DateTime){
     this.setLastModified(date.toDate().time)
 }
@@ -24,17 +20,14 @@ fun Activity.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, 
     try {
         if(paths.isEmpty()) return
 
-        val dateTakens = java.util.ArrayList<DateTaken>()
+        val datesTaken = ArrayList<DateTaken>()
 
         ensureBackgroundThread {
             for (path in paths){
                 val file = File(path)
                 val lastModified = file.lastModified()
                 val time = DateTime(lastModified) //file.lastModified()
-
-                //2018:09:05 15:09:05
                 val stringTime = time.toString("yyyy:MM:dd hh:mm:ss")
-                //toast(stringTime)
                 val exif = ExifInterface(path)
                 exif.setAttribute(ExifInterface.TAG_DATETIME_ORIGINAL, stringTime)
                 exif.setAttribute(ExifInterface.TAG_DATETIME, stringTime)
@@ -50,11 +43,11 @@ fun Activity.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, 
                     (System.currentTimeMillis() / 1000).toInt(),
                     lastModified
                 )
-                dateTakens.add(dateTaken)
+                datesTaken.add(dateTaken)
             }
 
-            if (dateTakens.isNotEmpty()) {
-                dateTakensDB.insertAll(dateTakens)
+            if (datesTaken.isNotEmpty()) {
+                dateTakensDB.insertAll(datesTaken)
             }
 
             callback?.invoke()

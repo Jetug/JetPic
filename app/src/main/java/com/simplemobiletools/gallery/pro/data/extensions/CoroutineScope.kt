@@ -14,4 +14,3 @@ fun launchDefault(block: suspend CoroutineScope.() -> Unit) = DefaultScope.launc
 fun launchMain(block: suspend CoroutineScope.() -> Unit) = MainScope.launch { block() }
 
 suspend fun withMainContext(block: suspend CoroutineScope.() -> Unit) = withContext(Dispatchers.Main) { block() }
-

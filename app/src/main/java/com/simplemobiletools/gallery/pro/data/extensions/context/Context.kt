@@ -1,5 +1,6 @@
 package com.simplemobiletools.gallery.pro.data.extensions
 
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
@@ -35,7 +36,6 @@ import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.*
 import com.simplemobiletools.gallery.pro.data.models.*
-import com.simplemobiletools.gallery.pro.data.jetug.*
 import com.simplemobiletools.gallery.pro.data.svg.SvgSoftwareLayerSetter
 import com.simplemobiletools.gallery.pro.ui.views.MySquareImageView
 import com.squareup.picasso.Picasso
@@ -47,8 +47,7 @@ import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
 import java.util.HashSet
 import java.util.LinkedHashSet
-import kotlin.Comparator
-import kotlin.collections.ArrayList
+import kotlin.collections.*
 import kotlin.collections.HashMap
 import kotlin.collections.set
 import kotlin.system.measureTimeMillis
@@ -757,7 +756,7 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
         }) as ArrayList<Medium>
 
         val pathToUse = if (path.isEmpty()) SHOW_ALL else path
-        mediaFetcher.sortMedia(media, getFolderSorting(pathToUse))
+        mediaFetcher.sortMedia(media, getCustomSorting(pathToUse))
         val grouped = mediaFetcher.groupMedia(media, pathToUse)
         callback(grouped.clone() as ArrayList<ThumbnailItem>)
         val OTGPath = config.OTGPath
@@ -1029,7 +1028,7 @@ fun Context.updateDirectoryPath(path: String) {
     val includedFolders = config.includedFolders
     val noMediaFolders = getNoMediaFoldersSync()
 
-    val sorting = getFolderSorting(path)
+    val sorting = getCustomSorting(path)
     val grouping = config.getFolderGrouping(path)
     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
         sorting and SORT_BY_DATE_TAKEN != 0 ||

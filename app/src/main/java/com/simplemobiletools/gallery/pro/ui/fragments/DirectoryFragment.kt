@@ -27,33 +27,26 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.*
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
-import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.models.Release
-import com.simplemobiletools.commons.views.MyGridLayoutManager
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.commons.models.*
+import com.simplemobiletools.commons.views.*
 import com.simplemobiletools.gallery.pro.activities.*
 import com.simplemobiletools.gallery.pro.ui.adapters.DirectoryAdapter
-import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
-import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
-import com.simplemobiletools.gallery.pro.ui.dialogs.FilterMediaDialog
+import com.simplemobiletools.gallery.pro.ui.dialogs.*
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.DirectoryOperationsListener
-import com.simplemobiletools.gallery.pro.data.jetug.*
 import com.simplemobiletools.gallery.pro.data.jobs.NewPhotoFetcher
-import com.simplemobiletools.gallery.pro.data.models.Directory
-import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
-import com.simplemobiletools.gallery.pro.data.models.Medium
+import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.fragment_directory.view.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 
 class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     //Const
@@ -1003,7 +996,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     return
                 }
 
-                val sorting = activity.getFolderSorting(directory.path)
+                val sorting = activity.getCustomSorting(directory.path)
                 val grouping = config.getFolderGrouping(directory.path)
                 val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                     sorting and SORT_BY_DATE_TAKEN != 0 ||
@@ -1104,7 +1097,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 return
             }
 
-            val sorting = activity.getFolderSorting(folder)
+            val sorting = activity.getCustomSorting(folder)
             val grouping = config.getFolderGrouping(folder)
             val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                 sorting and SORT_BY_DATE_TAKEN != 0 ||

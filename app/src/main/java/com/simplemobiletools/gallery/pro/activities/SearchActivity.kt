@@ -23,7 +23,7 @@ import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
-import com.simplemobiletools.gallery.pro.data.jetug.getFolderSorting
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailSection
@@ -238,7 +238,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
         media_horizontal_fastscroller.isHorizontal = true
         media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = this.getFolderSorting(SHOW_ALL)
+        val sorting = this.getCustomSorting(SHOW_ALL)
         if (allowHorizontalScroll) {
             media_horizontal_fastscroller.setViews(media_grid) {
                 media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))

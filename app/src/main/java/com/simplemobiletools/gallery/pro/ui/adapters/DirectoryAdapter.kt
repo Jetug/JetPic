@@ -46,6 +46,7 @@ import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.item_dir_group.view.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList

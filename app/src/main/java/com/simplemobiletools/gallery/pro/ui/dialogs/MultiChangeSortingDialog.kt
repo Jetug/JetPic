@@ -12,6 +12,7 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.config
 import com.simplemobiletools.gallery.pro.data.jetug.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 
 class MultiChangeSortingDialog(val activity: BaseSimpleActivity, val showFolderCheckbox: Boolean, val pathList: ArrayList<String>, val callback: () -> Unit) :
     DialogInterface.OnClickListener {
