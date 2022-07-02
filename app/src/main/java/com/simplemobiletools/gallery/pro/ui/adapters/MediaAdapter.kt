@@ -29,12 +29,17 @@ val mediaEmpty = object : MediaAdapterControls{
 
 @SuppressLint("ClickableViewAccessibility")
 class MediaAdapter(
-    private val mediaActivity: SimpleActivity, media: ArrayList<ThumbnailItem>,
-    listener: MediaOperationsListener?, isAGetIntent: Boolean,
-    allowMultiplePicks: Boolean, path: String, recyclerView: MyRecyclerView,
-    fastScroller: FastScroller? = null, swipeRefreshLayout : SwipeRefreshLayout? = null,
+    private val mediaActivity: SimpleActivity,
+    media: ArrayList<ThumbnailItem>,
+    listener: MediaOperationsListener?,
+    isAGetIntent: Boolean,
+    allowMultiplePicks: Boolean,
+    path: String,
+    recyclerView: MyRecyclerView,
+    fastScroller: FastScroller? = null,
+    swipeRefreshLayout : SwipeRefreshLayout? = null,
     val controls: MediaAdapterControls = mediaEmpty, itemClick: (Any) -> Unit):
-    MediaAdapterBase(mediaActivity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView,fastScroller, swipeRefreshLayout, itemClick){
+    MediaAdapterBase(mediaActivity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     override fun actionItemPressed(id: Int) {
         super.actionItemPressed(id)

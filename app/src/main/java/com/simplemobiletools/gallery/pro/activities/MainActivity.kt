@@ -15,13 +15,12 @@ import com.simplemobiletools.commons.helpers.WAS_PROTECTION_HANDLED
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
-import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.extensions.launchAbout
-import com.simplemobiletools.gallery.pro.data.extensions.launchSettings
-import com.simplemobiletools.gallery.pro.data.extensions.updateWidgets
+import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
 import com.simplemobiletools.gallery.pro.data.helpers.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false
@@ -80,7 +79,25 @@ class MainActivity : SimpleActivity() {
             }
         }
         Log.e(JET,"on Create $createTime ms")
+
+//        launchDefault {
+//            val time = measureTimeMillis {
+//                val a1 = async { call() }.await()
+//                val a2 = async { call() }.await()
+//
+//                Log.e(JET,"a1: ${a1}")
+//                Log.e(JET,"a2: ${a2}")
+//            }
+//            Log.e(JET,"Total time $time ms")
+//
+//        }
+
     }
+
+//    suspend fun call(): String{
+//        delay(3000)
+//        return "sd"
+//    }
 
 //    override fun onResume() {
 //        super.onResume()
@@ -112,11 +129,6 @@ class MainActivity : SimpleActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         mWasProtectionHandled = savedInstanceState.getBoolean(WAS_PROTECTION_HANDLED, false)
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        MenuCompat.setGroupDividerEnabled(menu, true);
-//        return true
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle != null && toggle!!.onOptionsItemSelected(item)){
@@ -165,22 +177,9 @@ class MainActivity : SimpleActivity() {
             .commit()
     }
 
-    private fun showMediaFragment(folderName: String){
-        val fragment = MediaFragment()
-        currentMediaFragment = fragment
-
-        val bundle = Bundle()
-        bundle.putString(DIRECTORY, folderName)
-        fragment.arguments = bundle
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
-            .commit()
-    }
-
     private fun showAllImagesFragment(){
         config.showAll = true
-        currentMediaFragment?.clearAdapter()
+//        currentMediaFragment?.clearAdapter()
         showMediaFragment("")
     }
 
@@ -192,5 +191,19 @@ class MainActivity : SimpleActivity() {
     private fun showRecyclerBinFragment(){
         config.showAll = false
         showMediaFragment(RECYCLE_BIN)
+    }
+
+    private fun showMediaFragment(folderName: String){
+        currentMediaFragment?.clearAdapter()
+
+        val fragment = MediaFragment()
+        currentMediaFragment = fragment
+        val bundle = Bundle()
+        bundle.putString(DIRECTORY, folderName)
+        fragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
+            .commit()
     }
 }

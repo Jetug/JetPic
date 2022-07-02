@@ -185,7 +185,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
             val time = measureTimeMillis {
                 groupName = getDirectoryGroup(dir.path)
             }
-            Log.e(JET,"getDirectoryGroup: $time ms")
+            //Log.e(JET,"getDirectoryGroup: $time ms")
             totalTime += time
 
             if(groupName == "" /*|| dir.groupName == groupName*/){
@@ -631,7 +631,7 @@ fun Context.tryLoadingWithPicasso(path: String, view: MySquareImageView, cropThu
 
 //Jet
 fun Context.getCachedDirectories(getVideosOnly: Boolean = false, getImagesOnly: Boolean = false, forceShowHidden: Boolean = false, callback: (ArrayList<Directory>) -> Unit) {
-    launchDefault {//ensureBackgroundThread {
+    ensureBackgroundThread {
         try {
             Process.setThreadPriority(Process.THREAD_PRIORITY_MORE_FAVORABLE)
         } catch (ignored: Exception) {

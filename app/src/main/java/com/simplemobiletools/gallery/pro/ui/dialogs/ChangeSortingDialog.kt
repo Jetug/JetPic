@@ -104,7 +104,8 @@ class ChangeSortingDialog(val activity: BaseSimpleActivity, val isDirectorySorti
 
         if (isDirectorySorting) {
             config.directorySorting = sorting
-        } else {
+        }
+        else {
             if (view.sorting_dialog_use_for_this_folder.isChecked) {
                 activity.saveCustomSorting(pathToUse, sorting)
             }

@@ -726,7 +726,6 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             }
         },
             {
-
                 ///Jet
 
                 ///

@@ -62,4 +62,10 @@ fun <T>ArrayList<T>.takeLast(): T{
     this.removeAt(this.size - 1)
     return item
 }
+
+fun <T>ArrayList<T>.takeFirst(): T{
+    val item = this.first()
+    this.removeAt(0)
+    return item
+}
 //////

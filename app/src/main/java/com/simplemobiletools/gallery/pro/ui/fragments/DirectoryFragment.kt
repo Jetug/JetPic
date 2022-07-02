@@ -47,6 +47,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.withContext
 
 class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     //Const
@@ -60,13 +62,16 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     lateinit var config: Config
     lateinit var intent: Intent
 
-    private lateinit var rvPosition: RecyclerViewPosition// = RecyclerViewPosition(null)
+    private lateinit var rvPosition: RecyclerViewPosition
+    private lateinit var binding: View
+
     private var mDirsToShow = ArrayList<FolderItem>()
     private var openedDirs = ArrayList<ArrayList<FolderItem>>()
 
     //Properties
     private val mAdapter get() = directories_grid.adapter as DirectoryAdapter?
-    private val currentlyDisplayedDirs get() = getRecyclerAdapter()?.dirs ?: ArrayList()
+    private val recyclerAdapter get() = binding.directories_grid.adapter as? DirectoryAdapter
+    private val currentlyDisplayedDirs get() = recyclerAdapter?.dirs ?: ArrayList()
     ///}
 
     //Private
@@ -94,8 +99,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     private var mStoredTextColor = 0
     private var mStoredAdjustedPrimaryColor = 0
     private var mStoredStyleString = ""
-
-    private lateinit var binding: View
 
     val controls = object : DirectoryAdapterControls {
         override fun recreateAdapter(dirs: ArrayList<FolderItem>) {
@@ -195,11 +198,11 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         mTimeFormat = activity.getTimeFormat()
 
         if (mStoredAnimateGifs != config.animateGifs) {
-            getRecyclerAdapter()?.updateAnimateGifs(config.animateGifs)
+            recyclerAdapter?.updateAnimateGifs(config.animateGifs)
         }
 
         if (mStoredCropThumbnails != config.cropThumbnails) {
-            getRecyclerAdapter()?.updateCropThumbnails(config.cropThumbnails)
+            recyclerAdapter?.updateCropThumbnails(config.cropThumbnails)
         }
 
         if (mStoredScrollHorizontally != config.scrollHorizontally) {
@@ -209,12 +212,12 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
 
         if (mStoredTextColor != config.textColor) {
-            getRecyclerAdapter()?.updateTextColor(config.textColor)
+            recyclerAdapter?.updateTextColor(config.textColor)
         }
 
         val adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
         if (mStoredAdjustedPrimaryColor != adjustedPrimaryColor) {
-            getRecyclerAdapter()?.updatePrimaryColor(config.primaryColor)
+            recyclerAdapter?.updatePrimaryColor(config.primaryColor)
             binding.directories_vertical_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
             binding.directories_horizontal_fastscroller.updatePrimaryColor(adjustedPrimaryColor)
         }
@@ -330,32 +333,9 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         activity.updateMenuItemColors(menu)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        if (mIsThirdPartyIntent) {
-//            menuInflater.inflate(R.menu.menu_main_intent, menu)
-//        } else {
-//            menuInflater.inflate(R.menu.menu_main, menu)
-//            val useBin = config.useRecycleBin
-//            menu.apply {
-//                findItem(R.id.increase_column_count).isVisible = config.viewTypeFolders == VIEW_TYPE_GRID && config.dirColumnCnt < MAX_COLUMN_COUNT
-//                findItem(R.id.reduce_column_count).isVisible = config.viewTypeFolders == VIEW_TYPE_GRID && config.dirColumnCnt > 1
-//                findItem(R.id.hide_the_recycle_bin).isVisible = useBin && config.showRecycleBinAtFolders
-//                findItem(R.id.show_the_recycle_bin).isVisible = useBin && !config.showRecycleBinAtFolders
-//                findItem(R.id.set_as_default_folder).isVisible = !config.defaultFolder.isEmpty()
-//                setupSearch(this)
-//            }
-//        }
-//
-//        menu.findItem(R.id.temporarily_show_hidden).isVisible = !config.shouldShowHidden
-//        menu.findItem(R.id.stop_showing_hidden).isVisible = config.temporarilyShowHidden
-//
-//        updateMenuItemColors(menu)
-//        return true
-//    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.cab_change_order -> getRecyclerAdapter()?.changeOrder()
+            R.id.cab_change_order -> recyclerAdapter?.changeOrder()
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterMediaDialog()
             R.id.open_camera -> activity.launchCamera()
@@ -375,9 +355,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
         return true
     }
-
-    private fun getRecyclerAdapter() = binding.directories_grid.adapter as? DirectoryAdapter
-
+    
     private fun storeStateVariables() {
         config.apply {
             mStoredAnimateGifs = animateGifs
@@ -437,6 +415,153 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
     }
 
+    private fun tryLoadGallery() {
+        fun load (it: Boolean){
+            launchDefault {
+                if (it) {
+                    if (!mWasDefaultFolderChecked) {
+                        openDefaultFolder()
+                        mWasDefaultFolderChecked = true
+                    }
+
+                    checkOTGPath()
+                    checkDefaultSpamFolders()
+                    getDirectories()
+                    setupLayoutManager()
+                } else {
+                    activity.toast(R.string.no_storage_permissions)
+                    activity.finish()
+                }
+            }
+        }
+
+        activity.handlePermission(PERMISSION_WRITE_STORAGE) {
+            load(it)
+        }
+    }
+
+    private fun getDirectories() {
+        val mTime = measureTimeMillis {
+            if (mIsGettingDirs) {
+                return
+            }
+
+            mShouldStopFetching = true
+            mIsGettingDirs = true
+            val getImagesOnly = mIsPickImageIntent || mIsGetImageContentIntent
+            val getVideosOnly = mIsPickVideoIntent || mIsGetVideoContentIntent
+
+            val time = measureTimeMillis {
+                activity.getCachedDirectories(getVideosOnly, getImagesOnly) {
+                    gotDirectories(activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>))
+                }
+            }
+            Log.e(JET,"getCachedDirectories() $time ms")
+
+
+            launchDefault {
+                activity.getCachedDirectories(getVideosOnly, getImagesOnly, true) {
+                    allDirs = activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>)
+                }
+            }
+        }
+        Log.e(JET,"getDirectories() $mTime ms")
+    }
+
+    fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
+        launchDefault{
+            val setupTime = measureTimeMillis {
+                val currAdapter = recyclerAdapter
+                val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
+
+                var dirsToShow: ArrayList<FolderItem>
+                val getDirsToShowTime = measureTimeMillis {
+                    dirsToShow = if (mOpenedGroups.isEmpty())
+                        activity.getDirsToShow(distinctDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
+                    else
+                        mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
+                }
+                Log.e(JET,"DirFrag Setup getDirsToShow(): $getDirsToShowTime ms")
+
+                if (mOpenedGroups.isEmpty())
+                    mDirsToShow = dirsToShow
+
+                if (currAdapter == null || forceRecreate) {
+                    initZoomListener()
+                    withContext(Main){
+                        initAdapter(dirsToShow)
+                    }
+                    measureRecyclerViewContent(dirsToShow)
+                } else {
+                    launchMain {
+                        if (textToSearch.isNotEmpty()) {
+                            dirsToShow = dirsToShow.filter { it.name.contains(textToSearch, true) }.sortedBy { !it.name.startsWith(textToSearch, true) }
+                                .toMutableList() as ArrayList
+                        }
+                        checkPlaceholderVisibility(dirsToShow)
+                        currAdapter.updateDirs(dirsToShow)
+                        measureRecyclerViewContent(dirsToShow)
+                    }
+                }
+
+                // recyclerview sometimes becomes empty at init/update, triggering an invisible refresh like this seems to work fine
+                binding.directories_grid.postDelayed({
+                    binding.directories_grid.scrollBy(0, 0)
+                }, 500)
+            }
+            Log.e(JET,"DirFragment Setup: $setupTime ms")
+        }
+    }
+
+    private fun initAdapter(dirsToShow:ArrayList<FolderItem>) {
+        val time = measureTimeMillis {
+            val fastScroller = if (config.scrollHorizontally) binding.directories_horizontal_fastscroller else binding.directories_vertical_fastscroller
+            val adapter = DirectoryAdapter(activity, dirsToShow, this, binding.directories_grid,isPickIntent(intent) || isGetAnyContentIntent(intent),
+                binding.directories_refresh_layout, fastScroller, controls){
+                onItemClicked(it)
+            }.apply {
+                setupZoomListener(mZoomListener)
+            }
+            //activity.runOnUiThread
+            launchMain{
+                binding.directories_grid.adapter = adapter
+                setupScrollDirection()
+
+                if (config.viewTypeFolders == VIEW_TYPE_LIST) {
+                    binding.directories_grid.scheduleLayoutAnimation()
+                }
+            }
+        }
+        Log.e(JET,"DirFragment initAdapter(): $time ms")
+    }
+
+    private fun onItemClicked(it: Any){
+        val clickedDir = it as FolderItem
+        val path = clickedDir.path
+        if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
+            if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
+                rvPosition.saveRVPosition()
+                mOpenedGroups.add(clickedDir)
+                setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
+            }
+            else if (path != config.tempFolderPath) {
+                openFolder(path)
+            }
+        } else {
+            mCurrentPathPrefix = path
+            mOpenedSubfolders.add(path)
+            rvPosition.saveRVPosition()
+            setupAdapter(mDirs, "")
+        }
+    }
+
+    private fun updateDirs(dirs: ArrayList<FolderItem>){
+        val currAdapter = recyclerAdapter
+        if (currAdapter != null) {
+            currAdapter.updateDirs(dirs)
+        }
+    }
+
     private fun removeTempFolder() {
         if (config.tempFolderPath.isNotEmpty()) {
             val newFolder = File(config.tempFolderPath)
@@ -463,7 +588,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
     }
 
-    private fun checkDefaultSpamFolders() {
+    private fun checkDefaultSpamFolders() = launchDefault {
         if (!config.spamFoldersChecked) {
             val spamFolders = arrayListOf(
                 "/storage/emulated/0/Android/data/com.facebook.orca/files/stickers"
@@ -479,89 +604,10 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
     }
 
-    private fun tryLoadGallery() {
-        fun load (it: Boolean){
-            if (it) {
-                if (!mWasDefaultFolderChecked) {
-                    openDefaultFolder()
-                    mWasDefaultFolderChecked = true
-                }
-
-//                if (!config.wasUpgradedFromFreeShown && isPackageInstalled("com.simplemobiletools.gallery")) {
-//                    ConfirmationDialog(this, "", R.string.upgraded_from_free, R.string.ok, 0) {}
-//                    config.wasUpgradedFromFreeShown = true
-//                }
-
-                checkOTGPath()
-                checkDefaultSpamFolders()
-
-                //Jet
-                //if (config.showAll) {
-                    //showAllMedia()
-                //} else {
-                    getDirectories()
-                //}
-
-                setupLayoutManager()
-            } else {
-                activity.toast(R.string.no_storage_permissions)
-                activity.finish()
-            }
-        }
-
-//        if(isRPlus()){
-//            handleStoragePermission{
-//                load(it)
-//            }
-//        }
-//        else
-        activity.handlePermission(PERMISSION_WRITE_STORAGE) {
-            load(it)
-        }
-
-
-    }
-
-    private fun getDirectories() {
-        if (mIsGettingDirs) {
-            return
-        }
-
-        mShouldStopFetching = true
-        mIsGettingDirs = true
-        val getImagesOnly = mIsPickImageIntent || mIsGetImageContentIntent
-        val getVideosOnly = mIsPickVideoIntent || mIsGetVideoContentIntent
-
-        activity.getCachedDirectories(getVideosOnly, getImagesOnly) {
-            gotDirectories(activity.addTempFolderIfNeeded(it as ArrayList<FolderItem> ))
-        }
-
-        launchDefault {
-            activity.getCachedDirectories(getVideosOnly, getImagesOnly, true) {
-                allDirs = activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>)
-            }
-        }
-    }
-
-
-
     //Jet
     private fun showSortingDialog() {
         ChangeSortingDialog(activity, true, false) {
-            //val adapter = binding.directories_grid.adapter as DirectoryAdapter
             mAdapter?.sort()
-
-            //setupAdapter(getSortedDirectories(currentlyDisplayedDirs))
-//            binding.directories_grid.adapter = null
-//            if (config.directorySorting and SORT_BY_DATE_MODIFIED != 0 || config.directorySorting and SORT_BY_DATE_TAKEN != 0) {
-//                getDirectories()
-//            }
-//            else {
-//                ensureBackgroundThread {
-//                    gotDirectories(currentlyDisplayedDirs)
-//                }
-//            }
-//
         }
     }
 
@@ -583,7 +629,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 handleMediaIntent(this)
             } else {
                 startActivity(this)
-                //activity.finish()
             }
         }
     }
@@ -792,14 +837,14 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 override fun zoomIn() {
                     if (layoutManager.spanCount > 1) {
                         reduceColumnCount()
-                        getRecyclerAdapter()?.finishActMode()
+                        recyclerAdapter?.finishActMode()
                     }
                 }
 
                 override fun zoomOut() {
                     if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
                         increaseColumnCount()
-                        getRecyclerAdapter()?.finishActMode()
+                        recyclerAdapter?.finishActMode()
                     }
                 }
             }
@@ -843,7 +888,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 
     private fun columnCountChanged() {
         invalidateOptionsMenu(activity)
-        getRecyclerAdapter()?.apply {
+        recyclerAdapter?.apply {
             notifyItemRangeChanged(0, dirs.size)
             measureRecyclerViewContent(dirs)
         }
@@ -938,6 +983,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     }
 
     private fun gotDirectories(newDirs: ArrayList<FolderItem>) {
+        val mTime = measureTimeMillis {
         mIsGettingDirs = false
         mShouldStopFetching = false
 
@@ -950,28 +996,25 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
 
 
-        val buff = activity.getSortedDirectories(newDirs)
-        val dirs = buff.getDirectories()
+        val dirs = activity.getSortedDirectories(newDirs).getDirectories()
         //if (config.groupDirectSubfolders) {
         mDirs = dirs.clone() as ArrayList<FolderItem>
         //}
 
         var isPlaceholderVisible = dirs.isEmpty()
 
-        val elapsedTime = measureTimeMillis {
-            //activity.runOnUiThread{
-            launchMain{
-                checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
+        activity.runOnUiThread{
+        //launchMain{
+            checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
 
-                val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
-                binding.directories_vertical_fastscroller.beVisibleIf(binding.directories_grid.isVisible() && !allowHorizontalScroll)
-                binding.directories_horizontal_fastscroller.beVisibleIf(binding.directories_grid.isVisible() && allowHorizontalScroll)
+            val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
+            binding.directories_vertical_fastscroller.beVisibleIf(binding.directories_grid.isVisible() && !allowHorizontalScroll)
+            binding.directories_horizontal_fastscroller.beVisibleIf(binding.directories_grid.isVisible() && allowHorizontalScroll)
 
-                //Jet
-                setupAdapter(dirs.clone() as ArrayList<FolderItem>)
-            }
+            //Jet
+            setupAdapter(dirs.clone() as ArrayList<FolderItem>)
         }
-        Log.e("Jet", "RunUI $elapsedTime")
+
 
         // cached folders have been loaded, recheck folders one by one starting with the first displayed
         mLastMediaFetcher?.shouldStop = true
@@ -990,7 +1033,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         val dateTakens = mLastMediaFetcher!!.getDateTakens()
 
         try {
-
             for (directory in dirs) {
                 if (mShouldStopFetching || activity.isDestroyed || activity.isFinishing) {
                     return
@@ -1045,8 +1087,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     Thread {
                         try {
                             activity.mediaDB.insertAll(curMedia)
-                        } catch (ignored: Exception) {
-                        }
+                        } catch (ignored: Exception) {}
                     }.start()
                 }
 
@@ -1146,7 +1187,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 
         if(newDirs.isNotEmpty()){
             dirs.addAll(newDirs)
-//            val adapter = getRecyclerAdapter()
+//            val adapter = recyclerAdapter
 //            adapter?.add(newDirs as ArrayList<FolderItem>)
             setupAdapter(dirs as ArrayList<FolderItem>)
         }
@@ -1189,6 +1230,8 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
 
         mDirs = dirs.clone() as ArrayList<FolderItem>
+        }
+        Log.e(JET,"gotDirectories() $mTime ms")
     }
 
     private fun setAsDefaultFolder() {
@@ -1250,103 +1293,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             Log.d("Jet", "error checkPlaceholderVisibility() IllegalStateException")
         }
     }
-
-    fun setupAdapter(dirs: ArrayList<FolderItem>, textToSearch: String = "", forceRecreate: Boolean = false) {
-        val setupTime = measureTimeMillis {
-            //launchDefault{
-            val currAdapter = getRecyclerAdapter()
-            val distinctDirs = dirs.distinctBy { it.path.getDistinctPath() }.toMutableList() as ArrayList<FolderItem>
-
-            var dirsToShow: ArrayList<FolderItem>
-            val getDirsToShowTime = measureTimeMillis {
-                dirsToShow = if (mOpenedGroups.isEmpty())
-                    activity.getDirsToShow(distinctDirs.getDirectories(), mDirs.getDirectories(), mCurrentPathPrefix).clone() as ArrayList<FolderItem>
-                else
-                    mOpenedGroups.last().innerDirs as ArrayList<FolderItem>
-            }
-            Log.e(JET,"DirFrag Setup getDirsToShow(): $getDirsToShowTime ms")
-
-            //dirsToShow = getSortedDirectories(dirsToShow)
-            //openedDirs.add(dirsToShow)
-            if (mOpenedGroups.isEmpty())
-                mDirsToShow = dirsToShow
-
-            if (currAdapter == null || forceRecreate) {
-                initZoomListener()
-                ///Jet
-                //withContext(Dispatchers.Main){
-                initAdapter(dirsToShow)
-                //}
-                ///
-                measureRecyclerViewContent(dirsToShow)
-            } else {
-                launchMain {
-                    if (textToSearch.isNotEmpty()) {
-                        dirsToShow = dirsToShow.filter { it.name.contains(textToSearch, true) }.sortedBy { !it.name.startsWith(textToSearch, true) }
-                            .toMutableList() as ArrayList
-                    }
-                    checkPlaceholderVisibility(dirsToShow)
-                    currAdapter.updateDirs(dirsToShow)
-                    measureRecyclerViewContent(dirsToShow)
-                }
-            }
-
-            // recyclerview sometimes becomes empty at init/update, triggering an invisible refresh like this seems to work fine
-            binding.directories_grid.postDelayed({
-                binding.directories_grid.scrollBy(0, 0)
-            }, 500)
-            //}
-        }
-        Log.e(JET,"DirFragment Setup: $setupTime ms")
-    }
-
-    private fun updateDirs(dirs: ArrayList<FolderItem>){
-        val currAdapter = getRecyclerAdapter()
-        if (currAdapter != null) {
-            currAdapter.updateDirs(dirs)
-        }
-    }
-
-    private fun initAdapter(dirsToShow:ArrayList<FolderItem>) {
-        val fastScroller = if (config.scrollHorizontally) binding.directories_horizontal_fastscroller else binding.directories_vertical_fastscroller
-        val adapter = DirectoryAdapter(activity, dirsToShow, this, binding.directories_grid,isPickIntent(intent) || isGetAnyContentIntent(intent),
-            binding.directories_refresh_layout, fastScroller, controls){
-            onItemClicked(it)
-        }.apply {
-            setupZoomListener(mZoomListener)
-        }
-        //activity.runOnUiThread
-        launchMain{
-            binding.directories_grid.adapter = adapter
-            setupScrollDirection()
-
-            if (config.viewTypeFolders == VIEW_TYPE_LIST) {
-                binding.directories_grid.scheduleLayoutAnimation()
-            }
-        }
-    }
-
-    private fun onItemClicked(it: Any){
-        val clickedDir = it as FolderItem
-        val path = clickedDir.path
-        if (clickedDir.subfoldersCount == 1 || !config.groupDirectSubfolders) {
-            if(clickedDir is DirectoryGroup && clickedDir.innerDirs.isNotEmpty()){
-                rvPosition.saveRVPosition()
-                mOpenedGroups.add(clickedDir)
-                setupAdapter(clickedDir.innerDirs as ArrayList<FolderItem>, "")
-            }
-            else if (path != config.tempFolderPath) {
-                openFolder(path)
-            }
-        } else {
-            mCurrentPathPrefix = path
-            mOpenedSubfolders.add(path)
-            rvPosition.saveRVPosition()
-            setupAdapter(mDirs, "")
-        }
-    }
-
-
 
     private fun openFolder(path: String) {
         activity.handleLockedFolderOpening(path) { success ->
@@ -1427,7 +1373,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     }
 
 
-    private fun getBubbleTextItem(index: Int) = getRecyclerAdapter()?.dirs?.getOrNull(index)?.getBubbleText(config.directorySorting, activity, mDateFormat, mTimeFormat)
+    private fun getBubbleTextItem(index: Int) = recyclerAdapter?.dirs?.getOrNull(index)?.getBubbleText(config.directorySorting, activity, mDateFormat, mTimeFormat)
         ?: ""
 
     private fun setupLatestMediaId() {

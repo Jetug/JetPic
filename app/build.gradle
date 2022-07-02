@@ -16,7 +16,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.jetugapps.gallery.plus.dev"
+        applicationId "com.jetugapps.gallery.plus"
         //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
