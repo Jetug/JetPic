@@ -5,8 +5,8 @@ import android.content.Intent
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore.Images
-import android.provider.MediaStore.Video
+import android.provider.MediaStore
+import android.provider.MediaStore.*
 import android.provider.Settings
 import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
@@ -22,18 +22,19 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.contracts.PickDirectoryContract
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.MANAGE_STORAGE_RC
+import org.w3c.dom.Document
 
 open class SimpleActivity : BaseSimpleActivity() {
     val observer = object : ContentObserver(null) {
         override fun onChange(selfChange: Boolean, uri: Uri?) {
             super.onChange(selfChange, uri)
-	    if (uri != null) {
-            	val path = getRealPathFromURI(uri)
-            	if (path != null) {
-            	    updateDirectoryPath(path.getParentPath())
-            	    addPathToDB(path)
-            	}
-	    }
+            if (uri != null) {
+                val path = getRealPathFromURI(uri)
+                if (path != null) {
+                    updateDirectoryPath(path.getParentPath())
+                    addPathToDB(path)
+                }
+            }
         }
     }
 
@@ -118,10 +119,12 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
+    //Jet
     fun registerFileUpdateListener() {
         try {
             contentResolver.registerContentObserver(Images.Media.EXTERNAL_CONTENT_URI, true, observer)
             contentResolver.registerContentObserver(Video.Media.EXTERNAL_CONTENT_URI, true, observer)
+            //contentResolver.registerContentObserver(Files.Media.EXTERNAL_CONTENT_URI, true, observer)
         } catch (ignored: Exception) {
         }
     }

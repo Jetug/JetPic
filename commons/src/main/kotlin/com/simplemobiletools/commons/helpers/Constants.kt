@@ -8,7 +8,11 @@ import android.os.Looper
 import android.util.Log
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.overloads.times
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.system.measureTimeMillis
 
 const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
 
@@ -380,10 +384,15 @@ fun isOnMainThread() = Looper.myLooper() == Looper.getMainLooper()
 
 fun ensureBackgroundThread(callback: () -> Unit) {
     if (isOnMainThread()) {
-        Thread {
-            callback()
-        }.start()
-    } else {
+        val createTime = measureTimeMillis {
+            //CoroutineScope(Default).launch {
+                Thread {
+                    callback()
+                }.start()
+            //}
+        }
+        Log.e("Jet", "ensureBackgroundThread $createTime ms")
+        } else {
         callback()
     }
 }

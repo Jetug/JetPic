@@ -295,9 +295,6 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
 
         mTempShowHiddenHandler.removeCallbacksAndMessages(null)
         mMedia.clear()
-
-        //Jet
-        //config.showAll = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

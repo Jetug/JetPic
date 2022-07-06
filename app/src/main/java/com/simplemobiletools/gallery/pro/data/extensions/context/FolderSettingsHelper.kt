@@ -40,6 +40,19 @@ class Synchronisator{
 
 private val sync = Synchronisator()
 
+fun checkForSettingsUpdate(){
+
+    GlobalScope.launch {
+        while (true){
+            delay(2000)
+        }
+    }
+
+    Thread{
+
+    }.start()
+}
+
 fun Context.getDirectoryGroup(path: String): String{
     val settingsDb: FolderSettings = getSettings(path)
     var group = settingsDb.group
@@ -112,7 +125,7 @@ fun Context.getSettings(path: String): FolderSettings{
         else
             settings = FolderSettings(null, path, "", arrayListOf())
 
-        IOScope.launch {
+        launchIO {
             folderSettingsDao.insert(settings)
         }
     }

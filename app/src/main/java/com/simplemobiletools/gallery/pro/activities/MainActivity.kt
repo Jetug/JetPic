@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.FAVORITES
@@ -19,8 +20,8 @@ import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
 import com.simplemobiletools.gallery.pro.data.helpers.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false
@@ -40,71 +41,38 @@ class MainActivity : SimpleActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_main)
         val createTime = measureTimeMillis {
-            setContentView(R.layout.activity_main)
-            //Nav
-            setupDrawerLayout()
+            launchDefault {
+                mIsPickImageIntent = isPickImageIntent(intent)
+                mIsPickVideoIntent = isPickVideoIntent(intent)
+                mIsGetImageContentIntent = isGetImageContentIntent(intent)
+                mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
+                mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
+                mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
+                mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent ||
+                    mIsGetVideoContentIntent || mIsGetAnyContentIntent || mIsSetWallpaperIntent
+                //config.showAll = false
+                withContext(Main) {
+                    setupDrawerLayout()
 
-            if (savedInstanceState == null) {
-                setupGalleryFragment()
-            }
-
-            mIsPickImageIntent = isPickImageIntent(intent)
-            mIsPickVideoIntent = isPickVideoIntent(intent)
-            mIsGetImageContentIntent = isGetImageContentIntent(intent)
-            mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
-            mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
-            mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
-            mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-            mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent || mIsGetVideoContentIntent ||
-                mIsGetAnyContentIntent || mIsSetWallpaperIntent
-
-            appLaunched(BuildConfig.APPLICATION_ID)
-            updateWidgets()
-            registerFileUpdateListener()
-
-            config.showAll = false
-
-            if (packageName.startsWith(PACKAGE_NAME_PRO)) {
-                handleStoragePermission {}
-            }
-
-            // just request the permission, tryLoadGallery will then trigger in onResume
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (!it) {
-                    toast(R.string.no_storage_permissions)
-                    finish()
+                    if (savedInstanceState == null) {
+                        if (config.showAll)
+                            showAllImages()
+                        else
+                            showDirectories()
+                    }
                 }
+                appLaunched(BuildConfig.APPLICATION_ID)
+                updateWidgets()
+                registerFileUpdateListener()
             }
+
         }
-        Log.e(JET,"on Create $createTime ms")
-
-//        launchDefault {
-//            val time = measureTimeMillis {
-//                val a1 = async { call() }.await()
-//                val a2 = async { call() }.await()
-//
-//                Log.e(JET,"a1: ${a1}")
-//                Log.e(JET,"a2: ${a2}")
-//            }
-//            Log.e(JET,"Total time $time ms")
-//
-//        }
-
+        Log.e(JET, "on Create $createTime ms")
+        handlePermissions()
     }
-
-//    suspend fun call(): String{
-//        delay(3000)
-//        return "sd"
-//    }
-
-//    override fun onResume() {
-//        super.onResume()
-////        if (config.showAll) {
-////            showAllMedia()
-////        }
-//    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -117,6 +85,11 @@ class MainActivity : SimpleActivity() {
                 GalleryDatabase.destroyInstance()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkDefaultSpamFolders()
     }
 
     @SuppressLint("MissingSuperCall")
@@ -143,67 +116,81 @@ class MainActivity : SimpleActivity() {
         val drawableId = R.drawable.ic_arrow_left_vector
         val icon = resources.getColoredDrawableWithColor(drawableId, color)
         supportActionBar?.setHomeAsUpIndicator(icon)
-        //drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     private fun setupDrawerLayout(){
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, 0,0)
         drawerLayout.addDrawerListener(toggle!!)
         toggle!!.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val navView = findViewById<NavigationView>(R.id.navView)
-        navView.setNavigationItemSelectedListener (::onNavigationItemSelected)
+        findViewById<NavigationView>(R.id.navView)
+            .setNavigationItemSelectedListener (::onNavigationItemSelected)
     }
 
     private fun onNavigationItemSelected(item: MenuItem):Boolean{
         when(item.itemId){
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
-            R.id.folders -> setupGalleryFragment()
-            R.id.all_images -> showAllImagesFragment()
-            R.id.favorites -> showFavoritesFragment()
-            R.id.recycle_bin -> showRecyclerBinFragment()
+            R.id.folders -> showDirectories()
+            R.id.all_images -> showAllImages()
+            R.id.favorites -> showFavorites()
+            R.id.recycle_bin -> showRecyclerBin()
         }
         return true
     }
 
-    private fun setupGalleryFragment(){
+    private fun showDirectories(){
         config.showAll = false
-        val fragment = DirectoryFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment)//.addToBackStack(null)
-            .commit()
+        showFragment(DirectoryFragment())
     }
 
-    private fun showAllImagesFragment(){
+    private fun showAllImages(){
         config.showAll = true
-//        currentMediaFragment?.clearAdapter()
         showMediaFragment("")
     }
 
-    private fun showFavoritesFragment(){
+    private fun showFavorites(){
         config.showAll = false
         showMediaFragment(FAVORITES)
     }
 
-    private fun showRecyclerBinFragment(){
+    private fun showRecyclerBin(){
         config.showAll = false
         showMediaFragment(RECYCLE_BIN)
     }
 
-    private fun showMediaFragment(folderName: String){
+    private fun showMediaFragment(dirName: String){
         currentMediaFragment?.clearAdapter()
 
         val fragment = MediaFragment()
         currentMediaFragment = fragment
         val bundle = Bundle()
-        bundle.putString(DIRECTORY, folderName)
+        bundle.putString(DIRECTORY, dirName)
         fragment.arguments = bundle
 
+        showFragment(fragment)
+    }
+
+    private fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContent, fragment) //.addToBackStack(null)
+            .replace(R.id.mainContent, fragment)
             .commit()
+    }
+
+    private fun handlePermissions(){
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (!it) {
+                toast(R.string.no_storage_permissions)
+                finish()
+            }
+        }
+
+        if (packageName.startsWith(PACKAGE_NAME_PRO))
+            handleStoragePermission {}
     }
 }
