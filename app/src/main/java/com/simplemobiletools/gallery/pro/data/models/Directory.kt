@@ -13,17 +13,17 @@ data class Directory(
     @ColumnInfo(name = "date_taken") override var taken: Long,
     @ColumnInfo(name = "size") override var size: Long,
     @ColumnInfo(name = "location") override var location: Int,
-    @ColumnInfo(name = "media_types") override var types: Int,
-    @ColumnInfo(name = "sort_value") override var sortValue: String,
+    @ColumnInfo(name = "media_types") var types: Int,
+    @ColumnInfo(name = "custom_sorting") var customSorting: Int,
+    @ColumnInfo(name = "group_name") var groupName: String,
 
     // used with "Group direct subfolders" enabled
     @Ignore override var subfoldersCount: Int = 0,
     @Ignore override var subfoldersMediaCount: Int = 0,
-    @Ignore override var containsMediaFilesDirectly: Boolean = true,
-
-    @Ignore var groupName: String = "") : FolderItem(id, path, tmb, name, mediaCnt, modified, taken, size, location, types, sortValue) {
+    @Ignore override var containsMediaFilesDirectly: Boolean = true)
+    : FolderItem(id, path, tmb, name, mediaCnt, modified, taken, size, location, types) {
 
     constructor() : this(null, "", "", "", 0, 0L, 0L, 0L,
-        0, 0, "", 0, 0, true
+        0, 0, 0, "", 0, 0, true
     )
 }

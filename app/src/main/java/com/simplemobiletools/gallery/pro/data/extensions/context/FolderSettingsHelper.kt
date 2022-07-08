@@ -1,11 +1,13 @@
 package com.simplemobiletools.gallery.pro.data.extensions.context
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.helpers.FAVORITES
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.helpers.JET
 import com.simplemobiletools.gallery.pro.data.helpers.NO_VALUE
 import com.simplemobiletools.gallery.pro.data.helpers.RECYCLE_BIN
 import com.simplemobiletools.gallery.pro.data.models.*
@@ -40,22 +42,34 @@ class Synchronisator{
 
 private val sync = Synchronisator()
 
-fun checkForSettingsUpdate(){
-
+fun Context.startSettingsScanner(){
     GlobalScope.launch {
         while (true){
-            delay(2000)
+            try {
+                val directories =  directoryDao.getAll() as ArrayList<Directory>
+                directories.forEach{
+                    val settings = readSettings(it.path)
+                    it.apply {
+                        val group = if(settings.group == NO_VALUE) "" else settings.group
+                        groupName = group
+                        customSorting = settings.sorting
+                    }
+
+                    directoryDao.update(it)
+                    folderSettingsDao.insert(settings)
+                }
+            } catch (e: Exception) {
+                Log.e(JET, e.message, e)
+            }
+
+            delay(5000)
         }
     }
-
-    Thread{
-
-    }.start()
 }
 
 fun Context.getDirectoryGroup(path: String): String{
-    val settingsDb: FolderSettings = getSettings(path)
-    var group = settingsDb.group
+    val settings = getSettings(path)
+    var group = settings.group
 
     if(group == NO_VALUE) group = ""
 
@@ -63,10 +77,35 @@ fun Context.getDirectoryGroup(path: String): String{
 }
 
 fun Context.saveDirectoryGroup(path: String, groupName: String) = launchIO{
-    val settings =getSettings(path)
+    val settings = getSettings(path)
     settings.group = groupName
 
     saveSettings(settings)
+}
+
+fun Context.getSorting(path: String): Int{
+    var sorting: Int
+    val time = measureTimeMillis {
+        val settings = getSettings(path)
+
+        if(settings.sorting != 0)
+            sorting = settings.sorting
+        else
+            sorting = config.getCustomFolderSorting(path)
+    }
+    //Log.e(JET,"getSorting $time ms")
+    return sorting
+}
+
+fun Context.saveSorting(path: String, sorting: Int){
+    sync.launch {
+        launchIO {
+            val settings = getSettings(path)
+            settings.sorting = sorting
+            config.saveCustomSorting(path, sorting)
+            saveSettings(settings)
+        }
+    }
 }
 
 fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
@@ -87,31 +126,6 @@ fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>){
 
                 saveSettings(settings)
             }
-        }
-    }
-}
-
-fun Context.getCustomSorting(path: String): Int{
-    var sorting: Int
-    val time = measureTimeMillis {
-        val settings = getSettings(path)
-
-        if(settings.sorting != 0)
-            sorting = settings.sorting
-        else
-            sorting = config.getCustomFolderSorting(path)
-    }
-    //Log.e(JET,"getCustomSorting $time ms")
-    return sorting
-}
-
-fun Context.saveCustomSorting(path: String, sorting: Int){
-    sync.launch {
-        launchIO {
-            val settings = getSettings(path)
-            settings.sorting = sorting
-            config.saveCustomSorting(path, sorting)
-            saveSettings(settings)
         }
     }
 }

@@ -10,7 +10,6 @@ import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.jetug.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 
@@ -80,7 +79,7 @@ class MultiChangeSortingDialog(val activity: BaseSimpleActivity, val showFolderC
 
         pathList.forEach {path ->
             if (view.sorting_dialog_use_for_this_folder.isChecked) {
-                activity.saveCustomSorting(path, sorting)
+                activity.saveSorting(path, sorting)
             } else {
                 config.removeCustomSorting(path)
                 config.sorting = sorting

@@ -46,7 +46,7 @@ class MediaFetcher(val context: Context) {
             curMedia.addAll(newMedia)
         }
 
-        sortMedia(curMedia, context.getCustomSorting(curPath))
+        sortMedia(curMedia, context.getSorting(curPath))
 
         return curMedia
     }

@@ -73,14 +73,14 @@ class MediaAdapter(
     override fun onDragAndDroppingEnded(){
         launchIO {
             activity.saveCustomMediaOrder(media.getMediums())
-            activity.saveCustomSorting(path, SORT_BY_CUSTOM)
+            activity.saveSorting(path, SORT_BY_CUSTOM)
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun sort(){
         val mediaFetcher = MediaFetcher(activity)
-        val sorting = activity.getCustomSorting(path)
+        val sorting = activity.getSorting(path)
         mediaFetcher.sortMedia(mediums, sorting)
         notifyDataSetChanged()
     }
@@ -88,7 +88,7 @@ class MediaAdapter(
     private fun showDateEditionDialog(){
         val paths = getSelectedPaths()
          DateEditingDialog(activity, paths) {_,_->
-            val sorting = activity.getCustomSorting(path)
+            val sorting = activity.getSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 controls.recreateAdapter()
             }

@@ -384,14 +384,12 @@ fun isOnMainThread() = Looper.myLooper() == Looper.getMainLooper()
 
 fun ensureBackgroundThread(callback: () -> Unit) {
     if (isOnMainThread()) {
-        val createTime = measureTimeMillis {
             //CoroutineScope(Default).launch {
                 Thread {
                     callback()
                 }.start()
             //}
-        }
-        Log.e("Jet", "ensureBackgroundThread $createTime ms")
+
         } else {
         callback()
     }

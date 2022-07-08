@@ -3,12 +3,12 @@ package com.simplemobiletools.gallery.pro.data.models
 import androidx.room.Ignore
 
 class DirectoryGroup(id: Long?, path: String, tmb: String, name: String, mediaCnt: Int, modified: Long,
-                     taken: Long, size: Long, location: Int, types: Int, sortValue: String
+                     taken: Long, size: Long, location: Int //, types: Int
 ) : FolderItem(id, path, tmb, name, mediaCnt, modified,
     taken,
     size,
     location,
-    types, sortValue
+    //types
 ) {
 
     constructor(dir: Directory, groupName: String) : this (null,
@@ -20,8 +20,7 @@ class DirectoryGroup(id: Long?, path: String, tmb: String, name: String, mediaCn
         dir.taken,
         dir.size,
         0,
-        dir.types,
-        dir.sortValue
+        //dir.types,
     )
 
     override var size: Long = 0

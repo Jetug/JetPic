@@ -307,7 +307,7 @@
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.ActionBar.Transparent" />
         <activity
-            android:name="com.simplemobiletools.gallery.pro.activities.MediaActivity"
+            android:name="com.simplemobiletools.gallery.pro.ui.activities.MediaActivity"
             android:parentActivityName="com.simplemobiletools.gallery.pro.activities.MainActivity"
             android:theme="@style/AppTheme.ActionBar.Transparent.NoAnimation">
             <meta-data
@@ -334,7 +334,7 @@
         <activity
             android:name="com.simplemobiletools.gallery.pro.activities.ViewPagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName="com.simplemobiletools.gallery.pro.activities.MediaActivity">
+            android:parentActivityName="com.simplemobiletools.gallery.pro.ui.activities.MediaActivity">
             <intent-filter>
                 <action android:name="com.android.camera.action.REVIEW" />
 
@@ -371,7 +371,7 @@
         <activity
             android:name="com.simplemobiletools.gallery.pro.activities.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName="com.simplemobiletools.gallery.pro.activities.MediaActivity" />
+            android:parentActivityName="com.simplemobiletools.gallery.pro.ui.activities.MediaActivity" />
         <activity
             android:name="com.simplemobiletools.gallery.pro.activities.PanoramaPhotoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

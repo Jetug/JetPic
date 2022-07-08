@@ -16,7 +16,7 @@ import com.simplemobiletools.commons.extensions.setText
 import com.simplemobiletools.commons.extensions.setVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.MediaActivity
+import com.simplemobiletools.gallery.pro.ui.activities.MediaActivity
 import com.simplemobiletools.gallery.pro.data.extensions.config
 import com.simplemobiletools.gallery.pro.data.extensions.directoryDao
 import com.simplemobiletools.gallery.pro.data.extensions.getFolderNameFromPath

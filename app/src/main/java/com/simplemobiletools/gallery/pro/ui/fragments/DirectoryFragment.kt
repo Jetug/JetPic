@@ -47,6 +47,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
+import com.simplemobiletools.gallery.pro.ui.activities.MediaActivity
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.withContext
 
@@ -519,7 +520,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                         return
                     }
 
-                    val sorting = activity.getCustomSorting(directory.path)
+                    val sorting = activity.getSorting(directory.path)
                     val grouping = config.getFolderGrouping(directory.path)
                     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                         sorting and SORT_BY_DATE_TAKEN != 0 ||
@@ -557,7 +558,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                         taken = newDir.taken
                         this@apply.size = newDir.size
                         types = newDir.types
-                        sortValue = ""//getDirectorySortingValue(curMedia, path, name, size)
+                        //sortValue = ""//getDirectorySortingValue(curMedia, path, name, size)
                     }
 
                     //setupAdapter(dirs as ArrayList<FolderItem>)
@@ -616,7 +617,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     return
                 }
 
-                val sorting = activity.getCustomSorting(folder)
+                val sorting = activity.getSorting(folder)
                 val grouping = config.getFolderGrouping(folder)
                 val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                     sorting and SORT_BY_DATE_TAKEN != 0 ||

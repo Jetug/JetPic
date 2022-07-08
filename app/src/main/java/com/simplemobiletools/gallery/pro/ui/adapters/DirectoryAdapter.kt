@@ -23,7 +23,7 @@ import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.MediaActivity
+import com.simplemobiletools.gallery.pro.ui.activities.MediaActivity
 import com.simplemobiletools.gallery.pro.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.activities.mDirs
 import com.simplemobiletools.gallery.pro.ui.dialogs.*
@@ -31,7 +31,6 @@ import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.DirectoryOperationsListener
 import com.simplemobiletools.gallery.pro.data.models.*
-import com.simplemobiletools.gallery.pro.data.jetug.*
 import com.simplemobiletools.gallery.pro.ui.views.MySquareImageView
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_check
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.dir_drag_handle_wrapper

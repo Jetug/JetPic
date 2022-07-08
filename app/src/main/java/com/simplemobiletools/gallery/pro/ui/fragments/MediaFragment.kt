@@ -239,7 +239,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 invalidateOptionsMenu(activity)
             }
 
-            if (mMedia.isEmpty() || activity.getCustomSorting(mPath) and SORT_BY_RANDOM == 0) {
+            if (mMedia.isEmpty() || activity.getSorting(mPath) and SORT_BY_RANDOM == 0) {
                 if (shouldSkipAuthentication()) {
                     tryLoadGallery()
                 } else {
@@ -533,7 +533,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         binding.media_horizontal_fastscroller.isHorizontal = true
         binding.media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = activity.getCustomSorting(if (mShowAll) SHOW_ALL else mPath)
+        val sorting = activity.getSorting(if (mShowAll) SHOW_ALL else mPath)
         if (allowHorizontalScroll) {
             binding.media_horizontal_fastscroller.setViews(binding.media_grid, binding.media_refresh_layout) {
                 binding.media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))
@@ -555,7 +555,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     }
 
     private fun checkLastMediaChanged() {
-        if (activity.isDestroyed || activity.getCustomSorting(mPath) and SORT_BY_RANDOM != 0) {
+        if (activity.isDestroyed || activity.getSorting(mPath) and SORT_BY_RANDOM != 0) {
             return
         }
 

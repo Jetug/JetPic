@@ -17,10 +17,12 @@ import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsScanner
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
 
@@ -44,34 +46,42 @@ class MainActivity : SimpleActivity() {
         setContentView(R.layout.activity_main)
         val createTime = measureTimeMillis {
             launchDefault {
-                mIsPickImageIntent = isPickImageIntent(intent)
-                mIsPickVideoIntent = isPickVideoIntent(intent)
-                mIsGetImageContentIntent = isGetImageContentIntent(intent)
-                mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
-                mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
-                mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
-                mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-                mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent ||
-                    mIsGetVideoContentIntent || mIsGetAnyContentIntent || mIsSetWallpaperIntent
-                //config.showAll = false
-                withContext(Main) {
-                    setupDrawerLayout()
+                val time = measureTimeMillis {
+                    mIsPickImageIntent = isPickImageIntent(intent)
+                    mIsPickVideoIntent = isPickVideoIntent(intent)
+                    mIsGetImageContentIntent = isGetImageContentIntent(intent)
+                    mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
+                    mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
+                    mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
+                    mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                    mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent ||
+                        mIsGetVideoContentIntent || mIsGetAnyContentIntent || mIsSetWallpaperIntent
+                    //config.showAll = false
 
-                    if (savedInstanceState == null) {
-                        if (config.showAll)
-                            showAllImages()
-                        else
-                            showDirectories()
+                    val time2 = measureTimeMillis {
+                        appLaunched(BuildConfig.APPLICATION_ID)
+                    }
+                    Log.e(JET, "!!!!!!!!!!!!!!!!!!! $time2 ms")
+                    updateWidgets()
+                    registerFileUpdateListener()
+                    startSettingsScanner()
+
+                    withContext(Main) {
+                        setupDrawerLayout()
                     }
                 }
-                appLaunched(BuildConfig.APPLICATION_ID)
-                updateWidgets()
-                registerFileUpdateListener()
+                Log.e(JET, "on Create background $time ms")
             }
+            handlePermissions()
 
+            if (savedInstanceState == null) {
+                if (config.showAll)
+                    showAllImages()
+                else
+                    showDirectories()
+            }
         }
         Log.e(JET, "on Create $createTime ms")
-        handlePermissions()
     }
 
     override fun onDestroy() {
@@ -81,9 +91,8 @@ class MainActivity : SimpleActivity() {
             config.tempSkipDeleteConfirmation = false
             unregisterFileUpdateListener()
 
-            if (!config.showAll) {
+            if (!config.showAll)
                 GalleryDatabase.destroyInstance()
-            }
         }
     }
 

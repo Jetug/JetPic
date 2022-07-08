@@ -17,18 +17,15 @@ abstract class FolderItem(open var id: Long?,
                           open var taken: Long,
                           open var size: Long,
                           open var location: Int,
-                          open var types: Int,
-                          open var sortValue: String,
+                          //open var types: Int,
+                          //open var sortValue: String,
 
                           @Ignore open var subfoldersCount: Int = 0,
                           @Ignore open var subfoldersMediaCount: Int = 0,
-                          @Ignore open var containsMediaFilesDirectly: Boolean = true,) {
+                          @Ignore open var containsMediaFilesDirectly: Boolean = true) {
 
 
     @Ignore var isHidden: Boolean = false
-
-    init {
-    }
 
     fun areFavorites() = path == FAVORITES
     fun isRecycleBin() = path == RECYCLE_BIN

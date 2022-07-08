@@ -75,7 +75,7 @@ class PickMediumDialog(val activity: SimpleActivity, val path: String, val callb
         }
 
         val scrollHorizontally = activity.config.scrollHorizontally && isGridViewType
-        val sorting = activity.getCustomSorting(if (path.isEmpty()) SHOW_ALL else path)
+        val sorting = activity.getSorting(if (path.isEmpty()) SHOW_ALL else path)
         val dateFormat = activity.config.dateFormat
         val timeFormat = activity.getTimeFormat()
         view.apply {

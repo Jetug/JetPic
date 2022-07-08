@@ -183,7 +183,7 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
         dirs.forEach{ dir ->
             var groupName = ""
             val time = measureTimeMillis {
-                groupName = getDirectoryGroup(dir.path)
+                groupName = dir.groupName//getDirectoryGroup(dir.path)
             }
             //Log.e(JET,"getDirectoryGroup: $time ms")
             totalTime += time
@@ -276,6 +276,7 @@ fun Context.getDirectParentSubfolders(dirs: ArrayList<Directory>, currentPathPre
                         subDirs.sumByLong { it.size },
                         getPathLocation(parent),
                         mediaTypes,
+                        0,
                         "")
 
                     directory.containsMediaFilesDirectly = false
@@ -486,7 +487,7 @@ fun Context.addTempFolderIfNeeded(dirs: ArrayList<FolderItem>): ArrayList<Folder
 
     if (tempFolderPath.isNotEmpty()) {
         val directories = ArrayList<FolderItem>()
-        val newFolder = Directory(null, tempFolderPath, "", tempFolderPath.getFilenameFromPath(), 0, 0, 0, 0L, getPathLocation(tempFolderPath), 0, "")
+        val newFolder = Directory(null, tempFolderPath, "", tempFolderPath.getFilenameFromPath(), 0, 0, 0, 0L, getPathLocation(tempFolderPath), 0, 0,"")
         directories.add(newFolder)
         directories.addAll(dirs)
         result = directories
@@ -640,7 +641,7 @@ fun Context.getCachedDirectories(getVideosOnly: Boolean = false, getImagesOnly: 
         val directories = try {
             directoryDao.getAll() as ArrayList<Directory>
         } catch (e: Exception) {
-            ArrayList<Directory>()
+            ArrayList()
         }
 
         if (!config.showRecycleBinAtFolders) {
@@ -756,7 +757,7 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
         }) as ArrayList<Medium>
 
         val pathToUse = if (path.isEmpty()) SHOW_ALL else path
-        mediaFetcher.sortMedia(media, getCustomSorting(pathToUse))
+        mediaFetcher.sortMedia(media, getSorting(pathToUse))
         val grouped = mediaFetcher.groupMedia(media, pathToUse)
         callback(grouped.clone() as ArrayList<ThumbnailItem>)
         val OTGPath = config.OTGPath
@@ -822,7 +823,8 @@ fun Context.updateDBDirectory(directory: Directory) {
                 directory.taken,
                 directory.size,
                 directory.types,
-                directory.sortValue
+                directory.customSorting,
+                directory.groupName
             )
         }
     }
@@ -1016,7 +1018,7 @@ fun Context.createDirectoryFromMedia(path: String, curMedia: ArrayList<Medium>, 
     val size = if (getProperFileSize) curMedia.sumByLong { it.size } else 0L
     val mediaTypes = curMedia.getDirMediaTypes()
     val sortValue = "" //getDirectorySortingValue(curMedia, path, dirName, size)
-    return Directory(null, path, thumbnail!!, dirName, curMedia.size, lastModified, dateTaken, size, getPathLocation(path), mediaTypes, sortValue)
+    return Directory(null, path, thumbnail!!, dirName, curMedia.size, lastModified, dateTaken, size, getPathLocation(path), mediaTypes, 0, "")
 }
 
 fun Context.updateDirectoryPath(path: String) {
@@ -1028,7 +1030,7 @@ fun Context.updateDirectoryPath(path: String) {
     val includedFolders = config.includedFolders
     val noMediaFolders = getNoMediaFoldersSync()
 
-    val sorting = getCustomSorting(path)
+    val sorting = getSorting(path)
     val grouping = config.getFolderGrouping(path)
     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
         sorting and SORT_BY_DATE_TAKEN != 0 ||
