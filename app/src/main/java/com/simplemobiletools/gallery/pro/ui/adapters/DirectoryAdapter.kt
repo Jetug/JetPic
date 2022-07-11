@@ -46,6 +46,12 @@ import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.item_dir_group.view.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
+import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,16 +59,23 @@ import kotlin.collections.HashMap
 
 interface DirectoryAdapterControls{
     fun recreateAdapter(dirs: ArrayList<FolderItem>)
+    fun clearAdapter()
 }
 
 val empty = object : DirectoryAdapterControls{
-    override fun recreateAdapter(dirs: ArrayList<FolderItem>) { }
+    override fun recreateAdapter(dirs: ArrayList<FolderItem>) {}
+    override fun clearAdapter() {}
 }
 
 @SuppressLint("NotifyDataSetChanged")
-class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>, val listener: DirectoryOperationsListener?, recyclerView: MyRecyclerView,
-                       private val isPickIntent: Boolean, swipeRefreshLayout: SwipeRefreshLayout? = null, fastScroller: FastScroller? = null
-                       , val controls: DirectoryAdapterControls = empty, itemClick: (Any) -> Unit) :
+class DirectoryAdapter(activity: SimpleActivity,
+                       var dirs: ArrayList<FolderItem>,
+                       val listener: DirectoryOperationsListener?,
+                       recyclerView: MyRecyclerView,
+                       private val isPickIntent: Boolean,
+                       swipeRefreshLayout: SwipeRefreshLayout? = null,
+                       fastScroller: FastScroller? = null,
+                       val controls: DirectoryAdapterControls = empty, itemClick: (Any) -> Unit) :
     RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     private val ITEM_PLACEHOLDER = 0
@@ -246,7 +259,7 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
             dirs = directories
             fillLockedFolders()
             notifyDataSetChanged()
-            finishActMode()
+            //finishActMode()
         }
     }
 
@@ -281,31 +294,34 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
     }
 
     private fun groupDirs(){
-        val items = selectedItems
-        val groups = selectedGroups
-
-        fun group(name: String){
-            var d = dirs
+        fun group(name: String) = launchDefault{
+            val items = selectedItems
             for (i in 0 until items.size){
                 val item = items[i]
                 if(item is Directory) {
                     item.groupName = name
-                    //activity.updateDBDirectory(item)
+                    //activity.updateDirectory(item)
                     //dirs.remove(item)
-                    activity.saveDirectoryGroup(item.path, name)
+                    //activity.saveDirectoryGroup(item.path, name)
+                    activity.saveDirChanges(item)
                 }
             }
 
-            d = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
-            dirs = d
-            mDirs = d
-            activity.directories_grid.adapter = null
-            controls.recreateAdapter(d)
-            //(activity as MainActivity).setupAdapter(d)
-            notifyDataSetChanged()
+            val dirsToShow = activity.getDirsToShow(dirs.getDirectories(), arrayListOf())
+            dirs = dirsToShow
+            mDirs = dirsToShow
+            withMainContext {
+                //activity.directories_grid.adapter = null
+                controls.clearAdapter()
+                controls.recreateAdapter(dirsToShow)
+                notifyDataSetChanged()
+                finishActMode()
+            }
         }
 
-        if(selectedGroups.size == 1){
+        val groups = selectedGroups
+
+        if(groups.size == 1){
             group(groups[0].name)
         }
         else {
@@ -313,29 +329,38 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
                 group(name)
             }
         }
-        finishActMode()
     }
 
-    private fun ungroupDirs(){
+    private fun ungroupDirs() {
         if(selectedItems.isEmpty()) return
-        val items = selectedItems
-        for (item in items) {
-            if (!(item is DirectoryGroup))
-                continue
 
-            val innerDirs = item.innerDirs
-            innerDirs.forEach {
-                activity.saveDirectoryGroup(it.path, "")
+        launchDefault{
+            val items = selectedItems
+            for (item in items) {
+                if (item !is DirectoryGroup)
+                    continue
+
+                val innerDirs = item.innerDirs
+                innerDirs.forEach {
+                    it.groupName = ""
+                    activity.saveDirChanges(it)
+                    //activity.saveDirectoryGroup(it.path, "")
+                }
+
+                dirs.remove(item)
+//            innerDirs.forEach {
+//                it.groupName = ""
+//            }
+                dirs.addAll(innerDirs)
             }
+            dirs = activity.getDirsToShow(dirs.getDirectories())
+            mDirs = dirs
 
-            dirs.remove(item)
-            innerDirs.forEach {it.groupName = "" }
-            dirs.addAll(innerDirs)
+            withMainContext {
+                notifyDataSetChanged()
+                finishActMode()
+            }
         }
-        dirs = activity.getDirsToShow(dirs.getDirectories())
-        mDirs = dirs
-        notifyDataSetChanged()
-        finishActMode()
     }
 
     private fun checkHideBtnVisibility(menu: Menu, selectedPaths: ArrayList<String>) {
@@ -372,11 +397,6 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
     }
 
     private fun showProperties() {
-
-//        val oy = recyclerView.computeVerticalScrollOffset()
-//        Toast.makeText(activity, "$oy", Toast.LENGTH_SHORT).show()
-//        val y = recyclerView.offsetChildrenVertical(-150)
-
         recyclerView.scrollY = 50
         if (selectedKeys.size <= 1) {
             val path = firstSelectedItemPath ?: return
@@ -635,6 +655,7 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
         currentDirectoriesHash = 0
         pinnedFolders = config.pinnedFolders
         listener?.recheckPinnedFolders()
+        finishActMode()
     }
 
     private fun moveFilesTo() {
@@ -756,7 +777,7 @@ class DirectoryAdapter(activity: SimpleActivity, var dirs: ArrayList<FolderItem>
             }
         }
 
-        activity.handleSAFDialog(SAFPath) {
+        activity.handleSAFDialog(SAFPath) { it ->
             if (!it) {
                 return@handleSAFDialog
             }

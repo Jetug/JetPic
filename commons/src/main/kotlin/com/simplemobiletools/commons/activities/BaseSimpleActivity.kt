@@ -531,7 +531,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
-    fun copyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, source: String, destination: String, isCopyOperation: Boolean, copyPhotoVideoOnly: Boolean,
+    fun copyMoveFilesTo(fileDirItems: ArrayList<FileDirItem>, source: String, destination: String,
+                        isCopyOperation: Boolean, copyPhotoVideoOnly: Boolean,
                         copyHidden: Boolean, callback: (destinationPath: String) -> Unit) {
         if (source == destination) {
             toast(R.string.source_and_destination_same)

@@ -1,6 +1,7 @@
 package com.simplemobiletools.gallery.pro.data.models
 
 import androidx.room.Ignore
+import com.simplemobiletools.gallery.pro.data.helpers.LOCATION_INTERNAL
 
 class DirectoryGroup(id: Long?, path: String, tmb: String, name: String, mediaCnt: Int, modified: Long,
                      taken: Long, size: Long, location: Int //, types: Int
@@ -19,7 +20,7 @@ class DirectoryGroup(id: Long?, path: String, tmb: String, name: String, mediaCn
         dir.modified,
         dir.taken,
         dir.size,
-        0,
+        LOCATION_INTERNAL,
         //dir.types,
     )
 

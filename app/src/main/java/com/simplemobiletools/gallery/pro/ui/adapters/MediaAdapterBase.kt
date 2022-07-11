@@ -380,6 +380,8 @@ open class MediaAdapterBase (
             return
         }
 
+        finishActMode()
+
         (activity as SimpleActivity).tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
             val destinationPath = it
             config.tempFolderPath = ""

@@ -474,7 +474,7 @@
         </provider>
 
         <receiver
-            android:name="com.simplemobiletools.gallery.pro.data.receivers.RefreshMediaReceiver"
+            android:name="com.simplemobiletools.gallery.pro.data.helpers.receivers.RefreshMediaReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.simplemobiletools.REFRESH_MEDIA" />
@@ -492,7 +492,7 @@
                 android:resource="@xml/widget_info" />
         </receiver>
         <receiver
-            android:name="com.simplemobiletools.gallery.pro.data.receivers.BootCompletedReceiver"
+            android:name="com.simplemobiletools.gallery.pro.data.helpers.receivers.BootCompletedReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -502,7 +502,7 @@
         </receiver>
 
         <service
-            android:name="com.simplemobiletools.gallery.pro.data.jobs.NewPhotoFetcher"
+            android:name="com.simplemobiletools.gallery.pro.data.helpers.jobs.NewPhotoFetcher"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>

@@ -1,9 +1,10 @@
-package com.simplemobiletools.gallery.pro.data.helpers
+package com.simplemobiletools.gallery.pro.data.helpers.decoders
 
 import android.content.Context
 import android.graphics.*
 import android.net.Uri
 import com.davemorrissey.labs.subscaleview.ImageRegionDecoder
+import com.simplemobiletools.gallery.pro.data.helpers.LOW_TILE_DPI
 
 class PicassoRegionDecoder(
     val showHighestQuality: Boolean,

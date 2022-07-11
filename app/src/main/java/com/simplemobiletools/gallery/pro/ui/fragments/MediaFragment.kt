@@ -51,7 +51,7 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.FilterMediaDialog
 import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapterControls
-import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask2
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask2
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 
 interface FragmentControls{

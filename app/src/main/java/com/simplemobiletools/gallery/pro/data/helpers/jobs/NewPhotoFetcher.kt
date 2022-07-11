@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.data.jobs
+package com.simplemobiletools.gallery.pro.data.helpers.jobs
 
 import android.annotation.TargetApi
 import android.app.job.JobInfo

@@ -15,17 +15,12 @@ data class FolderSettings (
     @ColumnInfo(name = "sorting") var sorting: Int = 0
 ) {
     constructor() : this(null, "", "", arrayListOf(), 0)
-}
 
-class JsonToStringConverter {
-    @TypeConverter
-    fun fromArrayList(list: ArrayList<String>): String {
-        val gson = Gson()
-        return gson.toJson(list)
-    }
-    @TypeConverter
-    fun fromString(value: String): ArrayList<String> {
-        val listType: Type = object : TypeToken<ArrayList<String?>?>(){}.type
-        return Gson().fromJson(value, listType)
+    fun addDirectoryData(directory: Directory){
+        if(directory.path == path){
+            group = directory.groupName
+            if(directory.customSorting > 0)
+                sorting = directory.customSorting
+        }
     }
 }

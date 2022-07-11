@@ -13,6 +13,9 @@ interface DirectoryDao {
     @Query("SELECT *  FROM directories")
     fun getAll(): List<Directory>
 
+    @Query("SELECT *  FROM directories WHERE path = :path")
+    fun get(path: String): List<Directory>
+
     @Insert(onConflict = REPLACE)
     fun insert(directory: Directory)
 

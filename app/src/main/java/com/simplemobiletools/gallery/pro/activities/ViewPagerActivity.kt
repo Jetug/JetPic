@@ -45,7 +45,7 @@ import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.adapters.MyPagerAdapter
-import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.ui.dialogs.DeleteWithRememberDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ResizeWithPathDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.SaveAsDialog

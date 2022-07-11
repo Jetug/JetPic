@@ -31,7 +31,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.activities.SettingsActivity
-import com.simplemobiletools.gallery.pro.data.asynctasks.GetMediaAsynctask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.*
@@ -39,7 +39,6 @@ import com.simplemobiletools.gallery.pro.data.models.*
 import com.simplemobiletools.gallery.pro.data.svg.SvgSoftwareLayerSetter
 import com.simplemobiletools.gallery.pro.ui.views.MySquareImageView
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.*
 import pl.droidsonroids.gif.GifDrawable
 import java.io.File
 import java.io.FileInputStream
@@ -811,33 +810,18 @@ fun Context.updateDBMediaPath(oldPath: String, newPath: String) {
     }
 }
 
-fun Context.updateDBDirectory(directory: Directory) {
-//    try {
-    fun update(directory: Directory){
-        CoroutineScope(Dispatchers.Default).launch{
-            directoryDao.updateDirectory(
-                directory.path,
-                directory.tmb,
-                directory.mediaCnt,
-                directory.modified,
-                directory.taken,
-                directory.size,
-                directory.types,
-                directory.customSorting,
-                directory.groupName
-            )
-        }
-    }
-
-    if(directory is Directory)
-        update(directory)
-//    else if(directory is DirectoryGroup && directory.innerDirs.isNotEmpty()){
-//            update(directory.innerDirs.first())
-//    }
-
-//    } catch (ignored: Exception) {
-//        val r = 0
-//    }
+fun Context.updateDirectory(directory: Directory) = launchIO{
+    directoryDao.updateDirectory(
+        directory.path,
+        directory.tmb,
+        directory.mediaCnt,
+        directory.modified,
+        directory.taken,
+        directory.size,
+        directory.types,
+        directory.customSorting,
+        directory.groupName
+    )
 }
 
 fun Context.getOTGFolderChildren(path: String) = getDocumentFile(path)?.listFiles()
@@ -1050,7 +1034,7 @@ fun Context.updateDirectoryPath(path: String) {
     val curMedia = mediaFetcher.getFilesFrom(path, getImagesOnly, getVideosOnly, getProperDateTaken, getProperLastModified, getProperFileSize,
         favoritePaths, false, lastModifieds, dateTakens)
     val directory = createDirectoryFromMedia(path, curMedia, albumCovers, hiddenString, includedFolders, getProperFileSize, noMediaFolders)
-    updateDBDirectory(directory)
+    updateDirectory(directory)
 }
 
 fun Context.getFileDateTaken(path: String): Long {

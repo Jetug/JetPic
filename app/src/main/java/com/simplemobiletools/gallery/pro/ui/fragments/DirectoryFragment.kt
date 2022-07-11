@@ -38,7 +38,7 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.*
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.DirectoryOperationsListener
-import com.simplemobiletools.gallery.pro.data.jobs.NewPhotoFetcher
+import com.simplemobiletools.gallery.pro.data.helpers.jobs.NewPhotoFetcher
 import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.fragment_directory.view.*
@@ -103,6 +103,10 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     val controls = object : DirectoryAdapterControls {
         override fun recreateAdapter(dirs: ArrayList<FolderItem>) {
             setupAdapter(dirs)
+        }
+
+        override fun clearAdapter() {
+            directories_grid.adapter = null
         }
     }
 
@@ -564,7 +568,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     //setupAdapter(dirs as ArrayList<FolderItem>)
 
                     // update directories and media files in the local db, delete invalid items. Intentionally creating a new thread
-                    activity.updateDBDirectory(directory)
+                    activity.updateDirectory(directory)
                     if (!directory.isRecycleBin()) {
                         Thread {
                             try {

@@ -59,7 +59,7 @@ class MainActivity : SimpleActivity() {
                     //config.showAll = false
 
                     val time2 = measureTimeMillis {
-                        appLaunched(BuildConfig.APPLICATION_ID)
+                         async{ appLaunched(BuildConfig.APPLICATION_ID) }
                     }
                     Log.e(JET, "!!!!!!!!!!!!!!!!!!! $time2 ms")
                     updateWidgets()
@@ -153,9 +153,19 @@ class MainActivity : SimpleActivity() {
         return true
     }
 
+    private var directoriesFragment: Fragment? = null
+
     private fun showDirectories(){
-        config.showAll = false
-        showFragment(DirectoryFragment())
+        val time = measureTimeMillis {
+            config.showAll = false
+
+            if(directoriesFragment == null)
+                directoriesFragment = DirectoryFragment()
+
+            //showFragment(directoriesFragment!!)
+            showFragment(DirectoryFragment())
+        }
+        Log.i(JET, "showDirectories() $time ms")
     }
 
     private fun showAllImages(){

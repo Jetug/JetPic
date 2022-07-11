@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.data.asynctasks
+package com.simplemobiletools.gallery.pro.data.helpers.asynctasks
 
 import android.content.Context
 import android.os.AsyncTask
@@ -11,7 +11,9 @@ import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import java.util.*
 
-class GetMediaAsynctask(val context: Context, val mPath: String, val isPickImage: Boolean = false, val isPickVideo: Boolean = false,
+class GetMediaAsynctask(val context: Context, val mPath: String,
+                        private val isPickImage: Boolean = false,
+                        private val isPickVideo: Boolean = false,
                         val showAll: Boolean, val callback: (media: ArrayList<ThumbnailItem>) -> Unit) :
     AsyncTask<Void, Void, ArrayList<ThumbnailItem>>() {
     private val mediaFetcher = MediaFetcher(context)

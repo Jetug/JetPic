@@ -12,6 +12,7 @@ import com.simplemobiletools.gallery.pro.data.helpers.NO_VALUE
 import com.simplemobiletools.gallery.pro.data.helpers.RECYCLE_BIN
 import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import java.io.File
 import java.lang.reflect.Type
 import kotlin.system.measureTimeMillis
@@ -43,10 +44,10 @@ class Synchronisator{
 private val sync = Synchronisator()
 
 fun Context.startSettingsScanner(){
-    GlobalScope.launch {
+    GlobalScope.launch(IO){
         while (true){
             try {
-                val directories =  directoryDao.getAll() as ArrayList<Directory>
+                val directories = directoryDao.getAll() as ArrayList<Directory>
                 directories.forEach{
                     val settings = readSettings(it.path)
                     it.apply {
@@ -56,6 +57,7 @@ fun Context.startSettingsScanner(){
                     }
 
                     directoryDao.update(it)
+                    config.saveCustomSorting(it.path, settings.sorting)
                     folderSettingsDao.insert(settings)
                 }
             } catch (e: Exception) {
@@ -76,6 +78,20 @@ fun Context.getDirectoryGroup(path: String): String{
     return group
 }
 
+fun Context.saveDirChanges(directory: Directory) = launchIO{
+    val settings = getSettings(directory.path)
+    settings.addDirectoryData(directory)
+    settings.sorting = config.getCustomFolderSorting(directory.path)
+    updateDirectory(directory)
+    val test = directoryDao.get(directory.path)
+    val test2 = test[0].groupName
+    val test1 = test[0].path
+    withMainContext {
+        Log.e(JET, "}}}}}}}}}}$test1{{{{{{{{{{{$test2")
+    }
+    saveSettings(settings)
+}
+
 fun Context.saveDirectoryGroup(path: String, groupName: String) = launchIO{
     val settings = getSettings(path)
     settings.group = groupName
@@ -88,10 +104,10 @@ fun Context.getSorting(path: String): Int{
     val time = measureTimeMillis {
         val settings = getSettings(path)
 
-        if(settings.sorting != 0)
-            sorting = settings.sorting
+        sorting = if(settings.sorting != 0)
+            settings.sorting
         else
-            sorting = config.getCustomFolderSorting(path)
+            config.getCustomFolderSorting(path)
     }
     //Log.e(JET,"getSorting $time ms")
     return sorting

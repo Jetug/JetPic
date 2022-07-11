@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.data.receivers
+package com.simplemobiletools.gallery.pro.data.helpers.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context

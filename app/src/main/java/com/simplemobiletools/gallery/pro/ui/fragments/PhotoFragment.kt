@@ -49,6 +49,8 @@ import com.simplemobiletools.gallery.pro.data.extensions.config
 import com.simplemobiletools.gallery.pro.data.extensions.saveRotatedImageToFile
 import com.simplemobiletools.gallery.pro.data.extensions.sendFakeClick
 import com.simplemobiletools.gallery.pro.data.helpers.*
+import com.simplemobiletools.gallery.pro.data.helpers.decoders.MyGlideImageDecoder
+import com.simplemobiletools.gallery.pro.data.helpers.decoders.PicassoRegionDecoder
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.svg.SvgSoftwareLayerSetter
 import com.squareup.picasso.Callback

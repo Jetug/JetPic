@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.data.helpers
+package com.simplemobiletools.gallery.pro.data.helpers.decoders
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.davemorrissey.labs.subscaleview.ImageDecoder
+import com.simplemobiletools.gallery.pro.data.helpers.RotateTransformation
 
 class MyGlideImageDecoder(val degrees: Int, val signature: ObjectKey) : ImageDecoder {
 
