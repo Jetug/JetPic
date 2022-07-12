@@ -45,7 +45,7 @@ class MainActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val createTime = measureTimeMillis {
-            launchDefault {
+            //launchDefault {
                 val time = measureTimeMillis {
                     mIsPickImageIntent = isPickImageIntent(intent)
                     mIsPickVideoIntent = isPickVideoIntent(intent)
@@ -59,19 +59,21 @@ class MainActivity : SimpleActivity() {
                     //config.showAll = false
 
                     val time2 = measureTimeMillis {
-                         async{ appLaunched(BuildConfig.APPLICATION_ID) }
+                         //async{
+                             appLaunched(BuildConfig.APPLICATION_ID)
+                         //}
                     }
                     Log.e(JET, "!!!!!!!!!!!!!!!!!!! $time2 ms")
                     updateWidgets()
                     registerFileUpdateListener()
                     startSettingsScanner()
 
-                    withContext(Main) {
+                    //withContext(Main) {
                         setupDrawerLayout()
-                    }
+                    //}
                 }
                 Log.e(JET, "on Create background $time ms")
-            }
+            //}
             handlePermissions()
 
             if (savedInstanceState == null) {

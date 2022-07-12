@@ -20,8 +20,7 @@ class DirectoryGroup(id: Long?, path: String, tmb: String, name: String, mediaCn
         dir.modified,
         dir.taken,
         dir.size,
-        LOCATION_INTERNAL,
-        //dir.types,
+        LOCATION_INTERNAL
     )
 
     override var size: Long = 0

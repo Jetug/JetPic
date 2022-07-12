@@ -1,4 +1,4 @@
-package com.simplemobiletools.commons.dialogs
+package com.simplemobiletools.commons.dialogs.rename
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.R

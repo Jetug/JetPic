@@ -13,8 +13,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
-import com.simplemobiletools.commons.dialogs.RenameDialog
-import com.simplemobiletools.commons.dialogs.RenameItemDialog
+import com.simplemobiletools.commons.dialogs.rename.RenameDialog
+import com.simplemobiletools.commons.dialogs.rename.RenameItemDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FileDirItem

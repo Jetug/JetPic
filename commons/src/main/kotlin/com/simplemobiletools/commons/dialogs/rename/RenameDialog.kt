@@ -1,4 +1,4 @@
-package com.simplemobiletools.commons.dialogs
+package com.simplemobiletools.commons.dialogs.rename
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

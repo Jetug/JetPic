@@ -78,17 +78,17 @@ fun Context.getDirectoryGroup(path: String): String{
     return group
 }
 
+fun Context.saveDirChanges(directories: ArrayList<Directory>) = launchIO{
+    directories.forEach{
+        saveDirChanges(it)
+    }
+}
+
 fun Context.saveDirChanges(directory: Directory) = launchIO{
     val settings = getSettings(directory.path)
     settings.addDirectoryData(directory)
     settings.sorting = config.getCustomFolderSorting(directory.path)
     updateDirectory(directory)
-    val test = directoryDao.get(directory.path)
-    val test2 = test[0].groupName
-    val test1 = test[0].path
-    withMainContext {
-        Log.e(JET, "}}}}}}}}}}$test1{{{{{{{{{{{$test2")
-    }
     saveSettings(settings)
 }
 

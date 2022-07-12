@@ -38,7 +38,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
-import com.simplemobiletools.commons.dialogs.RenameItemDialog
+import com.simplemobiletools.commons.dialogs.rename.RenameItemDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FileDirItem

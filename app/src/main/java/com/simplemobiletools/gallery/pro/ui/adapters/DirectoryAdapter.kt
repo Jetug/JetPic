@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.*
+import com.simplemobiletools.commons.dialogs.rename.RenameItemDialog
+import com.simplemobiletools.commons.dialogs.rename.RenameItemsDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FileDirItem
@@ -43,15 +45,9 @@ import kotlinx.android.synthetic.main.directory_item_list.view.*
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_drag_handle
 import kotlinx.android.synthetic.main.directory_item_list.view.dir_holder
 import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
-import kotlinx.android.synthetic.main.fragment_directory.*
 import kotlinx.android.synthetic.main.item_dir_group.view.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
-import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.simplemobiletools.gallery.pro.ui.dialogs.raname.RenameGroupDialog
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -164,7 +160,6 @@ class DirectoryAdapter(activity: SimpleActivity,
             findItem(R.id.cab_group).isVisible = selectedItems.size > 1 && selectedGroups.size <= 1
             findItem(R.id.cab_ungroup).isVisible = isOneItemSelected && selectedItems[0] is DirectoryGroup
 
-
             checkHideBtnVisibility(this, selectedPaths)
             checkPinBtnVisibility(this, selectedPaths)
         }
@@ -248,7 +243,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
     private fun getDirsToShow(){
         dirs = activity.getDirsToShow(dirs.getDirectories())
-        dirs = activity.getSortedDirectories(dirs)
+        //dirs = activity.getSortedDirectories(dirs)
         notifyDataSetChanged()
     }
 
@@ -415,7 +410,7 @@ class DirectoryAdapter(activity: SimpleActivity,
     }
 
     private fun renameDir() {
-        if (selectedKeys.size == 1 && firstSelectedItem is Directory) {
+        if (selectedKeys.size == 1) {
             val firstDir = firstSelectedItem ?: return
             val sourcePath = firstDir.path
             val dir = File(sourcePath)
@@ -426,15 +421,16 @@ class DirectoryAdapter(activity: SimpleActivity,
 
             activity.handleLockedFolderOpening(sourcePath) { success ->
                 if (success) {
-                    RenameItemDialog(activity, dir.absolutePath) {
-                        activity.runOnUiThread {
+                    if(firstDir is Directory){
+                        RenameItemDialog(activity, dir.absolutePath) {
                             firstDir.apply {
                                 path = it
                                 name = it.getFilenameFromPath()
                                 tmb = File(it, tmb.getFilenameFromPath()).absolutePath
                             }
                             updateDirs(dirs)
-                            ensureBackgroundThread {
+
+                            launchDefault {
                                 try {
                                     activity.directoryDao.updateDirectoryAfterRename(firstDir.tmb, firstDir.name, firstDir.path, sourcePath)
                                     listener?.refreshItems()
@@ -442,6 +438,16 @@ class DirectoryAdapter(activity: SimpleActivity,
                                     activity.showErrorToast(e)
                                 }
                             }
+                            finishActMode()
+                        }
+                    }
+                    else if(firstDir is DirectoryGroup){
+                        RenameGroupDialog(activity, firstDir){ name ->
+                            firstDir.innerDirs.forEach {
+                                it.groupName = name
+                            }
+                            getDirsToShow()
+                            finishActMode()
                         }
                     }
                 }
