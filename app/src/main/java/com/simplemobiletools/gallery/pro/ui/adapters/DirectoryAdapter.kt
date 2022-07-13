@@ -15,6 +15,7 @@ import android.widget.RelativeLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.google.vr.sdk.widgets.video.deps.ac
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.*
 import com.simplemobiletools.commons.dialogs.rename.RenameItemDialog
@@ -48,6 +49,7 @@ import kotlinx.android.synthetic.main.directory_item_list.view.photo_cnt
 import kotlinx.android.synthetic.main.item_dir_group.view.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.ui.dialogs.raname.RenameGroupDialog
+import com.simplemobiletools.gallery.pro.ui.dialogs.raname.RenameGroupsDialog
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -143,6 +145,9 @@ class DirectoryAdapter(activity: SimpleActivity,
         }
 
         menu.apply {
+            val selectedItemsSize = selectedItems.size
+            val selectedGroupsSize = selectedGroups.size
+
             findItem(R.id.cab_move_to_top).isVisible = isDragAndDropping
             findItem(R.id.cab_move_to_bottom).isVisible = isDragAndDropping
 
@@ -157,8 +162,10 @@ class DirectoryAdapter(activity: SimpleActivity,
 
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
 
-            findItem(R.id.cab_group).isVisible = selectedItems.size > 1 && selectedGroups.size <= 1
+            findItem(R.id.cab_group).isVisible = selectedItemsSize > 1 && selectedGroupsSize <= 1
             findItem(R.id.cab_ungroup).isVisible = isOneItemSelected && selectedItems[0] is DirectoryGroup
+
+            findItem(R.id.cab_rename).isVisible = selectedItemsSize == selectedGroupsSize || selectedGroupsSize == 0
 
             checkHideBtnVisibility(this, selectedPaths)
             checkPinBtnVisibility(this, selectedPaths)
@@ -410,8 +417,9 @@ class DirectoryAdapter(activity: SimpleActivity,
     }
 
     private fun renameDir() {
+        val firstDir = firstSelectedItem ?: return
+
         if (selectedKeys.size == 1) {
-            val firstDir = firstSelectedItem ?: return
             val sourcePath = firstDir.path
             val dir = File(sourcePath)
             if (activity.isAStorageRootFolder(dir.absolutePath)) {
@@ -453,9 +461,25 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
             }
         } else {
-            val paths = selectedPaths.filter { !activity.isAStorageRootFolder(it) && !config.isFolderProtected(it) } as ArrayList<String>
-            RenameItemsDialog(activity, paths) {
-                listener?.refreshItems()
+            if(firstDir is Directory){
+                val paths = selectedPaths.filter { !activity.isAStorageRootFolder(it) && !config.isFolderProtected(it) } as ArrayList<String>
+                RenameItemsDialog(activity, paths) {
+                    listener?.refreshItems()
+                }
+                finishActMode()
+            }
+            else if(firstDir is DirectoryGroup){
+                val selectedItems = selectedGroups
+                RenameGroupsDialog(activity, selectedItems){ newNames ->
+                    for (i in 0 until newNames.size){
+                        selectedItems[i].innerDirs.forEach {
+                            it.groupName = newNames[i]
+                        }
+                    }
+
+                    getDirsToShow()
+                    finishActMode()
+                }
             }
         }
     }
@@ -1038,7 +1062,6 @@ class DirectoryAdapter(activity: SimpleActivity,
     }
 
     //////////////Jet
-
     override fun onItemMoved(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
@@ -1052,6 +1075,5 @@ class DirectoryAdapter(activity: SimpleActivity,
 
         notifyItemMoved(fromPosition, toPosition)
     }
-
     ///////////////////
 }

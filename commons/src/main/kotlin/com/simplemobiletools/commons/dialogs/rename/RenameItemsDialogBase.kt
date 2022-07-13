@@ -1,30 +1,29 @@
 package com.simplemobiletools.commons.dialogs.rename
 
-import android.view.View
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
-import kotlinx.android.synthetic.main.dialog_rename_item.view.*
+import kotlinx.android.synthetic.main.dialog_rename_items.*
+import kotlinx.android.synthetic.main.dialog_rename_items.view.*
 import java.util.ArrayList
 
-abstract class RenameDialogBase (val activity: BaseSimpleActivity)  {
-    val view: View
+abstract class RenameItemsDialogBase(val activity: BaseSimpleActivity) {
+    @SuppressLint("InflateParams")
+    val view = activity.layoutInflater.inflate(R.layout.dialog_rename_items, null)
     val builder: AlertDialog
-    var nameValue: String
-        set(value) {
-            view.rename_item_name.setText(value)
-        }
-        get() = view.rename_item_name.value
+
+    val valueToAdd get() = view.rename_items_value.text.toString()
+    val append get() = view.rename_items_radio_group.checkedRadioButtonId == view.rename_items_radio_append.id
 
     init {
-        view = activity.layoutInflater.inflate(R.layout.dialog_rename_item, null)
         builder = AlertDialog.Builder(activity)
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
             .create().apply {
                 activity.setupDialogStuff(view, this, R.string.rename) {
-                    showKeyboard(view.rename_item_name)
+                    showKeyboard(view.rename_items_value)
                     getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         onPositiveClick()
                     }
@@ -33,8 +32,4 @@ abstract class RenameDialogBase (val activity: BaseSimpleActivity)  {
     }
 
     abstract fun onPositiveClick()
-
-    protected fun hideHint(){
-        view.rename_item_extension_hint.beGone()
-    }
 }

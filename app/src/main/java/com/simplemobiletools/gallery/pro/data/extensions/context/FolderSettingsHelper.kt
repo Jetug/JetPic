@@ -69,6 +69,16 @@ fun Context.startSettingsScanner(){
     }
 }
 
+fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
+    val groups = dirGroup.innerDirs
+
+    groups.forEach {
+        it.groupName = newName
+    }
+
+    saveDirChanges(groups)
+}
+
 fun Context.getDirectoryGroup(path: String): String{
     val settings = getSettings(path)
     var group = settings.group
