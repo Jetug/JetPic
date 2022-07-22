@@ -1,11 +1,10 @@
-package com.simplemobiletools.gallery.pro.activities
+package com.simplemobiletools.gallery.pro.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.MediaStore.*
 import android.provider.Settings
 import android.view.WindowManager
@@ -19,10 +18,9 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.contracts.PickDirectoryContract
+import com.simplemobiletools.gallery.pro.ui.activities.contracts.PickDirectoryContract
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.MANAGE_STORAGE_RC
-import org.w3c.dom.Document
 
 open class SimpleActivity : BaseSimpleActivity() {
     val observer = object : ContentObserver(null) {

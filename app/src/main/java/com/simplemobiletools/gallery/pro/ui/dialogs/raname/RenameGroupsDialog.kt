@@ -13,10 +13,7 @@ class RenameGroupsDialog(activity: BaseSimpleActivity, private val dirGroup: Arr
 
         dirGroup.forEach { group ->
             val name = group.name
-            val newName = if (append)
-                "$name$valueToAdd"
-            else
-                "$valueToAdd$name"
+            val newName = if (append) "$name$valueToAdd" else "$valueToAdd$name"
             names.add(newName)
             activity.renameGroup(group, newName)
         }

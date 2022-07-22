@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.activities
+package com.simplemobiletools.gallery.pro.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -21,9 +21,6 @@ import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsSc
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
 import com.simplemobiletools.gallery.pro.data.helpers.*
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false

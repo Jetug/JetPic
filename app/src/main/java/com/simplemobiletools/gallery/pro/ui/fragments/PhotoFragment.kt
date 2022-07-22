@@ -42,8 +42,8 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.PanoramaPhotoActivity
-import com.simplemobiletools.gallery.pro.activities.PhotoActivity
+import com.simplemobiletools.gallery.pro.ui.activities.PanoramaPhotoActivity
+import com.simplemobiletools.gallery.pro.ui.activities.PhotoActivity
 import com.simplemobiletools.gallery.pro.ui.adapters.PortraitPhotosAdapter
 import com.simplemobiletools.gallery.pro.data.extensions.config
 import com.simplemobiletools.gallery.pro.data.extensions.saveRotatedImageToFile

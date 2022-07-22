@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.activities
+package com.simplemobiletools.gallery.pro.ui.activities
 
 import com.simplemobiletools.gallery.pro.data.models.FolderItem
 

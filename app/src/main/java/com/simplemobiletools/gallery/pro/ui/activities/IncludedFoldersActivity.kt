@@ -1,9 +1,8 @@
-package com.simplemobiletools.gallery.pro.activities
+package com.simplemobiletools.gallery.pro.ui.activities
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.gallery.pro.R
@@ -11,7 +10,7 @@ import com.simplemobiletools.gallery.pro.ui.adapters.ManageFoldersAdapter
 import com.simplemobiletools.gallery.pro.data.extensions.config
 import kotlinx.android.synthetic.main.activity_manage_folders.*
 
-class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
+class IncludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_folders)
@@ -20,14 +19,14 @@ class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     private fun updateFolders() {
         val folders = ArrayList<String>()
-        config.excludedFolders.mapTo(folders) { it }
+        config.includedFolders.mapTo(folders) { it }
         manage_folders_placeholder.apply {
-            text = getString(R.string.excluded_activity_placeholder)
+            text = getString(R.string.included_activity_placeholder)
             beVisibleIf(folders.isEmpty())
             setTextColor(config.textColor)
         }
 
-        val adapter = ManageFoldersAdapter(this, folders, true, this, manage_folders_list) {}
+        val adapter = ManageFoldersAdapter(this, folders, false, this, manage_folders_list) {}
         manage_folders_list.adapter = adapter
     }
 
@@ -50,9 +49,7 @@ class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
     }
 
     private fun addFolder() {
-        FilePickerDialog(this, config.lastFilepickerPath, false, config.shouldShowHidden, false, true, true) {
-            config.lastFilepickerPath = it
-            config.addExcludedFolder(it)
+        showAddIncludedFolderDialog {
             updateFolders()
         }
     }

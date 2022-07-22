@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.helpers.FAVORITES
+import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.JET
 import com.simplemobiletools.gallery.pro.data.helpers.NO_VALUE
@@ -174,6 +175,7 @@ fun Context.getSettings(path: String): FolderSettings{
 
 fun Context.saveSettings(settings: FolderSettings) = launchIO {
     folderSettingsDao.insert(settings)
+    //GalleryDatabase.getInstance(applicationContext).isOpen
     writeSettings(settings)
 }
 

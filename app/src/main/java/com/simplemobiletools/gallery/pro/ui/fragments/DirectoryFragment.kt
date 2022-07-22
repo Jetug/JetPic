@@ -32,7 +32,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.*
 import com.simplemobiletools.commons.views.*
-import com.simplemobiletools.gallery.pro.activities.*
+import com.simplemobiletools.gallery.pro.ui.activities.*
 import com.simplemobiletools.gallery.pro.ui.adapters.DirectoryAdapter
 import com.simplemobiletools.gallery.pro.ui.dialogs.*
 import com.simplemobiletools.gallery.pro.data.extensions.*

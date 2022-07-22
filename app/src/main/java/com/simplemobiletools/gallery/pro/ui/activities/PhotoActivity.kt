@@ -1,11 +1,10 @@
-package com.simplemobiletools.gallery.pro.activities
+package com.simplemobiletools.gallery.pro.ui.activities
 
 import android.os.Bundle
 
-class VideoActivity : PhotoVideoActivity() {
-
+class PhotoActivity : PhotoVideoActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        mIsVideo = true
+        mIsVideo = false
         super.onCreate(savedInstanceState)
     }
 }

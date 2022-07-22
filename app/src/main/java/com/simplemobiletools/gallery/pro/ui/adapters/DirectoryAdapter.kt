@@ -15,7 +15,6 @@ import android.widget.RelativeLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.google.vr.sdk.widgets.video.deps.ac
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.*
 import com.simplemobiletools.commons.dialogs.rename.RenameItemDialog
@@ -27,8 +26,8 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.MediaActivity
-import com.simplemobiletools.gallery.pro.activities.SimpleActivity
-import com.simplemobiletools.gallery.pro.activities.mDirs
+import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
+import com.simplemobiletools.gallery.pro.ui.activities.mDirs
 import com.simplemobiletools.gallery.pro.ui.dialogs.*
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
@@ -446,7 +445,6 @@ class DirectoryAdapter(activity: SimpleActivity,
                                     activity.showErrorToast(e)
                                 }
                             }
-                            finishActMode()
                         }
                     }
                     else if(firstDir is DirectoryGroup){
@@ -455,7 +453,6 @@ class DirectoryAdapter(activity: SimpleActivity,
                                 it.groupName = name
                             }
                             getDirsToShow()
-                            finishActMode()
                         }
                     }
                 }
@@ -463,10 +460,17 @@ class DirectoryAdapter(activity: SimpleActivity,
         } else {
             if(firstDir is Directory){
                 val paths = selectedPaths.filter { !activity.isAStorageRootFolder(it) && !config.isFolderProtected(it) } as ArrayList<String>
-                RenameItemsDialog(activity, paths) {
+                RenameItemsDialog(activity, paths) { arr ->
+                    var i = 0
+                    selectedItems.forEach { item ->
+                        if(item.name == arr[i].first){
+                            item.name = arr[i].second
+                            i++
+                        }
+                    }
                     listener?.refreshItems()
+                    //getDirsToShow()
                 }
-                finishActMode()
             }
             else if(firstDir is DirectoryGroup){
                 val selectedItems = selectedGroups
@@ -476,12 +480,11 @@ class DirectoryAdapter(activity: SimpleActivity,
                             it.groupName = newNames[i]
                         }
                     }
-
                     getDirsToShow()
-                    finishActMode()
                 }
             }
         }
+        finishActMode()
     }
 
     private fun toggleFoldersVisibility(hide: Boolean) {

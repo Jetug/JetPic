@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.dialog_rename_items.*
 import kotlinx.android.synthetic.main.dialog_rename_items.view.*
 import java.util.*
 
-class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<String>, val callback: () -> Unit): RenameItemsDialogBase(activity) {
+class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<String>, val callback: (newNames: ArrayList<Pair<String, String>>) -> Unit): RenameItemsDialogBase(activity) {
     var ignoreClicks = false
 
     override fun onPositiveClick() {
@@ -20,7 +20,7 @@ class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<Strin
         val append = view.rename_items_radio_group.checkedRadioButtonId == view.rename_items_radio_append.id
 
         if (valueToAdd.isEmpty()) {
-            callback()
+            callback(arrayListOf())
             builder.dismiss()
             return
         }
@@ -45,6 +45,8 @@ class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<Strin
 
             ignoreClicks = true
             var pathsCnt = validPaths.size
+            val newNames = arrayListOf<Pair<String, String>>()
+
             for (path in validPaths) {
                 val fullName = path.getFilenameFromPath()
                 var dotAt = fullName.lastIndexOf(".")
@@ -55,11 +57,12 @@ class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<Strin
                 val name = fullName.substring(0, dotAt)
                 val extension = if (fullName.contains(".")) ".${fullName.getFilenameExtension()}" else ""
 
-                val newName = if (append) {
+                val newName = if (append)
                     "$name$valueToAdd$extension"
-                } else {
+                else
                     "$valueToAdd$fullName"
-                }
+
+                newNames.add(Pair(fullName, newName))
 
                 val newPath = "${path.getParentPath()}/$newName"
 
@@ -71,7 +74,6 @@ class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<Strin
                     if (success) {
                         pathsCnt--
                         if (pathsCnt == 0) {
-                            callback()
                             builder.dismiss()
                         }
                     } else {
@@ -82,6 +84,8 @@ class RenameItemsDialog(activity: BaseSimpleActivity, val paths: ArrayList<Strin
                 }
                 builder.dismiss()
             }
+
+            callback(newNames)
         }
     }
 }

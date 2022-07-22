@@ -1,10 +1,10 @@
-package com.simplemobiletools.gallery.pro.activities.contracts
+package com.simplemobiletools.gallery.pro.ui.activities.contracts
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import com.simplemobiletools.gallery.pro.activities.*
+import com.simplemobiletools.gallery.pro.ui.activities.*
 import com.simplemobiletools.gallery.pro.data.helpers.PICK_DIR_INPUT_PATH
 import com.simplemobiletools.gallery.pro.data.helpers.PICK_DIR_OUTPUT_PATH
 

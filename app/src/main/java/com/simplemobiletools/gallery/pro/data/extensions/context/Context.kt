@@ -30,7 +30,7 @@ import com.bumptech.glide.signature.ObjectKey
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.activities.SettingsActivity
+import com.simplemobiletools.gallery.pro.ui.activities.SettingsActivity
 import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
@@ -811,17 +811,22 @@ fun Context.updateDBMediaPath(oldPath: String, newPath: String) {
 }
 
 fun Context.updateDirectory(directory: Directory) = launchIO{
-    directoryDao.updateDirectory(
-        directory.path,
-        directory.tmb,
-        directory.mediaCnt,
-        directory.modified,
-        directory.taken,
-        directory.size,
-        directory.types,
-        directory.customSorting,
-        directory.groupName
-    )
+    try {
+        directoryDao.updateDirectory(
+            directory.path,
+            directory.tmb,
+            directory.mediaCnt,
+            directory.modified,
+            directory.taken,
+            directory.size,
+            directory.types,
+            directory.customSorting,
+            directory.groupName
+        )
+    }
+    catch (e: Exception){
+        Log.e(JET, e.message, e)
+    }
 }
 
 fun Context.getOTGFolderChildren(path: String) = getDocumentFile(path)?.listFiles()

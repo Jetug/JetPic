@@ -1,6 +1,6 @@
 package com.simplemobiletools.gallery.pro.data.jetug
 
-import android.app.Activity
+import android.content.Context
 import androidx.exifinterface.media.ExifInterface
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getParentPath
@@ -16,17 +16,17 @@ fun File.setLastModified(date: DateTime){
     this.setLastModified(date.toDate().time)
 }
 
-fun Activity.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, callback: (() -> Unit)? = null) {
-    try {
-        if(paths.isEmpty()) return
+fun Context.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, callback: (() -> Unit)? = null) {
+    if (paths.isEmpty()) return
 
-        val datesTaken = ArrayList<DateTaken>()
+    ensureBackgroundThread {
+        try {
+            val datesTaken = ArrayList<DateTaken>()
 
-        ensureBackgroundThread {
-            for (path in paths){
+            for (path in paths) {
                 val file = File(path)
                 val lastModified = file.lastModified()
-                val time = DateTime(lastModified) //file.lastModified()
+                val time = DateTime(lastModified)
                 val stringTime = time.toString("yyyy:MM:dd hh:mm:ss")
                 val exif = ExifInterface(path)
                 exif.setAttribute(ExifInterface.TAG_DATETIME_ORIGINAL, stringTime)
@@ -51,10 +51,10 @@ fun Activity.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, 
             }
 
             callback?.invoke()
-        }
-    } catch (e: Exception) {
-        if (showToasts) {
-            showErrorToast(e)
+        } catch (e: Exception) {
+            if (showToasts) {
+                showErrorToast(e)
+            }
         }
     }
 }
