@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml:2:1-58
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml:2:1-58
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml:2:1-58
+ADDED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml:2:1-58
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml:2:1-58
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml:2:1-58
 	package
-		ADDED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml:2:11-56
-		INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-		INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml:2:11-56
+		INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml:2:1-58
+		ADDED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml:2:1-58
 uses-sdk
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-		ADDED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-		INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-		ADDED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
-		INJECTED from D:\Projects\Android\JetPic\library\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Jetug\Desktop\GitHub\JetPic\library\src\main\AndroidManifest.xml

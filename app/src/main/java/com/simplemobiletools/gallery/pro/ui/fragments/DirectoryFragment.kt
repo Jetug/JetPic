@@ -444,27 +444,33 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 
     private fun getDirectories() {
         val mTime = measureTimeMillis {
-            if (mIsGettingDirs) {
+            if (mIsGettingDirs)
                 return
-            }
 
             mShouldStopFetching = true
             mIsGettingDirs = true
             val getImagesOnly = mIsPickImageIntent || mIsGetImageContentIntent
             val getVideosOnly = mIsPickVideoIntent || mIsGetVideoContentIntent
 
-            val time = measureTimeMillis {
-                activity.getCachedDirectories(getVideosOnly, getImagesOnly) {
-                    gotDirectories(activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>))
+            launchDefault {
+                val time2 = measureTimeMillis {
+                    activity.getCachedDirectories(getVideosOnly, getImagesOnly, true) {
+                        val time3 = measureTimeMillis {
+                            allDirs = activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>)
+                        }
+                        Log.i(JET,"addTempFolderIfNeeded()+++ $time3 ms")
+                    }
                 }
+                Log.i(JET,"getCachedDirectories() SHOW HIDDEN $time2 ms")
             }
-            Log.e(JET,"getCachedDirectories() $time ms")
-
 
             launchDefault {
-                activity.getCachedDirectories(getVideosOnly, getImagesOnly, true) {
-                    allDirs = activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>)
+                val time = measureTimeMillis {
+                    activity.getCachedDirectories(getVideosOnly, getImagesOnly) {
+                        gotDirectories(activity.addTempFolderIfNeeded(it as ArrayList<FolderItem>))
+                    }
                 }
+                Log.i(JET, "getCachedDirectories() -- $time ms")
             }
         }
         Log.e(JET,"getDirectories() $mTime ms")
@@ -491,13 +497,11 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             var isPlaceholderVisible = dirs.isEmpty()
 
             activity.runOnUiThread{
-                //launchMain{
                 checkPlaceholderVisibility(dirs as ArrayList<FolderItem>)
 
                 val allowHorizontalScroll = config.scrollHorizontally && config.viewTypeFolders == VIEW_TYPE_GRID
                 binding.directories_vertical_fastscroller.beVisibleIf(binding.directories_grid.isVisible() && !allowHorizontalScroll)
                 binding.directories_horizontal_fastscroller.beVisibleIf(binding.directories_grid.isVisible() && allowHorizontalScroll)
-
                 //Jet
                 setupAdapter(dirs.clone() as ArrayList<FolderItem>)
             }
@@ -613,7 +617,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
 
             dirs.forEach {
                 foldersToScan.remove(it.path)
-            }
+            }  
             // check the remaining folders which were not cached at all yet
             val newDirs = arrayListOf<Directory>()
             for (folder in foldersToScan) {
@@ -657,15 +661,16 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 //            setupAdapter(dirs as ArrayList<FolderItem>)
 
                 // make sure to create a new thread for these operations, dont just use the common bg thread
-                Thread {
+                launchIO{
                     try {
                         activity.directoryDao.insert(newDir)
                         if (folder != RECYCLE_BIN) {
                             activity.mediaDB.insertAll(newMedia)
                         }
-                    } catch (ignored: Exception) {
+                    } catch (e: Exception) {
+                        Log.e(JET, e.message, e)
                     }
-                }.start()
+                }
             }
 
             if(newDirs.isNotEmpty()){

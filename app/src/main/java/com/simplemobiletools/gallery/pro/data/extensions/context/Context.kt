@@ -630,77 +630,102 @@ fun Context.tryLoadingWithPicasso(path: String, view: MySquareImageView, cropThu
 }
 
 //Jet
-fun Context.getCachedDirectories(getVideosOnly: Boolean = false, getImagesOnly: Boolean = false, forceShowHidden: Boolean = false, callback: (ArrayList<Directory>) -> Unit) {
+fun Context.getCachedDirectories(getVideosOnly: Boolean = false, getImagesOnly: Boolean = false,
+                                 forceShowHidden: Boolean = false, callback: (ArrayList<Directory>) -> Unit) {
     ensureBackgroundThread {
-        try {
-            Process.setThreadPriority(Process.THREAD_PRIORITY_MORE_FAVORABLE)
-        } catch (ignored: Exception) {
-        }
+        val time4 = measureTimeMillis {
+            try {
+                Process.setThreadPriority(Process.THREAD_PRIORITY_MORE_FAVORABLE)
+            } catch (ignored: Exception) {}
 
-        val directories = try {
-            directoryDao.getAll() as ArrayList<Directory>
-        } catch (e: Exception) {
-            ArrayList()
-        }
-
-        if (!config.showRecycleBinAtFolders) {
-            directories.removeAll { it.isRecycleBin() }
-        }
-
-        val shouldShowHidden = config.shouldShowHidden || forceShowHidden
-        val excludedPaths = config.excludedFolders
-        val includedPaths = config.includedFolders
-
-        val folderNoMediaStatuses = HashMap<String, Boolean>()
-        val noMediaFolders = getNoMediaFoldersSync()
-        noMediaFolders.forEach { folder ->
-            folderNoMediaStatuses["$folder/$NOMEDIA"] = true
-        }
-
-        var filteredDirectories = directories.filter {
-            it.path.shouldFolderBeVisible(excludedPaths, includedPaths, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
-                folderNoMediaStatuses[path] = hasNoMedia
+            val directories = try {
+                directoryDao.getAll() as ArrayList<Directory>
+            } catch (e: Exception) {
+                ArrayList()
             }
-        } as ArrayList<Directory>
-        val filterMedia = config.filterMedia
 
-        filteredDirectories = (when {
-            getVideosOnly -> filteredDirectories.filter { it.types and TYPE_VIDEOS != 0 }
-            getImagesOnly -> filteredDirectories.filter { it.types and TYPE_IMAGES != 0 }
-            else -> filteredDirectories.filter {
-                (filterMedia and TYPE_IMAGES != 0 && it.types and TYPE_IMAGES != 0) ||
-                    (filterMedia and TYPE_VIDEOS != 0 && it.types and TYPE_VIDEOS != 0) ||
-                    (filterMedia and TYPE_GIFS != 0 && it.types and TYPE_GIFS != 0) ||
-                    (filterMedia and TYPE_RAWS != 0 && it.types and TYPE_RAWS != 0) ||
-                    (filterMedia and TYPE_SVGS != 0 && it.types and TYPE_SVGS != 0) ||
-                    (filterMedia and TYPE_PORTRAITS != 0 && it.types and TYPE_PORTRAITS != 0)
+            if (!config.showRecycleBinAtFolders) {
+                directories.removeAll { it.isRecycleBin() }
             }
-        }) as ArrayList<Directory>
 
-        if (shouldShowHidden) {
-            val hiddenString = resources.getString(R.string.hidden)
-            filteredDirectories.forEach {
-                val noMediaPath = "${it.path}/$NOMEDIA"
-                val hasNoMedia = if (folderNoMediaStatuses.keys.contains(noMediaPath)) {
-                    folderNoMediaStatuses[noMediaPath]!!
-                } else {
-                    it.path.doesThisOrParentHaveNoMedia(folderNoMediaStatuses) { path, hasNoMedia ->
-                        val newPath = "$path/$NOMEDIA"
-                        folderNoMediaStatuses[newPath] = hasNoMedia
+            //val includedPaths = config.includedFolders
+            val shouldShowHidden = config.shouldShowHidden || forceShowHidden
+            val folderNoMediaStatuses = HashMap<String, Boolean>()
+
+            val noMediaFolders: ArrayList<String>
+            val time6 = measureTimeMillis {
+                noMediaFolders = getNoMediaFoldersSync()
+            }
+            Log.i(JET, "getNoMediaFoldersSync() $time6 ms")
+
+
+            noMediaFolders.forEach { folder ->
+                folderNoMediaStatuses["$folder/$NOMEDIA"] = true
+            }
+
+            var filteredDirectories: ArrayList<Directory>
+            val time7 = measureTimeMillis {
+                filteredDirectories = directories.filter {
+                    it.path.shouldFolderBeVisible(config, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
+                        //folderNoMediaStatuses[path] = hasNoMedia
+                    }
+                } as ArrayList<Directory>
+            }
+            Log.i(JET, "shouldFolderBeVisible() $time7 ms")
+
+            val filterMedia = config.filterMedia
+            val time5 = measureTimeMillis {
+                filteredDirectories = (when {
+                    getVideosOnly -> filteredDirectories.filter { it.types and TYPE_VIDEOS != 0 }
+                    getImagesOnly -> filteredDirectories.filter { it.types and TYPE_IMAGES != 0 }
+                    else -> filteredDirectories.filter {
+                        (filterMedia and TYPE_IMAGES != 0 && it.types and TYPE_IMAGES != 0) ||
+                            (filterMedia and TYPE_VIDEOS != 0 && it.types and TYPE_VIDEOS != 0) ||
+                            (filterMedia and TYPE_GIFS != 0 && it.types and TYPE_GIFS != 0) ||
+                            (filterMedia and TYPE_RAWS != 0 && it.types and TYPE_RAWS != 0) ||
+                            (filterMedia and TYPE_SVGS != 0 && it.types and TYPE_SVGS != 0) ||
+                            (filterMedia and TYPE_PORTRAITS != 0 && it.types and TYPE_PORTRAITS != 0)
+                    }
+                }) as ArrayList<Directory>
+            }
+            Log.i(JET, "getCachedDirectories FILTER $time5 ms")
+
+            val time3 = measureTimeMillis {
+                if (shouldShowHidden) {
+                    //val hiddenString = resources.getString(R.string.hidden)
+                    filteredDirectories.forEach {
+//                    val noMediaPath = "${it.path}/$NOMEDIA"
+//                    val hasNoMedia = if (folderNoMediaStatuses.keys.contains(noMediaPath)) {
+//                        folderNoMediaStatuses[noMediaPath]!!
+//                    } else {
+//                        it.path.doesThisOrParentHaveNoMedia(folderNoMediaStatuses) { path, hasNoMedia ->
+//                            val newPath = "$path/$NOMEDIA"
+//                            folderNoMediaStatuses[newPath] = hasNoMedia
+//                        }
+//                    }
+
+//                    it.name = if (hasNoMedia && !it.path.isThisOrParentIncluded(includedPaths)) {
+//                        "${it.name.removeSuffix(hiddenString).trim()} $hiddenString"
+//                    } else {
+//                        it.name.removeSuffix(hiddenString).trim()
+//                    }
                     }
                 }
+            }
+            Log.i(JET, "if (shouldShowHidden) $time3 ms")
 
-                it.name = if (hasNoMedia && !it.path.isThisOrParentIncluded(includedPaths)) {
-                    "${it.name.removeSuffix(hiddenString).trim()} $hiddenString"
-                } else {
-                    it.name.removeSuffix(hiddenString).trim()
+
+                val clone = filteredDirectories.clone() as ArrayList<Directory>
+                callback(clone.distinctBy { it.path.getDistinctPath() } as ArrayList<Directory>)
+            val time = measureTimeMillis {
+                launchIO {
+                    removeInvalidDBDirectories(filteredDirectories)
                 }
             }
-        }
+            Log.i(JET, "END $time ms")
 
-        val clone = filteredDirectories.clone() as ArrayList<Directory>
-        callback(clone.distinctBy { it.path.getDistinctPath() } as ArrayList<Directory>)
-        removeInvalidDBDirectories(filteredDirectories)
+        }
+        Log.i(JET, "getCachedDirectories() origin $time4 ms")
     }
 }
 
@@ -791,8 +816,9 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
 
 fun Context.removeInvalidDBDirectories(dirs: ArrayList<Directory>? = null) {
     val dirsToCheck = dirs ?: directoryDao.getAll()
-    val OTGPath = config.OTGPath
-    dirsToCheck.filter { !it.areFavorites() && !it.isRecycleBin() && !getDoesFilePathExist(it.path, OTGPath) && it.path != config.tempFolderPath }.forEach {
+    val otgPath = config.OTGPath
+    dirsToCheck.filter { !it.areFavorites() && !it.isRecycleBin() && !getDoesFilePathExist(it.path, otgPath)
+        && it.path != config.tempFolderPath }.forEach {
         try {
             directoryDao.deleteDirPath(it.path)
         } catch (ignored: Exception) {

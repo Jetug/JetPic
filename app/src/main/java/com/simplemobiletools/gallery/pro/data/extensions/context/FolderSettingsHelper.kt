@@ -44,29 +44,27 @@ class Synchronisator{
 
 private val sync = Synchronisator()
 
-fun Context.startSettingsScanner(){
-    GlobalScope.launch(IO){
-        while (true){
-            try {
-                val directories = directoryDao.getAll() as ArrayList<Directory>
-                directories.forEach{
-                    val settings = readSettings(it.path)
-                    it.apply {
-                        val group = if(settings.group == NO_VALUE) "" else settings.group
-                        groupName = group
-                        customSorting = settings.sorting
-                    }
-
-                    directoryDao.update(it)
-                    config.saveCustomSorting(it.path, settings.sorting)
-                    folderSettingsDao.insert(settings)
+fun Context.startSettingsScanner() = launchIO{
+    while (true){
+        try {
+            val directories = directoryDao.getAll() as ArrayList<Directory>
+            directories.forEach{
+                val settings = readSettings(it.path)
+                it.apply {
+                    val group = if(settings.group == NO_VALUE) "" else settings.group
+                    groupName = group
+                    customSorting = settings.sorting
                 }
-            } catch (e: Exception) {
-                Log.e(JET, e.message, e)
-            }
 
-            delay(5000)
+                directoryDao.update(it)
+                config.saveCustomSorting(it.path, settings.sorting)
+                folderSettingsDao.insert(settings)
+            }
+        } catch (e: Exception) {
+            Log.e(JET, e.message, e)
         }
+
+        delay(5000)
     }
 }
 

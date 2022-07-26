@@ -71,8 +71,6 @@ class MediaFetcher(val context: Context) {
 
             val config = context.config
             val shouldShowHidden = config.shouldShowHidden
-            val excludedPaths = config.excludedFolders
-            val includedPaths = config.includedFolders
 
             val folderNoMediaStatuses = HashMap<String, Boolean>()
             val distinctPathsMap = HashMap<String, String>()
@@ -93,7 +91,7 @@ class MediaFetcher(val context: Context) {
             }
 
             distinctPaths.filter {
-                it.shouldFolderBeVisible(excludedPaths, includedPaths, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
+                it.shouldFolderBeVisible(config, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
                     folderNoMediaStatuses[path] = hasNoMedia
                 }
             }.toMutableList() as ArrayList<String>
