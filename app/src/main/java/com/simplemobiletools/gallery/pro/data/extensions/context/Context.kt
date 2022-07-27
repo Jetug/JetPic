@@ -177,35 +177,25 @@ fun Context.getDirsToShow(dirs: ArrayList<Directory>, allDirs: ArrayList<Directo
 
         dirs.forEach{ it.subfoldersMediaCount = it.mediaCnt }
 
-        var totalTime = 0L
-
         dirs.forEach{ dir ->
-            var groupName = ""
-            val time = measureTimeMillis {
-                groupName = dir.groupName//getDirectoryGroup(dir.path)
-            }
-            //Log.e(JET,"getDirectoryGroup: $time ms")
-            totalTime += time
+            val groupName = dir.groupName
 
-            if(groupName == "" /*|| dir.groupName == groupName*/){
+            if(groupName == ""){
                 result.add(dir)
             }
             else{
                 val innerDir = dir.copy(groupName = groupName)
 
-                if (groups.containsKey(groupName)){
+                if (groups.containsKey(groupName)) {
                     groups[groupName]!!.innerDirs.add(innerDir)
                     groups[groupName]!!.mediaCnt += dir.mediaCnt
-                }
-                else{
+                } else {
                     val dirGroup = DirectoryGroup(dir, groupName)
                     dirGroup.innerDirs.add(innerDir)
                     groups[groupName] = dirGroup
                 }
             }
         }
-
-        Log.e(JET,"group name totalTime: $totalTime ms")
 
         groups.forEach{ result.add(it.value)}
         result = getSortedDirectories(result) as ArrayList<FolderItem>
