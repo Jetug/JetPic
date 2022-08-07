@@ -311,7 +311,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
 
             //findItem(R.id.folder_view).isVisible = mShowAll
             findItem(R.id.open_camera).isVisible = mShowAll
-            findItem(R.id.about).isVisible = mShowAll
+            //findItem(R.id.about).isVisible = mShowAll
             findItem(R.id.create_new_folder).isVisible = !mShowAll && mPath != RECYCLE_BIN && mPath != FAVORITES
 
             findItem(R.id.temporarily_show_hidden).isVisible = !config.shouldShowHidden
@@ -324,6 +324,9 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             findItem(R.id.increase_column_count).isVisible = viewType == VIEW_TYPE_GRID && config.mediaColumnCnt < MAX_COLUMN_COUNT
             findItem(R.id.reduce_column_count).isVisible = viewType == VIEW_TYPE_GRID && config.mediaColumnCnt > 1
             findItem(R.id.toggle_filename).isVisible = viewType == VIEW_TYPE_GRID
+
+            findItem(R.id.settings).isVisible = false
+            findItem(R.id.about).isVisible = false
         }
 
         setupSearch(menu)
