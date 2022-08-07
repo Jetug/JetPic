@@ -47,14 +47,14 @@ class MediaAdapter(
         when (id) {
             R.id.editDate -> showDateEditionDialog()
             R.id.saveDateToExif -> saveDateToExif()
-            R.id.exifDate -> exifDate()
+            //R.id.exifDate -> exifDate()
         }
     }
 
-    private fun exifDate() {
-        val path = getSelectedPaths()[0]
-        activity.toast(getDateFromExif(path) ?: "")
-    }
+//    private fun exifDate() {
+//        val path = getSelectedPaths()[0]
+//        activity.toast(getDateFromExif(path) ?: "")
+//    }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {

@@ -2,6 +2,7 @@ package com.simplemobiletools.commons.models
 
 import android.content.Context
 import android.net.Uri
+import androidx.exifinterface.media.ExifInterface
 import com.bumptech.glide.signature.ObjectKey
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -61,6 +62,12 @@ open class FileDirItem(val path: String, val name: String = "", var isDirectory:
         sorting and SORT_BY_DATE_MODIFIED != 0 -> modified.formatDate(context, dateFormat, timeFormat)
         sorting and SORT_BY_EXTENSION != 0 -> getExtension().toLowerCase()
         else -> name
+    }
+
+    //Jet
+    fun getDateFromExif(): String?{
+        return ExifInterface(path).getAttribute(ExifInterface.TAG_DATETIME_ORIGINAL)
+            ?: ExifInterface(path).getAttribute(ExifInterface.TAG_DATETIME)
     }
 
     fun getProperSize(context: Context, countHidden: Boolean): Long {

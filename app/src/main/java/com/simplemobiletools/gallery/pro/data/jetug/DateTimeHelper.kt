@@ -59,7 +59,4 @@ fun Context.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, c
     }
 }
 
-fun getDateFromExif(path: String): String?{
-    return ExifInterface(path).getAttribute(ExifInterface.TAG_DATETIME_ORIGINAL)
-        ?: ExifInterface(path).getAttribute(ExifInterface.TAG_DATETIME)
-}
+

@@ -93,10 +93,9 @@ fun ExifInterface.getExifDateTaken(context: Context): String {
     dateTime.let {
         if (it?.isNotEmpty() == true) {
             try {
-                val simpleDateFormat = SimpleDateFormat("yyyy:MM:dd kk:mm:ss", Locale.ENGLISH)
+                val simpleDateFormat = SimpleDateFormat("yyyy:MM:dd kk:mm:ss", Locale.ROOT)
                 return simpleDateFormat.parse(it).time.formatDate(context).trim()
-            } catch (ignored: Exception) {
-            }
+            } catch (ignored: Exception) {}
         }
     }
     return ""

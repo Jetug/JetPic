@@ -214,6 +214,7 @@
     <string name="f_number">F-number</string>
     <string name="camera">Camera</string>
     <string name="exif">EXIF</string>
+    <string name="exif_date">EXIF date</string>
     <string name="song_title">Song title</string>
     <string name="gps_coordinates">GPS coordinates</string>
     <string name="altitude">Altitude</string>
