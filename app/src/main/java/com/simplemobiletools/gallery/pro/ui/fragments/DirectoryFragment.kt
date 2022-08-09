@@ -342,7 +342,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterMediaDialog()
             R.id.open_camera -> activity.launchCamera()
-            //R.id.show_all -> showAllMedia()
             R.id.change_view_type -> changeViewType()
             R.id.temporarily_show_hidden -> tryToggleTemporarilyShowHidden()
             R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
@@ -352,8 +351,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             R.id.increase_column_count -> increaseColumnCount()
             R.id.reduce_column_count -> reduceColumnCount()
             R.id.set_as_default_folder -> setAsDefaultFolder()
-//            R.id.settings -> launchSettings()
-//            R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -899,6 +896,14 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         mLoadedInitialPhotos = false
         config.temporarilyShowHidden = show
         //binding.directories_grid.adapter = null
+
+        val shouldShowHidden = config.shouldShowHidden
+        val temporarilyShowHidden = config.temporarilyShowHidden
+
+        Log.i("Hidden", "show: $show")
+        Log.i("Hidden", "shouldShowHidden $shouldShowHidden")
+        Log.i("Hidden", "temporarilyShowHidden $temporarilyShowHidden")
+
         getDirectories()
         invalidateOptionsMenu(activity)
     }

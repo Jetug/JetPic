@@ -16,8 +16,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        //applicationId "com.jetugapps.gallery.plus"
-        applicationId "com.jetugapps.gallery.plus.dev"
+        applicationId "com.jetugapps.gallery.plus"
+        //applicationId "com.jetugapps.gallery.plus.dev"
         //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
@@ -25,8 +25,8 @@ android {
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 29
-        versionCode 25
-        versionName "1.5.1"
+        versionCode 27
+        versionName "1.6.0"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }

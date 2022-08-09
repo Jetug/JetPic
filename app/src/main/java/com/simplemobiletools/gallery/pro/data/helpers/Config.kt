@@ -61,7 +61,10 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(HIDE_FOLDER_TOOLTIP_SHOWN, false)
         set(wasShown) = prefs.edit().putBoolean(HIDE_FOLDER_TOOLTIP_SHOWN, wasShown).apply()
 
-    var shouldShowHidden = showHiddenMedia || temporarilyShowHidden
+    val shouldShowHidden: Boolean
+        get() = showHiddenMedia || temporarilyShowHidden
+
+//    var shouldShowHidden = showHiddenMedia || temporarilyShowHidden
 
     var showHiddenMedia: Boolean
         get() = prefs.getBoolean(SHOW_HIDDEN_MEDIA, false)

@@ -55,10 +55,11 @@ class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<S
 
                 initialTimePicker.setIs24HourView(true)
                 stepTimePicker.setIs24HourView(true)
-                initSeconds.minValue = 0
                 initSeconds.maxValue = 59
-                stepSeconds.minValue = 0
                 stepSeconds.maxValue = 59
+                stepDay.maxValue = 60
+                stepMonth.maxValue = 60
+                stepYear.maxValue = 60
 
                 rb_current.setOnClickListener { setDateCurrent() }
                 rb_of_file.setOnClickListener { setDateOfFile() }
@@ -73,10 +74,10 @@ class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<S
         val initDate = getInitialDate()
         val step = getStep()
 
-        var buffDate = initDate
+        var date = initDate
         for (path in paths) {
-            File(path).setLastModified(initDate)
-            buffDate = if (isAddition) buffDate.plus(step) else buffDate.minus(step)
+            File(path).setLastModified(date)
+            date = if (isAddition) date.plus(step) else date.minus(step)
         }
 
         onComplete(initDate, step)
