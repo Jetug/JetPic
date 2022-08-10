@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 26,
-      "versionName": "1.6.0",
-      "outputFile": "gallery-26-foss-release.apk"
+      "versionCode": 27,
+      "versionName": "1.6.1",
+      "outputFile": "gallery-27-foss-release.apk"
     }
   ],
   "elementType": "File"
