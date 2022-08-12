@@ -55,10 +55,12 @@ class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<S
 
                 initialTimePicker.setIs24HourView(true)
                 stepTimePicker.setIs24HourView(true)
-                initSeconds.minValue = 0
+
                 initSeconds.maxValue = 59
-                stepSeconds.minValue = 0
                 stepSeconds.maxValue = 59
+                stepDay.maxValue = 59
+                stepMonth.maxValue = 59
+                stepYear.maxValue = 59
 
                 rb_current.setOnClickListener { setDateCurrent() }
                 rb_of_file.setOnClickListener { setDateOfFile() }
@@ -70,15 +72,17 @@ class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<S
     }
 
     private fun onPositiveButtonClick(dialog: DialogInterface, id: Int) {
+        activity.toast(R.string.date_editing)
         val initDate = getInitialDate()
         val step = getStep()
+        var date = initDate
 
-        var buffDate = initDate
         for (path in paths) {
-            File(path).setLastModified(initDate)
-            buffDate = if (isAddition) buffDate.plus(step) else buffDate.minus(step)
+            File(path).setLastModified(date)
+            date = if (isAddition) date.plus(step) else date.minus(step)
         }
 
+        activity.toast(R.string.date_editing_success)
         onComplete(initDate, step)
     }
 
@@ -108,9 +112,9 @@ class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<S
     }
 
     private fun setDateTime(date: LocalDateTime){
-        val year  = date.year().get()
-        val month = date.monthOfYear().get() - 1
-        val day   = date.dayOfMonth().get()
+        val year   = date.year()        .get()
+        val month  = date.monthOfYear() .get() - 1
+        val day    = date.dayOfMonth()  .get()
         val hour   = date.hourOfDay
         val minute = date.minuteOfHour
         val second = date.secondOfMinute

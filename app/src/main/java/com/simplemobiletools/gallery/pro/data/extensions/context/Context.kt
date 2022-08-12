@@ -130,7 +130,7 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
             }
         }
 
-        dirs.mapTo(newDirsOrdered, { it })
+        dirs.mapTo(newDirsOrdered) { it }
         return newDirsOrdered
     }
 

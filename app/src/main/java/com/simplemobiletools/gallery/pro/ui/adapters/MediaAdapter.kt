@@ -87,7 +87,7 @@ class MediaAdapter(
 
     private fun showDateEditionDialog(){
         val paths = getSelectedPaths()
-         DateEditingDialog(activity, paths) {_,_->
+        DateEditingDialog(activity, paths) {_,_->
             val sorting = activity.getSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 controls.recreateAdapter()
