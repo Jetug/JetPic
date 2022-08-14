@@ -438,14 +438,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="divider">:</string>
 
+    <!--    Jetug     -->
     <string name="current">Current</string>
-    <string name="of_file">First image</string>
+    <string name="of_file">Origin</string>
     <string name="custom">Custom</string>
 
-    <!--    Jetug     -->
     <string name="write_date_to_exif">Save date in EXIF</string>
     <string name="initial_date">Initial date</string>
     <string name="step">Step</string>
     <string name="date_editing">Setting new modification date</string>
     <string name="date_editing_success">New modification date set successfully</string>
+    <string name="save_exif">Saving the date to EXIF</string>
+    <string name="save_exif_success">Date successfully saved to EXIF</string>
 </resources>

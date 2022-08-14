@@ -34,7 +34,7 @@ import com.simplemobiletools.gallery.pro.ui.activities.SettingsActivity
 import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
-import com.simplemobiletools.gallery.pro.data.interfaces.*
+import com.simplemobiletools.gallery.pro.data.databases.dao.*
 import com.simplemobiletools.gallery.pro.data.models.*
 import com.simplemobiletools.gallery.pro.data.svg.SvgSoftwareLayerSetter
 import com.simplemobiletools.gallery.pro.ui.views.MySquareImageView
@@ -120,7 +120,8 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
     if (sorting and SORT_BY_RANDOM != 0) {
         dirs.shuffle()
         return movePinnedDirectoriesToFront(dirs)
-    } else if (sorting and SORT_BY_CUSTOM != 0) {
+    }
+    else if (sorting and SORT_BY_CUSTOM != 0) {
         val newDirsOrdered = ArrayList<FolderItem>()
         config.customFoldersOrder.split("|||").forEach { path ->
             val index = dirs.indexOfFirst { it.path == path }
@@ -134,7 +135,7 @@ fun Context.getSortedDirectories(source: ArrayList<FolderItem>): ArrayList<Folde
         return newDirsOrdered
     }
 
-    val comparator = getComparator();
+    val comparator = getComparator()
 
     dirs.sortWith { o1, o2 ->
         var result = comparator(o1, o2)
@@ -389,7 +390,11 @@ fun Context.rescanFolderMediaSync(path: String) {
         GetMediaAsynctask(applicationContext, path, false, false, false) {
             ensureBackgroundThread {
                 val newMedia = it
-                val media = newMedia.filter { it is Medium } as ArrayList<Medium>
+                //val media = newMedia.filter { it is Medium } as ArrayList<Medium>
+                val media = newMedia.filterByType<Medium>()
+//                media.forEach { medium ->
+//                    medium.modified = File(medium.path).lastModified()
+//                }
                 try {
                     mediaDB.insertAll(media)
 

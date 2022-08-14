@@ -67,8 +67,8 @@ class GetMediaAsynctask(val context: Context, val mPath: String,
 }
 
 
-class GetMediaAsynctask2(val context: Context, val mPath: String, val isPickImage: Boolean = false, val isPickVideo: Boolean = false,
-                        val showAll: Boolean, val callback: (media: ArrayList<ThumbnailItem>) -> Unit, val show: () -> Unit = {} ) :
+class GetMediaAsyncTask2(val context: Context, val mPath: String, val isPickImage: Boolean = false, val isPickVideo: Boolean = false,
+                         val showAll: Boolean, val callback: (media: ArrayList<ThumbnailItem>) -> Unit, val show: () -> Unit = {} ) :
         AsyncTask<Void, Void, ArrayList<ThumbnailItem>>() {
     private val mediaFetcher = MediaFetcher(context)
 
@@ -107,8 +107,6 @@ class GetMediaAsynctask2(val context: Context, val mPath: String, val isPickImag
             mediaFetcher.getFilesFrom(mPath, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize, favoritePaths,
                 getVideoDurations, lastModifieds, dateTakens)
         }
-
-
 
         return mediaFetcher.groupMedia(media, pathToUse)
     }

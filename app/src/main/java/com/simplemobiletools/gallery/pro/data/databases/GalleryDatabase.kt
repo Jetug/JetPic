@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.converters.JsonToStringConverter
-import com.simplemobiletools.gallery.pro.data.interfaces.*
+import com.simplemobiletools.gallery.pro.data.databases.dao.*
 import com.simplemobiletools.gallery.pro.data.models.*
 
 @TypeConverters(JsonToStringConverter::class)

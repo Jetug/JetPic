@@ -5,9 +5,13 @@ import androidx.exifinterface.media.ExifInterface
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getParentPath
 import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.data.extensions.IOScope
 import com.simplemobiletools.gallery.pro.data.extensions.dateTakensDB
 import com.simplemobiletools.gallery.pro.data.models.DateTaken
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.io.File
 import kotlin.collections.ArrayList
@@ -16,11 +20,12 @@ fun File.setLastModified(date: DateTime){
     this.setLastModified(date.toDate().time)
 }
 
-fun Context.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, callback: (() -> Unit)? = null) {
+fun Context.saveDateToExif(paths: ArrayList<String>, showToasts: Boolean, callback: (() -> Unit)? = null) {
     if (paths.isEmpty()) return
 
-    ensureBackgroundThread {
+    IOScope.launch {
         try {
+            toast(R.string.save_exif)
             val datesTaken = ArrayList<DateTaken>()
 
             for (path in paths) {
@@ -50,6 +55,7 @@ fun Context.saveDateTakenToExif(paths: ArrayList<String>, showToasts: Boolean, c
                 dateTakensDB.insertAll(datesTaken)
             }
 
+            toast(R.string.save_exif_success)
             callback?.invoke()
         } catch (e: Exception) {
             if (showToasts) {

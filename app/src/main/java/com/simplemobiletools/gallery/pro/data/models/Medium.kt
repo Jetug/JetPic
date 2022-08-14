@@ -8,11 +8,13 @@ import com.simplemobiletools.commons.helpers.SORT_BY_DATE_MODIFIED
 import com.simplemobiletools.commons.helpers.SORT_BY_NAME
 import com.simplemobiletools.commons.helpers.SORT_BY_PATH
 import com.simplemobiletools.commons.helpers.SORT_BY_SIZE
+import com.simplemobiletools.gallery.pro.data.extensions.launchIO
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import java.io.File
 import java.io.Serializable
 import java.util.*
@@ -33,6 +35,16 @@ data class Medium(
 
     @Ignore var gridPosition: Int = 0   // used at grid view decoration at Grouping enabled
 ) : Serializable, ThumbnailItem() {
+
+    init {
+        launchIO {
+            val file = File(path)
+            while (true){
+                modified = file.lastModified()
+                delay(5000)
+            }
+        }
+    }
 
     constructor() : this(null, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0){
         CoroutineScope(Dispatchers.Default).launch {

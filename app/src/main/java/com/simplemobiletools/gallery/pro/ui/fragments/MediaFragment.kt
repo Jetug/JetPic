@@ -51,7 +51,7 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.FilterMediaDialog
 import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapterControls
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask2
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask2
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 
 interface FragmentControls{
@@ -76,7 +76,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private var mLatestMediaDateId = 0L
     private var mLastMediaHandler = Handler()
     private var mTempShowHiddenHandler = Handler()
-    private var mCurrAsyncTask: GetMediaAsynctask2? = null
+    private var mCurrAsyncTask: GetMediaAsyncTask2? = null
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mStoredAnimateGifs = true
@@ -708,7 +708,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
 
     private fun startAsyncTask() {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsynctask2(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
+        mCurrAsyncTask = GetMediaAsyncTask2(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
             //restoreRVPosition()
             //ensureBackgroundThread {
             launchDefault {

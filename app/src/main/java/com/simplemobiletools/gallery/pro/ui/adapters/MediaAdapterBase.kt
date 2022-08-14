@@ -70,8 +70,7 @@ open class MediaAdapterBase (
 
     override val itemList = media
 
-    val mediums: ArrayList<Medium>
-        get() = propGetMediums()
+    val mediums: ArrayList<Medium> get() = ArrayList(media.takeWhile { it is Medium } as List<Medium>)
 
     init {
         setupDragListener(true)
@@ -229,10 +228,7 @@ open class MediaAdapterBase (
         }
     }
 
-    private fun propGetMediums(): ArrayList<Medium>{
-        val list = media.takeWhile { it is Medium } as List<Medium>
-        return ArrayList(list)
-    }
+
 
     private fun checkHideBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
         val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true

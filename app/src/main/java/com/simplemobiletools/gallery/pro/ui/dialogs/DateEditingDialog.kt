@@ -7,6 +7,7 @@ import android.view.View
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.data.extensions.launchIO
 import com.simplemobiletools.gallery.pro.data.extensions.launchMain
 import com.simplemobiletools.gallery.pro.data.helpers.JET
 import com.simplemobiletools.gallery.pro.data.jetug.setLastModified
@@ -16,7 +17,7 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<String>,
-                        val onComplete: (DateTime, Period) -> Unit = { _, _ ->}) {
+                        val onComplete: (Map<String, Long>) -> Unit = { _ ->}) {
     private val defaultStep = Period.years(0).withMonths(0).withDays(0).withHours(0).withMinutes(1).withSeconds(0)
     private var isAddition = false
 
@@ -71,19 +72,25 @@ class DateEditingDialog(val activity: BaseSimpleActivity, val paths: ArrayList<S
         Log.e(JET,"DateEditingDialog.initViews() $time ms")
     }
 
-    private fun onPositiveButtonClick(dialog: DialogInterface, id: Int) {
+    private fun onPositiveButtonClick(dialog: DialogInterface, id: Int) = launchIO{
         activity.toast(R.string.date_editing)
+        val dateMap = mutableMapOf<String, Long>()
         val initDate = getInitialDate()
         val step = getStep()
         var date = initDate
 
         for (path in paths) {
-            File(path).setLastModified(date)
-            date = if (isAddition) date.plus(step) else date.minus(step)
+            val file = File(path)
+            if(file.exists()) {
+                val dateLong = date.toDate().time
+                file.setLastModified(dateLong)
+                dateMap.put(path, dateLong)
+                date = if (isAddition) date.plus(step) else date.minus(step)
+            }
         }
 
         activity.toast(R.string.date_editing_success)
-        onComplete(initDate, step)
+        onComplete(dateMap)
     }
 
     private fun setDateOfFile(){

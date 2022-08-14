@@ -425,19 +425,27 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-    <string name="edit_date">Изменить дату</string>
-    <string name="group_dirs">Сгруппировать</string>
-    <string name="ungroup_dirs">Разгруппировать</string>
-    <string name="write_date_to_exif">Записать дату в EXIF</string>
-    <string name="initial_date">Начальная дата</string>
-    <string name="step">Шаг</string>
-    <string name="current">Current</string>
-    <string name="of_file">Of file</string>
-    <string name="custom">Custom</string>
 
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
     -->
+
+    <!--    Jetug     -->
+    <string name="edit_date">Изменить дату</string>
+    <string name="group_dirs">Сгруппировать</string>
+    <string name="ungroup_dirs">Разгруппировать</string>
+
+    <string name="current">Текущая</string>
+    <string name="of_file">Оригинальная</string>
+    <string name="custom">Своя</string>
+
+    <string name="write_date_to_exif">Сохранить дату в EXIF</string>
+    <string name="initial_date">Начальная дата</string>
+    <string name="step">Шаг</string>
+    <string name="date_editing">Установка новой даты изменения</string>
+    <string name="date_editing_success">Новая дата изменения установленна</string>
+    <string name="save_exif">Сохранение даты в EXIF</string>
+    <string name="save_exif_success">Дата сохранена в EXIF</string>
 
 </resources>

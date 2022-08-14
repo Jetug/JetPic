@@ -3,10 +3,7 @@ package com.simplemobiletools.gallery.pro.ui.adapters
 import android.annotation.SuppressLint
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.unipicdev.views.dialogs.DateEditingDialog
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.commons.helpers.SORT_BY_DATE_MODIFIED
-import com.simplemobiletools.commons.helpers.SORT_BY_DATE_TAKEN
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
@@ -16,7 +13,9 @@ import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.MediaFetcher
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.*
+import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
+import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment.Companion.mMedia
 import java.util.*
 
 interface MediaAdapterControls{
@@ -78,16 +77,35 @@ class MediaAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun sort(){
+    fun sort() = launchDefault{
         val mediaFetcher = MediaFetcher(activity)
         val sorting = activity.getSorting(path)
         mediaFetcher.sortMedia(mediums, sorting)
-        notifyDataSetChanged()
+        withMainContext { notifyDataSetChanged() }
     }
 
-    private fun showDateEditionDialog(){
+    private fun showDateEditionDialog() = launchDefault{
         val paths = getSelectedPaths()
-        DateEditingDialog(activity, paths) {_,_->
+        DateEditingDialog(activity, paths) { dateMap ->
+            dateMap.forEach{
+                try {
+                    val media = mediums.first{ medium ->
+                        medium.path == it.key
+                    }
+
+                    val item2 = mMedia.first{ medium ->
+                        medium is Medium && medium.path == it.key
+                    } as Medium
+
+                    media.modified = it.value
+                    item2.modified = it.value
+
+                    activity.mediaDB.deleteMedia(media)
+                    activity.mediaDB.insert(media)
+                }
+                catch (ignored: NoSuchElementException){}
+            }
+            sort()
             val sorting = activity.getSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 controls.recreateAdapter()
@@ -97,7 +115,7 @@ class MediaAdapter(
 
     private fun saveDateToExif() {
         val paths = getSelectedPaths()
-        activity.saveDateTakenToExif(paths, true){
+        activity.saveDateToExif(paths, true){
             listener?.refreshItems()
         }
     }

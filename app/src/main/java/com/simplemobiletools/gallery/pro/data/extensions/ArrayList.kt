@@ -68,4 +68,8 @@ fun <T>ArrayList<T>.takeFirst(): T{
     this.removeAt(0)
     return item
 }
+
+inline fun <reified Y>ArrayList<*>.filterByType(): ArrayList<Y>{
+    return this.filter { it is Y } as ArrayList<Y>
+}
 //////
