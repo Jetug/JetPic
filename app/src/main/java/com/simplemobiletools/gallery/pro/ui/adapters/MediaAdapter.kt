@@ -15,6 +15,7 @@ import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
+import com.simplemobiletools.gallery.pro.ui.activities.mDirs
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment.Companion.mMedia
 import java.util.*
 
@@ -82,6 +83,14 @@ class MediaAdapter(
         val sorting = activity.getSorting(path)
         mediaFetcher.sortMedia(mediums, sorting)
         withMainContext { notifyDataSetChanged() }
+        //updateDirectory()
+    }
+
+    private fun updateDirectory(){
+        //Jet
+        var dir = mDirs.getDirectories().first { it.path == path }
+        dir.tmb = mediums[0].path
+        activity.updateDirectory(dir)
     }
 
     private fun showDateEditionDialog() = launchDefault{

@@ -766,7 +766,7 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
             getVideosOnly -> media.filter { it.type == TYPE_VIDEOS }
             getImagesOnly -> media.filter { it.type == TYPE_IMAGES }
             else -> media.filter {
-                (filterMedia and TYPE_IMAGES != 0 && it.type == TYPE_IMAGES) ||
+                    (filterMedia and TYPE_IMAGES != 0 && it.type == TYPE_IMAGES) ||
                     (filterMedia and TYPE_VIDEOS != 0 && it.type == TYPE_VIDEOS) ||
                     (filterMedia and TYPE_GIFS != 0 && it.type == TYPE_GIFS) ||
                     (filterMedia and TYPE_RAWS != 0 && it.type == TYPE_RAWS) ||

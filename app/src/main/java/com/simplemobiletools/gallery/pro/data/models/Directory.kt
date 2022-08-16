@@ -1,6 +1,7 @@
 package com.simplemobiletools.gallery.pro.data.models
 
 import androidx.room.*
+import com.simplemobiletools.gallery.pro.data.extensions.launchDefault
 
 @Entity(tableName = "directories", indices = [Index(value = ["path"], unique = true)])
 data class Directory(
