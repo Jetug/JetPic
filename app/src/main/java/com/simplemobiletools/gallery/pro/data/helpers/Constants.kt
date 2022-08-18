@@ -10,6 +10,8 @@ const val MANAGE_STORAGE_RC = 201
 const val PACKAGE_NAME_PRO = "com.jetugapps.gallery.plus"
 const val JET = "Jet"
 const val NO_VALUE = "/*no value*/"
+const val FULL_APP_LINK = "https://drive.google.com/drive/folders/110625PGiFmCz-6Un8x6VCDBrRUXtyg_C?usp=sharing"
+const val FULL_APP_PACKAGE_NAME = "com.jetugapps.gallery.plus"
 
 // shared preferences
 const val DIRECTORY_SORT_ORDER = "directory_sort_order"

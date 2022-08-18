@@ -45,7 +45,7 @@ import java.util.*
 
 //////////////////Jet
 const val CREATE_FILE = 1
-
+val Activity.isFullApp get() = packageName.startsWith(FULL_APP_PACKAGE_NAME)
 val Activity.topBarsHeight get() = actionBarHeight + statusBarHeight
 
 fun Activity.setTopMarginToActionBarsHeight(view: View){

@@ -64,8 +64,10 @@ fun Context.launchSettings() {
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 //Jet
+//{
 val Context.sorting: Int get() = config.directorySorting
-
+//}
+//
 val Context.widgetsDB: WidgetsDao get() = GalleryDatabase.getInstance(applicationContext).WidgetsDao()
 
 val Context.mediaDB: MediumDao get() = GalleryDatabase.getInstance(applicationContext).MediumDao()

@@ -37,6 +37,11 @@
             android:title="@string/about"
             android:icon="@drawable/ic_info_vector"
             app:showAsAction="always" />
+        <item
+            android:id="@+id/download"
+            android:title="@string/download_full_app"
+            android:icon="@drawable/ic_download"
+            app:showAsAction="always" />
     </group>
 
 </menu>

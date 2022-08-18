@@ -439,6 +439,8 @@
     <string name="divider">:</string>
 
     <!--    Jetug     -->
+    <string name="access_storage_prompt">Please grant our app access to all your files, it might not work well without it.</string>
+
     <string name="current">Current</string>
     <string name="of_file">Origin</string>
     <string name="custom">Custom</string>
@@ -450,4 +452,5 @@
     <string name="date_editing_success">New modification date set successfully</string>
     <string name="save_exif">Saving the date to EXIF</string>
     <string name="save_exif_success">Date successfully saved to EXIF</string>
+    <string name="download_full_app">Download full app</string>
 </resources>

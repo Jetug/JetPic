@@ -5,22 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.FAVORITES
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.WAS_PROTECTION_HANDLED
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsScanner
+import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
-import com.simplemobiletools.gallery.pro.data.helpers.*
 import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false
@@ -83,6 +82,7 @@ class MainActivity : SimpleActivity() {
         Log.e(JET, "on Create $createTime ms")
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         if (!isChangingConfigurations) {
@@ -138,6 +138,10 @@ class MainActivity : SimpleActivity() {
 
         findViewById<NavigationView>(R.id.navView)
             .setNavigationItemSelectedListener (::onNavigationItemSelected)
+
+        val navView = findViewById<NavigationView>(R.id.navView)
+        val navMenu = navView.menu
+        navMenu.findItem(R.id.download).isVisible = !isFullApp
     }
 
     private fun onNavigationItemSelected(item: MenuItem):Boolean{
@@ -148,8 +152,13 @@ class MainActivity : SimpleActivity() {
             R.id.all_images -> showAllImages()
             R.id.favorites -> showFavorites()
             R.id.recycle_bin -> showRecyclerBin()
+            R.id.download -> downloadFullApp()
         }
         return true
+    }
+
+    private fun downloadFullApp(){
+        launchViewIntent(FULL_APP_LINK)
     }
 
     private var directoriesFragment: Fragment? = null

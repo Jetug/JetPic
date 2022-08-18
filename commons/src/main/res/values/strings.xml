@@ -1,6 +1,4 @@
 <resources>
-    <string name="access_storage_prompt">Please grant our app access to all your files, it might not work well without it.</string>
-
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="nothing">Nothing</string>
