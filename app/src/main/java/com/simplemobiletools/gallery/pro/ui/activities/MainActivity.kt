@@ -18,8 +18,12 @@ import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsScanner
 import com.simplemobiletools.gallery.pro.data.helpers.*
+import com.simplemobiletools.gallery.pro.data.helpers.khttp.async.Companion.post
+import com.simplemobiletools.gallery.pro.data.helpers.khttp.structures.files.FileLike
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
+import org.json.JSONObject
+import java.io.File
 import kotlin.system.measureTimeMillis
 
 var mWasProtectionHandled = false
@@ -81,7 +85,6 @@ class MainActivity : SimpleActivity() {
         }
         Log.e(JET, "on Create $createTime ms")
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -182,6 +185,26 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun showFavorites(){
+        //launchDefault {
+        val searchUrl = "https://yandex.ru/images/search"
+        val filePath = "C:\\Users\\Professional\\Desktop\\2018-11-09_23-44-58.png"
+        val file = File(filePath)
+        val fileLike = FileLike("upfile", file.name, file.readBytes())
+
+        val values = mapOf(
+            "rpt" to "imageview",
+            "format" to "json",
+            "request" to "{\"blocks\":[{\"block\":\"b-page_type_search-by-image__link\"}]}",
+        )
+
+            val result = post(
+                url = searchUrl,
+                params = values,
+                files = listOf(fileLike)
+            )
+
+        //}
+
         config.showAll = false
         showMediaFragment(FAVORITES)
     }
