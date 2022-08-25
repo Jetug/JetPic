@@ -432,14 +432,14 @@
     -->
 
     <!--    Jetug     -->
-    <string name="access_storage_prompt">Пожалуёста предоставте приложнию доступ ко всем данным, без этого многие функции не будут работать Please grant our app access to all your files, it might not work well without it.</string>
+    <string name="access_storage_prompt">Пожалуйста предоставьте приложению доступ ко всем данным, без этого многие функции не будут работать.</string>
 
     <string name="edit_date">Изменить дату</string>
     <string name="group_dirs">Сгруппировать</string>
     <string name="ungroup_dirs">Разгруппировать</string>
 
     <string name="current">Текущая</string>
-    <string name="of_file">Оригинальная</string>
+    <string name="of_file">Изначальная</string>
     <string name="custom">Своя</string>
 
     <string name="write_date_to_exif">Сохранить дату в EXIF</string>
