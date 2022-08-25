@@ -57,6 +57,7 @@ import com.simplemobiletools.gallery.pro.ui.fragments.VideoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.ViewPagerFragment
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
+import com.simplemobiletools.gallery.pro.data.jetug.searchInYandex
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import kotlinx.android.synthetic.main.activity_medium.*
@@ -238,9 +239,14 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             R.id.menu_create_shortcut -> createShortcut()
             R.id.menu_resize -> resizeImage()
             R.id.menu_settings -> launchSettings()
+            R.id.search_by_image -> searchByImage()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun searchByImage(){
+        searchInYandex(getCurrentPath())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
