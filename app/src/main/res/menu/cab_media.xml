@@ -126,4 +126,9 @@
         android:title="@string/select_all"
         app:showAsAction="ifRoom"
         android:visible="false"/>
+    <item
+        android:id="@+id/search_by_image"
+        android:icon="@drawable/ic_internet"
+        android:title="@string/search"
+        app:showAsAction="never"/>
 </menu>

@@ -27,6 +27,7 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.DeleteWithRememberDialog
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
+import com.simplemobiletools.gallery.pro.data.jetug.searchInYandex
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailSection
@@ -139,6 +140,7 @@ open class MediaAdapterBase (
         val selectedPaths = selectedItems.map { it.path } as ArrayList<String>
         val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true
         val isOneItemSelected = isOneItemSelected
+        val isOreoPlus = isOreoPlus()
 
         menu.apply {
             findItem(R.id.cab_rename).isVisible = !isInRecycleBin
@@ -148,10 +150,11 @@ open class MediaAdapterBase (
             findItem(R.id.cab_open_with).isVisible = isOneItemSelected
             findItem(R.id.cab_confirm_selection).isVisible = isAGetIntent && allowMultiplePicks && selectedKeys.isNotEmpty()
             findItem(R.id.cab_restore_recycle_bin_files).isVisible = selectedPaths.all { it.startsWith(activity.recycleBinPath) }
-            findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
-            findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
+            findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus && isOneItemSelected
+            findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus && isOneItemSelected
             findItem(R.id.cab_edit).isVisible = isOneItemSelected
             findItem(R.id.cab_set_as).isVisible = isOneItemSelected
+            findItem(R.id.search_by_image).isVisible = isOneItemSelected
 
             checkHideBtnVisibility(this, selectedItems)
             checkFavoriteBtnVisibility(this, selectedItems)
@@ -185,8 +188,11 @@ open class MediaAdapterBase (
             R.id.cab_fix_date_taken -> fixDateTaken()
             R.id.cab_set_as -> setAs()
             R.id.cab_delete -> checkDeleteConfirmation()
+            R.id.search_by_image -> activity.searchInYandex(getFirstSelectedItemPath() ?: "" )
         }
     }
+
+
 
     override fun getSelectableItemCount() = media.filter { it is Medium }.size
     override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)

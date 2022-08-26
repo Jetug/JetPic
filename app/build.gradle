@@ -16,23 +16,23 @@ android {
     compileSdk 31
 
     defaultConfig {
-        //applicationId "com.jetugapps.gallery.plus"
-        applicationId "com.jetugapps.gallery.plus.dev"
+        applicationId "com.jetugapps.gallery.plus"
+        //applicationId "com.jetugapps.gallery.plus.dev"
         //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
 
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 30
-        versionCode 28
-        versionName "1.6.2"
+        targetSdkVersion 29
+        versionCode 30
+        versionName "1.7.0"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
+        if (keystorePropertiesFile.exists()) {xxxxxxx
             release {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']

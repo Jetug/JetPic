@@ -23,7 +23,7 @@
         android:id="@+id/sort"
         android:icon="@drawable/ic_sort_vector"
         android:title="@string/sort_by"
-        app:showAsAction="always" />
+        app:showAsAction="collapseActionView|always"/>
     <item
         android:id="@+id/change_view_type"
         android:title="@string/change_view_type"

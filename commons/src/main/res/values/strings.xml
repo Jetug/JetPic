@@ -885,13 +885,16 @@
     <string name="invite_friends">Invite friends</string>
     <string name="contributors">Contributors</string>
     <string name="social">Social</string>
-    <string name="facebook">facebook</string>
-    <string name="reddit">reddit</string>
+    <string name="facebook" translatable="false">facebook</string>
+    <string name="reddit" translatable="false">reddit</string>
     <string name="more_apps_from_us">More apps from us</string>
     <string name="rate_us">Rate us</string>
     <string name="copying_success_one">File copied successfully</string>
     <string name="moving_success_one">File moved successfully</string>
     <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
     <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
-    <string name="github">GitHub</string>
+
+<!--    Jetug-->
+    <string name="github" translatable="false">GitHub</string>
+    <string name="loading">Loading…</string>
 </resources>

@@ -65,10 +65,9 @@ import kotlinx.android.synthetic.main.bottom_actions.*
 import java.io.File
 import java.io.OutputStream
 import java.util.*
+private const val REQUEST_VIEW_VIDEO = 1
 
 class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, ViewPagerFragment.FragmentListener {
-    private val REQUEST_VIEW_VIDEO = 1
-
     private var mPath = ""
     private var mDirectory = ""
     private var mIsFullScreen = false
@@ -88,6 +87,9 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     private var mMediaFiles = ArrayList<Medium>()
     private var mFavoritePaths = ArrayList<String>()
     private var mIgnoredPaths = ArrayList<String>()
+
+    private val currentMedia get() = if (mAreSlideShowMediaVisible) mSlideshowMedia else mMediaFiles
+    private val currentPath get() = getCurrentMedium()?.path ?: ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
@@ -197,6 +199,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
                 } else {
                     MenuItem.SHOW_AS_ACTION_IF_ROOM
                 })
+            findItem(R.id.search_by_image).isVisible = currentPath.isImageFast();
         }
 
         if (visibleBottomActions != 0) {
@@ -212,20 +215,20 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             return true
 
         when (item.itemId) {
-            R.id.menu_set_as -> setAs(getCurrentPath())
+            R.id.menu_set_as -> setAs(currentPath)
             R.id.menu_slideshow -> initSlideshow()
             R.id.menu_copy_to -> copyMoveTo(true)
             R.id.menu_move_to -> moveFileTo()
-            R.id.menu_open_with -> openPath(getCurrentPath(), true)
+            R.id.menu_open_with -> openPath(currentPath, true)
             R.id.menu_hide -> toggleFileVisibility(true)
             R.id.menu_unhide -> toggleFileVisibility(false)
-            R.id.menu_share -> shareMediumPath(getCurrentPath())
+            R.id.menu_share -> shareMediumPath(currentPath)
             R.id.menu_delete -> checkDeleteConfirmation()
             R.id.menu_rename -> renameFile()
             R.id.menu_print -> printFile()
-            R.id.menu_edit -> openEditor(getCurrentPath())
+            R.id.menu_edit -> openEditor(currentPath)
             R.id.menu_properties -> showProperties()
-            R.id.menu_show_on_map -> showFileOnMap(getCurrentPath())
+            R.id.menu_show_on_map -> showFileOnMap(currentPath)
             R.id.menu_rotate_right -> rotateImage(90)
             R.id.menu_rotate_left -> rotateImage(-90)
             R.id.menu_rotate_one_eighty -> rotateImage(180)
@@ -239,14 +242,10 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             R.id.menu_create_shortcut -> createShortcut()
             R.id.menu_resize -> resizeImage()
             R.id.menu_settings -> launchSettings()
-            R.id.search_by_image -> searchByImage()
+            R.id.search_by_image -> searchInYandex(currentPath)
             else -> return super.onOptionsItemSelected(item)
         }
         return true
-    }
-
-    private fun searchByImage(){
-        searchInYandex(getCurrentPath())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -603,7 +602,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             mSlideshowMedia.shuffle()
             mPos = 0
         } else {
-            mPath = getCurrentPath()
+            mPath = currentPath
             mPos = getPositionInList(mSlideshowMedia)
         }
 
@@ -624,7 +623,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun copyMoveTo(isCopyOperation: Boolean) {
-        val currPath = getCurrentPath()
+        val currPath = currentPath
         if (!isCopyOperation && currPath.startsWith(recycleBinPath)) {
             toast(R.string.moving_recycle_bin_items_disabled, Toast.LENGTH_LONG)
             return
@@ -644,14 +643,14 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun toggleFileVisibility(hide: Boolean, callback: (() -> Unit)? = null) {
-        toggleFileVisibility(getCurrentPath(), hide) {
+        toggleFileVisibility(currentPath, hide) {
             val newFileName = it.getFilenameFromPath()
             supportActionBar?.title = newFileName
 
             getCurrentMedium()!!.apply {
                 name = newFileName
                 path = it
-                getCurrentMedia()[mPos] = this
+                currentMedia[mPos] = this
             }
             invalidateOptionsMenu()
             callback?.invoke()
@@ -659,7 +658,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun rotateImage(degrees: Int) {
-        val currentPath = getCurrentPath()
+        val currentPath = currentPath
         if (needsStupidWritePermissions(currentPath)) {
             handleSAFDialog(currentPath) {
                 if (it) {
@@ -695,7 +694,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun saveImageAs() {
-        val currPath = getCurrentPath()
+        val currPath = currentPath
         SaveAsDialog(this, currPath, false) {
             val newPath = it
             handleSAFDialog(it) {
@@ -773,7 +772,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
 
     private fun showProperties() {
         if (getCurrentMedium() != null) {
-            PropertiesDialog(this, getCurrentPath(), false)
+            PropertiesDialog(this, currentPath, false)
         }
     }
 
@@ -798,13 +797,13 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         bottom_edit.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_EDIT != 0 && currentMedium?.isSVG() == false)
         bottom_edit.setOnLongClickListener { toast(R.string.edit); true }
         bottom_edit.setOnClickListener {
-            openEditor(getCurrentPath())
+            openEditor(currentPath)
         }
 
         bottom_share.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_SHARE != 0)
         bottom_share.setOnLongClickListener { toast(R.string.share); true }
         bottom_share.setOnClickListener {
-            shareMediumPath(getCurrentPath())
+            shareMediumPath(currentPath)
         }
 
         bottom_delete.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_DELETE != 0)
@@ -846,7 +845,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         bottom_show_on_map.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_SHOW_ON_MAP != 0)
         bottom_show_on_map.setOnLongClickListener { toast(R.string.show_on_map); true }
         bottom_show_on_map.setOnClickListener {
-            showFileOnMap(getCurrentPath())
+            showFileOnMap(currentPath)
         }
 
         bottom_toggle_file_visibility.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_TOGGLE_VISIBILITY != 0)
@@ -868,7 +867,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         bottom_set_as.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_SET_AS != 0)
         bottom_set_as.setOnLongClickListener { toast(R.string.set_as); true }
         bottom_set_as.setOnClickListener {
-            setAs(getCurrentPath())
+            setAs(currentPath)
         }
 
         bottom_copy.beVisibleIf(visibleBottomActions and BOTTOM_ACTION_COPY != 0)
@@ -920,7 +919,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun printFile() {
-        sendPrintIntent(getCurrentPath())
+        sendPrintIntent(currentPath)
     }
 
     private fun sendPrintIntent(path: String) {
@@ -973,14 +972,14 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun restoreFile() {
-        restoreRecycleBinPath(getCurrentPath()) {
+        restoreRecycleBinPath(currentPath) {
             refreshViewPager()
         }
     }
 
     @TargetApi(Build.VERSION_CODES.N)
     private fun resizeImage() {
-        val oldPath = getCurrentPath()
+        val oldPath = currentPath
         val originalSize = oldPath.getImageResolution() ?: return
         ResizeWithPathDialog(this, originalSize, oldPath) { newSize, newPath ->
             ensureBackgroundThread {
@@ -1051,7 +1050,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun askConfirmDelete() {
-        val filename = "\"${getCurrentPath().getFilenameFromPath()}\""
+        val filename = "\"${currentPath.getFilenameFromPath()}\""
 
         val baseString = if (config.useRecycleBin && !getCurrentMedium()!!.getIsInRecycleBin()) {
             R.string.move_to_recycle_bin_confirmation
@@ -1067,7 +1066,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun deleteConfirmed() {
-        val path = getCurrentMedia().getOrNull(mPos)?.path ?: return
+        val path = currentMedia.getOrNull(mPos)?.path ?: return
         if (getIsPathDirectory(path) || !path.isMediaFile()) {
             return
         }
@@ -1119,9 +1118,9 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun renameFile() {
-        val oldPath = getCurrentPath()
+        val oldPath = currentPath
         RenameItemDialog(this, oldPath) {
-            getCurrentMedia()[mPos].apply {
+            currentMedia[mPos].apply {
                 path = it
                 name = it.getFilenameFromPath()
             }
@@ -1205,13 +1204,13 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         if (!mIsOrientationLocked && config.screenRotation == ROTATE_BY_ASPECT_RATIO) {
             var flipSides = false
             try {
-                val pathToLoad = getCurrentPath()
+                val pathToLoad = currentPath
                 val exif = ExifInterface(pathToLoad)
                 val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1)
                 flipSides = orientation == ExifInterface.ORIENTATION_ROTATE_90 || orientation == ExifInterface.ORIENTATION_ROTATE_270
             } catch (e: Exception) {
             }
-            val resolution = applicationContext.getResolution(getCurrentPath()) ?: return
+            val resolution = applicationContext.getResolution(currentPath) ?: return
             val width = if (flipSides) resolution.y else resolution.x
             val height = if (flipSides) resolution.x else resolution.y
             if (width > height) {
@@ -1297,23 +1296,22 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
 
     private fun updateActionbarTitle() {
         runOnUiThread {
-            if (mPos < getCurrentMedia().size) {
-                supportActionBar?.title = getCurrentMedia()[mPos].path.getFilenameFromPath()
+            if (mPos < currentMedia.size) {
+                supportActionBar?.title = currentMedia[mPos].path.getFilenameFromPath()
             }
         }
     }
 
     private fun getCurrentMedium(): Medium? {
-        return if (getCurrentMedia().isEmpty() || mPos == -1) {
+        return if (currentMedia.isEmpty() || mPos == -1) {
             null
         } else {
-            getCurrentMedia()[Math.min(mPos, getCurrentMedia().size - 1)]
+            currentMedia[Math.min(mPos, currentMedia.size - 1)]
         }
     }
 
-    private fun getCurrentMedia() = if (mAreSlideShowMediaVisible) mSlideshowMedia else mMediaFiles
 
-    private fun getCurrentPath() = getCurrentMedium()?.path ?: ""
+
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
