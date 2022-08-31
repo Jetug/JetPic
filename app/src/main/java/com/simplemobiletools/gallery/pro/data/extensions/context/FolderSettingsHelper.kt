@@ -6,14 +6,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.helpers.FAVORITES
-import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.JET
 import com.simplemobiletools.gallery.pro.data.helpers.NO_VALUE
 import com.simplemobiletools.gallery.pro.data.helpers.RECYCLE_BIN
 import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
 import java.io.File
 import java.lang.reflect.Type
 import kotlin.system.measureTimeMillis
@@ -21,7 +19,7 @@ import kotlin.system.measureTimeMillis
 const val SETTINGS_FILE_NAME = "settings.txt"
 val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
-class Synchronisator{
+class Synchronizer{
     private val pool: ArrayList<()->Any> = arrayListOf()
 
     var isAlreadyRunning: Boolean = false
@@ -42,22 +40,22 @@ class Synchronisator{
     }
 }
 
-private val sync = Synchronisator()
+private val sync = Synchronizer()
 
 fun Context.startSettingsScanner() = launchIO{
     while (true){
         try {
             val directories = directoryDao.getAll() as ArrayList<Directory>
-            directories.forEach{
-                val settings = readSettings(it.path)
-                it.apply {
-                    val group = if(settings.group == NO_VALUE) "" else settings.group
+            directories.forEach{ dir ->
+                val settings = readSettings(dir.path)
+                val group = if(settings.group == NO_VALUE) "" else settings.group
+                dir.apply {
                     groupName = group
                     customSorting = settings.sorting
                 }
 
-                directoryDao.update(it)
-                config.saveCustomSorting(it.path, settings.sorting)
+                directoryDao.update(dir)
+                config.saveCustomSorting(dir.path, settings.sorting)
                 folderSettingsDao.insert(settings)
             }
         } catch (e: Exception) {
@@ -68,7 +66,11 @@ fun Context.startSettingsScanner() = launchIO{
     }
 }
 
-fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
+fun Context.pinDir(dirGroup: DirectoryGroup, newName: String){
+
+}
+
+fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String) = launchIO{
     val groups = dirGroup.innerDirs
 
     groups.forEach {
