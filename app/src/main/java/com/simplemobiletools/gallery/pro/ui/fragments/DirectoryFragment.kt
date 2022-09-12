@@ -330,8 +330,13 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             }
         }
 
-        menu.findItem(R.id.temporarily_show_hidden).isVisible = !config.shouldShowHidden
-        menu.findItem(R.id.stop_showing_hidden).isVisible = config.temporarilyShowHidden
+        menu.apply {
+            findItem(R.id.temporarily_show_hidden).isVisible = !config.shouldShowHidden
+            findItem(R.id.stop_showing_hidden).isVisible = config.temporarilyShowHidden
+
+            findItem(R.id.temporarily_show_excluded).isVisible = !findItem(R.id.temporarily_show_hidden).isVisible && !config.temporarilyShowExcluded
+            findItem(R.id.stop_showing_excluded).isVisible = !findItem(R.id.temporarily_show_hidden).isVisible && config.temporarilyShowExcluded
+        }
 
         activity.updateMenuItemColors(menu)
     }
@@ -345,6 +350,9 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             R.id.change_view_type -> changeViewType()
             R.id.temporarily_show_hidden -> tryToggleTemporarilyShowHidden()
             R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
+            R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
+            R.id.temporarily_show_excluded -> tryToggleTemporarilyShowExcluded()
+            R.id.stop_showing_excluded -> tryToggleTemporarilyShowExcluded()
             R.id.create_new_folder -> createNewFolder()
             R.id.show_the_recycle_bin -> toggleRecycleBin(true)
             R.id.hide_the_recycle_bin -> toggleRecycleBin(false)
@@ -876,6 +884,24 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             binding.directories_grid.adapter = null
             setupAdapter(mDirs)
         }
+    }
+
+    private fun tryToggleTemporarilyShowExcluded() {
+        if (config.temporarilyShowExcluded) {
+            toggleTemporarilyShowExcluded(false)
+        } else {
+            activity.handleExcludedFolderPasswordProtection {
+                toggleTemporarilyShowExcluded(true)
+            }
+        }
+    }
+
+    private fun toggleTemporarilyShowExcluded(show: Boolean) {
+        mLoadedInitialPhotos = false
+        config.temporarilyShowExcluded = show
+        directories_grid.adapter = null
+        getDirectories()
+        //refreshMenuItems()
     }
 
     private fun tryToggleTemporarilyShowHidden() {

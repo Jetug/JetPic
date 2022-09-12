@@ -16,6 +16,19 @@ open class BaseConfig(val context: Context) {
         fun newInstance(context: Context) = BaseConfig(context)
     }
 
+    //Excluded
+    var isExcludedPasswordProtectionOn: Boolean
+        get() = prefs.getBoolean(EXCLUDED_PASSWORD_PROTECTION, false)
+        set(isExcludedPasswordProtectionOn) = prefs.edit().putBoolean(EXCLUDED_PASSWORD_PROTECTION, isExcludedPasswordProtectionOn).apply()
+
+    var excludedPasswordHash: String
+        get() = prefs.getString(EXCLUDED_PASSWORD_HASH, "")!!
+        set(excludedPasswordHash) = prefs.edit().putString(EXCLUDED_PASSWORD_HASH, excludedPasswordHash).apply()
+
+    var excludedProtectionType: Int
+        get() = prefs.getInt(EXCLUDED_PROTECTION_TYPE, PROTECTION_PATTERN)
+        set(excludedProtectionType) = prefs.edit().putInt(EXCLUDED_PROTECTION_TYPE, excludedProtectionType).apply()
+
     var appRunCount: Int
         get() = prefs.getInt(APP_RUN_COUNT, 0)
         set(appRunCount) = prefs.edit().putInt(APP_RUN_COUNT, appRunCount).apply()
@@ -165,6 +178,10 @@ open class BaseConfig(val context: Context) {
     var hiddenProtectionType: Int
         get() = prefs.getInt(PROTECTION_TYPE, PROTECTION_PATTERN)
         set(hiddenProtectionType) = prefs.edit().putInt(PROTECTION_TYPE, hiddenProtectionType).apply()
+
+    var isUsingSystemTheme: Boolean
+        get() = prefs.getBoolean(IS_USING_SYSTEM_THEME, false)
+        set(isUsingSystemTheme) = prefs.edit().putBoolean(IS_USING_SYSTEM_THEME, isUsingSystemTheme).apply()
 
     // whole app launch protection
     var isAppPasswordProtectionOn: Boolean

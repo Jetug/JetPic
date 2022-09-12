@@ -74,6 +74,26 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(TEMPORARILY_SHOW_HIDDEN, false)
         set(temporarilyShowHidden) = prefs.edit().putBoolean(TEMPORARILY_SHOW_HIDDEN, temporarilyShowHidden).apply()
 
+    var temporarilyShowExcluded: Boolean
+        get() = prefs.getBoolean(TEMPORARILY_SHOW_EXCLUDED, false)
+        set(temporarilyShowExcluded) = prefs.edit().putBoolean(TEMPORARILY_SHOW_EXCLUDED, temporarilyShowExcluded).apply()
+
+    var isExcludedPasswordProtectionOn: Boolean
+        get() = prefs.getBoolean(EXCLUDED_PASSWORD_PROTECTION, false)
+        set(isExcludedPasswordProtectionOn) = prefs.edit().putBoolean(EXCLUDED_PASSWORD_PROTECTION, isExcludedPasswordProtectionOn).apply()
+
+    var excludedPasswordHash: String
+        get() = prefs.getString(EXCLUDED_PASSWORD_HASH, "")!!
+        set(excludedPasswordHash) = prefs.edit().putString(EXCLUDED_PASSWORD_HASH, excludedPasswordHash).apply()
+
+    var excludedProtectionType: Int
+        get() = prefs.getInt(EXCLUDED_PROTECTION_TYPE, PROTECTION_PATTERN)
+        set(excludedProtectionType) = prefs.edit().putInt(EXCLUDED_PROTECTION_TYPE, excludedProtectionType).apply()
+
+    var isExcludedPasswordProtectionOn: Boolean
+        get() = prefs.getBoolean(EXCLUDED_PASSWORD_PROTECTION, false)
+        set(isExcludedPasswordProtectionOn) = prefs.edit().putBoolean(EXCLUDED_PASSWORD_PROTECTION, isExcludedPasswordProtectionOn).apply()
+
     var isThirdPartyIntent: Boolean
         get() = prefs.getBoolean(IS_THIRD_PARTY_INTENT, false)
         set(isThirdPartyIntent) = prefs.edit().putBoolean(IS_THIRD_PARTY_INTENT, isThirdPartyIntent).apply()

@@ -14,6 +14,11 @@ const val FULL_APP_LINK = "https://drive.google.com/drive/folders/110625PGiFmCz-
 const val FULL_APP_PACKAGE_NAME = "com.jetugapps.gallery.plus"
 
 // shared preferences
+const val EXCLUDED_PASSWORD_PROTECTION = "excluded_password_protection"
+const val EXCLUDED_PASSWORD_HASH = "excluded_password_hash"
+const val TEMPORARILY_SHOW_EXCLUDED = "temporarily_show_excluded"
+const val EXCLUDED_PROTECTION_TYPE = "excluded_protection_type"
+
 const val DIRECTORY_SORT_ORDER = "directory_sort_order"
 const val GROUP_FOLDER_PREFIX = "group_folder_"
 const val VIEW_TYPE_PREFIX = "view_type_folder_"

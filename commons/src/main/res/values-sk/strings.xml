@@ -8,10 +8,13 @@
     <string name="invalid_file_format">Neplatný formát súboru</string>
     <string name="out_of_memory_error">Došlo k chybe s nedostatkom pamäte</string>
     <string name="an_error_occurred">Došlo k chybe: %s</string>
+    <string name="error">Chyba: %s</string>
     <string name="open_with">Otvoriť pomocou</string>
     <string name="edit_with">Upraviť pomocou</string>
     <string name="edit">Upraviť</string>
     <string name="no_app_found">Nenašla sa žiadna vhodná aplikácia</string>
+    <string name="no_browser_found">Nenašiel sa žiadny prehliadač</string>
+    <string name="no_email_client_found">Nenašiel sa žiadny emailový klient</string>
     <string name="set_as">Nastaviť ako</string>
     <string name="copy_to_clipboard">Skopírovať do schránky</string>
     <string name="copy_number_to_clipboard">Skopírovať číslo do schránky</string>
@@ -53,7 +56,18 @@
     <string name="seven">Sedem</string>
     <string name="eight">Osem</string>
     <string name="nine">Deväť</string>
+    <string name="value">Hodnota</string>
     <string name="value_cannot_be_empty">Hodnota nesmie byť prázdna</string>
+    <string name="create_new_contact">Vytvoriť nový kontakt</string>
+    <string name="add_to_existing_contact">Pridať k existujúcemu kontaktu</string>
+    <string name="app_corrupt">Apka je poškodená</string>
+    <string name="disclaimer">Upozornenie</string>
+    <string name="take_photo">Vytvoriť fotku</string>
+    <string name="choose_photo">Zvoliť fotku</string>
+
+    <!-- Events -->
+    <string name="birthday">Narodeniny</string>
+    <string name="anniversary">Výročie</string>
 
     <!-- Emails -->
     <string name="home">Domov</string>
@@ -70,10 +84,14 @@
     <!-- View types -->
     <string name="change_view_type">Zmeniť typ zobrazenia</string>
     <string name="grid">Mriežka</string>
+    <string name="grid_pro">Mriežka (Pro)</string>
     <string name="uneven_grid">Nerovnomerná mriežka</string>
     <string name="list">Zoznam</string>
     <string name="increase_column_count">Zvýšiť počet stĺpcov</string>
     <string name="reduce_column_count">Znížiť počet stĺpcov</string>
+    <string name="column_count">Počet stĺpcov Column count</string>
+    <string name="portrait_column_count">Počet stĺpcov v zobrazení na výšku</string>
+    <string name="landscape_column_count">Počet stĺpcov v zobrazení na šírku</string>
     <string name="change_cover_image">Zmeniť obal albumu</string>
     <string name="select_photo">Zvoliť foto</string>
 
@@ -89,6 +107,8 @@
     <string name="must_make_default_dialer">Pre použitie blokovania čísel musíte nastaviť aplikáciu ako predvolenú pre správu hovorov.</string>
     <string name="set_as_default">Nastaviť ako predvolenú</string>
     <string name="block_confirmation">Ste si istý, že chcete zablokovať \"%s\"?</string>
+    <string name="block_unknown_calls">Blokovať volania od neuložených kontaktov</string>
+    <string name="block_unknown_messages">Blokovať správy od neuložených kontaktov</string>
 
     <!-- Favorites -->
     <string name="favorites">Obľúbené</string>
@@ -102,6 +122,7 @@
 
     <!-- Filters -->
     <string name="filter">Filtrovať</string>
+    <string name="filter_pro">Filtrovať (Pro)</string>
     <string name="no_items_found">Nenašli sa žiadne položky.</string>
     <string name="change_filter">Upraviť filter</string>
 
@@ -110,6 +131,7 @@
     <string name="no_contacts_permission">Je potrebné povolenie pre prístup ku kontaktom</string>
     <string name="no_camera_permissions">Je potrebné povolenie pre prístup ku kamere</string>
     <string name="no_audio_permissions">Je potrebné povolenie pre prístup ku zvuku</string>
+    <string name="no_post_notifications_permissions">Je potrebné povolenie na zobrazovanie upozornení</string>
 
     <!-- Renaming -->
     <string name="rename_file">Premenovať súbor</string>
@@ -134,6 +156,7 @@
     <string name="rename_date_time_pattern">%Y - rok\n%M - mesiac\n%D - deň\n%h - hodina\n%m - minúta\n%s - sekunda\n%i - číslo narastajúce od 1</string>
     <string name="filename_without_txt">Názov súboru (bez .txt)</string>
     <string name="filename_without_json">Názov súboru (bez .json)</string>
+    <string name="filename_without_zip">Názov súboru (bez .zip)</string>
     <string name="cannot_hide_files">Od Android verzie 11 už nie je možné takýmto spôsobom skrývať súbory a priečinky</string>
 
     <!-- Copy / Move -->
@@ -165,6 +188,7 @@
     <string name="could_not_create_file">Nepodarilo sa vytvoriť súbor %s</string>
     <string name="no_new_items">Nenašli sa žiadne nové položky</string>
     <string name="no_space">V cieľovom priečinku nie je dostatok miesta.\nPotrebných %1$s, k dispozícií %2$s</string>
+    <string name="system_service_disabled">Systémová služba na voľbu súborov a priečinkov nie je dostupná</string>
 
     <!-- Create new -->
     <string name="create_new">Vytvoriť nový</string>
@@ -186,6 +210,11 @@
     <string name="skip">Preskočiť</string>
     <string name="append">Pripnúť \'_1\'</string>
     <string name="apply_to_all">Použiť na všetky konflikty</string>
+    <string name="system_folder_restriction">Systém nepovoľuje túto operáciu v tomto priečinku, prosím zvoľte iný</string>
+    <string name="system_folder_copy_restriction">Systém nepovoľuje kopírovanie do tohto priečinka, prosím zvoľte iný</string>
+    <string name="rename_in_sd_card_system_restriction">Systém v tomto priečinku nepovoľuje premenovávanie</string>
+    <string name="rename_internal_system_restriction">Nedá sa premenovať priečinky priamo na internej pamäti, iba podpriečinky</string>
+    <string name="cannot_rename_folder">Tento priečinok sa nedá premenovať</string>
 
     <!-- File picker -->
     <string name="select_folder">Zvoľte priečinok</string>
@@ -195,8 +224,11 @@
     <string name="confirm_storage_access_text">Pre poskytnutie práva na zápis prosím zvoľte na nasledujúcej obrazovke základný priečǐnok SD karty</string>
     <string name="confirm_storage_access_text_sd">Ak nevidíte SD kartu, skúste toto</string>
     <string name="confirm_storage_access_android_text">Prosím povoľte prístup ku zvolenému úložisku na nasledujúcej obrazovke stlačením spodného tlačidla \"Použiť tento priečinok\".</string>
+    <string name="confirm_storage_access_android_text_specific">Prosím povoľte prístup ku \'&lt;b&gt;%s&lt;/b&gt;\' na nasledujúcej obrazovke stlačením spodného tlačidla \"&lt;b&gt;Použiť tento priečinok&lt;/b&gt;\".</string>
+    <string name="confirm_create_doc_for_new_folder_text">Pre vytvorenie nového priečinka prosím stlačte \'&lt;b&gt;Uložiť&lt;/b&gt;\' na spodku nasledujúcej obrazovky.</string>
     <string name="confirm_selection">Potvrdiť výber</string>
     <string name="loading">Načítavanie…</string>
+    <string name="access_storage_prompt">Prosím povoľte našej apke prístup ku všetkým vašim súborom. Bez neho nebude fungovať správne.</string>
 
     <plurals name="items">
         <item quantity="one">%d položka</item>
@@ -226,6 +258,7 @@
 
     <!-- Storages -->
     <string name="select_storage">Zvoľte úložisko</string>
+    <string name="storage">Úložisko</string>
     <string name="internal">Interné</string>
     <string name="sd_card">SD karta</string>
     <string name="root">Koreňový priečinok</string>
@@ -254,6 +287,9 @@
     <string name="song_title">Názov skladby</string>
     <string name="gps_coordinates">GPS súradnice</string>
     <string name="altitude">Nadmorská výška</string>
+    <string name="remove_exif">Odstrániť EXIF</string>
+    <string name="remove_exif_confirmation">Ste si istý, že chcete odstrániť všetky EXIF hodnoty ako GPS súradnice, model fotoaparátu atď?</string>
+    <string name="exif_removed">EXIF hodnoty boli úspešne odstránené</string>
 
     <!-- Color customization -->
     <string name="background_color">Farba pozadia</string>
@@ -290,12 +326,14 @@
     <string name="light_theme">Svetlá</string>
     <string name="dark_theme">Tmavá</string>
     <string name="auto_theme">Automatická</string>
+    <string name="auto_light_dark_theme">Automatická svetlá / tmavá</string>
     <string name="solarized">Solarizovaná</string>
     <string name="dark_red">Tmavo červená</string>
     <string name="white">Biela</string>
     <string name="black_white">Čiernobiela</string>
     <string name="custom">Vlastná</string>
     <string name="shared">Zdieľaná</string>
+    <string name="system_default">Systémová</string>
 
     <!-- What's new -->
     <string name="whats_new">Novinky</string>
@@ -320,7 +358,9 @@
     <string name="undo">Späť</string>
     <string name="redo">Obnoviť</string>
     <string name="print">Tlačiť</string>
+    <string name="print_pro">Tlačiť (Pro)</string>
     <string name="create_shortcut">Vytvoriť skratku</string>
+    <string name="create_shortcut_pro">Vytvoriť skratku (Pro)</string>
     <string name="add_number_to_contact">Priradiť číslo kontaktu</string>
     <string name="view_contact_details">Zobraziť detaily kontaktu</string>
     <string name="call_from_sim_1">Zavolať zo SIM 1</string>
@@ -333,6 +373,8 @@
     <string name="send_sms">Poslať SMS</string>
     <string name="send_email">Poslať email</string>
     <string name="call">Zavolať</string>
+    <string name="contact_details">Detaily kontaktu</string>
+    <string name="add_contact">Pridať kontakt</string>
 
     <!-- Sorting -->
     <string name="sort_by">Na zoradenie použiť</string>
@@ -398,6 +440,7 @@
     <string name="protection_setup_successfully">Heslo bolo úspešne nastavené. Ak ho zabudnete, prosím preinštalujte aplikáciu.</string>
     <string name="fingerprint_setup_successfully">Ochrana bola úspešne nastavená. Prosím preinštalujte aplikáciu v prípade problémov s jej zmenou.</string>
     <string name="lock_folder">Uzamknúť priečinok</string>
+    <string name="lock_folder_pro">Uzamknúť priečinok (Pro)</string>
     <string name="unlock_folder">Odomknúť priečinok</string>
     <string name="lock_folder_notice">Táto ochrana funguje iba v tejto aplikácii, nemá za cieľ nahradiť šifrovanie fungujúce po celom systéme.</string>
 
@@ -405,6 +448,7 @@
     <string name="yesterday">Včera</string>
     <string name="today">Dnes</string>
     <string name="tomorrow">Zajtra</string>
+    <string name="every_day">Každý deň</string>
     <string name="hide_year">Ukryť rok</string>
     <string name="seconds_raw">sekundy</string>
     <string name="minutes_raw">minúty</string>
@@ -564,6 +608,7 @@
     <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
     <string name="alarm_goes_off_in">Zostávajúci čas do zvonenia budíka:\n%s</string>
     <string name="reminder_triggers_in">Zostávajúci čas do pripomienky:\n%s</string>
+    <string name="time_remaining">Zostávajúci čas:\n%s</string>
     <string name="alarm_warning">Pred tým, ako by ste sa na budík spoliehali, sa prosím uistite, že funguje správne. Niektoré systémové obmedzenia spojené so zlepšením výdrže batérie môžu spôsobiť problémy.</string>
     <string name="reminder_warning">Pred tým, ako by ste sa na upozornenia spoliehali, sa prosím uistite, že fungujú správne. Pozrite sa do nastavení batérie a upozornení vášho zariadenia, či nič neblokuje upozornenia, alebo nevypína na pozadí apku.</string>
     <string name="notifications_disabled">Pripomienky tejto aplikácie sú vypnuté. Pre ich zapnutie prosím choďte do nastavení zariadenia.</string>
@@ -588,6 +633,7 @@
     <string name="color_customization">Úprava farieb</string>
     <string name="customize_colors">Upraviť farby</string>
     <string name="customize_colors_locked">Upraviť farby (Uzamknuté)</string>
+    <string name="feature_locked">Uzamknuté</string>
     <string name="customize_widget_colors">Upraviť farby widgetov</string>
     <string name="customize_notifications">Upraviť pripomienky</string>
     <string name="use_english_language">Použiť angličtinu</string>
@@ -598,7 +644,7 @@
     <string name="medium">Stredné</string>
     <string name="large">Veľké</string>
     <string name="extra_large">Extra veľké</string>
-    <string name="password_protect_hidden_items">Uzamknúť viditeľnosť skrytých položiek heslom</string>
+    <string name="password_protect_hidden_items">Uzamknúť heslom viditeľnosť skrytých položiek</string>
     <string name="password_protect_whole_app">Uzamknúť heslom celú aplikáciu</string>
     <string name="password_protect_file_deletion">Uzamknúť heslom mazanie a presúvanie súborov</string>
     <string name="keep_last_modified">Ponechať starú hodnotu naposledy-upravené pri súborových operáciách</string>
@@ -747,6 +793,10 @@
     <string name="more_info">Viac info</string>
     <string name="upgrade">Stiahnuť</string>
     <string name="upgrade_calendar">Lokálne uložené udalosti musíte exportovať manuálne do .ics súboru, následne importovať. Tlačidlá pre exportovanie/importovanie nájdete v menu hlavnej obrazovky.</string>
+    <string name="upgraded_to_pro">Zdravím,\n\nvyzerá to tak, že už máte Pro verziu. Túto už teda nebudete potrebovať, môžete ju odinštalovať.</string>
+    <string name="upgraded_to_pro_calendar">Lokálne uložené udalosti musíte premigrovať manuálne pomocou exportovania do .ics súboru a následného importovania. Tlačidlá pre export a import nájdete v hornom menu.</string>
+    <string name="upgraded_to_pro_notes">Poznámky musíte do Pro verzie skopírovať manuálne.</string>
+    <string name="upgraded_to_pro_contacts">Súkromne uložené kontakty musíte premigrovať manuálne pomocou exportovania do .vcf súboru a následného importovania. Tlačidlá pre export a import nájdete v hornom menu.</string>
 
     <!-- About -->
     <string name="about">O aplikácií</string>
@@ -762,13 +812,13 @@
     <string name="rate_us">Ohodnotiť aplikáciu</string>
     <string name="rate">Ohodnotiť</string>
     <string name="donate">Podporiť</string>
-    <string name="donate_underlined"><u>Podporiť</u></string>
     <string name="follow_us">Sledujte nás</string>
     <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
     <string name="support">Podpora</string>
     <string name="help_us">Pomôžte nám</string>
     <string name="social">Sociálne siete</string>
     <string name="other">Iné</string>
+    <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="version_placeholder">Verzia %s</string>
     <string name="hello">Ahoj :)</string>
     <string name="about_footer">Vyrobené so &#10084;&#65039; na Slovensku</string>
@@ -782,22 +832,21 @@
             Ďakujem!
         ]]>
     </string>
+    <string name="donate_new">Zdravím,&lt;br&gt;&lt;br&gt;dúfame, že sa vám naša apka páči. Neobsahuje žiadne reklamy a ani nezbiera vaše údaje, podporte prosíme jej vývoj zakúpením aplikácie &lt;a href=https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou&gt;Jednoduché ďakujem&lt;/a&gt;. Budete tým mať zároveň odomknuté všetky funkcie a zmenu farieb.&lt;br&gt;&lt;br&gt;Ďakujeme!</string>
     <string name="purchase">Zakúpiť</string>
+    <string name="get_simple_phone">Objednať Jednoduchý Telefón</string>
     <string name="update_thank_you">Prosím aktualizujte Jednoduché Ďakujem na najnovšiu verziu</string>
     <string name="before_asking_question_read_faq">Predtým, ako sa niečo opýtate, si prosím prejdite nastavenia aplikácie a prečítajte Často Kladené Otázky. Možno v nich nájdete svoju odpoveď.</string>
     <string name="before_rate_read_faq">Predtým, ako nás ohodnotíte, si prosím prejdite nastavenia aplikácie a prečítajte Často Kladené Otázky. Ak máte nejaké problémy, možno v nich nájdete riešenia.</string>
     <string name="make_sure_latest">Taktiež sa uistite, že používate najnovšiu verziu apky.</string>
+    <string name="make_sure_upgrade">Taktiež vám dávame na vedomie, že táto verzia apky už nie je vyvíjaná. Pre množstvo vylepšení prejdite na Pro verziu.</string>
     <string name="read_it">Prečítať</string>
     <string name="read_faq">Prečítať FAQ</string>
     <string name="rate_us_prompt">Zdravím,\n\nzdá sa, že už nejaký čas používate túto aplikáciu a to si veľmi ceníme.\n\nAk Vás môžeme požiadať o láskavosť, prosím ohodnoťte nás na Google Play. Naozaj by nám to veľmi pomohlo.\n\nBez ohľadu na to, ako sa rozhodnete, túto správu už neuvidíte.\n\nVďaka!</string>
     <string name="rate_our_app">Ohodnoťte našu aplikáciu, prosím :)</string>
     <string name="thank_you">Ďakujeme</string>
     <string name="widget_locked_pro">Widget je uzamknutý.\nNa odomknutie prosím prejdite na Pro verziu.</string>
-    <string name="widget_locked">
-        <![CDATA[
-            Widget je uzamknutý.<br>Na odomknutie prosím kúpte <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Jednoduché ďakujem</a>.
-        ]]>
-    </string>
+    <string name="features_locked">Táto funkcia je uzamknutá, prosím kúpte &lt;a href=https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou&gt;Jednoduché ďakujem&lt;/a&gt; pre odomknutie celej apky.&lt;br&gt;&lt;br&gt;Ide o jednorazovú platbu a ak nebudete spokojný, peniaze vám vrátime.</string>
 
     <!-- New app (do not translate anything on the 4th line) -->
     <string name="new_app">
@@ -906,6 +955,7 @@
     <string name="translation_azerbaijani">Azerbajdžančina</string>
     <string name="translation_bengali">Bengálčina</string>
     <string name="translation_breton">Bretónčina</string>
+    <string name="translation_bulgarian">Bulharčina</string>
     <string name="translation_catalan">Katalánčina</string>
     <string name="translation_czech">Čeština</string>
     <string name="translation_welsh">Waleština</string>
@@ -953,7 +1003,8 @@
     <string name="why_upgrade_pro_version">Pro</string>
     <string name="why_upgrade_no_ads">Žiadne reklamy</string>
     <string name="why_upgrade_no_internet_access">Žiadny prístup na internet</string>
-    <string name="why_upgrade_footer">+ 100% Garancia vrátenia peňazí</string>
+    <string name="why_upgrade_footer">100% Garancia vrátenia peňazí</string>
+    <string name="why_upgrade_footer_one_time_payment">Jednorázová platba</string>
     <string name="why_upgrade_improved_design">Vylepšený dizajn</string>
 
     <!-- Gallery Pro -->
@@ -975,6 +1026,7 @@
     <string name="why_upgrade_private_contact_sharing">Voliteľné zdieľanie súkromných kontaktov vrámci našich apiek</string>
     <string name="why_upgrade_customizable_contact_ringtones">Vlastné zvonenie kontaktov</string>
     <string name="why_upgrade_contact_filtering">Filtrovanie kontaktov</string>
+    <string name="why_upgrade_contact_private_contacts">Súkromne uložené kontakty</string>
 
     <!-- Notes Pro -->
     <string name="why_upgrade_checklists">Zoznamy položiek</string>
@@ -1024,6 +1076,9 @@
     <string name="audio_record_view_title">Audio Record View (vizualizácia zvukov)</string>
     <string name="sms_mms_title">SMS MMS (spravovanie SMS a MMS)</string>
     <string name="apng_title">APNG Android (podpora pre animované WebP súbory)</string>
+    <string name="pdf_viewer_title">Android PdfViewer (prehliadač PDF súborov)</string>
+    <string name="m3u_parser_title">M3U Parser (správa playlistových súborov m3u)</string>
+    <string name="android_lame_title">AndroidLame (mp3 enkóder)</string>
 
     <!-- Google Play listing -->
     <string name="deprecated_app">ZASTARALÁ: Táto verzia aplikácie už nie je podporovaná. Stiahnite si Pro verziu na https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>

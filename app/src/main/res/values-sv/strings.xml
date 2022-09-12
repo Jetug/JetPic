@@ -1,1000 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ok">OK</string>
-    <string name="cancel">Avbryt</string>
-    <string name="nothing">Nothing</string>
-    <string name="later">Later</string>
-    <string name="save_as">Spara som</string>
-    <string name="file_saved">Filen har sparats</string>
-    <string name="invalid_file_format">Ogiltigt filformat</string>
-    <string name="out_of_memory_error">Minnet är fullt</string>
-    <string name="an_error_occurred">Ett fel har uppstått: %s</string>
-    <string name="open_with">Öppna med</string>
-    <string name="edit_with">Redigera med</string>
-    <string name="edit">Edit</string>
-    <string name="no_app_found">Ingen giltig app hittades</string>
-    <string name="set_as">Använd som</string>
-    <string name="copy_to_clipboard">Copy to clipboard</string>
-    <string name="copy_number_to_clipboard">Copy number to clipboard</string>
-    <string name="value_copied_to_clipboard">Värdet har kopierats till Urklipp</string>
-    <string name="value_copied_to_clipboard_show">Värdet har kopierats till Urklipp:\n%s</string>
-    <string name="dial_number">Dial number</string>
-    <string name="unknown">Okänd</string>
-    <string name="always">Alltid</string>
-    <string name="never">Aldrig</string>
-    <string name="details">Information</string>
-    <string name="notes">Anteckningar</string>
-    <string name="deleting_folder">Tar bort mappen \'%s\'</string>
-    <string name="none">Ingen</string>
-    <string name="label">Etikett</string>
-    <string name="transparent">Genomskinlig</string>
-    <string name="transparent_color">Genomskinlig färg</string>
-    <string name="select_a_different_color">Välj en annan färg</string>
-    <string name="download">Hämta</string>
-    <string name="notification">Avisering</string>
-    <string name="notifications">Notifications</string>
-    <string name="email">E-post</string>
-    <string name="previous">Föregående</string>
-    <string name="playpause">Spela / Pausa</string>
-    <string name="next">Nästa</string>
-    <string name="number">Nummer</string>
-    <string name="no_contacts_found">Inga kontakter hittades</string>
-    <string name="request_the_required_permissions">Begär de behörigheter som krävs</string>
-    <string name="no_access_to_contacts">The app could not access your contacts</string>
-    <string name="no_phone_call_permission">App does not have the permission to initiate phone calls, please grant it in the device settings</string>
-    <string name="insert_text_here">Insert text here</string>
-    <string name="call_person">Ring %s</string>
-    <string name="zero">Zero</string>
-    <string name="one">One</string>
-    <string name="two">Two</string>
-    <string name="three">Three</string>
-    <string name="four">Four</string>
-    <string name="five">Five</string>
-    <string name="six">Six</string>
-    <string name="seven">Seven</string>
-    <string name="eight">Eight</string>
-    <string name="nine">Nine</string>
-    <string name="value_cannot_be_empty">Value cannot be empty</string>
-
-    <!-- Emails -->
-    <string name="home">Hem</string>
-    <string name="work">Arbete</string>
-    <!-- Phone numbers -->
-    <string name="mobile">Mobil</string>
-    <string name="main_number">Primärt nummer</string>
-    <string name="work_fax">Arbetsfax</string>
-    <string name="home_fax">Hemfax</string>
-    <string name="pager">Personsökare</string>
-    <string name="no_phone_number_found">Inget telefonnummer hittades</string>
-
+    <string name="app_name">Simpelt galleri</string>
+    <string name="app_launcher_name">Galleri</string>
+    <string name="edit">Redigera</string>
+    <string name="open_camera">Öppna kameran</string>
+    <string name="hidden">(dold)</string>
+    <string name="excluded">(utesluten)</string>
+    <string name="pin_folder">Fäst mapp</string>
+    <string name="unpin_folder">Lossa mapp</string>
+    <string name="pin_to_the_top">Fäst högst upp</string>
+    <string name="show_all">Visa alla mappars innehåll</string>
+    <string name="all_folders">Alla mappar</string>
+    <string name="folder_view">Byt till mappvy</string>
+    <string name="other_folder">Annan mapp</string>
+    <string name="show_on_map">Visa på karta</string>
+    <string name="unknown_location">Okänd plats</string>
+    <string name="volume">Volym</string>
+    <string name="brightness">Ljusstyrka</string>
+    <string name="lock_orientation">Aktivera rotationslås</string>
+    <string name="unlock_orientation">Inaktivera rotationslås</string>
+    <string name="change_orientation">Ändra orientering</string>
+    <string name="force_portrait">Lås skärmen i stående läge</string>
+    <string name="force_landscape">Lås skärmen i liggande läge</string>
+    <string name="use_default_orientation">Använd standardorientering</string>
+    <string name="fix_date_taken">Korrigera fotodatum</string>
+    <string name="fixing">Korrigerar…</string>
+    <string name="dates_fixed_successfully">Datumen har korrigerats</string>
+    <string name="no_date_takens_found">No Date Taken values have been found</string>
+    <string name="share_resized">Dela en version med ändrad storlek</string>
+    <string name="upgraded_from_free">Hey,
+\n
+\nseems like you upgraded from the old free app. You can now uninstall the old version, which has an \'Upgrade to Pro\' button at the top of the app settings.
+\n
+\nYou will only have the Recycle bin items deleted, favorite items unmarked and you will also have to reset your app settings.
+\n
+\nThanks!</string>
+    <string name="switch_to_file_search">Växla till filsökning i alla synliga mappar</string>
+    <string name="set_as_default_folder">Set as default folder</string>
+    <string name="unset_as_default_folder">Unset as default folder</string>
+    <string name="reorder_by_dragging">Reorder folders by dragging</string>
+    <string name="reorder_by_dragging_pro">Reorder folders by dragging (Pro)</string>
+    <string name="restore_to_path">Restoring to \'%s\'</string>
+    <!-- Filter -->
+    <string name="filter_media">Filtrera media</string>
+    <string name="images">Bilder</string>
+    <string name="videos">Videos</string>
+    <string name="gifs">GIF-bilder</string>
+    <string name="raw_images">RAW-bilder</string>
+    <string name="svgs">SVG-bilder</string>
+    <string name="portraits">Portraits</string>
+    <string name="no_media_with_filters">Inga mediefiler hittades med valda filter.</string>
+    <string name="change_filters_underlined"><u>Ändra filter</u></string>
+    <!-- Hide / Exclude -->
+    <string name="hide_folder_description">Denna funktion döljer mappen och alla dess undermappar genom att lägga till en \'.nomedia\'-fil i den. Du kan se dem genom att växla \'Visa dolda objekt\'-alternativet i Inställningar. Vill du fortsätta\?</string>
+    <string name="exclude">Uteslut</string>
+    <string name="excluded_folders">Uteslutna mappar</string>
+    <string name="manage_excluded_folders">Hantera uteslutna mappar</string>
+    <string name="exclude_folder_description">Detta utesluter bara den markerade mappen och dess undermappar från Simple Gallery. Du kan hantera uteslutna mappar i Inställningar.</string>
+    <string name="exclude_folder_parent">Vill du utesluta en överordnad mapp istället\?</string>
+    <string name="excluded_activity_placeholder">Uteslutning av mappar döljer bara dem och deras undermappar i Simple Gallery, de visas fortfarande i andra appar.
+\n
+\nAnvänd Dölj-funktionen om du även vill dölja dem från andra appar.</string>
+    <string name="remove_all">Ta bort alla</string>
+    <string name="remove_all_description">Vill du ta bort alla mappar från uteslutningslistan\? Detta raderar inte mapparna.</string>
+    <string name="hidden_folders">Dolda mappar</string>
+    <string name="manage_hidden_folders">Hantera dolda mappar</string>
+    <string name="hidden_folders_placeholder">Det verkar som att inga mappar har dolts med \".nomedia\"-filer.</string>
+    <string name="temporarily_show_excluded">Temporarily show excluded</string>
+    <string name="stop_showing_excluded">Stop showing excluded</string>
+    <!-- Include folders -->
+    <string name="include_folders">Inkluderade mappar</string>
+    <string name="manage_included_folders">Hantera inkluderade mappar</string>
+    <string name="add_folder">Lägg till mapp</string>
+    <string name="included_activity_placeholder">Om du har vissa mappar som innehåller media men som inte känns igen av appen, kan du lägga till dem manuellt här.</string>
+    <string name="no_media_add_included">Inga mediefiler hittades. Du kan lägga till de mappar som innehåller mediefiler manuellt.</string>
+    <!-- Resizing -->
+    <string name="resize">Ändra storlek</string>
+    <string name="resize_and_save">Ändra storlek och spara</string>
+    <string name="width">Bredd</string>
+    <string name="height">Höjd</string>
+    <string name="keep_aspect_ratio">Behåll bildförhållande</string>
+    <string name="invalid_values">Ange en giltig bildupplösning</string>
+    <!-- Editor -->
+    <string name="editor">Redigerare</string>
+    <string name="rotate">Rotera</string>
+    <string name="invalid_image_path">Ogiltig bildsökväg</string>
+    <string name="invalid_video_path">Invalid video path</string>
+    <string name="image_editing_failed">Bilden kunde inte redigeras</string>
+    <string name="video_editing_failed">Video editing failed</string>
+    <string name="image_editing_cancelled">Image editing cancelled</string>
+    <string name="video_editing_cancelled">Video editing cancelled</string>
+    <string name="file_edited_successfully">File edited successfully</string>
+    <string name="image_edited_successfully">Image edited successfully</string>
+    <string name="video_edited_successfully">Video edited successfully</string>
+    <string name="edit_image_with">Redigera bilden med:</string>
+    <string name="edit_video_with">Edit video with:</string>
+    <string name="no_image_editor_found">Ingen bildredigerare hittades</string>
+    <string name="no_video_editor_found">No video editor found</string>
+    <string name="unknown_file_location">Okänd filplats</string>
+    <string name="error_saving_file">Det gick inte att skriva över källfilen</string>
+    <string name="rotate_left">Rotera åt vänster</string>
+    <string name="rotate_right">Rotera åt höger</string>
+    <string name="rotate_one_eighty">Rotera 180º</string>
+    <string name="flip">Vänd</string>
+    <string name="flip_horizontally">Vänd horisontellt</string>
+    <string name="flip_vertically">Vänd vertikalt</string>
+    <string name="free_aspect_ratio">Fritt</string>
+    <!-- available as an option: 1:1, 4:3, 16:9, free -->
+    <string name="other_aspect_ratio">Annat</string>
+    <!-- available as an option: 1:1, 4:3, 16:9, free, other -->
+    <!-- Set wallpaper -->
+    <string name="simple_wallpaper">Bakgrund</string>
+    <string name="set_as_wallpaper">Använd som bakgrund</string>
+    <string name="set_as_wallpaper_failed">Det gick inte att ställa in bakgrunden</string>
+    <string name="set_as_wallpaper_with">Ställ in som bakgrund med:</string>
+    <string name="setting_wallpaper">Ställer in bakgrunden…</string>
+    <string name="wallpaper_set_successfully">Bakgrunden har ställts in</string>
+    <string name="portrait_aspect_ratio">Stående bildförhållande</string>
+    <string name="landscape_aspect_ratio">Liggande bildförhållande</string>
+    <string name="home_screen">Startskärm</string>
+    <string name="lock_screen">Låsskärm</string>
+    <string name="home_and_lock_screen">Startskärm och låsskärm</string>
+    <string name="allow_changing_aspect_ratio">Allow changing the aspect ratio</string>
+    <!-- Slideshow -->
+    <string name="slideshow">Bildspel</string>
+    <string name="interval">Intervall</string>
+    <string name="include_photos">Inkludera foton</string>
+    <string name="include_videos">Inkludera videor</string>
+    <string name="include_gifs">Inkludera GIF-bilder</string>
+    <string name="random_order">Spela upp i slumpmässig ordning</string>
+    <string name="move_backwards">Spela upp i omvänd ordning</string>
+    <string name="loop_slideshow">Spela upp i en slinga</string>
+    <string name="animation">Animation</string>
+    <string name="no_animation">Ingen</string>
+    <string name="fade">Tona</string>
+    <string name="slide">Glid</string>
+    <string name="slideshow_ended">Bildspelet har avslutats</string>
+    <string name="no_media_for_slideshow">Ingen media hittades för bildspelet</string>
     <!-- View types -->
-    <string name="change_view_type">Ändra vy</string>
-    <string name="grid">Rutnät</string>
-    <string name="uneven_grid">Uneven Grid</string>
-    <string name="list">Lista</string>
-    <string name="increase_column_count">Öka antalet kolumner</string>
-    <string name="reduce_column_count">Minska antalet kolumner</string>
-    <string name="change_cover_image">Byt omslagsbild</string>
-    <string name="select_photo">Välj foto</string>
-
-    <!-- Blocked numbers -->
-    <string name="manage_blocked_numbers">Hantera blockerade nummer</string>
-    <string name="not_blocking_anyone">Du blockerar inte någon.</string>
-    <string name="add_a_blocked_number">Lägg till ett blockerat nummer</string>
-    <string name="block_number">Blockera nummer</string>
-    <string name="block_numbers">Blockera nummer</string>
-    <string name="blocked_numbers">Blockerade nummer</string>
-    <string name="export_blocked_numbers">Export blocked numbers</string>
-    <string name="import_blocked_numbers">Import blocked numbers</string>
-    <string name="must_make_default_dialer">Du måste ställa in den här appen som standardtelefonapp för att kunna använda blockerade nummer.</string>
-    <string name="set_as_default">Ange som standard</string>
-    <string name="block_confirmation">Are you sure you want to block \"%s\"?</string>
-
-    <!-- Favorites -->
-    <string name="favorites">Favoriter</string>
-    <string name="add_favorites">Lägg till favoriter</string>
-    <string name="add_to_favorites">Lägg till i favoriter</string>
-    <string name="remove_from_favorites">Ta bort från favoriter</string>
-
-    <!-- Search -->
-    <string name="search">Sök</string>
-    <string name="type_2_characters">Skriv in minst två tecken för att starta sökningen.</string>
-
-    <!-- Filters -->
-    <string name="filter">Filtrera</string>
-    <string name="no_items_found">Inga objekt hittades.</string>
-    <string name="change_filter">Ändra filter</string>
-
-    <!-- Permissions -->
-    <string name="no_storage_permissions">Lagringsbehörighet krävs</string>
-    <string name="no_contacts_permission">Kontaktbehörighet krävs</string>
-    <string name="no_camera_permissions">Kamerabehörighet krävs</string>
-    <string name="no_audio_permissions">Mikrofonbehörighet krävs</string>
-
-    <!-- Renaming -->
-    <string name="rename_file">Byt namn på fil</string>
-    <string name="rename_folder">Byt namn på mapp</string>
-    <string name="rename_file_error">Det gick inte att byta namn på filen</string>
-    <string name="rename_folder_error">Det gick inte att byta namn på mappen</string>
-    <string name="rename_folder_empty">Du måste ange ett mappnamn</string>
-    <string name="rename_folder_exists">Det finns redan en mapp med samma namn</string>
-    <string name="rename_folder_root">Det går inte att byta namn på rotmappen på ett lagringsutrymme</string>
-    <string name="rename_folder_ok">Mappen har fått ett nytt namn</string>
-    <string name="renaming_folder">Byter namn på mappen</string>
-    <string name="filename_cannot_be_empty">Du måste ange ett filnamn</string>
-    <string name="filename_invalid_characters">Filnamnet innehåller ogiltiga tecken</string>
-    <string name="filename_invalid_characters_placeholder">Filnamnet \'%s\' innehåller ogiltiga tecken</string>
-    <string name="extension_cannot_be_empty">Filnamnstillägget får inte vara tomt</string>
-    <string name="source_file_doesnt_exist">Källfilen %s finns inte</string>
-    <string name="prepend_filenames">Lägg till före filnamnen</string>
-    <string name="append_filenames">Lägg till efter filnamnen</string>
-    <string name="simple_renaming">Simple renaming</string>
-    <string name="pattern_renaming">Pattern</string>
-    <string name="string_to_add">String to add</string>
-    <string name="rename_date_time_pattern">%Y - år\n%M - månad\n%D - dag\n%h - timme\n%m - minut\n%s - sekund\n%i - number increasing from 1</string>
-    <string name="filename_without_txt">Filename (without .txt)</string>
-    <string name="filename_without_json">Filename (without .json)</string>
-    <string name="cannot_hide_files">Starting from Android 11 you cannot hide files and folders like that anymore</string>
-
-    <!-- Copy / Move -->
-    <string name="copy">Kopiera</string>
-    <string name="move">Flytta</string>
-    <string name="copy_move">Kopiera / Flytta</string>
-    <string name="copy_to">Kopiera till</string>
-    <string name="move_to">Flytta till</string>
-    <string name="source">Källa</string>
-    <string name="destination">Mål</string>
-    <string name="select_destination">Välj mål</string>
-    <string name="click_select_destination">Tryck här för att välja mål</string>
-    <string name="invalid_destination">Det gick inte att skriva till målet</string>
-    <string name="please_select_destination">Välj mål</string>
-    <string name="source_and_destination_same">Källa och mål kan inte vara samma</string>
-    <string name="copy_failed">Det gick inte att kopiera filerna</string>
-    <string name="copying">Kopierar…</string>
-    <string name="copying_success">Filerna har kopierats</string>
-    <string name="copying_success_one">File copied successfully</string>
-    <string name="copy_move_failed">Ett fel har uppstått</string>
-    <string name="moving">Flyttar…</string>
-    <string name="moving_success">Filerna har flyttats</string>
-    <string name="moving_success_one">File moved successfully</string>
-    <string name="moving_success_partial">Det gick inte att flytta vissa filer</string>
-    <string name="copying_success_partial">Det gick inte att kopiera vissa filer</string>
-    <string name="no_files_selected">Inga filer har valts</string>
-    <string name="saving">Sparar…</string>
-    <string name="could_not_create_folder">Det gick inte att skapa mappen %s</string>
-    <string name="could_not_create_file">Det gick inte att skapa filen %s</string>
-    <string name="no_new_items">Inga nya objekt hittades</string>
-    <string name="no_space">The destination does not have enough space available.\nRequired %1$s, available %2$s</string>
-
-    <!-- Create new -->
-    <string name="create_new">Skapa ny</string>
-    <string name="folder">Mapp</string>
-    <string name="file">Fil</string>
-    <string name="create_new_folder">Skapa ny mapp</string>
-    <string name="name_taken">Det finns redan en fil eller mapp med samma namn</string>
-    <string name="invalid_name">Namnet innehåller ogiltiga tecken</string>
-    <string name="empty_name">Ange ett namn</string>
-    <string name="unknown_error_occurred">Ett okänt fel har uppstått</string>
-
-    <!-- File operation conflicts -->
-    <string name="file_already_exists">Filen \"%s\" finns redan</string>
-    <string name="file_already_exists_overwrite">Filen \"%s\" finns redan. Skriv över?</string>
-    <string name="folder_already_exists">Mappen \"%s\" finns redan</string>
-    <string name="merge">Slå ihop</string>
-    <string name="keep_both">Behåll båda</string>
-    <string name="overwrite">Skriv över</string>
-    <string name="skip">Hoppa över</string>
-    <string name="append">Lägg till \'_1\'</string>
-    <string name="apply_to_all">Använd på alla konflikter</string>
-
-    <!-- File picker -->
-    <string name="select_folder">Välj mapp</string>
-    <string name="select_file">Välj fil</string>
-    <string name="confirm_storage_access_title">Bekräfta åtkomst till extern lagring</string>
-    <string name="confirm_folder_access_title">Confirm folder access</string>
-    <string name="confirm_storage_access_text">Välj rotmappen på ditt SD-kort på nästa skärm, för att bevilja skrivrättigheter</string>
-    <string name="confirm_storage_access_text_sd">Om du inte ser SD-kortet, prova detta</string>
-    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
-    <string name="confirm_selection">Bekräfta val</string>
-    <string name="loading">Loading…</string>
-
-    <plurals name="items">
-        <item quantity="one">%d objekt</item>
-        <item quantity="other">%d objekt</item>
-    </plurals>
-
-    <!-- Are you sure you want to delete 5 items? -->
-    <plurals name="delete_items">
-        <item quantity="one">%d objekt</item>
-        <item quantity="other">%d objekt</item>
-    </plurals>
-
-    <plurals name="deleting_items">
-        <item quantity="one">Tar bort %d objekt</item>
-        <item quantity="other">Tar bort %d objekt</item>
-    </plurals>
-
-    <!-- Are you sure you want to delete 5 contacts? -->
-    <plurals name="delete_contacts">
-        <item quantity="one">%d kontakt</item>
-        <item quantity="other">%d kontakter</item>
-    </plurals>
-
-    <!-- Storages -->
-    <string name="select_storage">Välj lagringsplats</string>
-    <string name="internal">Internt</string>
-    <string name="sd_card">SD-kort</string>
-    <string name="root">Rot</string>
-    <string name="wrong_root_selected">Du har valt fel mapp, välj rotmappen på ditt SD-kort</string>
-    <string name="sd_card_usb_same">SD-kortets och USB-enhetens sökvägar kan inte vara samma</string>
-    <string name="app_on_sd_card">You seem to have the app installed on an SD card, that makes the app widgets unavailable. You won\'t even see them on the list of available widgets.
-        It is a system limitation, so if you want to use the widgets, you have to move the app back on the internal storage.</string>
-    <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
-
-    <!-- File properties -->
-    <string name="properties">Egenskaper</string>
-    <string name="path">Sökväg</string>
-    <string name="items_selected">Valda objekt</string>
-    <string name="direct_children_count">Antal direkta döttrar</string>
-    <string name="files_count">Antal filer</string>
-    <string name="resolution">Upplösning</string>
-    <string name="duration">Varaktighet</string>
-    <string name="artist">Artist</string>
-    <string name="album">Album</string>
-    <string name="focal_length">Brännvidd</string>
-    <string name="exposure_time">Exponeringstid</string>
-    <string name="iso_speed">ISO-grader</string>
-    <string name="f_number">F-nummer</string>
-    <string name="camera">Kamera</string>
-    <string name="exif">EXIF</string>
-    <string name="song_title">Låttitel</string>
-    <string name="gps_coordinates">GPS-koordinater</string>
-    <string name="altitude">Höjd över havet</string>
-
-    <!-- Color customization -->
-    <string name="background_color">Bakgrundsfärg</string>
-    <string name="text_color">Textfärg</string>
-    <string name="primary_color">Primär färg</string>
-    <string name="accent_color_white">Accent color of white theme</string>
-    <string name="accent_color_black_and_white">Accent color of Black &amp; White theme</string>
-    <string name="foreground_color">Förgrundsfärg</string>
-    <string name="app_icon_color">Appikonens färg</string>
-    <string name="bottom_navigation_bar_color">Navigeringsfältets färg</string>
-    <string name="restore_defaults">Återställ standardfärger</string>
-    <string name="use_default">Använd standard</string>
-    <string name="default_color">Standard</string>
-    <string name="change_color">Ändra färg</string>
-    <string name="theme">Tema</string>
-    <string name="changing_color_description">Om du ändrar en färg, ändras temat till anpassat tema</string>
-    <string name="save">Spara</string>
-    <string name="discard">Avbryt</string>
-    <string name="undo_changes">Ångra ändringar</string>
-    <string name="undo_changes_confirmation">Är du säker på att du vill ångra dina ändringar?</string>
-    <string name="save_before_closing">Du har ändringar som inte är sparade. Spara innan du lämnar?</string>
-    <string name="apply_to_all_apps">Använd färgerna i alla Simple-appar</string>
-    <string name="app_icon_color_warning">WARNING: Some launchers do not handle app icon customization properly. In case the icon will disappear, try launching the app via Google Play or some widget, if available.
-        Once launched, just set back the default orange icon #F57C00. You might have to reinstall the app in the worst case.</string>
-    <string name="share_colors_success">Färgerna har uppdaterats. Ett nytt Tema som heter \'Delat\' har lagts till, använd det för att uppdatera alla apparnas färger i framtiden.</string>
-    <string name="shared_theme_note">Note that even though you are using the Pro app version, you still need Simple Thank You for technical reasons. It takes care of the color synchronization.</string>
-    <string name="purchase_thank_you">
-        <![CDATA[
-            Köp <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> för att låsa upp denna funktion och stödja utvecklingen. Tack!
-        ]]>
-    </string>
-
-    <!-- Themes -->
-    <string name="light_theme">Ljust</string>
-    <string name="dark_theme">Mörkt</string>
-    <string name="auto_theme">Auto</string>
-    <string name="solarized">Solariserat</string>
-    <string name="dark_red">Mörkrött</string>
-    <string name="white">White</string>
-    <string name="black_white">Svartvitt</string>
-    <string name="custom">Anpassat</string>
-    <string name="shared">Delat</string>
-
-    <!-- What's new -->
-    <string name="whats_new">Vad är nytt</string>
-    <string name="whats_new_disclaimer">* bara de större uppdateringarna visas här, det görs också alltid några mindre förbättringar</string>
-
-    <!-- Actionbar items -->
-    <string name="delete">Ta bort</string>
-    <string name="remove">Ta bort</string>
-    <string name="rename">Byt namn</string>
-    <string name="share">Dela</string>
-    <string name="share_via">Dela via</string>
-    <string name="select_all">Välj alla</string>
-    <string name="select_text">Select text</string>
-    <string name="hide">Dölj</string>
-    <string name="unhide">Visa</string>
-    <string name="hide_folder">Dölj mapp</string>
-    <string name="unhide_folder">Visa mapp</string>
-    <string name="temporarily_show_hidden">Visa dolda objekt tillfälligt</string>
-    <string name="stop_showing_hidden">Sluta visa dolda objekt</string>
-    <string name="maximum_share_reached">Du kan inte dela så här mycket innehåll på en gång</string>
-    <string name="empty_and_disable_recycle_bin">Töm och inaktivera Papperskorgen</string>
-    <string name="undo">Ångra</string>
-    <string name="redo">Gör om</string>
-    <string name="print">Skriv ut</string>
-    <string name="create_shortcut">Skapa genväg</string>
-    <string name="add_number_to_contact">Add number to contact</string>
-    <string name="view_contact_details">View contact details</string>
-    <string name="call_from_sim_1">Call from SIM 1</string>
-    <string name="call_from_sim_2">Call from SIM 2</string>
-    <string name="toggle_filename">Visa/dölj filnamn</string>
-    <string name="move_to_top">Move to the top</string>
-    <string name="move_to_bottom">Move to the bottom</string>
-    <string name="pin_item">Pin item</string>
-    <string name="unpin_item">Unpin item</string>
-    <string name="send_sms">Send SMS</string>
-    <string name="send_email">Send email</string>
-    <string name="call">Call</string>
-
-    <!-- Sorting -->
-    <string name="sort_by">Sortera efter</string>
-    <string name="name">Namn</string>
-    <string name="size">Storlek</string>
-    <string name="last_modified">Senast ändrad</string>
-    <string name="date_created">Date created</string>
-    <string name="date_taken">Fotodatum</string>
-    <string name="title">Titel</string>
-    <string name="filename">Filnamn</string>
-    <string name="extension">Filnamnstillägg</string>
-    <string name="random">Slumpmässigt</string>
-    <string name="sort_randomly">Ordna slumpmässigt</string>
-    <string name="ascending">Stigande</string>
-    <string name="descending">Fallande</string>
-    <string name="use_for_this_folder">Använd bara för denna mapp</string>
-    <string name="sort_numeric_parts">Sortera numeriska delar efter faktiskt värde</string>
-    <string name="first_name">Förnamn</string>
-    <string name="middle_name">Mellannamn</string>
-    <string name="surname">Efternamn</string>
-    <string name="full_name">Full name</string>
-    <string name="use_custom_sorting">Use custom sorting</string>
-    <string name="change_order">Change order</string>
-
-    <!-- Confirmation dialog -->
-    <string name="proceed_with_deletion">Är du säker på att du vill fortsätta med borttagningen?</string>
-    <string name="deletion_confirmation">Är du säker på att du vill ta bort %s?</string>    <!-- Are you sure you want to delete 5 items? -->
-    <string name="move_to_recycle_bin_confirmation">Är du säker på att du vill flytta %s till Papperskorgen?</string>    <!-- Are you sure you want to move 3 items into the Recycle Bin? -->
-    <string name="are_you_sure_delete">Är du säker på att du vill ta bort det här objektet?</string>
-    <string name="are_you_sure_recycle_bin">Är du säker på att du vill flytta det här objektet till Papperskorgen?</string>
-    <string name="do_not_ask_again">Fråga inte igen i denna session</string>
-    <string name="do_not_show_again">Do not show again</string>
-    <string name="yes">Ja</string>
-    <string name="no">Nej</string>
-    <string name="maybe">Kanske</string>
-
-    <plurals name="delete_warning">
-        <item quantity="one">VARNING! Du håller på att ta bort %d mapp</item>
-        <item quantity="other">VARNING! Du håller på att ta bort %d mappar</item>
-    </plurals>
-
-    <!-- Password protection -->
-    <string name="pin">PIN-kod</string>
-    <string name="enter_pin">Ange PIN-kod</string>
-    <string name="please_enter_pin">Ange en PIN-kod</string>
-    <string name="wrong_pin">Du har angett fel PIN-kod</string>
-    <string name="repeat_pin">Upprepa PIN-kod</string>
-    <string name="pattern">Mönster</string>
-    <string name="insert_pattern">Rita mönster</string>
-    <string name="wrong_pattern">Du har ritat fel mönster</string>
-    <string name="repeat_pattern">Upprepa mönster</string>
-    <string name="biometrics">Biometrics</string>
-    <string name="fingerprint">Fingeravtryck</string>
-    <string name="add_fingerprint">Lägg till fingeravtryck</string>
-    <string name="place_finger">Placera fingret på fingeravtrycksläsaren</string>
-    <string name="open_biometric_dialog">Open biometric ID verification dialog</string>
-    <string name="authenticate">Authenticate</string>
-    <string name="authentication_failed">Autentiseringen misslyckades</string>
-    <string name="authentication_blocked">Autentisering blockeras, försök igen om en stund</string>
-    <string name="no_fingerprints_registered">Du har inga registrerade fingeravtryck, lägg till några i Inställningarna på din enhet</string>
-    <string name="go_to_settings">Gå till Inställningar</string>
-    <string name="protection_setup_successfully">Lösenordet har ställts in. Installera om appen om du glömmer bort det.</string>
-    <string name="fingerprint_setup_successfully">Skyddet har ställts in. Installera om appen om du inte kan ta bort skyddet.</string>
-    <string name="lock_folder">Lås mapp</string>
-    <string name="unlock_folder">Lås upp mapp</string>
-    <string name="lock_folder_notice">This protection works in this app only, it is not supposed to replace a real systemwide folder encryption.</string>
-
-    <!-- Times -->
-    <string name="yesterday">Igår</string>
-    <string name="today">Idag</string>
-    <string name="tomorrow">Imorgon</string>
-    <string name="hide_year">Hide year</string>
-    <string name="seconds_raw">sekunder</string>
-    <string name="minutes_raw">minuter</string>
-    <string name="hours_raw">timmar</string>
-    <string name="days_raw">dagar</string>
-    <string name="seconds_letter">s</string>
-    <string name="minutes_letter">m</string>
-    <string name="hours_letter">h</string>
-
-    <plurals name="seconds">
-        <item quantity="one">%d sekund</item>
-        <item quantity="other">%d sekunder</item>
-    </plurals>
-    <plurals name="minutes">
-        <item quantity="one">%d minut</item>
-        <item quantity="other">%d minuter</item>
-    </plurals>
-    <plurals name="hours">
-        <item quantity="one">%d timme</item>
-        <item quantity="other">%d timmar</item>
-    </plurals>
-    <plurals name="days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dagar</item>
-    </plurals>
-    <plurals name="weeks">
-        <item quantity="one">%d vecka</item>
-        <item quantity="other">%d veckor</item>
-    </plurals>
-    <plurals name="months">
-        <item quantity="one">%d månad</item>
-        <item quantity="other">%d månader</item>
-    </plurals>
-    <plurals name="years">
-        <item quantity="one">%d år</item>
-        <item quantity="other">%d år</item>
-    </plurals>
-
-    <!-- For example: I will be there in 5 minutes -->
-    <plurals name="in_seconds">
-        <item quantity="one">%d sekund</item>
-        <item quantity="other">%d sekunder</item>
-    </plurals>
-    <plurals name="in_minutes">
-        <item quantity="one">%d minut</item>
-        <item quantity="other">%d minuter</item>
-    </plurals>
-    <plurals name="in_hours">
-        <item quantity="one">%d timme</item>
-        <item quantity="other">%d timmar</item>
-    </plurals>
-    <plurals name="in_days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dagar</item>
-    </plurals>
-    <plurals name="in_weeks">
-        <item quantity="one">%d vecka</item>
-        <item quantity="other">%d veckor</item>
-    </plurals>
-    <plurals name="in_months">
-        <item quantity="one">%d månad</item>
-        <item quantity="other">%d månader</item>
-    </plurals>
-    <plurals name="in_years">
-        <item quantity="one">%d år</item>
-        <item quantity="other">%d år</item>
-    </plurals>
-
-    <!-- For example: Event reminder: 3 minutes before -->
-    <plurals name="seconds_before">
-        <item quantity="one">%d sekund innan</item>
-        <item quantity="other">%d sekunder innan</item>
-    </plurals>
-    <plurals name="minutes_before">
-        <item quantity="one">%d minut innan</item>
-        <item quantity="other">%d minuter innan</item>
-    </plurals>
-    <plurals name="hours_before">
-        <item quantity="one">%d timme innan</item>
-        <item quantity="other">%d timmar innan</item>
-    </plurals>
-    <plurals name="days_before">
-        <item quantity="one">%d dag innan</item>
-        <item quantity="other">%d dagar innan</item>
-    </plurals>
-    <plurals name="weeks_before">
-        <item quantity="one">%d vecka innan</item>
-        <item quantity="other">%d veckor innan</item>
-    </plurals>
-    <plurals name="months_before">
-        <item quantity="one">%d månad innan</item>
-        <item quantity="other">%d månader innan</item>
-    </plurals>
-    <plurals name="years_before">
-        <item quantity="one">%d år innan</item>
-        <item quantity="other">%d år innan</item>
-    </plurals>
-
-    <!-- For example: Postpone reminder by 3 minutes -->
-    <plurals name="by_seconds">
-        <item quantity="one">%d sekund</item>
-        <item quantity="other">%d sekunder</item>
-    </plurals>
-    <plurals name="by_minutes">
-        <item quantity="one">%d minut</item>
-        <item quantity="other">%d minuter</item>
-    </plurals>
-    <plurals name="by_hours">
-        <item quantity="one">%d timme</item>
-        <item quantity="other">%d timmar</item>
-    </plurals>
-    <plurals name="by_days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dagar</item>
-    </plurals>
-    <plurals name="by_weeks">
-        <item quantity="one">%d vecka</item>
-        <item quantity="other">%d veckor</item>
-    </plurals>
-    <plurals name="by_months">
-        <item quantity="one">%d månad</item>
-        <item quantity="other">%d månader</item>
-    </plurals>
-    <plurals name="by_years">
-        <item quantity="one">%d år</item>
-        <item quantity="other">%d år</item>
-    </plurals>
-
-    <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
-    <string name="alarm_goes_off_in">Återstående tid tills alarmet ringer:\n%s</string>
-    <string name="reminder_triggers_in">Återstående tid tills påminnelsen aktiveras:\n%s</string>
-    <string name="time_remaining">Time remaining:\n%s</string>
-    <string name="alarm_warning">Kontrollera att alarmet fungerar som det ska innan du förlitar dig på det. Det kanske inte fungerar som det ska på grund av batterisparrelaterade systembegränsningar.</string>
-    <string name="reminder_warning">Kontrollera att påminnelserna fungerar som de ska innan du förlitar dig på dem. De kanske inte fungerar som de ska på grund av batterisparrelaterade systembegränsningar.</string>
-    <string name="notifications_disabled">Notifications of this application are disabled. Please go in your device settings for enabling them.</string>
-
-    <!-- Alarms -->
-    <string name="alarm">Alarm</string>
-    <string name="snooze">Snooza</string>
-    <string name="dismiss">Stäng av</string>
-    <string name="no_reminder">Ingen påminnelse</string>
-    <string name="at_start">Vid start</string>
-    <string name="system_sounds">Systemljud</string>
-    <string name="your_sounds">Dina ljud</string>
-    <string name="add_new_sound">Lägg till ett nytt ljud</string>
-    <string name="no_sound">Inget ljud</string>
-    <string name="during_day_at_hh_mm">During the day at hh:mm</string>
-    <string name="during_day_at">During the day at %02d:%02d</string>
-
+    <string name="group_direct_subfolders">Gruppera direkta undermappar</string>
+    <!-- Grouping at media thumbnails -->
+    <string name="group_by">Gruppera efter</string>
+    <string name="do_not_group_files">Gruppera inte filer</string>
+    <string name="by_folder">Mapp</string>
+    <string name="by_last_modified">Senast ändrad</string>
+    <string name="by_last_modified_daily">Senast ändrad (dag)</string>
+    <string name="by_last_modified_monthly">Senast ändrad (månad)</string>
+    <string name="by_date_taken">Fotodatum</string>
+    <string name="by_date_taken_daily">Fotodatum (dag)</string>
+    <string name="by_date_taken_monthly">Fotodatum (månad)</string>
+    <string name="by_file_type">Filtyp</string>
+    <string name="by_extension">Filnamnstillägg</string>
+    <string name="show_file_count_section_header">Show file count at section headers</string>
+    <string name="grouping_and_sorting">Observera att gruppering och sortering är två oberoende funktioner</string>
+    <!-- Widgets -->
+    <string name="folder_on_widget">Mapp som visas i widgeten:</string>
+    <string name="show_folder_name">Visa mappnamnet</string>
     <!-- Settings -->
-    <string name="settings">Inställningar</string>
-    <string name="purchase_simple_thank_you">Köp Simple Thank You</string>
-    <string name="general_settings">General</string>
-    <string name="color_customization">Color customization</string>
-    <string name="customize_colors">Anpassa färger</string>
-    <string name="customize_colors_locked">Anpassa färger (Locked)</string>
-    <string name="customize_widget_colors">Anpassa widgetarnas färger</string>
-    <string name="customize_notifications">Customize notifications</string>
-    <string name="use_english_language">Använd engelska</string>
-    <string name="language">Language</string>
-    <string name="show_hidden_items">Visa dolda objekt</string>
-    <string name="font_size">Teckenstorlek</string>
-    <string name="small">Liten</string>
-    <string name="medium">Medelstor</string>
-    <string name="large">Stor</string>
-    <string name="extra_large">Extra stor</string>
-    <string name="password_protect_hidden_items">Lösenordsskydda synligheten för dolda objekt</string>
-    <string name="password_protect_whole_app">Lösenordsskydda hela appen</string>
-    <string name="password_protect_file_deletion">Lösenordsskydda borttagning och flytt av filer</string>
-    <string name="keep_last_modified">Behåll senast ändrad-tider vid filåtgärder</string>
-    <string name="show_info_bubble">Visa en informationsbubbla när jag rullar genom objekt genom att dra rullningslisten</string>
-    <string name="prevent_phone_from_sleeping">Hindra aktivering av viloläge när appen körs i förgrunden</string>
-    <string name="skip_delete_confirmation">Hoppa alltid över dialogrutan för bekräftelse av borttagning</string>
-    <string name="enable_pull_to_refresh">Aktivera uppdatering vid svepning från överkant</string>
-    <string name="use_24_hour_time_format">Använd 24-timmarsformat</string>
-    <string name="change_date_and_time_format">Ändra datum- och tidsformat</string>
-    <string name="sunday_first">Börja veckan på söndag</string>
-    <string name="widgets">Widgetar</string>
-    <string name="use_same_snooze">Använd alltid samma snooze-intervall</string>
-    <string name="snooze_time">Snooze-intervall</string>
-    <string name="vibrate_on_button_press">Vibrera när jag trycker på knapparna</string>
-    <string name="move_items_into_recycle_bin">Flytta objekt till Papperskorgen istället för att ta bort dem</string>
-    <string name="recycle_bin_cleaning_interval">Rensningsintervall för Papperskorgen</string>
-    <string name="empty_recycle_bin">Töm Papperskorgen</string>
-    <string name="force_portrait_mode">Lås skärmen i stående läge</string>
-    <string name="export_settings">Exportera inställningar</string>
-    <string name="import_settings">Importera inställningar</string>
-    <string name="settings_exported_successfully">Inställningarna har exporterats</string>
-    <string name="settings_imported_successfully">Inställningarna har importerats</string>
-    <string name="start_name_with_surname">Visa efternamn först</string>
-    <string name="clear_cache">Clear cache</string>
-    <string name="show_call_confirmation_dialog">Visa en bekräftelsedialogruta före uppringning</string>
-
+    <string name="autoplay_videos">Spela upp videor automatiskt</string>
+    <string name="remember_last_video_position">Kom ihåg senaste videouppspelningsposition</string>
+    <string name="loop_videos">Spela upp videor om och om igen</string>
+    <string name="animate_gifs">Animera GIF-bilders miniatyrer</string>
+    <string name="max_brightness">Maximal ljusstyrka när media visas i helskärmsläge</string>
+    <string name="crop_thumbnails">Beskär miniatyrer till kvadrater</string>
+    <string name="show_thumbnail_video_duration">Visa videolängder</string>
+    <string name="screen_rotation_by">Rotera media i helskärmsläge</string>
+    <string name="screen_rotation_system_setting">Systeminställning</string>
+    <string name="screen_rotation_device_rotation">Enhetens rotation</string>
+    <string name="screen_rotation_aspect_ratio">Bildförhållande</string>
+    <string name="black_background_at_fullscreen">Svart bakgrund när media visas i helskärmsläge</string>
+    <string name="scroll_thumbnails_horizontally">Rulla horisontellt genom miniatyrer</string>
+    <string name="hide_system_ui_at_fullscreen">Dölj systemanvändargränssnittet automatiskt när media visas i helskärmsläge</string>
+    <string name="delete_empty_folders">Ta bort tomma mappar när deras innehåll tas bort</string>
+    <string name="allow_photo_gestures">Tillåt styrning av fotoljusstyrka med vertikala gester</string>
+    <string name="allow_video_gestures">Tillåt styrning av videovolym och videoljusstyrka med vertikala gester</string>
+    <string name="show_media_count">Visa antalet mediefiler i varje mapp i huvudvyn</string>
+    <string name="show_extended_details">Visa utökad information över media i helskärmsläge</string>
+    <string name="manage_extended_details">Hantera utökad information</string>
+    <string name="one_finger_zoom">Tillåt zoomning med ett finger när media visas i helskärmsläge</string>
+    <string name="allow_instant_change">Tillåt snabbyte av media genom tryckning på skärmens kanter</string>
+    <string name="allow_deep_zooming_images">Tillåt djupzoomning av bilder</string>
+    <string name="hide_extended_details">Dölj utökad information när statusfältet är dolt</string>
+    <string name="show_at_bottom">Visa några åtgärdsknappar längst ned på skärmen</string>
+    <string name="show_recycle_bin">Visa Papperskorgen i mappvyn</string>
+    <string name="deep_zoomable_images">Djupt zoombara bilder</string>
+    <string name="show_highest_quality">Visa bilder i högsta möjliga kvalitet</string>
+    <string name="show_recycle_bin_last">Visa Papperskorgen som det sista objektet i huvudvyn</string>
+    <string name="allow_down_gesture">Tillåt avslutning av helskärmsläget med en nedåtgest</string>
+    <string name="allow_one_to_one_zoom">Tillåt 1:1-zoomning med två dubbeltryck</string>
+    <string name="open_videos_on_separate_screen">Öppna alltid videor i en separat vy med nya horisontella gester</string>
+    <string name="show_notch">Show a notch if available</string>
+    <string name="allow_rotating_gestures">Allow rotating images with gestures</string>
+    <string name="file_loading_priority">File loading priority</string>
+    <string name="speed">Speed</string>
+    <string name="compromise">Compromise</string>
+    <string name="avoid_showing_invalid_files">Avoid showing invalid files</string>
+    <string name="show_image_file_types">Show image file types</string>
+    <string name="allow_zooming_videos">Allow zooming videos with double tapping them</string>
+    <string name="folder_thumbnail_style">Folder thumbnail style</string>
+    <string name="file_thumbnail_style">File thumbnail style</string>
+    <string name="mark_favorite_items">Mark favorite items</string>
+    <string name="thumbnail_spacing">Thumbnail spacing</string>
+    <string name="show_file_count_line">Show file count on a separate line</string>
+    <string name="show_file_count_brackets">Show file count in brackets</string>
+    <string name="show_file_count_none">Do not show file count</string>
+    <string name="limit_folder_title">Limit long folder titles to 1 line</string>
+    <string name="square">Square</string>
+    <string name="rounded_corners">Rounded corners</string>
+    <string name="export_favorite_paths">Export favorite file paths</string>
+    <string name="media_management_prompt">To make sure that all file operations work reliably, please make this app a Media management app in your device settings.</string>
+    <string name="password_protect_excluded">Password protect excluded folder visibility</string>
+    <string name="media_management_manual">Something went wrong, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
+    <string name="media_management_note">If the redirection does not work, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
+    <string name="media_management_alternative">If you do not want to do it, you can also go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
     <!-- Setting sections -->
-    <string name="visibility">Synlighet</string>
-    <string name="security">Säkerhet</string>
-    <string name="scrolling">Rullning</string>
-    <string name="file_operations">Filåtgärder</string>
-    <string name="recycle_bin">Papperskorgen</string>
-    <string name="saving_label">Sparande</string>
-    <string name="startup">Start</string>
-    <string name="text">Text</string>
-    <string name="migrating">Migrering</string>
-    <string name="quality">Quality</string>
-    <string name="main_screen">Main screen</string>
-    <string name="thumbnails">Thumbnails</string>
-    <string name="list_view">List view</string>
-
-    <!-- Default tab to open -->
-    <string name="manage_shown_tabs">Välj vilka flikar som ska visas</string>
-    <string name="default_tab_to_open">Tab to open at app start</string>
-    <string name="contacts_tab">Contacts</string>
-    <string name="favorites_tab">Favorites</string>
-    <string name="call_history_tab">Call History</string>
-    <string name="groups_tab">Groups</string>
-    <string name="last_used_tab">Last used one</string>
-    <string name="files_tab">Files</string>
-    <string name="recent_files_tab">Recent files</string>
-
-    <!-- Recycle Bin -->
-    <string name="restore_this_file">Återställ filen</string>
-    <string name="restore_selected_files">Återställ valda filer</string>
-    <string name="restore_all_files">Återställ alla filer</string>
-    <string name="recycle_bin_emptied">Papperskorgen har tömts</string>
-    <string name="files_restored_successfully">Filerna har återställts</string>
-    <string name="empty_recycle_bin_confirmation">Är du säker på att du vill tömma Papperskorgen? Filerna tas bort permanent.</string>
-    <string name="recycle_bin_empty">Papperskorgen är tom</string>
-    <string name="moving_recycle_bin_items_disabled">Flytt av objekt i Papperskorgen är inaktiverad, använd Återställ</string>
-    <string name="show_the_recycle_bin">Visa Papperskorgen</string>
-    <string name="hide_the_recycle_bin">Dölj Papperskorgen</string>
-
-    <plurals name="moving_items_into_bin">
-        <item quantity="one">Flyttar %d objekt till Papperskorgen</item>
-        <item quantity="other">Flyttar %d objekt till Papperskorgen</item>
-    </plurals>
-
-    <!-- Import / Export -->
-    <string name="importing">Importerar…</string>
-    <string name="exporting">Exporterar…</string>
-    <string name="importing_successful">Importen lyckades</string>
-    <string name="exporting_successful">Exporten lyckades</string>
-    <string name="importing_failed">Importen misslyckades</string>
-    <string name="exporting_failed">Exporten misslyckades</string>
-    <string name="importing_some_entries_failed">Importen av vissa poster misslyckades</string>
-    <string name="exporting_some_entries_failed">Exporten av vissa poster misslyckades</string>
-    <string name="no_entries_for_importing">Inga poster som kan importeras hittades</string>
-    <string name="no_new_entries_for_importing">No new entries for importing have been found</string>
-    <string name="no_entries_for_exporting">Inga poster som kan exporteras hittades</string>
-
-    <!-- OTG devices -->
-    <string name="usb">USB</string>
-    <string name="usb_detected">You seem to have an USB device attached to your device. To make sure its files appear properly, you need to grant additional permissions.</string>
-    <string name="confirm_usb_storage_access_text">Välj rotmappen på USB-enheten på nästa skärm, för att ge åtkomst</string>
-    <string name="wrong_root_selected_usb">Du har valt fel mapp, välj rotmappen på din USB-enhet</string>
-
-    <!-- Dates -->
-    <string name="january">Januari</string>
-    <string name="february">Februari</string>
-    <string name="march">Mars</string>
-    <string name="april">April</string>
-    <string name="may">Maj</string>
-    <string name="june">Juni</string>
-    <string name="july">Juli</string>
-    <string name="august">Augusti</string>
-    <string name="september">September</string>
-    <string name="october">Oktober</string>
-    <string name="november">November</string>
-    <string name="december">December</string>
-
-    <!-- in January -->
-    <string name="in_january">i januari</string>
-    <string name="in_february">i februari</string>
-    <string name="in_march">i mars</string>
-    <string name="in_april">i april</string>
-    <string name="in_may">i maj</string>
-    <string name="in_june">i juni</string>
-    <string name="in_july">i juli</string>
-    <string name="in_august">i augusti</string>
-    <string name="in_september">i september</string>
-    <string name="in_october">i oktober</string>
-    <string name="in_november">i november</string>
-    <string name="in_december">i december</string>
-
-    <string name="monday">Måndag</string>
-    <string name="tuesday">Tisdag</string>
-    <string name="wednesday">Onsdag</string>
-    <string name="thursday">Torsdag</string>
-    <string name="friday">Fredag</string>
-    <string name="saturday">Lördag</string>
-    <string name="sunday">Söndag</string>
-
-    <string name="monday_letter">M</string>
-    <string name="tuesday_letter">T</string>
-    <string name="wednesday_letter">O</string>
-    <string name="thursday_letter">T</string>
-    <string name="friday_letter">F</string>
-    <string name="saturday_letter">L</string>
-    <string name="sunday_letter">S</string>
-
-    <string name="monday_short">Mån</string>
-    <string name="tuesday_short">Tis</string>
-    <string name="wednesday_short">Ons</string>
-    <string name="thursday_short">Tor</string>
-    <string name="friday_short">Fre</string>
-    <string name="saturday_short">Lör</string>
-    <string name="sunday_short">Sön</string>
-
-    <!-- Pro version -->
-    <string name="upgrade_to_pro_long">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements.</string>
-    <string name="upgrade_to_pro_long_click">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements by clicking here.</string>
-    <string name="it_is_free">Den är gratis fram till: %s. Om du hämtar den innan dess, kan du använda den kostnadsfritt för all framtid.</string>
-    <string name="more_info">Mer information</string>
-    <string name="upgrade">Uppgradera</string>
-    <string name="upgrade_calendar">Lokalt sparade händelser kan bara migreras manuellt genom att exportera och importera dem till och från en .ics-fil. Du hittar knappar för både export och import i huvudvymenyn.</string>
-
-    <!-- About -->
-    <string name="about">Om</string>
-    <string name="website">Website</string>
-    <string name="website_label">Du hittar källkoden på</string>
-    <string name="email_label">Skicka dina synpunkter och förslag till</string>
-    <string name="upgrade_to_pro">Uppgradera till Pro</string>
-    <string name="more_apps">Fler appar</string>
-    <string name="more_apps_from_us">More apps from us</string>
-    <string name="invite_friends">Bjud in vänner</string>
-    <string name="share_text">Hej, läs om %1$s på %2$s</string>
-    <string name="invite_via">Bjud in via</string>
-    <string name="rate_us">Betygsätt oss</string>
-    <string name="rate">Betygsätt</string>
-    <string name="donate">Donera</string>
-    <string name="donate_underlined"><u>Donera</u></string>
-    <string name="follow_us">Följ oss</string>
-    <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
-    <string name="support">Support</string>
-    <string name="help_us">Help us</string>
-    <string name="social">Social</string>
-    <string name="other">Other</string>
-    <string name="version_placeholder">Version %s</string>
-    <string name="hello">Hello :)</string>
-    <string name="about_footer">Made with &#10084;&#65039; in Slovakia</string>
-    <string name="additional_info">Ytterligare information</string>
-    <string name="app_version">Appversion: %s</string>
-    <string name="device_os">Enhetens operativsystem: %s</string>
-    <string name="donate_please">
-        <![CDATA[
-            Hej,<br><br>
-            jag hoppas att du gillar appen. Den innehåller ingen reklam. Stöd dess utveckling genom att köpa appen <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a>, som även hindrar den här dialogrutan från att visas igen.<br><br>
-            Tack!
-        ]]>
-    </string>
-    <string name="purchase">Köp</string>
-    <string name="update_thank_you">Uppdatera Simple Thank You till den senaste versionen</string>
-    <string name="before_asking_question_read_faq">Before you ask a question, please check the app settings and read the Frequently Asked Questions first. Maybe the solution is there.</string>
-    <string name="before_rate_read_faq">Before you rate us, please check the app settings and read the Frequently Asked Questions first. If you have any problems, maybe the solution is there.</string>
-    <string name="make_sure_latest">Also make sure that you are using the latest app version.</string>
-    <string name="read_it">Read it</string>
-    <string name="read_faq">Read FAQ</string>
-    <string name="rate_us_prompt">Hello,\n\nit looks like you are using this app for quite a while already, and we really appreciate it.\n\nIf we can ask you a favor, please rate us on Google Play. That would really help us a lot.\n\nNo matter how you decide, you will not see this message again.\n\nThanks!</string>
-    <string name="rate_our_app">Rate our app please :)</string>
-    <string name="thank_you">Thank you</string>
-    <string name="widget_locked_pro">The widget is locked.\nPlease upgrade to the Pro version to unlock it.</string>
-    <string name="widget_locked">
-        <![CDATA[
-            The widget is locked.<br>Please purchase <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> to unlock it.
-        ]]>
-    </string>
-
-    <!-- New app (do not translate anything on the 4th line) -->
-    <string name="new_app">
-        <![CDATA[
-            Hej,<br><br>
-            jag vill bara meddela att en ny app nyligen har publicerats:<br><br>
-            <a href="%1$s">%2$s</a><br><br>
-            <a href="%3$s">%4$s</a><br><br>
-            <a href="%5$s">%6$s</a><br><br>
-            Du kan hämta den genom att trycka på titeln.<br><br>
-            Tack
-        ]]>
-    </string>
-
-    <string name="simple_app_launcher">Simple App Launcher</string>
-    <string name="simple_calculator">Simple Calculator</string>
-    <string name="simple_calendar">Simple Calendar</string>
-    <string name="simple_camera">Simple Camera</string>
-    <string name="simple_clock">Simple Clock</string>
-    <string name="simple_contacts">Simple Contacts</string>
-    <string name="simple_dialer">Simple Dialer</string>
-    <string name="simple_draw">Simple Draw</string>
-    <string name="simple_file_manager">Simple File Manager</string>
-    <string name="simple_flashlight">Simple Flashlight</string>
-    <string name="simple_gallery">Simple Gallery</string>
-    <string name="simple_keyboard">Simple Keyboard</string>
-    <string name="simple_music_player">Simple Music Player</string>
-    <string name="simple_notes">Simple Notes</string>
-    <string name="simple_sms_messenger">Simple SMS Messenger</string>
-    <string name="simple_thank_you">Simple Thank You</string>
-    <string name="simple_voice_recorder">Simple Voice Recorder</string>
-
-    <string name="app_launcher_short">App Launcher</string>
-    <string name="calculator_short">Calculator</string>
-    <string name="calendar_short">Calendar</string>
-    <string name="camera_short">Camera</string>
-    <string name="clock_short">Clock</string>
-    <string name="contacts_short">Contacts</string>
-    <string name="dialer_short">Dialer</string>
-    <string name="draw_short">Draw</string>
-    <string name="file_manager_short">File Manager</string>
-    <string name="flashlight_short">Flashlight</string>
-    <string name="gallery_short">Gallery</string>
-    <string name="keyboard_short">Keyboard</string>
-    <string name="music_player_short">Music Player</string>
-    <string name="notes_short">Notes</string>
-    <string name="sms_messenger_short">SMS Messenger</string>
-    <string name="thank_you_short">Thank You</string>
-    <string name="voice_recorder_short">Voice Recorder</string>
-
-    <string name="sideloaded_app">
-        <![CDATA[
-            It looks like your app version is corrupt. Please download the original version <a href="%s">here</a>.
-        ]]>
-    </string>
-
+    <string name="thumbnails">Miniatyrer</string>
+    <string name="fullscreen_media">Visning av media i helskärmsläge</string>
+    <string name="extended_details">Utökad information</string>
+    <string name="bottom_actions">Åtgärder längst ned på skärmen</string>
+    <!-- Bottom actions -->
+    <string name="manage_bottom_actions">Hantera synliga åtgärder längst ned på skärmen</string>
+    <string name="toggle_favorite">Växla favorit</string>
+    <string name="toggle_file_visibility">Visa/dölj fil</string>
+    <!-- New editor strings -->
+    <string name="pesdk_transform_button_freeCrop">Custom</string>
+    <string name="pesdk_transform_button_resetCrop">Reset</string>
+    <string name="pesdk_transform_button_squareCrop">Square</string>
+    <string name="pesdk_transform_title_name">Transform</string>
+    <string name="pesdk_filter_title_name">Filter</string>
+    <string name="pesdk_filter_asset_none">None</string>
+    <string name="pesdk_adjustments_title_name">Adjust</string>
+    <string name="pesdk_adjustments_button_shadowTool">Shadows</string>
+    <string name="pesdk_adjustments_button_exposureTool">Exposure</string>
+    <string name="pesdk_adjustments_button_highlightTool">Highlights</string>
+    <string name="pesdk_adjustments_button_brightnessTool">Brightness</string>
+    <string name="pesdk_adjustments_button_contrastTool">Contrast</string>
+    <string name="pesdk_adjustments_button_saturationTool">Saturation</string>
+    <string name="pesdk_adjustments_button_clarityTool">Clarity</string>
+    <string name="pesdk_adjustments_button_gammaTool">Gamma</string>
+    <string name="pesdk_adjustments_button_blacksTool">Blacks</string>
+    <string name="pesdk_adjustments_button_whitesTool">Whites</string>
+    <string name="pesdk_adjustments_button_temperatureTool">Temperature</string>
+    <string name="pesdk_adjustments_button_sharpnessTool">Sharpness</string>
+    <string name="pesdk_adjustments_button_reset">Reset</string>
+    <string name="pesdk_focus_title_name">Focus</string>
+    <string name="pesdk_focus_title_disabled">None</string>
+    <string name="pesdk_focus_button_radial">Radial</string>
+    <string name="pesdk_focus_button_linear">Linear</string>
+    <string name="pesdk_focus_button_mirrored">Mirrored</string>
+    <string name="pesdk_focus_button_gaussian">Gaussian</string>
+    <string name="pesdk_text_title_input">Add text</string>
+    <string name="pesdk_text_title_name">Text</string>
+    <string name="pesdk_text_title_options">Text Options</string>
+    <string name="pesdk_text_title_textColor">Text Color</string>
+    <string name="pesdk_text_title_font">Font</string>
+    <string name="pesdk_text_button_add">Add</string>
+    <string name="pesdk_text_button_edit">Edit</string>
+    <string name="pesdk_text_button_straighten">Straighten</string>
+    <string name="pesdk_text_button_font">Font</string>
+    <string name="pesdk_text_button_color">Color</string>
+    <string name="pesdk_text_button_backgroundColor">BG Color</string>
+    <string name="pesdk_text_button_alignment">Alignment</string>
+    <string name="pesdk_text_button_bringToFront">To Front</string>
+    <string name="pesdk_text_button_delete">Delete</string>
+    <string name="pesdk_text_text_editTextPlaceholder">Your text</string>
+    <string name="pesdk_brush_title_name">Brush</string>
+    <string name="pesdk_brush_button_color">Color</string>
+    <string name="pesdk_brush_button_size">Size</string>
+    <string name="pesdk_brush_button_hardness">Hardness</string>
+    <string name="pesdk_brush_button_bringToFront">To Front</string>
+    <string name="pesdk_brush_button_delete">Delete</string>
+    <string name="pesdk_brush_title_brushColor">Brush Color</string>
+    <string name="pesdk_editor_title_name">Editor</string>
+    <string name="pesdk_editor_title_closeEditorAlert">Close Editor\?</string>
+    <string name="pesdk_editor_text_closeEditorAlert">Do you really want to discard the changes\?</string>
+    <string name="pesdk_editor_button_closeEditorAlertConfirmation">Yes</string>
+    <string name="pesdk_editor_button_closeEditorAlertCancelation">No</string>
+    <string name="pesdk_editor_cancel">Cancel</string>
+    <string name="pesdk_editor_accept">Accept</string>
+    <string name="pesdk_editor_save">Save</string>
+    <string name="pesdk_editor_text_exportProgressUnknown">Exporting…</string>
+    <string name="pesdk_editor_text_exportProgress" formatted="false">Exporting %s.</string>
+    <string name="pesdk_sticker_title_name">Sticker</string>
+    <string name="pesdk_sticker_title_color">Sticker Color</string>
+    <string name="pesdk_sticker_title_options">Sticker Options</string>
+    <string name="pesdk_sticker_button_add">Add</string>
+    <string name="pesdk_sticker_button_color">Color</string>
+    <string name="pesdk_sticker_button_delete">Delete</string>
+    <string name="pesdk_sticker_button_bringToFront">To Front</string>
+    <string name="pesdk_sticker_button_straighten">Straighten</string>
+    <string name="pesdk_sticker_button_replace">Replace</string>
+    <string name="pesdk_sticker_button_opacity">Opacity</string>
+    <string name="pesdk_sticker_button_contrast">Contrast</string>
+    <string name="pesdk_sticker_button_saturation">Saturation</string>
+    <string name="pesdk_sticker_button_brightness">Brightness</string>
+    <string name="pesdk_sticker_category_name_custom">Uploads</string>
+    <string name="pesdk_overlay_title_name">Overlay</string>
+    <string name="pesdk_overlay_button_blendModeNormal">Normal</string>
+    <string name="pesdk_overlay_button_blendModeDarken">Darken</string>
+    <string name="pesdk_overlay_button_blendModeScreen">Screen</string>
+    <string name="pesdk_overlay_button_blendModeOverlay">Overlay</string>
+    <string name="pesdk_overlay_button_blendModeLighten">Lighten</string>
+    <string name="pesdk_overlay_button_blendModeMultiply">Multiply</string>
+    <string name="pesdk_overlay_button_blendModeColorBurn">Color Burn</string>
+    <string name="pesdk_overlay_button_blendModeSoftLight">Soft Light</string>
+    <string name="pesdk_overlay_button_blendModeHardLight">Hard Light</string>
+    <string name="pesdk_overlay_asset_none">None</string>
+    <string name="pesdk_overlay_asset_golden">Golden</string>
+    <string name="pesdk_overlay_asset_lightleak1">Lightleak 1</string>
+    <string name="pesdk_overlay_asset_mosaic">Mosaic</string>
+    <string name="pesdk_overlay_asset_paper">Paper</string>
+    <string name="pesdk_overlay_asset_rain">Rain</string>
+    <string name="pesdk_overlay_asset_vintage">Vintage</string>
+    <string name="pesdk_common_button_flipH">Flip H</string>
+    <string name="pesdk_common_button_flipV">Flip V</string>
+    <string name="pesdk_common_button_undo">Undo</string>
+    <string name="pesdk_common_button_redo">Redo</string>
+    <string name="pesdk_common_title_colorPicker">Color Picker</string>
+    <string name="pesdk_common_title_transparentColor">Transparent</string>
+    <string name="pesdk_common_title_whiteColor">White</string>
+    <string name="pesdk_common_title_grayColor">Gray</string>
+    <string name="pesdk_common_title_blackColor">Black</string>
+    <string name="pesdk_common_title_lightBlueColor">Light blue</string>
+    <string name="pesdk_common_title_blueColor">Blue</string>
+    <string name="pesdk_common_title_purpleColor">Purple</string>
+    <string name="pesdk_common_title_orchidColor">Orchid</string>
+    <string name="pesdk_common_title_pinkColor">Pink</string>
+    <string name="pesdk_common_title_redColor">Red</string>
+    <string name="pesdk_common_title_orangeColor">Orange</string>
+    <string name="pesdk_common_title_goldColor">Gold</string>
+    <string name="pesdk_common_title_yellowColor">Yellow</string>
+    <string name="pesdk_common_title_oliveColor">Olive</string>
+    <string name="pesdk_common_title_greenColor">Green</string>
+    <string name="pesdk_common_title_aquamarinColor">Aquamarin</string>
+    <string name="pesdk_common_title_pipettableColor">Pipettable color</string>
+    <string name="vesdk_video_trim_title_name">Trim</string>
     <!-- FAQ -->
-    <string name="frequently_asked_questions">Frågor och svar</string>
-    <string name="before_asking_question">Innan du ställer en fråga, läs först</string>
-    <string name="faq_1_title_commons">How come I don\'t see this apps widget on the list of widgets?</string>
-    <string name="faq_1_text_commons">It is most likely because you moved the app on an SD card. There is an Android system limitation which hides the given app widgets
-        in that case. The only solution is to move the app back onto the Internal Storage via your device settings.</string>
-    <string name="faq_2_title_commons">I want to support you, but I cannot donate money. Is there anything else I can do?</string>
-    <string name="faq_2_text_commons">
-        <![CDATA[
-            Yes, of course. You can spread the word about the apps or give good feedback and ratings. You can also help by translating the apps in a new language, or just update some existing translations.
-            The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
-        ]]>
-    </string>
-    <string name="faq_3_title_commons">I deleted some files by mistake, how can I recover them?</string>
-    <string name="faq_3_text_commons">Sadly, you cannot. Files are deleted instantly after the confirmation dialog, there is no trashbin available.</string>
-    <string name="faq_4_title_commons">I don\'t like the widget colors, can I change them?</string>
-    <string name="faq_4_text_commons">Yep, as you drag a widget on your home screen a widget config screen appears. You will see colored squares at the bottom left corner, just press them to pick a new color. You can use the slider for adjusting the alpha too.</string>
-    <string name="faq_5_title_commons">Can I somehow restore deleted files?</string>
-    <string name="faq_5_text_commons">If they were really deleted, you cannot. However, there is a Recycle Bin enabled by default, it will cause the files just be moved in the Bin instead of deleting them.</string>
-    <string name="faq_6_title_commons">The app launcher icon disappeared. What can I do?</string>
-    <string name="faq_6_text_commons">It is caused by your launcher not supporting icon customization properly. Try launching the app via Google Play or some widget, if available.
-        Once launched, just set back the default orange icon #F57C00. You might have to reinstall the app in the worst case.</string>
-    <string name="faq_7_title_commons">The money has been deducted from my bank account, but I cannot download the app. What can I do?</string>
-    <string name="faq_7_text_commons">Payments are fully handled by Google, their system glitches from time to time. Just clear your Google Play app cache and restart your device, then retry downloading it.</string>
-    <string name="faq_8_title_commons">Why should I upgrade to the Pro version?</string>
-    <string name="faq_8_text_commons">As your app version is no longer updated, the bugs you have maybe spotted will never be fixed. There will also be no new functions added. You can purchase the Pro version on Google Play for a small sum of money.
-        It is a one time payment, which means that once you purchase it, you will never have to pay again. Not even after getting a new device. If you won\'t like the Pro version, you can just uninstall it within a few hours and you will automatically get your money back.
-        If you want a refund anytime later, just contact us at hello@simplemobiletools.com and you will get it.</string>
-    <string name="faq_9_title_commons">How can I select multiple items at once?</string>
-    <string name="faq_9_text_commons">There are multiple ways of doing that. The first one is starting the selection mode by long pressing one item, then short clicking on others to select them. The second way is similar to selecting items on PCs with a mouse,
-        just start the selection mode by long pressing one item, then with your finger still down drag it across other items for selecting. The third way of selecting multiple items is long pressing one item, then long pressing another one and everything in between gets selected. If you
-        want to select all items, just long press one item, then click at the selected item counter at the top left corner. That will select or unselect all everything.</string>
-    <string name="faq_10_title_commons">I have purchased the app, but I cannot download it on another device.</string>
-    <string name="faq_10_text_commons">Try clearing your Google Play app cache and restarting your device. It is some Google Play glitch, not really related to the app itself.</string>
-
-    <!-- Contributors -->
-    <string name="contributors">Contributors</string>
-    <string name="translation">Translation</string>
-    <string name="development">Development</string>
-    <string name="other_help">Other help</string>
-    <string name="contributors_label">
-        <![CDATA[
-            This list contains everyone that noticeably helped any app within the Simple Mobile Tools suite, not only this one. Translations are handled by volunteers,
-            let us know if you want to help too. The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
-            Thanks to all contributors and other supporters!
-        ]]>
-    </string>
-
-    <string name="translation_arabic">Arabic</string>
-    <string name="translation_azerbaijani">Azerbaijani</string>
-    <string name="translation_bengali">Bengali</string>
-    <string name="translation_breton">Breton</string>
-    <string name="translation_catalan">Catalan</string>
-    <string name="translation_czech">Czech</string>
-    <string name="translation_welsh">Welsh</string>
-    <string name="translation_danish">Danish</string>
-    <string name="translation_english">English</string>
-    <string name="translation_german">German</string>
-    <string name="translation_greek">Greek</string>
-    <string name="translation_spanish">Spanish</string>
-    <string name="translation_basque">Basque</string>
-    <string name="translation_persian">Persian</string>
-    <string name="translation_finnish">Finnish</string>
-    <string name="translation_french">French</string>
-    <string name="translation_galician">Galician</string>
-    <string name="translation_hindi">Hindi</string>
-    <string name="translation_croatian">Croatian</string>
-    <string name="translation_hungarian">Hungarian</string>
-    <string name="translation_indonesian">Indonesian</string>
-    <string name="translation_italian">Italian</string>
-    <string name="translation_hebrew">Hebrew</string>
-    <string name="translation_japanese">Japanese</string>
-    <string name="translation_korean">Korean</string>
-    <string name="translation_lithuanian">Lithuanian</string>
-    <string name="translation_nepali">Nepali</string>
-    <string name="translation_norwegian">Norwegian</string>
-    <string name="translation_dutch">Dutch</string>
-    <string name="translation_polish">Polish</string>
-    <string name="translation_portuguese">Portuguese</string>
-    <string name="translation_romanian">Romanian</string>
-    <string name="translation_russian">Russian</string>
-    <string name="translation_slovak">Slovak</string>
-    <string name="translation_slovenian">Slovenian</string>
-    <string name="translation_serbian">Serbian</string>
-    <string name="translation_swedish">Swedish</string>
-    <string name="translation_tamil">Tamil</string>
-    <string name="translation_turkish">Turkish</string>
-    <string name="translation_ukrainian">Ukrainian</string>
-    <string name="translation_vietnamese">Vietnamese</string>
-    <string name="translation_chinese_hk">Chinese (Hong Kong)</string>
-    <string name="translation_chinese_cn">Chinese (Simplified)</string>
-    <string name="translation_chinese_tw">Chinese (Traditional)</string>
-
-    <!-- Pro comparison (shown in the deprecated free apps) -->
-    <string name="why_upgrade">Get the Pro version now!</string>
-    <string name="why_upgrade_basic_version">Basic</string>
-    <string name="why_upgrade_pro_version">Pro</string>
-    <string name="why_upgrade_no_ads">No ads</string>
-    <string name="why_upgrade_no_internet_access">No internet access</string>
-    <string name="why_upgrade_footer">+ 100% Money Back Guarantee</string>
-    <string name="why_upgrade_improved_design">Improved design</string>
-
-    <!-- Gallery Pro -->
-    <string name="why_upgrade_advanced_photo_editor">Advanced photo editor</string>
-    <string name="why_upgrade_heic_support">HEIC/HEIF file support</string>
-    <string name="why_upgrade_batch_renaming">Advanced batch file renaming</string>
-    <string name="why_upgrade_folder_locking">Individual folder locking</string>
-    <string name="why_upgrade_printing_support">Printing support</string>
-
-    <!-- Calendar Pro -->
-    <string name="why_upgrade_time_zone_support">Time zone support</string>
-    <string name="why_upgrade_attendees_emails">Attendees and email reminders</string>
-    <string name="why_upgrade_easy_event_importing">Easy event importing</string>
-    <string name="why_upgrade_new_widgets">New widgets</string>
-
-    <!-- Contacts Pro -->
-    <string name="why_upgrade_duplicate_contact_merging">Improved duplicate contact merging</string>
-    <string name="why_upgrade_font_size_customization">Font size customization</string>
-    <string name="why_upgrade_private_contact_sharing">Optional private contact sharing within our apps</string>
-    <string name="why_upgrade_customizable_contact_ringtones">Customizable contact ringtones</string>
-    <string name="why_upgrade_contact_filtering">Contact filtering</string>
-
-    <!-- Notes Pro -->
-    <string name="why_upgrade_checklists">Checklists</string>
-    <string name="why_upgrade_different_note_per_widget">Different note and colors per widget</string>
-    <string name="why_upgrade_note_locking">Note locking</string>
-
-    <!-- File Manager Pro -->
-    <string name="why_upgrade_date_and_time_format">Date and time format customization</string>
-    <string name="why_upgrade_shortcuts">Home screen shortcuts</string>
-    <string name="why_upgrade_file_compression">File compression support</string>
-    <string name="why_upgrade_recents_tab">Tab with recent files</string>
-
-    <!-- Draw Pro -->
-    <string name="why_upgrade_background_color_customization">Background color customization</string>
-    <string name="why_upgrade_file_importing">File importing support</string>
-    <string name="why_upgrade_zooming">Zooming</string>
-
-    <!-- License -->
-    <string name="notice">Denna app använder följande tredjepartsbibliotek för att göra mitt liv enklare. Tack.</string>
-    <string name="third_party_licences">Tredjepartslicenser</string>
-    <string name="kotlin_title">Kotlin (programmeringsspråk)</string>
-    <string name="subsampling_title">Subsampling Scale Image View (zoombara bildvyer)</string>
-    <string name="glide_title">Glide (inläsning och cachning av bilder)</string>
-    <string name="picasso_title">Picasso (inläsning och cachning av bilder)</string>
-    <string name="cropper_title">Android Image Cropper (beskärning och rotering av bilder)</string>
-    <string name="rtl_viewpager_title">RtlViewPager (höger-till-vänster-svepning)</string>
-    <string name="joda_title">Joda-Time (ersättning för Javas datumklass)</string>
-    <string name="stetho_title">Stetho (avlusning av databaser)</string>
-    <string name="otto_title">Otto (händelsebuss)</string>
-    <string name="photoview_title">PhotoView (zoombara GIF-bilder)</string>
-    <string name="pattern_title">PatternLockView (mönsterlås)</string>
-    <string name="reprint_title">Reprint (fingeravtryckslås)</string>
-    <string name="gif_drawable_title">Gif Drawable (inläsning av GIF-bilder)</string>
-    <string name="autofittextview_title">AutoFitTextView (storleksändring av text)</string>
-    <string name="robolectric_title">Robolectric (testramverk)</string>
-    <string name="espresso_title">Espresso (testhjälpklass)</string>
-    <string name="gson_title">Gson (JSON-parser)</string>
-    <string name="leak_canary_title">Leak Canary (minnesläckagedetektor)</string>
-    <string name="number_picker_title">Number Picker (anpassningsbar talväljare)</string>
-    <string name="exoplayer_title">ExoPlayer (video player)</string>
-    <string name="panorama_view_title">VR Panorama View (displaying panoramas)</string>
-    <string name="sanselan_title">Apache Sanselan (reading image metadata)</string>
-    <string name="filters_title">Android Photo Filters (image filters)</string>
-    <string name="gesture_views_title">Gesture Views (zoomable images)</string>
-    <string name="indicator_fast_scroll_title">Indicator Fast Scroll (letters on scrollbar)</string>
-    <string name="event_bus_title">Event Bus (communication within the app)</string>
-    <string name="audio_record_view_title">Audio Record View (audio visualization)</string>
-    <string name="sms_mms_title">SMS MMS (SMS and MMS handling)</string>
-    <string name="apng_title">APNG Android (animated WebP support)</string>
-
-    <!-- Google Play listing -->
-    <string name="deprecated_app">DEPRECATED: This version of the app is no longer maintained, get the Pro version at https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>
-    <string name="pro_app_refund">Don\'t forget that if you uninstall any paid app within 2 hours, you will automatically be refunded. If you want a refund anytime later, just contact us at hello@simplemobiletools.com and you will get it. That makes it easy to try it out :)</string>
-
-    <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
-    <string name="developer_description">A group of simple, open source Android apps with customizable widgets, without ads and unnecessary permissions.</string>
+    <string name="faq_1_title">How can I make Simple Gallery the default device gallery\?</string>
+    <string name="faq_1_text">First you have to find the currently default gallery in the Apps section of your device settings, look for a button that says something like \"Open by default\", click on it, then select \"Clear defaults\". The next time you will try opening an image or video you should see an app picker, where you can select Simple Gallery and make it the default app.</string>
+    <string name="faq_2_title">I locked the app with a password, but I forgot it. What can I do\?</string>
+    <string name="faq_2_text">You can solve it in 2 ways. You can either reinstall the app, or find the app in your device settings and select \"Clear data\". It will reset all your settings, it will not remove any media files.</string>
+    <string name="faq_3_title">How can I make an album always appear at the top\?</string>
+    <string name="faq_3_text">You can long press the desired album and select the Pin icon at the actions menu, that will pin it to the top. You can pin multiple folders too, pinned items will be sorted by the default sorting method.</string>
+    <string name="faq_4_title">How can I fast forward videos\?</string>
+    <string name="faq_4_text">You can do it by double tapping the side of the screen, or tapping the current or max duration texts near the seekbar. If you enable opening videos on a separate screen in the app settings, you can use horizontal gestures too.</string>
+    <string name="faq_5_title">What is the difference between hiding and excluding a folder\?</string>
+    <string name="faq_5_text">Exclude prevents displaying the folder only in Simple Gallery, while Hide works system-wise and it hides the folder from other galleries too. It works by creating an empty \".nomedia\" file in the given folder, which you can then remove with any file manager too. Note that some devices do not allow hiding folders like Camera, Screenshots and Downloads.</string>
+    <string name="faq_6_title">Why do folders with music cover art or stickers show up\?</string>
+    <string name="faq_6_text">It can happen that you will see some unusual albums show up. You can easily exclude them by long pressing them and selecting Exclude. In the next dialog you can then select the parent folder, chances are it will prevent the other related albums showing up too.</string>
+    <string name="faq_7_title">A folder with images isn\'t showing up, or it doesn\'t show all items. What can I do\?</string>
+    <string name="faq_7_text">That can have multiple reasons, but solving it is easy. Just go in Settings -&gt; Manage Included Folders, select Plus and navigate to the required folder.</string>
+    <string name="faq_8_title">What if I want just a few particular folders visible\?</string>
+    <string name="faq_8_text">Adding a folder at the Included Folders doesn\'t automatically exclude anything. What you can do is go in Settings -&gt; Manage Excluded Folders, exclude the root folder \"/\", then add the desired folders at Settings -&gt; Manage Included Folders. That will make only the selected folders visible, as both excluding and including are recursive and if a folder is both excluded and included, it will show up.</string>
+    <string name="faq_10_title">Can I crop images with this app\?</string>
+    <string name="faq_10_text">Yes, you can crop images in the editor, by dragging the image corners. You can get to the editor either by long pressing an image thumbnail and selecting Edit, or selecting Edit from the fullscreen view.</string>
+    <string name="faq_11_title">Can I somehow group media file thumbnails\?</string>
+    <string name="faq_11_text">Sure, just use the \"Group by\" menu item while at the thumbnails view. You can group files by multiple criteria, including Date Taken. If you use the \"Show all folders content\" function you can group them by folders too.</string>
+    <string name="faq_12_title">Sorting by Date Taken doesn\'t seem to work properly, how can I fix it\?</string>
+    <string name="faq_12_text">It is most likely caused by the files being copied from somewhere. You can fix it by selecting the file thumbnails and selecting \"Fix Date Taken value\".</string>
+    <string name="faq_13_title">I see some color banding on the images. How can I improve the quality\?</string>
+    <string name="faq_13_text">The current solution for displaying images works fine in the vast majority of cases, but if you want even better image quality, you can enable the \"Show images in the highest possible quality\" at the app settings, in the \"Deep zoomable images\" section.</string>
+    <string name="faq_14_title">I have hidden a file/folder. How can I unhide it\?</string>
+    <string name="faq_14_text">You can either press the \"Temporarily show hidden items\" menu item at the main screen, or toggle \"Show hidden items\" in the app settings to see the hidden item. If you want to unhide it, just long press it and select \"Unhide\". Folders are hidden by adding a hidden \".nomedia\" file into them, you can delete the file with any file manager too. Note that hiding works recursively though, so if you hide a folder, all subfolders will become hidden too. So for unhiding the subfolders you have to unhide the parent folder.</string>
+    <string name="faq_15_title">Why does the app take up so much space\?</string>
+    <string name="faq_15_text">App cache can take up to 250MB, it ensures quicker image loading. If the app is taking up even more space, it is most likely caused by you having items in the Recycle Bin. Those files count to the app size. You can clear the Recycle bin by opening it and deleting all files, or from the app settings. Every file in the Bin is deleted automatically after 30 days.</string>
+    <string name="faq_16_title">What happened to file and folder hiding and why cannot I see hidden items anymore\?</string>
+    <string name="faq_16_text">Starting with Android 11 you cannot hide or unhide files or folders anymore, you cannot see the hidden ones in gallery apps either. You will have to use some file manager for that.</string>
+    <string name="faq_17_title">Why cannot I include missing folders anymore\?</string>
+    <string name="faq_17_text">That stopped working due to the system changes that came with Android 11 too, the app cannot browse real folders anymore, it relies on the so called MediaStore at fetching data.</string>
+    <string name="faq_18_title">Why do I see ads during video playback\?</string>
+    <string name="faq_18_text">Our apps have no ads whatsoever. If you see them during video playback, you must be using some other apps video player. Try finding your default video player in the device settings, then do a \"Clear defaults\" on it. The next time you invoke some video intent you will see an app picker prompt, where you can select what app you want to use.</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>

@@ -1148,6 +1148,18 @@ fun FragmentActivity.handleHiddenFolderPasswordProtection(callback: () -> Unit) 
     }
 }
 
+fun FragmentActivity.handleExcludedFolderPasswordProtection(callback: () -> Unit) {
+    if (baseConfig.isExcludedPasswordProtectionOn) {
+        SecurityDialog(this, baseConfig.excludedPasswordHash, baseConfig.excludedProtectionType) { _, _, success ->
+            if (success) {
+                callback()
+            }
+        }
+    } else {
+        callback()
+    }
+}
+
 fun FragmentActivity.handleAppPasswordProtection(callback: (success: Boolean) -> Unit) {
     if (baseConfig.isAppPasswordProtectionOn) {
         SecurityDialog(this, baseConfig.appPasswordHash, baseConfig.appProtectionType) { _, _, success ->
