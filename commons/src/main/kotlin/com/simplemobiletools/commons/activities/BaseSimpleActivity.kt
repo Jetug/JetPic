@@ -15,6 +15,8 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.isExternalStorageManager
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.Settings
@@ -34,10 +36,7 @@ import androidx.core.util.Pair
 import com.google.android.material.appbar.MaterialToolbar
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.asynctasks.CopyMoveTask
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.dialogs.ExportSettingsDialog
-import com.simplemobiletools.commons.dialogs.FileConflictDialog
-import com.simplemobiletools.commons.dialogs.WritePermissionDialog
+import com.simplemobiletools.commons.dialogs.*
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.CopyMoveListener
@@ -244,6 +243,59 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
             supportActionBar?.setHomeAsUpIndicator(icon)
         }
     }
+
+    fun isSPlus(): Boolean {
+        return false
+    }
+
+    fun Context.canManageMedia(): Boolean {
+        //return isSPlus() && MediaStore.canManageMedia(this)
+        return false
+    }
+
+//    @RequiresApi(Build.VERSION_CODES.R)
+//    fun BaseSimpleActivity.handleMediaManagementPrompt(callback: () -> Unit) {
+//        if (canManageMedia() || isExternalStorageManager()) {
+//            callback()
+//        } else if (isRPlus() && resources.getBoolean(R.bool.default_vibrate_on_press)) {
+//            if (Environment.isExternalStorageManager()) {
+//                callback()
+//            } else {
+//                var messagePrompt = getString(R.string.access_storage_prompt)
+//                if (isSPlus()) {
+//                    messagePrompt += "\n\n${getString(R.string.media_management_alternative)}"
+//                }
+//
+//                ConfirmationAdvancedDialog(this, messagePrompt, 0, R.string.ok, 0) { success ->
+//                    if (success) {
+//                        try {
+//                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+//                            intent.addCategory("android.intent.category.DEFAULT")
+//                            intent.data = Uri.parse("package:$packageName")
+//                            startActivity(intent)
+//                        } catch (e: Exception) {
+//                            val intent = Intent()
+//                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+//                            try {
+//                                startActivity(intent)
+//                            } catch (e: Exception) {
+//                                showErrorToast(e)
+//                            }
+//                        }
+//                    } else {
+//                        finish()
+//                    }
+//                }
+//            }
+//        } else if (isSPlus() && !MediaStore.canManageMedia(this) && !isExternalStorageManager()) {
+//            val message = "${getString(R.string.media_management_prompt)}\n\n${getString(R.string.media_management_note)}"
+//            ConfirmationDialog(this, message, 0, R.string.ok, 0) {
+//                launchMediaManagementIntent(callback)
+//            }
+//        } else {
+//            callback()
+//        }
+//    }
 
     private fun getCurrentAppIconColorIndex(): Int {
         val appIconColor = baseConfig.appIconColor

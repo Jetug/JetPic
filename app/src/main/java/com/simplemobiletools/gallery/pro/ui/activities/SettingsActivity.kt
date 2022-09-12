@@ -1,11 +1,10 @@
-package com.simplemobiletools.gallery.pro.activities
+package com.simplemobiletools.gallery.pro.ui.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.os.Environment.isExternalStorageManager
 import android.text.TextUtils
-import androidx.annotation.ChecksSdkIntAtLeast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.*
@@ -13,7 +12,6 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeFileThumbnailStyleDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeFolderThumbnailStyleDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ManageBottomActionsDialog
@@ -147,7 +145,7 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupUseEnglish() {
-        settings_use_english_holder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
+        //settings_use_english_holder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
         settings_use_english.isChecked = config.useEnglish
         settings_use_english_holder.setOnClickListener {
             settings_use_english.toggle()
@@ -161,14 +159,14 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupLanguage() {
         settings_language.text = Locale.getDefault().displayLanguage
-        settings_language_holder.beVisibleIf(isTiramisuPlus())
+        //settings_language_holder.beVisibleIf(isTiramisuPlus())
 
         if (settings_use_english_holder.isGone() && settings_language_holder.isGone()) {
             settings_change_date_time_format_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
         }
 
         settings_language_holder.setOnClickListener {
-            launchChangeAppLanguageIntent()
+            //launchChangeAppLanguageIntent()
         }
     }
 
@@ -491,10 +489,10 @@ class SettingsActivity : SimpleActivity() {
     private fun setupKeepLastModified() {
         settings_keep_last_modified.isChecked = config.keepLastModified
         settings_keep_last_modified_holder.setOnClickListener {
-            handleMediaManagementPrompt {
+            //handleMediaManagementPrompt {
                 settings_keep_last_modified.toggle()
                 config.keepLastModified = settings_keep_last_modified.isChecked
-            }
+            //}
         }
     }
 

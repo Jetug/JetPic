@@ -66,6 +66,11 @@ class Config(context: Context) : BaseConfig(context) {
 
 //    var shouldShowHidden = showHiddenMedia || temporarilyShowHidden
 
+    var markFavoriteItems: Boolean
+        get() = prefs.getBoolean(MARK_FAVORITE_ITEMS, true)
+        set(markFavoriteItems) = prefs.edit().putBoolean(MARK_FAVORITE_ITEMS, markFavoriteItems).apply()
+
+
     var showHiddenMedia: Boolean
         get() = prefs.getBoolean(SHOW_HIDDEN_MEDIA, false)
         set(showHiddenFolders) = prefs.edit().putBoolean(SHOW_HIDDEN_MEDIA, showHiddenFolders).apply()
@@ -77,22 +82,6 @@ class Config(context: Context) : BaseConfig(context) {
     var temporarilyShowExcluded: Boolean
         get() = prefs.getBoolean(TEMPORARILY_SHOW_EXCLUDED, false)
         set(temporarilyShowExcluded) = prefs.edit().putBoolean(TEMPORARILY_SHOW_EXCLUDED, temporarilyShowExcluded).apply()
-
-    var isExcludedPasswordProtectionOn: Boolean
-        get() = prefs.getBoolean(EXCLUDED_PASSWORD_PROTECTION, false)
-        set(isExcludedPasswordProtectionOn) = prefs.edit().putBoolean(EXCLUDED_PASSWORD_PROTECTION, isExcludedPasswordProtectionOn).apply()
-
-    var excludedPasswordHash: String
-        get() = prefs.getString(EXCLUDED_PASSWORD_HASH, "")!!
-        set(excludedPasswordHash) = prefs.edit().putString(EXCLUDED_PASSWORD_HASH, excludedPasswordHash).apply()
-
-    var excludedProtectionType: Int
-        get() = prefs.getInt(EXCLUDED_PROTECTION_TYPE, PROTECTION_PATTERN)
-        set(excludedProtectionType) = prefs.edit().putInt(EXCLUDED_PROTECTION_TYPE, excludedProtectionType).apply()
-
-    var isExcludedPasswordProtectionOn: Boolean
-        get() = prefs.getBoolean(EXCLUDED_PASSWORD_PROTECTION, false)
-        set(isExcludedPasswordProtectionOn) = prefs.edit().putBoolean(EXCLUDED_PASSWORD_PROTECTION, isExcludedPasswordProtectionOn).apply()
 
     var isThirdPartyIntent: Boolean
         get() = prefs.getBoolean(IS_THIRD_PARTY_INTENT, false)
