@@ -45,7 +45,7 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.PanoramaPhotoActivity
 import com.simplemobiletools.gallery.pro.ui.activities.PhotoActivity
 import com.simplemobiletools.gallery.pro.ui.adapters.PortraitPhotosAdapter
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.saveRotatedImageToFile
 import com.simplemobiletools.gallery.pro.data.extensions.sendFakeClick
 import com.simplemobiletools.gallery.pro.data.helpers.*

@@ -28,9 +28,9 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.PanoramaVideoActivity
 import com.simplemobiletools.gallery.pro.ui.activities.VideoActivity
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.hasNavBar
-import com.simplemobiletools.gallery.pro.data.extensions.parseFileChannel
+import com.simplemobiletools.gallery.pro.data.extensions.context.parseFileChannel
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.ui.views.MediaSideScroll

@@ -5,15 +5,14 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
+import com.simplemobiletools.commons.extensions.toStringSet
 import com.simplemobiletools.commons.helpers.FAVORITES
-import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.JET
 import com.simplemobiletools.gallery.pro.data.helpers.NO_VALUE
 import com.simplemobiletools.gallery.pro.data.helpers.RECYCLE_BIN
 import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
 import java.io.File
 import java.lang.reflect.Type
 import kotlin.system.measureTimeMillis
@@ -68,6 +67,13 @@ fun Context.startSettingsScanner() = launchIO{
     }
 }
 
+fun Context.saveIsPined(path: String, isPinned: Boolean){
+    val settings = getSettings(path)
+    settings.pined = isPinned
+    config.addPinnedFolders(setOf(path));
+    saveSettings(settings)
+}
+
 fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
     val groups = dirGroup.innerDirs
 
@@ -88,9 +94,7 @@ fun Context.getDirectoryGroup(path: String): String{
 }
 
 fun Context.saveDirChanges(directories: ArrayList<Directory>) = launchIO{
-    directories.forEach{
-        saveDirChanges(it)
-    }
+    directories.forEach{ saveDirChanges(it) }
 }
 
 fun Context.saveDirChanges(directory: Directory) = launchIO{
@@ -118,19 +122,15 @@ fun Context.getSorting(path: String): Int{
         else
             config.getCustomFolderSorting(path)
     }
-    //Log.e(JET,"getSorting $time ms")
+    Log.i(JET,"getSorting $time ms")
     return sorting
 }
 
-fun Context.saveSorting(path: String, sorting: Int){
-    sync.launch {
-        launchIO {
-            val settings = getSettings(path)
-            settings.sorting = sorting
-            config.saveCustomSorting(path, sorting)
-            saveSettings(settings)
-        }
-    }
+fun Context.saveSorting(path: String, sorting: Int) = launchIO {
+    val settings = getSettings(path)
+    settings.sorting = sorting
+    config.saveCustomSorting(path, sorting)
+    saveSettings(settings)
 }
 
 fun Context.getCustomMediaOrder(source: ArrayList<Medium>){

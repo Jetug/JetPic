@@ -10,8 +10,8 @@ import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.adapters.ManageHiddenFoldersAdapter
 import com.simplemobiletools.gallery.pro.data.extensions.addNoMedia
-import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.extensions.getNoMediaFolders
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.getNoMediaFolders
 import kotlinx.android.synthetic.main.activity_manage_folders.*
 
 class HiddenFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {

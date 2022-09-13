@@ -17,13 +17,14 @@ import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.launchSettings
 import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsScanner
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateWidgets
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.helpers.khttp.post
-import com.simplemobiletools.gallery.pro.data.helpers.khttp.structures.files.FileLike
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
-import java.io.File
 import java.net.InetAddress
 import kotlin.system.measureTimeMillis
 

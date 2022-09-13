@@ -7,7 +7,8 @@ import com.simplemobiletools.commons.dialogs.rename.RenameItemsDialogBase
 import com.simplemobiletools.gallery.pro.data.extensions.context.renameGroup
 import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
 
-class RenameGroupsDialog(activity: BaseSimpleActivity, private val dirGroup: ArrayList<DirectoryGroup>, val callback: (newNames: ArrayList<String>) -> Unit): RenameItemsDialogBase(activity) {
+class RenameGroupsDialog(activity: BaseSimpleActivity, private val dirGroup: ArrayList<DirectoryGroup>,
+                         val callback: (newNames: ArrayList<String>) -> Unit) : RenameItemsDialogBase(activity) {
     override fun onPositiveClick() {
         val names = arrayListOf<String>()
 

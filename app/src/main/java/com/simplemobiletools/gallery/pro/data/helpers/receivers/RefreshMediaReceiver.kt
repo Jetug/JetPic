@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.simplemobiletools.commons.helpers.REFRESH_PATH
-import com.simplemobiletools.gallery.pro.data.extensions.addPathToDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.addPathToDB
 
 class RefreshMediaReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

@@ -6,10 +6,9 @@ import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getParentPath
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.IOScope
-import com.simplemobiletools.gallery.pro.data.extensions.dateTakensDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.dateTakensDB
 import com.simplemobiletools.gallery.pro.data.models.DateTaken
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime

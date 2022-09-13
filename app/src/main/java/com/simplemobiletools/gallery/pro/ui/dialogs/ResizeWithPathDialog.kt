@@ -8,7 +8,7 @@ import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import kotlinx.android.synthetic.main.dialog_resize_image_with_path.view.*
 
 class ResizeWithPathDialog(val activity: BaseSimpleActivity, val size: Point, val path: String, val callback: (newSize: Point, newPath: String) -> Unit) {

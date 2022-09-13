@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.isVisible
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.helpers.SHOW_ALL
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*

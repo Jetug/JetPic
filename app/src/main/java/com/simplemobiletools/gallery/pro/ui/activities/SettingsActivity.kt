@@ -17,6 +17,9 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeFolderThumbnailStyleDi
 import com.simplemobiletools.gallery.pro.ui.dialogs.ManageBottomActionsDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ManageExtendedDetailsDialog
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.mediaDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.recycleBinPath
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.models.AlbumCover
 import kotlinx.android.synthetic.main.activity_settings.*

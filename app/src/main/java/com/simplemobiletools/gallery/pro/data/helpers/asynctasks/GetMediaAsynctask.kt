@@ -3,8 +3,8 @@ package com.simplemobiletools.gallery.pro.data.helpers.asynctasks
 import android.content.Context
 import android.os.AsyncTask
 import com.simplemobiletools.commons.helpers.*
-import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.extensions.getFavoritePaths
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.getFavoritePaths
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.models.Medium

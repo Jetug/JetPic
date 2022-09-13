@@ -25,6 +25,7 @@ import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.activities.ViewPagerActivity
 import com.simplemobiletools.gallery.pro.ui.dialogs.DeleteWithRememberDialog
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.searchInYandex

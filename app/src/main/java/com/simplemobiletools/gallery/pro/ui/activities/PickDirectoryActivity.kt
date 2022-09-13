@@ -9,6 +9,9 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.adapters.*
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.getDirsToShow
+import com.simplemobiletools.gallery.pro.data.extensions.context.getSortedDirectories
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.data.models.FolderItem

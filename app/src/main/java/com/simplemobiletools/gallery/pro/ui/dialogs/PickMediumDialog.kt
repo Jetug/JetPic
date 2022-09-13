@@ -12,8 +12,8 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.adapters.SearchResultAdapter
 import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
-import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.extensions.getCachedMedia
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.getCachedMedia
 import com.simplemobiletools.gallery.pro.data.helpers.SHOW_ALL
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.models.Medium

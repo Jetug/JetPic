@@ -12,6 +12,7 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.adapters.DirectoryAdapter
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.data.models.FolderItem
 import kotlinx.android.synthetic.main.dialog_directory_picker.view.*

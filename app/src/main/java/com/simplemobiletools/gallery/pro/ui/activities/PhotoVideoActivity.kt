@@ -17,6 +17,8 @@ import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.parseFileChannel
 import com.simplemobiletools.gallery.pro.ui.fragments.PhotoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.VideoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.ViewPagerFragment

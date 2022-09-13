@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.getBasePath
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import kotlinx.android.synthetic.main.dialog_exclude_folder.view.*
 
 class ExcludeFolderDialog(val activity: BaseSimpleActivity, val selectedPaths: List<String>, val callback: () -> Unit) {

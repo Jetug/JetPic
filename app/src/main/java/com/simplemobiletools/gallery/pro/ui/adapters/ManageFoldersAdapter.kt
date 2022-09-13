@@ -8,7 +8,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import kotlinx.android.synthetic.main.item_manage_folder.view.*
 import java.util.*
 

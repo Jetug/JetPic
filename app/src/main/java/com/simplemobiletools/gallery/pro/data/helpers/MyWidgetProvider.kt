@@ -17,10 +17,10 @@ import com.simplemobiletools.commons.extensions.setVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.MediaActivity
-import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.extensions.directoryDao
-import com.simplemobiletools.gallery.pro.data.extensions.getFolderNameFromPath
-import com.simplemobiletools.gallery.pro.data.extensions.widgetsDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.directoryDao
+import com.simplemobiletools.gallery.pro.data.extensions.context.getFolderNameFromPath
+import com.simplemobiletools.gallery.pro.data.extensions.context.widgetsDB
 import com.simplemobiletools.gallery.pro.data.models.Widget
 
 class MyWidgetProvider : AppWidgetProvider() {

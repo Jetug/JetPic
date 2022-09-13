@@ -1,6 +1,5 @@
-package com.simplemobiletools.gallery.pro.data.extensions
+package com.simplemobiletools.gallery.pro.data.extensions.context
 
-import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
@@ -35,6 +34,7 @@ import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncta
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.databases.dao.*
+import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.models.*
 import com.simplemobiletools.gallery.pro.data.svg.SvgSoftwareLayerSetter
 import com.simplemobiletools.gallery.pro.ui.views.MySquareImageView

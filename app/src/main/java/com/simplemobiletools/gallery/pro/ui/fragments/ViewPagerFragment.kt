@@ -8,7 +8,7 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import java.io.File

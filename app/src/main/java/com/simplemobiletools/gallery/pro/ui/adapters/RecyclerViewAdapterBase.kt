@@ -12,7 +12,7 @@ import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import java.util.*
 
 @SuppressLint("NotifyDataSetChanged")

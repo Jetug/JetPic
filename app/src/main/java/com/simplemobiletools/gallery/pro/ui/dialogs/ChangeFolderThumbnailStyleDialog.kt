@@ -13,7 +13,7 @@ import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import kotlinx.android.synthetic.main.dialog_change_folder_thumbnail_style.view.*
 import kotlinx.android.synthetic.main.directory_item_grid_square.view.*

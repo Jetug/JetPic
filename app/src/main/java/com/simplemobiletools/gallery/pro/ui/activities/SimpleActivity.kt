@@ -19,7 +19,9 @@ import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.contracts.PickDirectoryContract
-import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.addPathToDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateDirectoryPath
 import com.simplemobiletools.gallery.pro.data.helpers.MANAGE_STORAGE_RC
 
 open class SimpleActivity : BaseSimpleActivity() {
