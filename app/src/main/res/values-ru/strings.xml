@@ -38,7 +38,6 @@
     <string name="switch_to_file_search">Переключиться на поиск файлов по всем видимым папкам</string>
     <string name="set_as_default_folder">Установить как папку по умолчанию</string>
     <string name="unset_as_default_folder">Отключить как папку по умолчанию</string>
-    <string name="reorder_by_dragging">Менять порядок папок перетаскиванием</string>
     <string name="reorder_by_dragging_pro">Менять порядок папок перетаскиванием (Pro)</string>
     <string name="restore_to_path">Восстановление в \"%s\"</string>
     <!-- Filter -->
@@ -66,8 +65,7 @@
     <string name="hidden_folders">Скрытые папки</string>
     <string name="manage_hidden_folders">Управление скрытыми папками</string>
     <string name="hidden_folders_placeholder">Похоже, у вас нет папок, скрытых файлом \".nomedia\".</string>
-    <string name="temporarily_show_excluded">Временно показать исключённые</string>
-    <string name="stop_showing_excluded">Не показывать исключённые</string>
+
     <!-- Include folders -->
     <string name="include_folders">Включённые папки</string>
     <string name="manage_included_folders">Управление включёнными папками</string>
@@ -379,6 +377,10 @@
 
     <!--    Jetug     -->
     <string name="access_storage_prompt">Пожалуйста предоставьте приложению доступ ко всем данным, без этого многие функции не будут работать.</string>
+    <string name="reorder_by_dragging">Поменять порядок</string>
+
+    <string name="temporarily_show_excluded">Показать исключённые</string>
+    <string name="stop_showing_excluded">Не показывать исключённые</string>
 
     <string name="edit_date">Изменить дату</string>
     <string name="group_dirs">Сгруппировать</string>
@@ -395,4 +397,5 @@
     <string name="date_editing_success">Новая дата изменения установленна</string>
     <string name="save_exif">Сохранение даты в EXIF</string>
     <string name="save_exif_success">Дата сохранена в EXIF</string>
+
 </resources>

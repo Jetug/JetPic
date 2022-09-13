@@ -32,7 +32,6 @@
     <string name="switch_to_file_search">Switch to file search across all visible folders</string>
     <string name="set_as_default_folder">Set as default folder</string>
     <string name="unset_as_default_folder">Unset as default folder</string>
-    <string name="reorder_by_dragging">Reorder folders by dragging</string>
     <string name="reorder_by_dragging_pro">Reorder folders by dragging (Pro)</string>
     <string name="restore_to_path">Restoring to \'%s\'</string>
 
@@ -60,8 +59,6 @@
     <string name="hidden_folders">Hidden folders</string>
     <string name="manage_hidden_folders">Manage hidden folders</string>
     <string name="hidden_folders_placeholder">Seems like you don\'t have any folders hidden with a \".nomedia\" file.</string>
-    <string name="temporarily_show_excluded">Temporarily show excluded</string>
-    <string name="stop_showing_excluded">Stop showing excluded</string>
 
     <!-- Include folders -->
     <string name="include_folders">Included folders</string>
@@ -384,6 +381,10 @@
 
     <!--    Jetug     -->
     <string name="access_storage_prompt">Please grant our app access to all your files, it might not work well without it.</string>
+    <string name="reorder_by_dragging">Reorder folders</string>
+
+    <string name="temporarily_show_excluded">Show excluded</string>
+    <string name="stop_showing_excluded">Stop showing excluded</string>
 
     <string name="edit_date">Edit date</string>
     <string name="group_dirs">Group</string>

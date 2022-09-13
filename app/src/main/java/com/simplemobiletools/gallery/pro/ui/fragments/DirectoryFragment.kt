@@ -134,6 +134,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         ///}
         if (savedInstanceState == null) {
             config.temporarilyShowHidden = false
+            config.temporarilyShowExcluded = false
             config.tempSkipDeleteConfirmation = false
             removeTempFolder()
             checkRecycleBinItems()
@@ -268,9 +269,10 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     override fun onStop() {
         super.onStop()
 
-        if (config.temporarilyShowHidden || config.tempSkipDeleteConfirmation) {
+        if (config.temporarilyShowHidden || config.tempSkipDeleteConfirmation || config.temporarilyShowExcluded) {
             mTempShowHiddenHandler.postDelayed({
                 config.temporarilyShowHidden = false
+                config.temporarilyShowExcluded = false
                 config.tempSkipDeleteConfirmation = false
             }, SHOW_TEMP_HIDDEN_DURATION)
         } else {
@@ -281,6 +283,8 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
     override fun onDestroy() {
         super.onDestroy()
         if (!activity.isChangingConfigurations) {
+            config.temporarilyShowExcluded = false
+            config.tempSkipDeleteConfirmation = false
             mTempShowHiddenHandler.removeCallbacksAndMessages(null)
             removeTempFolder()
 
@@ -327,15 +331,15 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 findItem(R.id.show_the_recycle_bin).isVisible = useBin && !config.showRecycleBinAtFolders
                 findItem(R.id.set_as_default_folder).isVisible = !config.defaultFolder.isEmpty()
                 setupSearch(this)
-            }
+        }
         }
 
         menu.apply {
             findItem(R.id.temporarily_show_hidden).isVisible = !config.shouldShowHidden
             findItem(R.id.stop_showing_hidden).isVisible = config.temporarilyShowHidden
 
-            findItem(R.id.temporarily_show_excluded).isVisible = !findItem(R.id.temporarily_show_hidden).isVisible && !config.temporarilyShowExcluded
-            findItem(R.id.stop_showing_excluded).isVisible = !findItem(R.id.temporarily_show_hidden).isVisible && config.temporarilyShowExcluded
+            findItem(R.id.temporarily_show_excluded).isVisible = !config.temporarilyShowExcluded
+            findItem(R.id.stop_showing_excluded).isVisible = config.temporarilyShowExcluded
         }
 
         activity.updateMenuItemColors(menu)
@@ -349,7 +353,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             R.id.open_camera -> activity.launchCamera()
             R.id.change_view_type -> changeViewType()
             R.id.temporarily_show_hidden -> tryToggleTemporarilyShowHidden()
-            R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
             R.id.stop_showing_hidden -> tryToggleTemporarilyShowHidden()
             R.id.temporarily_show_excluded -> tryToggleTemporarilyShowExcluded()
             R.id.stop_showing_excluded -> tryToggleTemporarilyShowExcluded()

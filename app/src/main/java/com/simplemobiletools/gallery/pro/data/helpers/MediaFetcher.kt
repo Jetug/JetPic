@@ -71,6 +71,13 @@ class MediaFetcher(val context: Context) {
 
             val config = context.config
             val shouldShowHidden = config.shouldShowHidden
+            val excludedPaths = if (config.temporarilyShowExcluded) {
+                HashSet()
+            } else {
+                config.excludedFolders
+            }
+
+            val includedPaths = config.includedFolders
 
             val folderNoMediaStatuses = HashMap<String, Boolean>()
             val distinctPathsMap = HashMap<String, String>()
@@ -91,14 +98,71 @@ class MediaFetcher(val context: Context) {
             }
 
             distinctPaths.filter {
-                it.shouldFolderBeVisible(config, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
+                it.shouldFolderBeVisible(excludedPaths, includedPaths, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
                     folderNoMediaStatuses[path] = hasNoMedia
                 }
-            }.toMutableList() as ArrayList<String>
+            }.toMutableList() as java.util.ArrayList<String>
         } catch (e: Exception) {
-            ArrayList()
+            java.util.ArrayList()
         }
     }
+
+//    fun getFoldersToScan(): ArrayList<String> {
+//        return try {
+//            val OTGPath = context.config.OTGPath
+//            val folders = getLatestFileFolders()
+//            folders.addAll(arrayListOf(
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString(),
+//                "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)}/Camera",
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
+//            ).filter { context.getDoesFilePathExist(it, OTGPath) })
+//
+//            val filterMedia = context.config.filterMedia
+//            val uri = Files.getContentUri("external")
+//            val projection = arrayOf(Images.Media.DATA)
+//            val selection = getSelectionQuery(filterMedia)
+//            val selectionArgs = getSelectionArgsQuery(filterMedia).toTypedArray()
+//            val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+//            folders.addAll(parseCursor(cursor!!))
+//
+//            val config = context.config
+//            val shouldShowHidden = config.shouldShowHidden
+//            val excludedPaths = if (config.temporarilyShowExcluded) {
+//                HashSet()
+//            } else {
+//                config.excludedFolders
+//            }
+//
+//            val folderNoMediaStatuses = HashMap<String, Boolean>()
+//            val distinctPathsMap = HashMap<String, String>()
+//            val distinctPaths = folders.distinctBy {
+//                when {
+//                    distinctPathsMap.containsKey(it) -> distinctPathsMap[it]
+//                    else -> {
+//                        val distinct = it.getDistinctPath()
+//                        distinctPathsMap[it.getParentPath()] = distinct.getParentPath()
+//                        distinct
+//                    }
+//                }
+//            }
+//
+//            val noMediaFolders = context.getNoMediaFoldersSync()
+//            noMediaFolders.forEach { folder ->
+//                folderNoMediaStatuses["$folder/$NOMEDIA"] = true
+//            }
+//
+//            distinctPaths.filter {
+//                it.shouldFolderBeVisible(excludedPaths, includedPaths, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
+//                    folderNoMediaStatuses[path] = hasNoMedia
+//                }
+////                it.shouldFolderBeVisible(config, shouldShowHidden, folderNoMediaStatuses) { path, hasNoMedia ->
+////                    folderNoMediaStatuses[path] = hasNoMedia
+////                }
+//            }.toMutableList() as ArrayList<String>
+//        } catch (e: Exception) {
+//            ArrayList()
+//        }
+//    }
 
     @SuppressLint("NewApi")
     private fun getLatestFileFolders(): LinkedHashSet<String> {
