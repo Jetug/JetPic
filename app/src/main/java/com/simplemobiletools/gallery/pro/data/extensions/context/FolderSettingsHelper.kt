@@ -47,21 +47,20 @@ fun Context.startSettingsScanner() = launchIO{
     while (true){
         try {
             val directories = directoryDao.getAll() as ArrayList<Directory>
-            directories.forEach{
-                val settings = readSettings(it.path)
-                it.apply {
+            directories.forEach{ dir ->
+                val settings = readSettings(dir.path)
+                dir.apply {
                     val group = if(settings.group == NO_VALUE) "" else settings.group
                     groupName = group
                     customSorting = settings.sorting
                 }
 
-                directoryDao.update(it)
-                config.saveCustomSorting(it.path, settings.sorting)
+                directoryDao.update(dir)
+                config.saveCustomSorting(dir.path, settings.sorting)
                 folderSettingsDao.insert(settings)
             }
-        } catch (e: Exception) {
-            Log.e(JET, e.message, e)
         }
+        catch (e: Exception) { Log.e(JET, e.message, e) }
 
         delay(5000)
     }
@@ -76,11 +75,7 @@ fun Context.saveIsPined(path: String, isPinned: Boolean){
 
 fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
     val groups = dirGroup.innerDirs
-
-    groups.forEach {
-        it.groupName = newName
-    }
-
+    groups.forEach { it.groupName = newName }
     saveDirChanges(groups)
 }
 

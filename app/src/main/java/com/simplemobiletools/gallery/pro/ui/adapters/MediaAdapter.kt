@@ -13,6 +13,8 @@ import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.MediaFetcher
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.*
+import com.simplemobiletools.gallery.pro.data.models.Directory
+import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.ui.activities.mDirs
@@ -26,8 +28,7 @@ interface MediaAdapterControls{
 val mediaEmpty = object : MediaAdapterControls{
     override fun recreateAdapter() { }
 }
-
-@SuppressLint("ClickableViewAccessibility")
+@SuppressLint("ClickableViewAccessibility", "NotifyDataSetChanged")
 class MediaAdapter(
     private val mediaActivity: SimpleActivity,
     media: ArrayList<ThumbnailItem>,
@@ -77,20 +78,37 @@ class MediaAdapter(
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun sort() = launchDefault{
         val mediaFetcher = MediaFetcher(activity)
         val sorting = activity.getSorting(path)
-        mediaFetcher.sortMedia(mediums, sorting)
+        val buffMediums = mediums
+        mediaFetcher.sortMedia(buffMediums, sorting)
+        media = mediaFetcher.groupMedia(buffMediums, path)
         withMainContext { notifyDataSetChanged() }
-        //updateDirectory()
+        updateDirectoryTmb()
     }
 
-    private fun updateDirectory(){
-        //Jet
-        var dir = mDirs.getDirectories().first { it.path == path }
-        dir.tmb = mediums[0].path
-        activity.updateDirectory(dir)
+    private fun updateDirectoryTmb (){
+        if(mediums.isEmpty()) return
+        val tmb = mediums.first().path
+        var directory = Directory()
+        for (dir in mDirs) {
+            if(dir is Directory && dir.path == path){
+                dir.tmb = tmb
+                directory = dir
+                break
+            }
+            else if(dir is DirectoryGroup){
+                for (inDir in dir.innerDirs) {
+                    if (inDir.path == path) {
+                        inDir.tmb = tmb
+                        directory = inDir
+                        break
+                    }
+                }
+            }
+        }
+        activity.updateDirectory(directory)
     }
 
     private fun showDateEditionDialog() = launchDefault{
@@ -114,7 +132,7 @@ class MediaAdapter(
                 }
                 catch (ignored: NoSuchElementException){}
             }
-            sort()
+            //sort()
             val sorting = activity.getSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 controls.recreateAdapter()

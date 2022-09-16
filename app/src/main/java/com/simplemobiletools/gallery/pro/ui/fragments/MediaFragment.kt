@@ -584,8 +584,9 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private fun showSortingDialog() {
         ChangeSortingDialog(activity, false, true, mPath) {
             mLoadedInitialPhotos = false
-            binding.media_grid.adapter = null
-            getMedia()
+            //binding.media_grid.adapter = null
+            mediaAdapter?.sort()
+            //getMedia()
         }
     }
 
@@ -648,6 +649,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         ChangeGroupingDialog(activity, mPath) {
             mLoadedInitialPhotos = false
             binding.media_grid.adapter = null
+            //mediaAdapter?.sort()
             getMedia()
         }
     }
@@ -665,7 +667,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         }
     }
 
-    fun getMedia() {
+    private fun getMedia() {
         if (mIsGettingMedia) {
             return
         }
@@ -677,7 +679,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             activity.getCachedMedia(mPath, mIsGetVideoIntent, mIsGetImageIntent) {
                 if (it.isEmpty()) {
                     activity.runOnUiThread {
-                        binding.media_refresh_layout.isRefreshing = true
+                        media_refresh_layout.isRefreshing = true
                     }
                 } else {
                     gotMedia(it, true)

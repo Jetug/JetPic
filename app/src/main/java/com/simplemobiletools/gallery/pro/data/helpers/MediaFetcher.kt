@@ -610,7 +610,7 @@ class MediaFetcher(val context: Context) {
         if (sorting and SORT_BY_RANDOM != 0) {
             media.shuffle()
             return
-        }else if(sorting and SORT_BY_CUSTOM != 0){
+        } else if(sorting and SORT_BY_CUSTOM != 0){
             context.getCustomMediaOrder(media)
             return
         }
