@@ -19,7 +19,7 @@ import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.adapters.SearchResultAdapter
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
@@ -40,7 +40,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
     private var mTimeFormat = ""
 
     private var mSearchMenuItem: MenuItem? = null
-    private var mCurrAsyncTask: GetMediaAsynctask? = null
+    private var mCurrAsyncTask: GetMediaAsyncTask? = null
     private var mAllMedia = ArrayList<ThumbnailItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -318,7 +318,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun startAsyncTask(updateItems: Boolean) {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsynctask(applicationContext, "", showAll = true) {
+        mCurrAsyncTask = GetMediaAsyncTask(applicationContext, "", showAll = true) {
             mAllMedia = it.clone() as ArrayList<ThumbnailItem>
             if (updateItems) {
                 textChanged(mLastSearchedText)

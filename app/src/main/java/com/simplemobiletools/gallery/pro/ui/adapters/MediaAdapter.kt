@@ -2,7 +2,7 @@ package com.simplemobiletools.gallery.pro.ui.adapters
 
 import android.annotation.SuppressLint
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.unipicdev.views.dialogs.DateEditingDialog
+import com.simplemobiletools.gallery.pro.ui.dialogs.DateEditingDialog
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView

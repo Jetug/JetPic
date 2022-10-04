@@ -45,7 +45,7 @@ import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.adapters.MyPagerAdapter
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
 import com.simplemobiletools.gallery.pro.ui.dialogs.DeleteWithRememberDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ResizeWithPathDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.SaveAsDialog
@@ -1134,7 +1134,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
 
     private fun refreshViewPager() {
         if (getSorting(mDirectory) and SORT_BY_RANDOM == 0) {
-            GetMediaAsynctask(applicationContext, mDirectory, false, false, mShowAll) {
+            GetMediaAsyncTask(applicationContext, mDirectory, false, false, mShowAll) {
                 gotMedia(it)
             }.execute()
         }
@@ -1309,9 +1309,6 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             currentMedia[Math.min(mPos, currentMedia.size - 1)]
         }
     }
-
-
-
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 

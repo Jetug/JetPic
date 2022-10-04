@@ -679,11 +679,13 @@ class DirectoryAdapter(activity: SimpleActivity,
     }
 
     private fun pinFolders(pin: Boolean) {
-        if (pin) {
-            config.addPinnedFolders(selectedPaths.toHashSet())
-        } else {
-            config.removePinnedFolders(selectedPaths.toHashSet())
-        }
+        activity.saveIsPinned(selectedPaths, pin)
+
+//        if (pin) {
+//            config.addPinnedFolders(selectedPaths.toHashSet())
+//        } else {
+//            config.removePinnedFolders(selectedPaths.toHashSet())
+//        }
 
         currentDirectoriesHash = 0
         pinnedFolders = config.pinnedFolders

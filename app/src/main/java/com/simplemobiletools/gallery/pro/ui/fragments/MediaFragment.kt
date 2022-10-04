@@ -46,6 +46,7 @@ import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeGroupingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
@@ -76,7 +77,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private var mLatestMediaDateId = 0L
     private var mLastMediaHandler = Handler()
     private var mTempShowHiddenHandler = Handler()
-    private var mCurrAsyncTask: GetMediaAsyncTask2? = null
+    private var mCurrAsyncTask: GetMediaAsyncTask? = null
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mStoredAnimateGifs = true
@@ -710,7 +711,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
 
     private fun startAsyncTask() {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsyncTask2(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll, {
+        mCurrAsyncTask = GetMediaAsyncTask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
             //restoreRVPosition()
             //ensureBackgroundThread {
             launchDefault {
@@ -726,12 +727,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 }
                 //}
             }
-        },
-            {
-                ///Jet
-
-                ///
-            })
+        }
 
         mCurrAsyncTask!!.execute()
     }
@@ -993,7 +989,8 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                             activity.finish()
                         }
                     })
-            } else if (mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent) {
+            }
+            else if (mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent) {
                 Intent().apply {
                     data = Uri.parse(path)
                     activity.setResult(Activity.RESULT_OK, this)

@@ -30,7 +30,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.SettingsActivity
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.databases.dao.*
@@ -389,7 +389,7 @@ fun Context.rescanFolderMedia(path: String) {
 fun Context.rescanFolderMediaSync(path: String) {
     getCachedMedia(path) {
         val cached = it
-        GetMediaAsynctask(applicationContext, path, false, false, false) {
+        GetMediaAsyncTask(applicationContext, path, false, false, false) {
             ensureBackgroundThread {
                 val newMedia = it
                 //val media = newMedia.filter { it is Medium } as ArrayList<Medium>

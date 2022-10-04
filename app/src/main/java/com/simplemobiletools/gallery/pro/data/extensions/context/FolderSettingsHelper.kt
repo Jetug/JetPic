@@ -5,7 +5,6 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
-import com.simplemobiletools.commons.extensions.toStringSet
 import com.simplemobiletools.commons.helpers.FAVORITES
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.JET
@@ -48,7 +47,8 @@ fun Context.startSettingsScanner() = launchIO{
         try {
             val directories = directoryDao.getAll() as ArrayList<Directory>
             directories.forEach{ dir ->
-                val settings = readSettings(dir.path)
+                val path = dir.path
+                val settings = readSettings(path)
                 dir.apply {
                     val group = if(settings.group == NO_VALUE) "" else settings.group
                     groupName = group
@@ -56,20 +56,32 @@ fun Context.startSettingsScanner() = launchIO{
                 }
 
                 directoryDao.update(dir)
-                config.saveCustomSorting(dir.path, settings.sorting)
+                config.saveCustomSorting(path, settings.sorting)
+                if(settings.pinned)
+                    saveIsPinned(path, settings.pinned)
                 folderSettingsDao.insert(settings)
             }
         }
         catch (e: Exception) { Log.e(JET, e.message, e) }
 
-        delay(5000)
+        delay(10000)
     }
 }
 
-fun Context.saveIsPined(path: String, isPinned: Boolean){
+fun Context.saveIsPinned(paths: ArrayList<String>, pin: Boolean) = launchIO{
+    paths.forEach { saveIsPinned(it, pin) }
+}
+
+fun Context.saveIsPinned(path: String, pin: Boolean) = launchIO{
     val settings = getSettings(path)
-    settings.pined = isPinned
-    config.addPinnedFolders(setOf(path));
+    val paths = setOf(path)
+
+    if (pin)
+        config.addPinnedFolders(paths)
+    else
+        config.removePinnedFolders(paths)
+
+    settings.pinned = pin
     saveSettings(settings)
 }
 
