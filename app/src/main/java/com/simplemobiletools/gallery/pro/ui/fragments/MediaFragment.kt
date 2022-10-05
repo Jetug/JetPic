@@ -52,7 +52,6 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.FilterMediaDialog
 import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapterControls
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask2
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 
 interface FragmentControls{
@@ -488,7 +487,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         val size = mMedia.size
         mMedia.clear()
         adapter?.notifyItemRangeChanged(0, size)
-        //binding.media_grid.adapter = null
+        binding.media_grid.adapter = null
     }
 
     private fun setupAdapter() {
@@ -585,9 +584,9 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private fun showSortingDialog() {
         ChangeSortingDialog(activity, false, true, mPath) {
             mLoadedInitialPhotos = false
-            //binding.media_grid.adapter = null
-            mediaAdapter?.sort()
-            //getMedia()
+            binding.media_grid.adapter = null
+            //mediaAdapter?.sort()
+            getMedia()
         }
     }
 

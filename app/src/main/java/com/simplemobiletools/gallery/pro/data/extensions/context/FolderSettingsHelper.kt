@@ -19,29 +19,6 @@ import kotlin.system.measureTimeMillis
 const val SETTINGS_FILE_NAME = "settings.txt"
 val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
-class Synchronisator{
-    private val pool: ArrayList<()->Any> = arrayListOf()
-
-    var isAlreadyRunning: Boolean = false
-
-    fun <T:Any> launch(block: ()->T){
-        if(isAlreadyRunning){
-            pool.add(block)
-        }
-        else{
-            isAlreadyRunning = true
-            block()
-            isAlreadyRunning = false
-            if (pool.isNotEmpty()){
-                val savedBlock = pool.takeFirst()
-                launch{savedBlock}
-            }
-        }
-    }
-}
-
-private val sync = Synchronisator()
-
 fun Context.startSettingsScanner() = launchIO{
     while (true){
         try {
@@ -55,11 +32,10 @@ fun Context.startSettingsScanner() = launchIO{
                     customSorting = settings.sorting
                 }
 
-                directoryDao.update(dir)
+                if(settings.pinned) config.addPinnedFolders(setOf(path))
                 config.saveCustomSorting(path, settings.sorting)
-                if(settings.pinned)
-                    saveIsPinned(path, settings.pinned)
                 folderSettingsDao.insert(settings)
+                directoryDao.update(dir)
             }
         }
         catch (e: Exception) { Log.e(JET, e.message, e) }
@@ -68,19 +44,19 @@ fun Context.startSettingsScanner() = launchIO{
     }
 }
 
-fun Context.saveIsPinned(paths: ArrayList<String>, pin: Boolean) = launchIO{
-    paths.forEach { saveIsPinned(it, pin) }
+fun Context.saveIsPinned(paths: ArrayList<String>, pin: Boolean) {
+    if (pin)
+        config.addPinnedFolders(paths.toHashSet())
+    else
+        config.removePinnedFolders(paths.toHashSet())
+
+    paths.forEach { path ->
+        saveIsPinned(path, pin)
+    }
 }
 
 fun Context.saveIsPinned(path: String, pin: Boolean) = launchIO{
     val settings = getSettings(path)
-    val paths = setOf(path)
-
-    if (pin)
-        config.addPinnedFolders(paths)
-    else
-        config.removePinnedFolders(paths)
-
     settings.pinned = pin
     saveSettings(settings)
 }
@@ -89,15 +65,6 @@ fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
     val groups = dirGroup.innerDirs
     groups.forEach { it.groupName = newName }
     saveDirChanges(groups)
-}
-
-fun Context.getDirectoryGroup(path: String): String{
-    val settings = getSettings(path)
-    var group = settings.group
-
-    if(group == NO_VALUE) group = ""
-
-    return group
 }
 
 fun Context.saveDirChanges(directories: ArrayList<Directory>) = launchIO{
@@ -148,17 +115,13 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
     sortAs(source, settings.order)
 }
 
-fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>){
-    sync.launch{
-        launchIO {
-            if (medias.isNotEmpty()) {
-                val path = medias[0].parentPath
-                val settings = getSettings(path)
-                settings.order = medias.names
+fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = launchIO {
+    if (medias.isNotEmpty()) {
+        val path = medias[0].parentPath
+        val settings = getSettings(path)
+        settings.order = medias.names
 
-                saveSettings(settings)
-            }
-        }
+        saveSettings(settings)
     }
 }
 
@@ -180,7 +143,6 @@ fun Context.getSettings(path: String): FolderSettings{
 
 fun Context.saveSettings(settings: FolderSettings) = launchIO {
     folderSettingsDao.insert(settings)
-    //GalleryDatabase.getInstance(applicationContext).isOpen
     writeSettings(settings)
 }
 

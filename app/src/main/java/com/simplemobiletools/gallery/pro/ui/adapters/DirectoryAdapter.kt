@@ -702,7 +702,7 @@ class DirectoryAdapter(activity: SimpleActivity,
     private fun copyMoveTo(isCopyOperation: Boolean) {
         val paths = ArrayList<String>()
         val showHidden = config.shouldShowHidden
-        selectedPaths.forEach {
+        selectedPaths.forEach { it ->
             val filter = config.filterMedia
             File(it).listFiles()?.filter {
                 !File(it.absolutePath).isDirectory &&

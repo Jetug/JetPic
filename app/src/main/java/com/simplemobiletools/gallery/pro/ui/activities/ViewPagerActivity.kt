@@ -99,7 +99,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         window.decorView.setBackgroundColor(config.backgroundColor)
         top_shadow.layoutParams.height = statusBarHeight + actionBarHeight
         checkNotchSupport()
-        (mMedia.clone() as ArrayList<ThumbnailItem>).filter { it is Medium }.mapTo(mMediaFiles) { it as Medium }
+        (mMedia.clone() as ArrayList<*>).filterIsInstance<Medium>().mapTo(mMediaFiles) { it }
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {

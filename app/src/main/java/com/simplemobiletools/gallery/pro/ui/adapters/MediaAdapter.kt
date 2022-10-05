@@ -132,10 +132,11 @@ class MediaAdapter(
                 }
                 catch (ignored: NoSuchElementException){}
             }
-            //sort()
+
             val sorting = activity.getSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
-                controls.recreateAdapter()
+                sort()
+                //controls.recreateAdapter()
             }
         }
     }
