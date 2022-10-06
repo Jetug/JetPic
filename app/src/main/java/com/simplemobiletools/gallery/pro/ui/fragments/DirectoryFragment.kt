@@ -519,6 +519,8 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             val lastModifieds = mLastMediaFetcher!!.getLastModifieds()
             val dateTakens = mLastMediaFetcher!!.getDateTakens()
 
+            // fetch files from MediaStore only, unless the app has the MANAGE_EXTERNAL_STORAGE permission on Android 11+
+            val android11Files = mLastMediaFetcher?.getAndroid11FolderMedia(getImagesOnly, getVideosOnly, favoritePaths, false, true, dateTakens)
             try {
                 for (directory in dirs) {
                     if (mShouldStopFetching || activity.isDestroyed || activity.isFinishing) {
@@ -538,7 +540,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                         grouping and GROUP_BY_LAST_MODIFIED_MONTHLY != 0
 
                     val curMedia = mLastMediaFetcher!!.getFilesFrom(directory.path, getImagesOnly, getVideosOnly, getProperDateTaken, getProperLastModified,
-                        getProperFileSize, favoritePaths, false, lastModifieds, dateTakens)
+                        getProperFileSize, favoritePaths, false, lastModifieds, dateTakens, android11Files)
 
                     val newDir = if (curMedia.isEmpty()) {
                         if (directory.path != tempFolderPath) {
@@ -635,7 +637,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     grouping and GROUP_BY_LAST_MODIFIED_MONTHLY != 0
 
                 val newMedia = mLastMediaFetcher!!.getFilesFrom(folder, getImagesOnly, getVideosOnly, getProperDateTaken, getProperLastModified,
-                    getProperFileSize, favoritePaths, false, lastModifieds, dateTakens)
+                    getProperFileSize, favoritePaths, false, lastModifieds, dateTakens, android11Files)
 
                 if (newMedia.isEmpty()) {
                     continue
@@ -1404,13 +1406,31 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             Handler().postDelayed({
                 ensureBackgroundThread {
                     try {
-                        activity.mediaDB.deleteOldRecycleBinItems(System.currentTimeMillis() - MONTH_MILLISECONDS)
-                    } catch (e: Exception) {
-                    }
+                        val filesToDelete = activity.mediaDB.getOldRecycleBinItems(System.currentTimeMillis() - MONTH_MILLISECONDS)
+                        filesToDelete.forEach {
+                            if (File(it.path.replaceFirst(RECYCLE_BIN, activity.recycleBinPath)).delete()) {
+                                activity.mediaDB.deleteMediumPath(it.path)
+                            }
+                        }
+                    } catch (_: Exception) { }
                 }
             }, 3000L)
         }
     }
+
+//    private fun checkRecycleBinItems2() {
+//        if (config.useRecycleBin && config.lastBinCheck < System.currentTimeMillis() - DAY_SECONDS * 1000) {
+//            config.lastBinCheck = System.currentTimeMillis()
+//            Handler().postDelayed({
+//                ensureBackgroundThread {
+//                    try {
+//                        activity.mediaDB.deleteOldRecycleBinItems(System.currentTimeMillis() - MONTH_MILLISECONDS)
+//                    } catch (e: Exception) {
+//                    }
+//                }
+//            }, 3000L)
+//        }
+//    }
 
     private fun getFoldersWithMedia(path: String): HashSet<String> {
         val folders = HashSet<String>()

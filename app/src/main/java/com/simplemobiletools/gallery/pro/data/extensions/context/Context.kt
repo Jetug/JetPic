@@ -991,7 +991,7 @@ fun Context.addPathToDB(path: String) {
             val isFavorite = favoritesDB.isFavorite(path)
             val videoDuration = if (type == TYPE_VIDEOS) getDuration(path) ?: 0 else 0
             val medium = Medium(null, path.getFilenameFromPath(), path, path.getParentPath(), System.currentTimeMillis(), System.currentTimeMillis(),
-                File(path).length(), type, videoDuration, isFavorite, 0L)
+                File(path).length(), type, videoDuration, isFavorite, 0L, 0L)
 
             mediaDB.insert(medium)
         } catch (ignored: Exception) {
@@ -1060,7 +1060,7 @@ fun Context.updateDirectoryPath(path: String) {
     val dateTakens = mediaFetcher.getFolderDateTakens(path)
     val favoritePaths = getFavoritePaths()
     val curMedia = mediaFetcher.getFilesFrom(path, getImagesOnly, getVideosOnly, getProperDateTaken, getProperLastModified, getProperFileSize,
-        favoritePaths, false, lastModifieds, dateTakens)
+        favoritePaths, false, lastModifieds, dateTakens, null)
     val directory = createDirectoryFromMedia(path, curMedia, albumCovers, hiddenString, includedFolders, getProperFileSize, noMediaFolders)
     updateDirectory(directory)
 }

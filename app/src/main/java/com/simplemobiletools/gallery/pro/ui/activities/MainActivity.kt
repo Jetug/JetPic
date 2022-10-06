@@ -3,14 +3,21 @@ package com.simplemobiletools.gallery.pro.ui.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.BuildConfig
@@ -42,6 +49,11 @@ private var currentMediaFragment: MediaFragment? = null
 
 class MainActivity : SimpleActivity() {
     private var toggle: ActionBarDrawerToggle? = null
+    private val isProApp: Boolean get(){
+        val info: PackageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+        val permissions: Array<String> = info.requestedPermissions //This array contains the requested permissions.
+        return permissions.contains("android.permission.MANAGE_EXTERNAL_STORAGE")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -261,14 +273,61 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun handlePermissions(){
-        handlePermission(PERMISSION_WRITE_STORAGE) {
-            if (!it) {
-                toast(R.string.no_storage_permissions)
-                finish()
-            }
+
+        handleStoragePermission {
+
         }
 
-        if (packageName.startsWith(PACKAGE_NAME_PRO))
-            handleStoragePermission {}
+//        handlePermission(PERMISSION_WRITE_STORAGE) {
+//            if (!it) {
+//                toast(R.string.no_storage_permissions)
+//                finish()
+//            }
+//        }
+//
+//        if (packageName.startsWith(PACKAGE_NAME_PRO))
+//            handleStoragePermission {}
     }
+
+
+
+    private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
+        actionOnPermission = null
+        if (hasStoragePermission)
+            return
+        if (isRPlus() && isProApp) {
+
+
+            requestManageAllFilesPermission(callback)
+        } else {
+            handlePermission(PERMISSION_WRITE_STORAGE) {
+                if (!it) {
+                    toast(R.string.no_storage_permissions)
+                    finish()
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun requestManageAllFilesPermission(callback: (granted: Boolean) -> Unit) {
+        ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
+            if (success) {
+                isAskingPermissions = true
+                actionOnPermission = callback
+                try {
+                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    intent.addCategory("android.intent.category.DEFAULT")
+                    intent.data = Uri.parse("package:$packageName")
+                    startActivityForResult(intent, MANAGE_STORAGE_RC)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                    startActivityForResult(intent, MANAGE_STORAGE_RC)
+                }
+            }
+        }
+    }
+
 }
