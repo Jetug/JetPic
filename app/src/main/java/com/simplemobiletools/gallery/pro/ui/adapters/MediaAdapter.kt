@@ -78,13 +78,23 @@ class MediaAdapter(
         }
     }
 
-    fun sort() = launchDefault{
+//    fun sort() = launchDefault{
+//        val mediaFetcher = MediaFetcher(activity)
+//        //val sorting = activity.getFolderSorting(path)
+//        val buffMediums = mediums
+//        mediaFetcher.sortMedia(buffMediums, activity.getFolderSorting(path))
+//        media = mediaFetcher.groupMedia(buffMediums, path)
+//        withMainContext { notifyDataSetChanged() }
+//        updateDirectoryTmb()
+//    }
+
+    fun sort() {
         val mediaFetcher = MediaFetcher(activity)
-        val sorting = activity.getSorting(path)
+        //val sorting = activity.getFolderSorting(path)
         val buffMediums = mediums
-        mediaFetcher.sortMedia(buffMediums, sorting)
+        mediaFetcher.sortMedia(buffMediums, activity.getFolderSorting(path))
         media = mediaFetcher.groupMedia(buffMediums, path)
-        withMainContext { notifyDataSetChanged() }
+        notifyDataSetChanged()
         updateDirectoryTmb()
     }
 
@@ -133,7 +143,7 @@ class MediaAdapter(
                 catch (ignored: NoSuchElementException){}
             }
 
-            val sorting = activity.getSorting(path)
+            val sorting = activity.getFolderSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
                 sort()
                 //controls.recreateAdapter()

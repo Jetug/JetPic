@@ -86,7 +86,7 @@ fun Context.saveDirectoryGroup(path: String, groupName: String) = launchIO{
     saveSettings(settings)
 }
 
-fun Context.getSorting(path: String): Int{
+fun Context.getFolderSorting(path: String): Int{
     var sorting: Int
     val time = measureTimeMillis {
         val settings = getSettings(path)
@@ -96,7 +96,7 @@ fun Context.getSorting(path: String): Int{
         else
             config.getCustomFolderSorting(path)
     }
-    Log.i(JET,"getSorting $time ms")
+    Log.i(JET,"getFolderSorting $time ms")
     return sorting
 }
 

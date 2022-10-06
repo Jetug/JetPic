@@ -30,7 +30,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.SettingsActivity
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.databases.dao.*
@@ -389,7 +389,7 @@ fun Context.rescanFolderMedia(path: String) {
 fun Context.rescanFolderMediaSync(path: String) {
     getCachedMedia(path) {
         val cached = it
-        GetMediaAsyncTask(applicationContext, path, false, false, false) {
+        GetMediaAsynctask(applicationContext, path, false, false, false) {
             ensureBackgroundThread {
                 val newMedia = it
                 //val media = newMedia.filter { it is Medium } as ArrayList<Medium>
@@ -778,7 +778,7 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
         }) as ArrayList<Medium>
 
         val pathToUse = if (path.isEmpty()) SHOW_ALL else path
-        mediaFetcher.sortMedia(media, getSorting(pathToUse))
+        mediaFetcher.sortMedia(media, getFolderSorting(pathToUse))
         val grouped = mediaFetcher.groupMedia(media, pathToUse)
         callback(grouped.clone() as ArrayList<ThumbnailItem>)
         val OTGPath = config.OTGPath
@@ -1021,7 +1021,7 @@ fun Context.createDirectoryFromMedia(path: String, curMedia: ArrayList<Medium>, 
     }
 
     val isSortingAscending = config.directorySorting.isSortingAscending()
-    val defaultMedium = Medium(0, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L)
+    val defaultMedium = Medium(0, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0L)
     val firstItem = curMedia.firstOrNull() ?: defaultMedium
     val lastItem = curMedia.lastOrNull() ?: defaultMedium
     val dirName = checkAppendingHidden(path, hiddenString, includedFolders, noMediaFolders)
@@ -1042,7 +1042,7 @@ fun Context.updateDirectoryPath(path: String) {
     val includedFolders = config.includedFolders
     val noMediaFolders = getNoMediaFoldersSync()
 
-    val sorting = getSorting(path)
+    val sorting = getFolderSorting(path)
     val grouping = config.getFolderGrouping(path)
     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
         sorting and SORT_BY_DATE_TAKEN != 0 ||

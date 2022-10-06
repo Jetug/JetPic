@@ -11,7 +11,7 @@ import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.adapters.SearchResultAdapter
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.context.getCachedMedia
 import com.simplemobiletools.gallery.pro.data.helpers.SHOW_ALL
@@ -50,7 +50,7 @@ class PickMediumDialog(val activity: SimpleActivity, val path: String, val callb
             }
         }
 
-        GetMediaAsyncTask(activity, path, false, false, false) {
+        GetMediaAsynctask(activity, path, false, false, false) {
             gotMedia(it)
         }.execute()
     }
@@ -75,7 +75,7 @@ class PickMediumDialog(val activity: SimpleActivity, val path: String, val callb
         }
 
         val scrollHorizontally = activity.config.scrollHorizontally && isGridViewType
-        val sorting = activity.getSorting(if (path.isEmpty()) SHOW_ALL else path)
+        val sorting = activity.getFolderSorting(if (path.isEmpty()) SHOW_ALL else path)
         val dateFormat = activity.config.dateFormat
         val timeFormat = activity.getTimeFormat()
         view.apply {

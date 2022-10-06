@@ -19,7 +19,7 @@ import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.adapters.SearchResultAdapter
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
@@ -40,7 +40,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
     private var mTimeFormat = ""
 
     private var mSearchMenuItem: MenuItem? = null
-    private var mCurrAsyncTask: GetMediaAsyncTask? = null
+    private var mCurrAsyncTask: GetMediaAsynctask? = null
     private var mAllMedia = ArrayList<ThumbnailItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,7 +238,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
         media_horizontal_fastscroller.isHorizontal = true
         media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = this.getSorting(SHOW_ALL)
+        val sorting = this.getFolderSorting(SHOW_ALL)
         if (allowHorizontalScroll) {
             media_horizontal_fastscroller.setViews(media_grid) {
                 media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))
@@ -318,7 +318,7 @@ class SearchActivity : SimpleActivity(), MediaOperationsListener {
 
     private fun startAsyncTask(updateItems: Boolean) {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsyncTask(applicationContext, "", showAll = true) {
+        mCurrAsyncTask = GetMediaAsynctask(applicationContext, "", showAll = true) {
             mAllMedia = it.clone() as ArrayList<ThumbnailItem>
             if (updateItems) {
                 textChanged(mLastSearchedText)

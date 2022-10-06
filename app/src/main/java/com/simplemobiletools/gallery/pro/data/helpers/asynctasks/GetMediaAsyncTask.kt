@@ -11,9 +11,7 @@ import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import java.util.*
 
-class GetMediaAsyncTask(val context: Context, val mPath: String,
-                        private val isPickImage: Boolean = false,
-                        private val isPickVideo: Boolean = false,
+class GetMediaAsynctask(val context: Context, val mPath: String, val isPickImage: Boolean = false, val isPickVideo: Boolean = false,
                         val showAll: Boolean, val callback: (media: ArrayList<ThumbnailItem>) -> Unit) :
     AsyncTask<Void, Void, ArrayList<ThumbnailItem>>() {
     private val mediaFetcher = MediaFetcher(context)
@@ -21,7 +19,7 @@ class GetMediaAsyncTask(val context: Context, val mPath: String,
     override fun doInBackground(vararg params: Void): ArrayList<ThumbnailItem> {
         val pathToUse = if (showAll) SHOW_ALL else mPath
         val folderGrouping = context.config.getFolderGrouping(pathToUse)
-        val fileSorting = context.getSorting(pathToUse)
+        val fileSorting = context.getFolderSorting(pathToUse)
         val getProperDateTaken = fileSorting and SORT_BY_DATE_TAKEN != 0 ||
             folderGrouping and GROUP_BY_DATE_TAKEN_DAILY != 0 ||
             folderGrouping and GROUP_BY_DATE_TAKEN_MONTHLY != 0
@@ -41,15 +39,15 @@ class GetMediaAsyncTask(val context: Context, val mPath: String,
             val media = ArrayList<Medium>()
             foldersToScan.forEach {
                 val newMedia = mediaFetcher.getFilesFrom(it, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize,
-                    favoritePaths, getVideoDurations, lastModifieds, dateTakens)
+                    favoritePaths, getVideoDurations, lastModifieds, dateTakens.clone() as HashMap<String, Long>, null)
                 media.addAll(newMedia)
             }
 
-            mediaFetcher.sortMedia(media, context.getSorting(SHOW_ALL))
+            mediaFetcher.sortMedia(media, context.getFolderSorting(SHOW_ALL))
             media
         } else {
             mediaFetcher.getFilesFrom(mPath, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize, favoritePaths,
-                getVideoDurations, lastModifieds, dateTakens)
+                getVideoDurations, lastModifieds, dateTakens, null)
         }
 
         return mediaFetcher.groupMedia(media, pathToUse)

@@ -46,7 +46,7 @@ import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
-import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncTask
+import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsynctask
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeGroupingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
@@ -76,7 +76,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private var mLatestMediaDateId = 0L
     private var mLastMediaHandler = Handler()
     private var mTempShowHiddenHandler = Handler()
-    private var mCurrAsyncTask: GetMediaAsyncTask? = null
+    private var mCurrAsyncTask: GetMediaAsynctask? = null
     private var mZoomListener: MyRecyclerView.MyZoomListener? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mStoredAnimateGifs = true
@@ -239,7 +239,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 invalidateOptionsMenu(activity)
             }
 
-            if (mMedia.isEmpty() || activity.getSorting(mPath) and SORT_BY_RANDOM == 0) {
+            if (mMedia.isEmpty() || activity.getFolderSorting(mPath) and SORT_BY_RANDOM == 0) {
                 if (shouldSkipAuthentication()) {
                     tryLoadGallery()
                 } else {
@@ -536,7 +536,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         binding.media_horizontal_fastscroller.isHorizontal = true
         binding.media_horizontal_fastscroller.beVisibleIf(allowHorizontalScroll)
 
-        val sorting = activity.getSorting(if (mShowAll) SHOW_ALL else mPath)
+        val sorting = activity.getFolderSorting(if (mShowAll) SHOW_ALL else mPath)
         if (allowHorizontalScroll) {
             binding.media_horizontal_fastscroller.setViews(binding.media_grid, binding.media_refresh_layout) {
                 binding.media_horizontal_fastscroller.updateBubbleText(getBubbleTextItem(it, sorting))
@@ -558,7 +558,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     }
 
     private fun checkLastMediaChanged() {
-        if (activity.isDestroyed || activity.getSorting(mPath) and SORT_BY_RANDOM != 0) {
+        if (activity.isDestroyed || activity.getFolderSorting(mPath) and SORT_BY_RANDOM != 0) {
             return
         }
 
@@ -584,9 +584,9 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private fun showSortingDialog() {
         ChangeSortingDialog(activity, false, true, mPath) {
             mLoadedInitialPhotos = false
-            binding.media_grid.adapter = null
-            //mediaAdapter?.sort()
-            getMedia()
+            //binding.media_grid.adapter = null
+            mediaAdapter?.sort()
+            //getMedia()
         }
     }
 
@@ -707,10 +707,36 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         return true
     }
 
-
     private fun startAsyncTask() {
         mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsyncTask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
+        mCurrAsyncTask = GetMediaAsynctask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
+            ensureBackgroundThread {
+                val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
+                val newMedia = it
+                try {
+                    gotMedia(newMedia, false)
+
+                    // remove cached files that are no longer valid for whatever reason
+                    val newPaths = newMedia.mapNotNull { it as? Medium }.map { it.path }
+                    oldMedia.mapNotNull { it as? Medium }.filter { !newPaths.contains(it.path) }.forEach {
+                        if (mPath == FAVORITES && activity.getDoesFilePathExist(it.path)) {
+                            activity.favoritesDB.deleteFavoritePath(it.path)
+                            activity.mediaDB.updateFavorite(it.path, false)
+                        } else {
+                            activity.mediaDB.deleteMediumPath(it.path)
+                        }
+                    }
+                } catch (e: Exception) {
+                }
+            }
+        }
+
+        mCurrAsyncTask!!.execute()
+    }
+
+    private fun startAsyncTask2() {
+        mCurrAsyncTask?.stopFetching()
+        mCurrAsyncTask = GetMediaAsynctask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
             //restoreRVPosition()
             //ensureBackgroundThread {
             launchDefault {

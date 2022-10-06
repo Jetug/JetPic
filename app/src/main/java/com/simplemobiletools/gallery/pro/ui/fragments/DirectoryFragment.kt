@@ -525,7 +525,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                         return
                     }
 
-                    val sorting = activity.getSorting(directory.path)
+                    val sorting = activity.getFolderSorting(directory.path)
                     val grouping = config.getFolderGrouping(directory.path)
                     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                         sorting and SORT_BY_DATE_TAKEN != 0 ||
@@ -622,7 +622,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                     return
                 }
 
-                val sorting = activity.getSorting(folder)
+                val sorting = activity.getFolderSorting(folder)
                 val grouping = config.getFolderGrouping(folder)
                 val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
                     sorting and SORT_BY_DATE_TAKEN != 0 ||
