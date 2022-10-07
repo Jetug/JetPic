@@ -77,7 +77,7 @@ class MainActivity : SimpleActivity() {
                              appLaunched(BuildConfig.APPLICATION_ID)
                          //}
                     }
-                    Log.e(JET, "!!!!!!!!!!!!!!!!!!! $time2 ms")
+                    Log.i(JET, "!!!!!!!!!!appLaunched!!!!!!!!! $time2 ms")
                     updateWidgets()
                     registerFileUpdateListener()
                     startSettingsScanner()
@@ -88,7 +88,8 @@ class MainActivity : SimpleActivity() {
                 }
                 Log.e(JET, "on Create background $time ms")
             //}
-            handlePermissions()
+
+            handleStoragePermission()
 
             if (savedInstanceState == null) {
                 if (config.showAll)
@@ -98,47 +99,6 @@ class MainActivity : SimpleActivity() {
             }
         }
         Log.e(JET, "on Create $createTime ms")
-
-        launchDefault {
-            val te = isInternetAvailable()
-            val r = isNetworkConnected()
-
-            Log.i(JET, "CONNECT $r")
-            Log.i(JET, "NET $te")
-
-            val searchUrl = "https://yandex.ru/images/search"
-//            val filePath = "C:\\Users\\Professional\\Desktop\\2018-11-09_23-44-58.png"
-//            val file = File(filePath)
-//            val fileLike = FileLike("upfile", file.name, file.readBytes())
-
-            val values = mapOf(
-                "rpt" to "imageview",
-                "format" to "json",
-                "request" to "{\"blocks\":[{\"block\":\"b-page_type_search-by-image__link\"}]}",
-            )
-
-            val result = post(
-                url = searchUrl,
-                params = values,
-                //files = listOf(fileLike)
-            )
-            Log.i(JET, "NET ${result.jsonObject}")
-        }
-    }
-
-    private fun isInternetAvailable(): Boolean {
-        return try {
-            val ipAddr = InetAddress.getByName("google.com");
-            !ipAddr.equals("")
-
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private fun isNetworkConnected(): Boolean {
-        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
     }
 
     override fun onDestroy() {
@@ -272,33 +232,12 @@ class MainActivity : SimpleActivity() {
             .commit()
     }
 
-    private fun handlePermissions(){
-
-        handleStoragePermission {
-
-        }
-
-//        handlePermission(PERMISSION_WRITE_STORAGE) {
-//            if (!it) {
-//                toast(R.string.no_storage_permissions)
-//                finish()
-//            }
-//        }
-//
-//        if (packageName.startsWith(PACKAGE_NAME_PRO))
-//            handleStoragePermission {}
-    }
-
-
-
-    private fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
+    private fun handleStoragePermission() {
         actionOnPermission = null
         if (hasStoragePermission)
             return
         if (isRPlus() && isProApp) {
-
-
-            requestManageAllFilesPermission(callback)
+            requestManageAllFilesPermission()
         } else {
             handlePermission(PERMISSION_WRITE_STORAGE) {
                 if (!it) {
@@ -310,11 +249,10 @@ class MainActivity : SimpleActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun requestManageAllFilesPermission(callback: (granted: Boolean) -> Unit) {
+    private fun requestManageAllFilesPermission() {
         ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
             if (success) {
                 isAskingPermissions = true
-                actionOnPermission = callback
                 try {
                     val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                     intent.addCategory("android.intent.category.DEFAULT")
