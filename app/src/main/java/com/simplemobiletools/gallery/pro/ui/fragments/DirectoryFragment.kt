@@ -329,9 +329,9 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 findItem(R.id.reduce_column_count).isVisible = config.viewTypeFolders == VIEW_TYPE_GRID && config.dirColumnCnt > 1
                 findItem(R.id.hide_the_recycle_bin).isVisible = useBin && config.showRecycleBinAtFolders
                 findItem(R.id.show_the_recycle_bin).isVisible = useBin && !config.showRecycleBinAtFolders
-                findItem(R.id.set_as_default_folder).isVisible = !config.defaultFolder.isEmpty()
+                findItem(R.id.set_as_default_folder).isVisible = config.defaultFolder.isNotEmpty()
                 setupSearch(this)
-        }
+            }
         }
 
         menu.apply {
