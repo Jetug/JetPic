@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.vr.cardboard.ThreadUtils.runOnUiThread
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.*
 import com.simplemobiletools.commons.helpers.*
@@ -691,6 +692,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         mLoadedInitialPhotos = true
     }
 
+
     fun isMediasEquals(newMedia: ArrayList<ThumbnailItem>): Boolean {
         val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
 
@@ -728,29 +730,6 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                     }
                 } catch (e: Exception) {
                 }
-            }
-        }
-
-        mCurrAsyncTask!!.execute()
-    }
-
-    private fun startAsyncTask2() {
-        mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsynctask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
-            //restoreRVPosition()
-            //ensureBackgroundThread {
-            launchDefault {
-                val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
-                val newMedia = it
-                //if(isMediasEquals(newMedia)){
-                try {
-                    gotMedia(newMedia, false)
-                    oldMedia.filter { !newMedia.contains(it) }.mapNotNull { it as? Medium }.filter { !activity.getDoesFilePathExist(it.path) }.forEach {
-                        activity.mediaDB.deleteMediumPath(it.path)
-                    }
-                } catch (e: Exception) {
-                }
-                //}
             }
         }
 
@@ -1046,45 +1025,76 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         Log.e("Jet","Media on Click $elapsedTime ms")
     }
 
+//    private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
+//        try {
+//            mIsGettingMedia = false
+//            checkLastMediaChanged()
+//            mMedia = media
+//
+//            activity.runOnUiThread {
+//                binding.media_refresh_layout.isRefreshing = false
+//                binding.media_empty_text_placeholder.beVisibleIf(media.isEmpty() && !isFromCache)
+//                binding.media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
+//
+//                if (binding.media_empty_text_placeholder.isVisible()) {
+//                    binding.media_empty_text_placeholder.text = activity.getString(R.string.no_media_with_filters)
+//                }
+//                binding.media_grid.beVisibleIf(binding.media_empty_text_placeholder.isGone())
+//
+//                val viewType = config.getFolderViewType(if (mShowAll) SHOW_ALL else mPath)
+//                val allowHorizontalScroll = config.scrollHorizontally && viewType == VIEW_TYPE_GRID
+//                binding.media_vertical_fastscroller.beVisibleIf(binding.media_grid.isVisible() && !allowHorizontalScroll)
+//                binding.media_horizontal_fastscroller.beVisibleIf(binding.media_grid.isVisible() && allowHorizontalScroll)
+//                setupAdapter()
+//            }
+//
+//            mLatestMediaId = activity.getLatestMediaId()
+//            mLatestMediaDateId = activity.getLatestMediaByDateId()
+//            if (!isFromCache) {
+//                val mediaToInsert = (mMedia).filter { it is Medium && it.deletedTS == 0L }.map { it as Medium }
+//                Thread {
+//                    try {
+//                        activity.mediaDB.insertAll(mediaToInsert)
+//                    } catch (e: Exception) {
+//                    }
+//                }.start()
+//            }
+//        }
+//        catch (e:IllegalStateException){
+//            Log.d("Jet", "error gotMedia() IllegalStateException")
+//        }
+//    }
+
     private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
-        try {
-            mIsGettingMedia = false
-            checkLastMediaChanged()
-            mMedia = media
+        mIsGettingMedia = false
+        checkLastMediaChanged()
+        mMedia = media
 
-            activity.runOnUiThread {
-                binding.media_refresh_layout.isRefreshing = false
-                binding.media_empty_text_placeholder.beVisibleIf(media.isEmpty() && !isFromCache)
-                binding.media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
+        runOnUiThread {
+            media_refresh_layout.isRefreshing = false
+            media_empty_text_placeholder.beVisibleIf(media.isEmpty() && !isFromCache)
+            media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
 
-                if (binding.media_empty_text_placeholder.isVisible()) {
-                    binding.media_empty_text_placeholder.text = activity.getString(R.string.no_media_with_filters)
-                }
-                binding.media_grid.beVisibleIf(binding.media_empty_text_placeholder.isGone())
-
-                val viewType = config.getFolderViewType(if (mShowAll) SHOW_ALL else mPath)
-                val allowHorizontalScroll = config.scrollHorizontally && viewType == VIEW_TYPE_GRID
-                binding.media_vertical_fastscroller.beVisibleIf(binding.media_grid.isVisible() && !allowHorizontalScroll)
-                binding.media_horizontal_fastscroller.beVisibleIf(binding.media_grid.isVisible() && allowHorizontalScroll)
-                setupAdapter()
+            if (media_empty_text_placeholder.isVisible()) {
+                media_empty_text_placeholder.text = getString(R.string.no_media_with_filters)
             }
-
-            mLatestMediaId = activity.getLatestMediaId()
-            mLatestMediaDateId = activity.getLatestMediaByDateId()
-            if (!isFromCache) {
-                val mediaToInsert = (mMedia).filter { it is Medium && it.deletedTS == 0L }.map { it as Medium }
-                Thread {
-                    try {
-                        activity.mediaDB.insertAll(mediaToInsert)
-                    } catch (e: Exception) {
-                    }
-                }.start()
-            }
+            //media_fastscroller.beVisibleIf(media_empty_text_placeholder.isGone())
+            setupAdapter()
         }
-        catch (e:IllegalStateException){
-            Log.d("Jet", "error gotMedia() IllegalStateException")
+
+        mLatestMediaId = activity.getLatestMediaId()
+        mLatestMediaDateId = activity.getLatestMediaByDateId()
+        if (!isFromCache) {
+            val mediaToInsert = (mMedia).filter { it is Medium && it.deletedTS == 0L }.map { it as Medium }
+            Thread {
+                try {
+                    activity.mediaDB.insertAll(mediaToInsert)
+                } catch (e: Exception) {
+                }
+            }.start()
         }
     }
+
 
     override fun tryDeleteFiles(fileDirItems: ArrayList<FileDirItem>) {
         val filtered = fileDirItems.filter { !activity.getIsPathDirectory(it.path) && it.path.isMediaFile() } as ArrayList
