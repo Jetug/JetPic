@@ -19,11 +19,16 @@ import kotlin.system.measureTimeMillis
 const val SETTINGS_FILE_NAME = "settings.txt"
 val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
+suspend fun <A, B> Iterable<A>.pmap(f: suspend (A) -> B): List<B> = coroutineScope {
+    map { async { f(it) } }.awaitAll()
+}
+
 fun Context.startSettingsScanner() = launchIO{
     while (true){
         try {
             val directories = directoryDao.getAll() as ArrayList<Directory>
-            directories.forEach{ dir ->
+
+            directories.pmap{ dir ->
                 val path = dir.path
                 val settings = readSettings(path)
                 dir.apply {
@@ -32,11 +37,26 @@ fun Context.startSettingsScanner() = launchIO{
                     customSorting = settings.sorting
                 }
 
-                if(settings.pinned) config.addPinnedFolders(setOf(path))
+                if(settings.pinned)
+                    config.addPinnedFolders(setOf(path))
                 config.saveCustomSorting(path, settings.sorting)
                 folderSettingsDao.insert(settings)
                 directoryDao.update(dir)
             }
+//            directories.forEach{ dir ->
+//                val path = dir.path
+//                val settings = readSettings(path)
+//                dir.apply {
+//                    val group = if(settings.group == NO_VALUE) "" else settings.group
+//                    groupName = group
+//                    customSorting = settings.sorting
+//                }
+//
+//                if(settings.pinned) config.addPinnedFolders(setOf(path))
+//                config.saveCustomSorting(path, settings.sorting)
+//                folderSettingsDao.insert(settings)
+//                directoryDao.update(dir)
+//            }
         }
         catch (e: Exception) { Log.e(JET, e.message, e) }
 
@@ -87,24 +107,28 @@ fun Context.saveDirectoryGroup(path: String, groupName: String) = launchIO{
 }
 
 fun Context.getFolderSorting(path: String): Int{
-    var sorting: Int
-    val time = measureTimeMillis {
-        val settings = getSettings(path)
+//    var sorting: Int
+//    val time = measureTimeMillis {
+//        val settings = getSettings(path)
+//
+//        sorting = if(settings.sorting != 0)
+//            settings.sorting
+//        else
+//            config.getCustomFolderSorting(path)
+//    }
+//    Log.i(JET,"getFolderSorting $time ms")
+//    return sorting
 
-        sorting = if(settings.sorting != 0)
-            settings.sorting
-        else
-            config.getCustomFolderSorting(path)
-    }
-    Log.i(JET,"getFolderSorting $time ms")
-    return sorting
+    return config.getCustomFolderSorting(path)
 }
 
-fun Context.saveSorting(path: String, sorting: Int) = launchIO {
-    val settings = getSettings(path)
-    settings.sorting = sorting
+fun Context.saveSorting(path: String, sorting: Int) {
     config.saveCustomSorting(path, sorting)
-    saveSettings(settings)
+    launchIO {
+        val settings = getSettings(path)
+        settings.sorting = sorting
+        saveSettings(settings)
+    }
 }
 
 fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
