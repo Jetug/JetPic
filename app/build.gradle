@@ -17,15 +17,15 @@ android {
 
     defaultConfig {
         //applicationId "com.jetugapps.gallery.plus.jetug"
-        //applicationId "com.jetugapps.gallery.plus"
+        applicationId "com.jetugapps.gallery.plus"
         //applicationId "com.jetugapps.gallery.plus.dev"
-        applicationId "com.jetugapps.gallery"
+        //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
 
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 31
         versionName "1.6.3"
         setProperty("archivesBaseName", "gallery-$versionCode")
