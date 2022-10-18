@@ -153,10 +153,10 @@ fun Context.getSettings(path: String): FolderSettings{
     var settings: FolderSettings? = folderSettingsDao.getByPath(path)
 
     if(settings == null) {
-        if(hasStoragePermission)
-            settings = readSettings(path)
+        settings = if(hasStoragePermission)
+            readSettings(path)
         else
-            settings = FolderSettings(null, path, "", arrayListOf())
+            FolderSettings(null, path, "", arrayListOf())
 
         launchIO {
             folderSettingsDao.insert(settings)

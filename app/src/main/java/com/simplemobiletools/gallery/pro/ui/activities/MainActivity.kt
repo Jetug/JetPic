@@ -49,6 +49,7 @@ private var currentMediaFragment: MediaFragment? = null
 
 class MainActivity : SimpleActivity() {
     private var toggle: ActionBarDrawerToggle? = null
+
     private val isProApp: Boolean get(){
         val info: PackageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
         val permissions: Array<String> = info.requestedPermissions //This array contains the requested permissions.
@@ -236,7 +237,7 @@ class MainActivity : SimpleActivity() {
         actionOnPermission = null
         if (hasStoragePermission)
             return
-        if (isRPlus() && isProApp) {
+        if (isRPlus() && isProApp && baseConfig.appRunCount <= 5) {
             requestManageAllFilesPermission()
         } else {
             handlePermission(PERMISSION_WRITE_STORAGE) {
