@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.simplemobiletools.gallery.pro.ui.fragments
 
 import java.io.File
@@ -26,6 +28,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
+import androidx.recyclerview.widget.RecyclerView.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
@@ -96,6 +99,17 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     var mIsGetImageIntent = false
     var mIsGetVideoIntent = false
 
+    private lateinit var binding: View
+
+    val adapter: Adapter<ViewHolder>? get() {
+        return try{
+            binding.media_grid.adapter
+        } catch (e: UninitializedPropertyAccessException){
+            null
+        }
+
+    }
+
     companion object {
         var mMedia = ArrayList<ThumbnailItem>()
     }
@@ -103,6 +117,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val elapsedTime = measureTimeMillis {
         activity = getActivity() as SimpleActivity
         config = activity.config
         intent = activity.intent
@@ -133,21 +148,13 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
 //        }
 
         activity.updateWidgets()
-    }
-
-    private lateinit var binding: View
-    val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? get() {
-        try{
-            return binding.media_grid.adapter
         }
-        catch (e: UninitializedPropertyAccessException){
-            return null
-        }
+        Log.e("Jet","Media on Create $elapsedTime ms")
 
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+        val elapsedTime = measureTimeMillis {
         binding = inflater.inflate(R.layout.fragment_media, container, false)
 
         setHasOptionsMenu(true)
@@ -169,7 +176,8 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             else -> activity.getHumanizedFilename(mPath)
         }
         activity.updateActionBarTitle(if (mShowAll) resources.getString(R.string.all_folders) else dirName)
-
+        }
+        Log.e("Jet","Media onCreateView $elapsedTime ms")
         return binding
     }
 
@@ -668,7 +676,37 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         }
     }
 
+    private fun startAsyncTask() {
+        mCurrAsyncTask?.stopFetching()
+        mCurrAsyncTask = GetMediaAsynctask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
+            ensureBackgroundThread {
+                val elapsedTime = measureTimeMillis {
+                    val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
+                    val newMedia = it
+                    try {
+                        gotMedia(newMedia, false)
+
+                        // remove cached files that are no longer valid for whatever reason
+                        val newPaths = newMedia.mapNotNull { it as? Medium }.map { it.path }
+                        oldMedia.mapNotNull { it as? Medium }.filter { !newPaths.contains(it.path) }.forEach {
+                            if (mPath == FAVORITES && activity.getDoesFilePathExist(it.path)) {
+                                activity.favoritesDB.deleteFavoritePath(it.path)
+                                activity.mediaDB.updateFavorite(it.path, false)
+                            } else {
+                                activity.mediaDB.deleteMediumPath(it.path)
+                            }
+                        }
+                    } catch (_: Exception) { }
+                }
+                Log.e("Jet","Media gotMedia $elapsedTime ms")
+            }
+        }
+
+        mCurrAsyncTask!!.execute()
+    }
+
     private fun getMedia() {
+        val elapsedTime = measureTimeMillis {
         if (mIsGettingMedia) {
             return
         }
@@ -690,7 +728,43 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         }
 
         mLoadedInitialPhotos = true
+        }
+        Log.e("Jet","Media getMedia $elapsedTime ms")
     }
+
+    private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
+        val elapsedTime = measureTimeMillis {
+            mIsGettingMedia = false
+            checkLastMediaChanged()
+            mMedia = media
+
+            runOnUiThread {
+                media_refresh_layout.isRefreshing = false
+                media_empty_text_placeholder.beVisibleIf(media.isEmpty() && !isFromCache)
+                media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
+
+                if (media_empty_text_placeholder.isVisible()) {
+                    media_empty_text_placeholder.text = getString(R.string.no_media_with_filters)
+                }
+                //media_fastscroller.beVisibleIf(media_empty_text_placeholder.isGone())
+                setupAdapter()
+            }
+
+            mLatestMediaId = activity.getLatestMediaId()
+            mLatestMediaDateId = activity.getLatestMediaByDateId()
+            if (!isFromCache) {
+                val mediaToInsert = (mMedia).filter { it is Medium && it.deletedTS == 0L }.map { it as Medium }
+                Thread {
+                    try {
+                        activity.mediaDB.insertAll(mediaToInsert)
+                    } catch (e: Exception) {
+                    }
+                }.start()
+            }
+        }
+        Log.e("Jet","Media gotMedia $elapsedTime ms")
+    }
+
 
 
     fun isMediasEquals(newMedia: ArrayList<ThumbnailItem>): Boolean {
@@ -709,32 +783,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         return true
     }
 
-    private fun startAsyncTask() {
-        mCurrAsyncTask?.stopFetching()
-        mCurrAsyncTask = GetMediaAsynctask(activity.applicationContext, mPath, mIsGetImageIntent, mIsGetVideoIntent, mShowAll) {
-            ensureBackgroundThread {
-                val oldMedia = mMedia.clone() as ArrayList<ThumbnailItem>
-                val newMedia = it
-                try {
-                    gotMedia(newMedia, false)
 
-                    // remove cached files that are no longer valid for whatever reason
-                    val newPaths = newMedia.mapNotNull { it as? Medium }.map { it.path }
-                    oldMedia.mapNotNull { it as? Medium }.filter { !newPaths.contains(it.path) }.forEach {
-                        if (mPath == FAVORITES && activity.getDoesFilePathExist(it.path)) {
-                            activity.favoritesDB.deleteFavoritePath(it.path)
-                            activity.mediaDB.updateFavorite(it.path, false)
-                        } else {
-                            activity.mediaDB.deleteMediumPath(it.path)
-                        }
-                    }
-                } catch (e: Exception) {
-                }
-            }
-        }
-
-        mCurrAsyncTask!!.execute()
-    }
 
     private fun isDirEmpty(): Boolean {
         return if (mMedia.size <= 0 && config.filterMedia > 0) {
@@ -805,10 +854,10 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         }
 
         if (config.scrollHorizontally) {
-            layoutManager.orientation = RecyclerView.HORIZONTAL
+            layoutManager.orientation = HORIZONTAL
             binding.media_refresh_layout.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
         } else {
-            layoutManager.orientation = RecyclerView.VERTICAL
+            layoutManager.orientation = VERTICAL
             binding.media_refresh_layout.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
 
@@ -922,7 +971,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private fun setupListLayoutManager() {
         val layoutManager = binding.media_grid.layoutManager as MyGridLayoutManager
         layoutManager.spanCount = 1
-        layoutManager.orientation = RecyclerView.VERTICAL
+        layoutManager.orientation = VERTICAL
         media_refresh_layout.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         val smallMargin = resources.getDimension(R.dimen.small_margin).toInt()
@@ -1023,76 +1072,6 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             }
         }
         Log.e("Jet","Media on Click $elapsedTime ms")
-    }
-
-//    private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
-//        try {
-//            mIsGettingMedia = false
-//            checkLastMediaChanged()
-//            mMedia = media
-//
-//            activity.runOnUiThread {
-//                binding.media_refresh_layout.isRefreshing = false
-//                binding.media_empty_text_placeholder.beVisibleIf(media.isEmpty() && !isFromCache)
-//                binding.media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
-//
-//                if (binding.media_empty_text_placeholder.isVisible()) {
-//                    binding.media_empty_text_placeholder.text = activity.getString(R.string.no_media_with_filters)
-//                }
-//                binding.media_grid.beVisibleIf(binding.media_empty_text_placeholder.isGone())
-//
-//                val viewType = config.getFolderViewType(if (mShowAll) SHOW_ALL else mPath)
-//                val allowHorizontalScroll = config.scrollHorizontally && viewType == VIEW_TYPE_GRID
-//                binding.media_vertical_fastscroller.beVisibleIf(binding.media_grid.isVisible() && !allowHorizontalScroll)
-//                binding.media_horizontal_fastscroller.beVisibleIf(binding.media_grid.isVisible() && allowHorizontalScroll)
-//                setupAdapter()
-//            }
-//
-//            mLatestMediaId = activity.getLatestMediaId()
-//            mLatestMediaDateId = activity.getLatestMediaByDateId()
-//            if (!isFromCache) {
-//                val mediaToInsert = (mMedia).filter { it is Medium && it.deletedTS == 0L }.map { it as Medium }
-//                Thread {
-//                    try {
-//                        activity.mediaDB.insertAll(mediaToInsert)
-//                    } catch (e: Exception) {
-//                    }
-//                }.start()
-//            }
-//        }
-//        catch (e:IllegalStateException){
-//            Log.d("Jet", "error gotMedia() IllegalStateException")
-//        }
-//    }
-
-    private fun gotMedia(media: ArrayList<ThumbnailItem>, isFromCache: Boolean) {
-        mIsGettingMedia = false
-        checkLastMediaChanged()
-        mMedia = media
-
-        runOnUiThread {
-            media_refresh_layout.isRefreshing = false
-            media_empty_text_placeholder.beVisibleIf(media.isEmpty() && !isFromCache)
-            media_empty_text_placeholder_2.beVisibleIf(media.isEmpty() && !isFromCache)
-
-            if (media_empty_text_placeholder.isVisible()) {
-                media_empty_text_placeholder.text = getString(R.string.no_media_with_filters)
-            }
-            //media_fastscroller.beVisibleIf(media_empty_text_placeholder.isGone())
-            setupAdapter()
-        }
-
-        mLatestMediaId = activity.getLatestMediaId()
-        mLatestMediaDateId = activity.getLatestMediaByDateId()
-        if (!isFromCache) {
-            val mediaToInsert = (mMedia).filter { it is Medium && it.deletedTS == 0L }.map { it as Medium }
-            Thread {
-                try {
-                    activity.mediaDB.insertAll(mediaToInsert)
-                } catch (e: Exception) {
-                }
-            }.start()
-        }
     }
 
 
