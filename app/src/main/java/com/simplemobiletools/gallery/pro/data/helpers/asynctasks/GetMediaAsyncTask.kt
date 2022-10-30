@@ -21,7 +21,7 @@ class GetMediaAsynctask(val context: Context, val mPath: String, val isPickImage
     override fun doInBackground(vararg params: Void): ArrayList<ThumbnailItem> {
 
         val pathToUse = if (showAll) SHOW_ALL else mPath
-        val media: ArrayList<Medium> = arrayListOf()
+        var media: ArrayList<Medium> = arrayListOf()
 
         val folderGrouping = context.config.getFolderGrouping(pathToUse)
         val fileSorting = context.getFolderSorting(pathToUse)
@@ -35,30 +35,32 @@ class GetMediaAsynctask(val context: Context, val mPath: String, val isPickImage
 
         val getProperFileSize = fileSorting and SORT_BY_SIZE != 0
 
-        val half1 = measureTimeMillis {
+//        val half1 = measureTimeMillis {
+
         val favoritePaths = context.getFavoritePaths()
         val getVideoDurations = context.config.showThumbnailVideoDuration
         val lastModifieds = if (getProperLastModified) mediaFetcher.getLastModifieds() else HashMap()
         val dateTakens = if (getProperDateTaken) mediaFetcher.getDateTakens() else HashMap()
-        }
-        Log.e("Jet","GetMediaAsynctask doInBackground (1) $half1 ms")
 
-//        val elapsedTime = measureTimeMillis {
-//            media = if (showAll) {
-//                val foldersToScan = mediaFetcher.getFoldersToScan().filter { it != RECYCLE_BIN && it != FAVORITES && !context.config.isFolderProtected(it) }
-//                val media = ArrayList<Medium>()
-//                foldersToScan.forEach {
-//                    val newMedia = mediaFetcher.getFilesFrom(it, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize,
-//                        favoritePaths, getVideoDurations, lastModifieds, dateTakens.clone() as HashMap<String, Long>, null)
-//                    media.addAll(newMedia)
-//                }
-//
-//                mediaFetcher.sortMedia(media, context.getFolderSorting(SHOW_ALL))
-//                media
-//            } else {
-//                mediaFetcher.getFilesFrom(mPath, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize, favoritePaths,
-//                    getVideoDurations, lastModifieds, dateTakens, null)
-//            }
+//        }
+//        Log.e("Jet","GetMediaAsynctask doInBackground (1) $half1 ms")
+
+        //val elapsedTime = measureTimeMillis {
+            media = if (showAll) {
+                val foldersToScan = mediaFetcher.getFoldersToScan().filter { it != RECYCLE_BIN && it != FAVORITES && !context.config.isFolderProtected(it) }
+                val media = ArrayList<Medium>()
+                foldersToScan.forEach {
+                    val newMedia = mediaFetcher.getFilesFrom(it, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize,
+                        favoritePaths, getVideoDurations, lastModifieds, dateTakens.clone() as HashMap<String, Long>, null)
+                    media.addAll(newMedia)
+                }
+
+                mediaFetcher.sortMedia(media, context.getFolderSorting(SHOW_ALL))
+                media
+            } else {
+                mediaFetcher.getFilesFrom(mPath, isPickImage, isPickVideo, getProperDateTaken, getProperLastModified, getProperFileSize, favoritePaths,
+                    getVideoDurations, lastModifieds, dateTakens, null)
+            }
 //        }
 //        Log.e("Jet","GetMediaAsynctask doInBackground (2)$elapsedTime ms")
         return mediaFetcher.groupMedia(media, pathToUse)

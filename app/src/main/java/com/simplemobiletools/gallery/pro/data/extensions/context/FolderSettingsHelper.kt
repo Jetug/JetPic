@@ -43,20 +43,6 @@ fun Context.startSettingsScanner() = launchIO{
                 folderSettingsDao.insert(settings)
                 directoryDao.update(dir)
             }
-//            directories.forEach{ dir ->
-//                val path = dir.path
-//                val settings = readSettings(path)
-//                dir.apply {
-//                    val group = if(settings.group == NO_VALUE) "" else settings.group
-//                    groupName = group
-//                    customSorting = settings.sorting
-//                }
-//
-//                if(settings.pinned) config.addPinnedFolders(setOf(path))
-//                config.saveCustomSorting(path, settings.sorting)
-//                folderSettingsDao.insert(settings)
-//                directoryDao.update(dir)
-//            }
         }
         catch (e: Exception) { Log.e(JET, e.message, e) }
 

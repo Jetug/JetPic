@@ -38,24 +38,24 @@ data class Medium(
 ) : Serializable, ThumbnailItem() {
 
     init {
-        launchIO {
-            val file = File(path)
-            while (true){
-                modified = file.lastModified()
-                delay(5000)
-            }
-        }
+//        launchIO {
+//            val file = File(path)
+//            while (true){
+//                modified = file.lastModified()
+//                delay(5000)
+//            }
+//        }
     }
 
     constructor() : this(null, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0L, 0){
-        CoroutineScope(Dispatchers.Default).launch {
-            while (true) {
-                delay(5000)
-                val file = File(path)
-                if (file.exists())
-                    modified = file.lastModified()
-            }
-        }
+//        CoroutineScope(Dispatchers.Default).launch {
+//            while (true) {
+//                delay(5000)
+//                val file = File(path)
+//                if (file.exists())
+//                    modified = file.lastModified()
+//            }
+//        }
     }
 
     companion object {
