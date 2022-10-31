@@ -139,14 +139,13 @@ class DirectoryAdapter(activity: SimpleActivity,
 
     override fun prepareActionMode(menu: Menu) {
         val selectedPaths = selectedPaths
-        if (selectedPaths.isEmpty()) {
+        if (selectedPaths.isEmpty())
             return
-        }
+        val selectedItems = selectedItems
+        val selectedItemsSize = selectedItems.size
+        val selectedGroupsSize = selectedGroups.size
 
         menu.apply {
-            val selectedItemsSize = selectedItems.size
-            val selectedGroupsSize = selectedGroups.size
-
             findItem(R.id.cab_move_to_top).isVisible = isDragAndDropping
             findItem(R.id.cab_move_to_bottom).isVisible = isDragAndDropping
 
@@ -162,7 +161,8 @@ class DirectoryAdapter(activity: SimpleActivity,
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
 
             findItem(R.id.cab_group).isVisible = selectedItemsSize > 1 && selectedGroupsSize <= 1
-            findItem(R.id.cab_ungroup).isVisible = isOneItemSelected && selectedItems[0] is DirectoryGroup
+            findItem(R.id.cab_ungroup).isVisible = (isOneItemSelected && selectedItems[0] is DirectoryGroup) ||
+                selectedItems.all{it is Directory && it.groupName != ""}
 
             findItem(R.id.cab_rename).isVisible = selectedItemsSize == selectedGroupsSize || selectedGroupsSize == 0
 
@@ -332,37 +332,36 @@ class DirectoryAdapter(activity: SimpleActivity,
         }
     }
 
-    private fun ungroupDirs() {
-        if(selectedItems.isEmpty()) return
+    private fun ungroupDirs() = launchDefault {
+        if(selectedItems.isEmpty()) return@launchDefault
 
-        launchDefault{
-            val items = selectedItems
-            for (item in items) {
-                if (item !is DirectoryGroup)
-                    continue
-
+        for (item in selectedItems) {
+            if (item is DirectoryGroup) {
                 val innerDirs = item.innerDirs
                 innerDirs.forEach {
                     it.groupName = ""
                     activity.saveDirChanges(it)
-                    //activity.saveDirectoryGroup(it.path, "")
                 }
 
                 dirs.remove(item)
-//            innerDirs.forEach {
-//                it.groupName = ""
-//            }
                 dirs.addAll(innerDirs)
             }
-            dirs = activity.getDirsToShow(dirs.getDirectories())
-            mDirs = dirs
-
-            withMainContext {
-                notifyDataSetChanged()
-                finishActMode()
+            else if (item is Directory){
+                item.groupName = ""
+                activity.saveDirChanges(item)
+                dirs.remove(item)
             }
         }
+
+        dirs = activity.getDirsToShow(dirs.getDirectories())
+        mDirs = dirs
+
+        withMainContext {
+            notifyDataSetChanged()
+            finishActMode()
+        }
     }
+
 
     private fun checkHideBtnVisibility(menu: Menu, selectedPaths: ArrayList<String>) {
         menu.findItem(R.id.cab_hide).isVisible = selectedPaths.any { !it.doesThisOrParentHaveNoMedia(HashMap(), null) }

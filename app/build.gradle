@@ -17,8 +17,8 @@ android {
 
     defaultConfig {
         //applicationId "com.jetugapps.gallery.plus.jetug"
-        applicationId "com.jetugapps.gallery.plus"
-        //applicationId "com.jetugapps.gallery.plus.dev"
+        //applicationId "com.jetugapps.gallery.plus"
+        applicationId "com.jetugapps.gallery.plus.dev"
         //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
@@ -119,6 +119,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
 
     compileOnly 'com.squareup.okhttp3:okhttp:4.9.0'
 

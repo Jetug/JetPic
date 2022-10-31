@@ -453,4 +453,5 @@
     <string name="save_exif">Saving the date to EXIF</string>
     <string name="save_exif_success">Date successfully saved to EXIF</string>
     <string name="download_full_app">Download full app</string>
+    <string name="tasks">Tasks</string>
 </resources>

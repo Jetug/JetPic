@@ -290,28 +290,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
     }
 
-    fun onBackPressed() {
-        if (config.groupDirectSubfolders) {
-            if (mCurrentPathPrefix.isEmpty()) {
-                activity.finish()
-            } else {
-                mOpenedSubfolders.removeAt(mOpenedSubfolders.size - 1)
-                mCurrentPathPrefix = mOpenedSubfolders.last()
-                rvPosition.restoreRVPosition()
-                setupAdapter(mDirs)
-            }
-        } else if (mOpenedGroups.isNotEmpty()) {
-            mOpenedGroups.takeLast()
-            if (mDirs.size == 0) {
-                getDirectories()
-            }
-            rvPosition.restoreRVPosition()
-            updateDirs(activity.getSortedDirectories(mDirsToShow))
-        } else {
-            activity.finish()
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
@@ -355,7 +333,29 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         }
         return true
     }
-    
+
+    fun onBackPressed() {
+        if (config.groupDirectSubfolders) {
+            if (mCurrentPathPrefix.isEmpty()) {
+                activity.finish()
+            } else {
+                mOpenedSubfolders.removeAt(mOpenedSubfolders.size - 1)
+                mCurrentPathPrefix = mOpenedSubfolders.last()
+                rvPosition.restoreRVPosition()
+                setupAdapter(mDirs)
+            }
+        } else if (mOpenedGroups.isNotEmpty()) {
+            mOpenedGroups.takeLast()
+            if (mDirs.size == 0) {
+                getDirectories()
+            }
+            rvPosition.restoreRVPosition()
+            updateDirs(activity.getSortedDirectories(mDirsToShow))
+        } else {
+            activity.finish()
+        }
+    }
+
     private fun storeStateVariables() {
         config.apply {
             mStoredAnimateGifs = animateGifs
