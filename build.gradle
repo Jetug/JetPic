@@ -5,7 +5,7 @@ buildscript {
 
 
     ext {
-        propCompileSdkVersion = 30
+        propCompileSdkVersion = 32
         propMinSdkVersion = 23
         propTargetSdkVersion = 29
         propVersionCode = 400

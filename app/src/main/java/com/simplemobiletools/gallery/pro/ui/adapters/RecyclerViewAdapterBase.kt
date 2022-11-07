@@ -49,7 +49,6 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         }
     }
 
-
     private fun moveItem(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
@@ -89,10 +88,5 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
                 }
             }
         }
-    }
-
-    protected fun createDialog(dialog: DialogFragment, tag: String){
-        val manager = activity.supportFragmentManager
-        dialog.show(manager, tag)
     }
 }

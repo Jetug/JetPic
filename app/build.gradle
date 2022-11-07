@@ -142,8 +142,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'org.json:json:20220320'
 
-    //implementation "com.github.jkcclemens:khttp:0.1.0"
-    //implementation 'khttp:khttp:1.0.0'
+    def work_version = "2.5.0"
+
+    // Kotlin + coroutines
+    //implementation "androidx.work:work-runtime-ktx:2.4.0"
+    // optional - GCMNetworkManager support
+//    implementation "androidx.work:work-gcm:$work_version"
+//    // optional - Test helpers
+//    androidTestImplementation "androidx.work:work-testing:$work_version"
 
     implementation project(':commons')
     implementation project(':library')

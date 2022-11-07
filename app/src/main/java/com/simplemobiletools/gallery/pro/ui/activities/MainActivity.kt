@@ -22,6 +22,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.TasksActivity
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
@@ -165,15 +166,20 @@ class MainActivity : SimpleActivity() {
 
     private fun onNavigationItemSelected(item: MenuItem):Boolean{
         when(item.itemId){
-            R.id.settings -> launchSettings()
-            R.id.about -> launchAbout()
             R.id.folders -> showDirectories()
             R.id.all_images -> showAllImages()
             R.id.favorites -> showFavorites()
             R.id.recycle_bin -> showRecyclerBin()
+            R.id.tasks -> task()
             R.id.download -> downloadFullApp()
+            R.id.settings -> launchSettings()
+            R.id.about -> launchAbout()
         }
         return true
+    }
+
+    private fun task(){
+        Intent(this, TasksActivity::class.java)
     }
 
     private fun downloadFullApp(){
