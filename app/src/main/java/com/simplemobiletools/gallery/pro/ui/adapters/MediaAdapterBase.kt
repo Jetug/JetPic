@@ -7,6 +7,7 @@ import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -235,8 +236,6 @@ open class MediaAdapterBase (
         }
     }
 
-
-
     private fun checkHideBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
         val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true
         menu.findItem(R.id.cab_hide).isVisible = !isInRecycleBin && selectedItems.any { !it.isHidden() }
@@ -250,6 +249,8 @@ open class MediaAdapterBase (
 
     private fun confirmSelection() {
         listener?.selectedPaths(getSelectedPaths())
+
+        Log.w("Jet", "confirm")
     }
 
     private fun showProperties() {

@@ -48,15 +48,9 @@ class MediaAdapter(
         when (id) {
             R.id.editDate -> showDateEditionDialog()
             R.id.saveDateToExif -> saveDateToExif()
-            //R.id.exifDate -> exifDate()
         }
     }
-
-//    private fun exifDate() {
-//        val path = getSelectedPaths()[0]
-//        activity.toast(getDateFromExif(path) ?: "")
-//    }
-
+    
     override fun onItemMoved(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
@@ -78,19 +72,8 @@ class MediaAdapter(
         }
     }
 
-//    fun sort() = launchDefault{
-//        val mediaFetcher = MediaFetcher(activity)
-//        //val sorting = activity.getFolderSorting(path)
-//        val buffMediums = mediums
-//        mediaFetcher.sortMedia(buffMediums, activity.getFolderSorting(path))
-//        media = mediaFetcher.groupMedia(buffMediums, path)
-//        withMainContext { notifyDataSetChanged() }
-//        updateDirectoryTmb()
-//    }
-
     fun sort() {
         val mediaFetcher = MediaFetcher(activity)
-        //val sorting = activity.getFolderSorting(path)
         val buffMediums = mediums
         mediaFetcher.sortMedia(buffMediums, activity.getFolderSorting(path))
         media = mediaFetcher.groupMedia(buffMediums, path)

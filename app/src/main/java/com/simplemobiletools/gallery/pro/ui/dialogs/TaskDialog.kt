@@ -1,4 +1,4 @@
-package com.simplemobiletools.gallery.pro.ui.dialogs
+  package com.simplemobiletools.gallery.pro.ui.dialogs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

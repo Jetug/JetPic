@@ -49,21 +49,6 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         }
     }
 
-    private fun moveItem(fromPosition: Int, toPosition: Int){
-        if (fromPosition < toPosition) {
-            for (i in fromPosition until toPosition) {
-                Collections.swap(itemList, i, i + 1)
-            }
-        } else {
-            for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(itemList, i, i - 1)
-            }
-        }
-
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-
     override fun onRowSelected(myViewHolder: ViewHolder?) {
         swipeRefreshLayout?.isEnabled = false
     }
