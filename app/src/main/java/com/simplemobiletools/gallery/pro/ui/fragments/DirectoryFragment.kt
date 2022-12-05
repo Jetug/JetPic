@@ -1082,14 +1082,14 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 override fun zoomIn() {
                     if (layoutManager.spanCount > 1) {
                         reduceColumnCount()
-                        recyclerAdapter?.finishActMode()
+                        recyclerAdapter?.finishActionMode()
                     }
                 }
 
                 override fun zoomOut() {
                     if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
                         increaseColumnCount()
-                        recyclerAdapter?.finishActMode()
+                        recyclerAdapter?.finishActionMode()
                     }
                 }
             }

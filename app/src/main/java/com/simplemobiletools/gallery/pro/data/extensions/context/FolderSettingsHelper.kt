@@ -19,8 +19,8 @@ import kotlin.system.measureTimeMillis
 const val SETTINGS_FILE_NAME = "settings.txt"
 val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
-suspend fun <A, B> Iterable<A>.pmap(f: suspend (A) -> B): List<B> = coroutineScope {
-    map { async { f(it) } }.awaitAll()
+suspend fun <A, B> Iterable<A>.pmap(action: suspend (A) -> B): List<B> = coroutineScope {
+    map { async { action(it) } }.awaitAll()
 }
 
 fun Context.startSettingsScanner() = launchIO{
@@ -121,8 +121,7 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
     if (source.isEmpty()) return
 
     val path = source[0].parentPath
-    val settings: FolderSettings = getSettings(path)
-    sortAs(source, settings.order)
+    sortAs(source, getSettings(path).order)
 }
 
 fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = launchIO {

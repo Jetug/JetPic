@@ -57,7 +57,7 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         swipeRefreshLayout?.isEnabled = activity.config.enablePullToRefresh
     }
 
-    fun changeOrder() {
+    open fun changeOrder() {
         enterSelectionMode()
         isDragAndDropping = true
         notifyDataSetChanged()

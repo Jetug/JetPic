@@ -48,6 +48,7 @@ class MediaAdapter(
         when (id) {
             R.id.editDate -> showDateEditionDialog()
             R.id.saveDateToExif -> saveDateToExif()
+            R.id.cab_change_order -> changeOrder()
         }
     }
     
@@ -66,10 +67,7 @@ class MediaAdapter(
     }
 
     override fun onDragAndDroppingEnded(){
-        launchIO {
-            activity.saveCustomMediaOrder(media.getMediums())
-            activity.saveSorting(path, SORT_BY_CUSTOM)
-        }
+
     }
 
     fun sort() {

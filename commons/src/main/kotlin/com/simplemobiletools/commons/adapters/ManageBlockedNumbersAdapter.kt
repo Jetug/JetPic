@@ -69,7 +69,7 @@ class ManageBlockedNumbersAdapter(
     private fun copyNumberToClipboard() {
         val selectedNumber = getSelectedItems().firstOrNull() ?: return
         activity.copyToClipboard(selectedNumber.number)
-        finishActMode()
+        finishActionMode()
     }
 
     private fun deleteSelection() {

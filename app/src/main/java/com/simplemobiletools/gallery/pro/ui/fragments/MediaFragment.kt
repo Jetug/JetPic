@@ -25,7 +25,6 @@ import android.annotation.SuppressLint
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.RecyclerView.*
@@ -952,14 +951,14 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
                 override fun zoomIn() {
                     if (layoutManager.spanCount > 1) {
                         reduceColumnCount()
-                        mediaAdapter?.finishActMode()
+                        mediaAdapter?.finishActionMode()
                     }
                 }
 
                 override fun zoomOut() {
                     if (layoutManager.spanCount < MAX_COLUMN_COUNT) {
                         increaseColumnCount()
-                        mediaAdapter?.finishActMode()
+                        mediaAdapter?.finishActionMode()
                     }
                 }
             }

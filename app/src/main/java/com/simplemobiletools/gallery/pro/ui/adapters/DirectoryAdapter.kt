@@ -316,7 +316,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 controls.clearAdapter()
                 controls.recreateAdapter(dirsToShow)
                 notifyDataSetChanged()
-                finishActMode()
+                finishActionMode()
             }
         }
 
@@ -358,7 +358,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
         withMainContext {
             notifyDataSetChanged()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -483,7 +483,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
             }
         }
-        finishActMode()
+        finishActionMode()
     }
 
     private fun toggleFoldersVisibility(hide: Boolean) {
@@ -492,7 +492,7 @@ class DirectoryAdapter(activity: SimpleActivity,
             config.showRecycleBinAtFolders = false
             if (selectedPaths.size == 1) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
 
@@ -517,7 +517,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                                 } else {
                                     activity.runOnUiThread {
                                         listener?.refreshItems()
-                                        finishActMode()
+                                        finishActionMode()
                                     }
                                 }
                             }
@@ -605,7 +605,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                     currentDirectoriesHash = newDirs.hashCode()
                     dirs = newDirs
 
-                    finishActMode()
+                    finishActionMode()
                     listener?.updateDirectories(newDirs)
                 }
             }
@@ -619,19 +619,19 @@ class DirectoryAdapter(activity: SimpleActivity,
             config.showRecycleBinAtFolders = false
             if (selectedPaths.size == 1) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
 
         if (paths.size == 1) {
             ExcludeFolderDialog(activity, paths.toMutableList()) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         } else if (paths.size > 1) {
             config.addExcludedFolders(paths)
             listener?.refreshItems()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -654,7 +654,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
 
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -672,7 +672,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
 
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -689,7 +689,7 @@ class DirectoryAdapter(activity: SimpleActivity,
         currentDirectoriesHash = 0
         pinnedFolders = config.pinnedFolders
         listener?.recheckPinnedFolders()
-        finishActMode()
+        finishActionMode()
     }
 
     private fun moveFilesTo() {
@@ -722,7 +722,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
             config.tempFolderPath = ""
             listener?.refreshItems()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -830,7 +830,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                     }
 
                     if (selectedKeys.size == 1) {
-                        finishActMode()
+                        finishActionMode()
                     }
                 } else {
                     foldersToDelete.add(File(it.path))
@@ -889,7 +889,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
     private fun storeCovers(albumCovers: ArrayList<AlbumCover>) {
         config.albumCovers = Gson().toJson(albumCovers)
-        finishActMode()
+        finishActionMode()
         listener?.refreshItems()
     }
 

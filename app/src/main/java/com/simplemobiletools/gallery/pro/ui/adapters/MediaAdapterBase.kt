@@ -71,6 +71,8 @@ open class MediaAdapterBase (
     private var displayFilenames = config.displayFileNames
     private var showFileTypes = config.showThumbnailFileTypes
 
+    private var isChangeOrderAction = false
+
     override val itemList = media
 
     val mediums: ArrayList<Medium> get() = ArrayList(media.takeWhile { it is Medium } as List<Medium>)
@@ -150,7 +152,7 @@ open class MediaAdapterBase (
             findItem(R.id.cab_fix_date_taken).isVisible = !isInRecycleBin
             findItem(R.id.cab_move_to).isVisible = !isInRecycleBin
             findItem(R.id.cab_open_with).isVisible = isOneItemSelected
-            findItem(R.id.cab_confirm_selection).isVisible = isAGetIntent && allowMultiplePicks && selectedKeys.isNotEmpty()
+            findItem(R.id.cab_confirm_selection).isVisible = (isAGetIntent && allowMultiplePicks && selectedKeys.isNotEmpty()) || isChangeOrderAction
             findItem(R.id.cab_restore_recycle_bin_files).isVisible = selectedPaths.all { it.startsWith(activity.recycleBinPath) }
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus && isOneItemSelected
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus && isOneItemSelected
@@ -194,13 +196,21 @@ open class MediaAdapterBase (
         }
     }
 
-
-
-    override fun getSelectableItemCount() = media.filter { it is Medium }.size
+    override fun getSelectableItemCount() = media.filterIsInstance<Medium>().size
     override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
     override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
     override fun onActionModeCreated() {}
+
+    override fun changeOrder() {
+        isChangeOrderAction = true
+        super.changeOrder()
+    }
+
+    override fun finishActionMode() {
+        super.finishActionMode()
+        isChangeOrderAction = false
+    }
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -215,6 +225,43 @@ open class MediaAdapterBase (
     }
 
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
+
+
+    fun updateMedia(newMedia: ArrayList<ThumbnailItem>) {
+        val thumbnailItems = newMedia.clone() as ArrayList<ThumbnailItem>
+        if (thumbnailItems.hashCode() != currentMediaHash) {
+            currentMediaHash = thumbnailItems.hashCode()
+            media = thumbnailItems
+            enableInstantLoad()
+            notifyDataSetChanged()
+            finishActionMode()
+        }
+    }
+
+    fun updateDisplayFilenames(displayFilenames: Boolean) {
+        this.displayFilenames = displayFilenames
+        enableInstantLoad()
+        notifyDataSetChanged()
+    }
+
+    fun updateAnimateGifs(animateGifs: Boolean) {
+        this.animateGifs = animateGifs
+        notifyDataSetChanged()
+    }
+
+    fun updateCropThumbnails(cropThumbnails: Boolean) {
+        this.cropThumbnails = cropThumbnails
+        notifyDataSetChanged()
+    }
+
+    fun updateShowFileTypes(showFileTypes: Boolean) {
+        this.showFileTypes = showFileTypes
+        notifyDataSetChanged()
+    }
+
+    fun getItemBubbleText(position: Int, sorting: Int, dateFormat: String, timeFormat: String): String {
+        return (media[position] as? Medium)?.getBubbleText(sorting, activity, dateFormat, timeFormat) ?: ""
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, holder: ViewHolder, position: Int){
@@ -248,9 +295,13 @@ open class MediaAdapterBase (
     }
 
     private fun confirmSelection() {
-        listener?.selectedPaths(getSelectedPaths())
-
-        Log.w("Jet", "confirm")
+        if(isChangeOrderAction){
+            activity.saveCustomMediaOrder(media.getMediums())
+            activity.saveSorting(path, SORT_BY_CUSTOM)
+            finishActionMode()
+        }
+        else
+            listener?.selectedPaths(getSelectedPaths())
     }
 
     private fun showProperties() {
@@ -273,7 +324,7 @@ open class MediaAdapterBase (
                     activity.runOnUiThread {
                         enableInstantLoad()
                         listener?.refreshItems()
-                        finishActMode()
+                        finishActionMode()
                     }
                 }
             }
@@ -281,7 +332,7 @@ open class MediaAdapterBase (
             RenameDialog(activity, getSelectedPaths(), true) {
                 enableInstantLoad()
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -308,7 +359,7 @@ open class MediaAdapterBase (
             }
             activity.runOnUiThread {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -321,7 +372,7 @@ open class MediaAdapterBase (
             }
             activity.runOnUiThread {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -329,7 +380,7 @@ open class MediaAdapterBase (
     private fun restoreFiles() {
         activity.restoreRecycleBinPaths(getSelectedPaths()) {
             listener?.refreshItems()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -354,7 +405,7 @@ open class MediaAdapterBase (
                     if (fileCnt == 0) {
                         activity.runOnUiThread {
                             listener?.refreshItems()
-                            finishActMode()
+                            finishActionMode()
                         }
                     }
                 }
@@ -384,7 +435,7 @@ open class MediaAdapterBase (
             return
         }
 
-        finishActMode()
+        finishActionMode()
 
         (activity as SimpleActivity).tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
             val destinationPath = it
@@ -433,7 +484,7 @@ open class MediaAdapterBase (
         ensureBackgroundThread {
             activity.fixDateTaken(getSelectedPaths(), true) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -504,47 +555,11 @@ open class MediaAdapterBase (
 
     private fun getItemWithKey(key: Int): Medium? = media.firstOrNull { (it as? Medium)?.path?.hashCode() == key } as? Medium
 
-    fun updateMedia(newMedia: ArrayList<ThumbnailItem>) {
-        val thumbnailItems = newMedia.clone() as ArrayList<ThumbnailItem>
-        if (thumbnailItems.hashCode() != currentMediaHash) {
-            currentMediaHash = thumbnailItems.hashCode()
-            media = thumbnailItems
-            enableInstantLoad()
-            notifyDataSetChanged()
-            finishActMode()
-        }
-    }
-
-    fun updateDisplayFilenames(displayFilenames: Boolean) {
-        this.displayFilenames = displayFilenames
-        enableInstantLoad()
-        notifyDataSetChanged()
-    }
-
-    fun updateAnimateGifs(animateGifs: Boolean) {
-        this.animateGifs = animateGifs
-        notifyDataSetChanged()
-    }
-
-    fun updateCropThumbnails(cropThumbnails: Boolean) {
-        this.cropThumbnails = cropThumbnails
-        notifyDataSetChanged()
-    }
-
-    fun updateShowFileTypes(showFileTypes: Boolean) {
-        this.showFileTypes = showFileTypes
-        notifyDataSetChanged()
-    }
-
     private fun enableInstantLoad() {
         loadImageInstantly = true
         delayHandler.postDelayed({
             loadImageInstantly = false
         }, INSTANT_LOAD_DURATION)
-    }
-
-    fun getItemBubbleText(position: Int, sorting: Int, dateFormat: String, timeFormat: String): String {
-        return (media[position] as? Medium)?.getBubbleText(sorting, activity, dateFormat, timeFormat) ?: ""
     }
 
     private fun setupThumbnail(view: View, medium: Medium) {
