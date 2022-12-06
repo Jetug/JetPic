@@ -32,7 +32,8 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         if (isDragAndDropping) {
             onDragAndDroppingEnded()
         }
-        isDragAndDropping = false
+        finishDragMode()
+        //isDragAndDropping = false
         notifyDataSetChanged()
     }
 
@@ -58,8 +59,9 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
     }
 
     open fun changeOrder() {
-        enterSelectionMode()
-        isDragAndDropping = true
+        enterSelectionMode(false)
+        enterDragMode()
+        //isDragAndDropping = true
         notifyDataSetChanged()
         actMode?.invalidate()
 

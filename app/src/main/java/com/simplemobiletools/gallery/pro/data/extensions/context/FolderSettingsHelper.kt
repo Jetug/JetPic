@@ -120,8 +120,7 @@ fun Context.saveSorting(path: String, sorting: Int) {
 fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
     if (source.isEmpty()) return
 
-    val path = source[0].parentPath
-    sortAs(source, getSettings(path).order)
+    sortAs(source, getSettings(source[0].parentPath).order)
 }
 
 fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = launchIO {

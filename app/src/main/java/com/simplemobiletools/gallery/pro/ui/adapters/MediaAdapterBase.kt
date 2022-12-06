@@ -203,6 +203,11 @@ open class MediaAdapterBase (
     override fun onActionModeCreated() {}
 
     override fun changeOrder() {
+        if(selectedKeys.isEmpty()) {
+            val itemKey = getItemSelectionKey(0) ?: return
+            selectedKeys.add(itemKey)
+        }
+
         isChangeOrderAction = true
         super.changeOrder()
     }

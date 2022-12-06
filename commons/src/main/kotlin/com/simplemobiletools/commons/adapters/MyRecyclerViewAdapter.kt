@@ -44,6 +44,7 @@ abstract class MyRecyclerViewAdapter(
     private var actBarTextView: TextView? = null
     private var lastLongPressedItem = -1
     private var dragMode:Boolean = true
+    private var finishOnEmpty: Boolean = true
 
     abstract fun getActionMenuId(): Int
     abstract fun prepareActionMode(menu: Menu)
@@ -135,7 +136,7 @@ abstract class MyRecyclerViewAdapter(
             updateTitle()
         }
 
-        if (selectedKeys.isEmpty() && !isDragAndDropping) {
+        if (selectedKeys.isEmpty() && !isDragAndDropping && finishOnEmpty) {
             finishActionMode()
         }
     }
@@ -265,6 +266,7 @@ abstract class MyRecyclerViewAdapter(
     }
 
     open fun finishActionMode() {
+        finishOnEmpty = true
         actMode?.finish()
     }
 
@@ -336,9 +338,19 @@ abstract class MyRecyclerViewAdapter(
         }
     }
 
-    fun enterSelectionMode(){
+    fun enterSelectionMode(finishOnEmpty: Boolean = true){
+        this.finishOnEmpty = finishOnEmpty
         if (!actModeCallback.isSelectable) {
             activity.startSupportActionMode(actModeCallback)
         }
     }
+
+    fun enterDragMode(){
+        isDragAndDropping = true
+    }
+
+    fun finishDragMode(){
+        isDragAndDropping = true
+    }
+
 }
