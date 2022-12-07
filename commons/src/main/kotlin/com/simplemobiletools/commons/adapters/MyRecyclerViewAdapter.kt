@@ -350,7 +350,6 @@ abstract class MyRecyclerViewAdapter(
     }
 
     fun finishDragMode(){
-        isDragAndDropping = true
+        isDragAndDropping = false
     }
-
 }

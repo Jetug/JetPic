@@ -15,10 +15,9 @@ data class FolderSettings (
     constructor() : this(null, "", "", arrayListOf(), 0)
 
     fun addDirectoryData(directory: Directory){
-        if(directory.path == path){
-            group = directory.groupName
-            if(directory.customSorting > 0)
-                sorting = directory.customSorting
-        }
+        if (directory.path != path) return
+        group = directory.groupName
+        if(directory.customSorting > 0)
+            sorting = directory.customSorting
     }
 }

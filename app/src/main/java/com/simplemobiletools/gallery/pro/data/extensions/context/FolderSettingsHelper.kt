@@ -56,15 +56,7 @@ fun Context.saveIsPinned(paths: ArrayList<String>, pin: Boolean) {
     else
         config.removePinnedFolders(paths.toHashSet())
 
-    paths.forEach { path ->
-        saveIsPinned(path, pin)
-    }
-}
-
-fun Context.saveIsPinned(path: String, pin: Boolean) = launchIO{
-    val settings = getSettings(path)
-    settings.pinned = pin
-    saveSettings(settings)
+    paths.forEach { path -> saveIsPinned(path, pin) }
 }
 
 fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
@@ -93,18 +85,6 @@ fun Context.saveDirectoryGroup(path: String, groupName: String) = launchIO{
 }
 
 fun Context.getFolderSorting(path: String): Int{
-//    var sorting: Int
-//    val time = measureTimeMillis {
-//        val settings = getSettings(path)
-//
-//        sorting = if(settings.sorting != 0)
-//            settings.sorting
-//        else
-//            config.getCustomFolderSorting(path)
-//    }
-//    Log.i(JET,"getFolderSorting $time ms")
-//    return sorting
-
     return config.getCustomFolderSorting(path)
 }
 
@@ -118,8 +98,6 @@ fun Context.saveSorting(path: String, sorting: Int) {
 }
 
 fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
-    if (source.isEmpty()) return
-
     sortAs(source, getSettings(source[0].parentPath).order)
 }
 
@@ -154,7 +132,6 @@ fun Context.saveSettings(settings: FolderSettings) = launchIO {
     writeSettings(settings)
 }
 
-////////////////////////////
 private fun getOrCreateSettingsFile(path: String): File{
     val settingsFile = File(File(path), SETTINGS_FILE_NAME)
     if (!settingsFile.exists())
@@ -190,8 +167,7 @@ private fun Context.writeSettings(settings: FolderSettings){
 }
 
 private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
-    if (source.isEmpty())
-        return
+    if (source.isEmpty()) return
 
     val path = source[0].parentPath
     sample.forEach {
@@ -209,4 +185,10 @@ private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
         }
     }
     source.reverse()
+}
+
+private fun Context.saveIsPinned(path: String, pin: Boolean) = launchIO{
+    val settings = getSettings(path)
+    settings.pinned = pin
+    saveSettings(settings)
 }
