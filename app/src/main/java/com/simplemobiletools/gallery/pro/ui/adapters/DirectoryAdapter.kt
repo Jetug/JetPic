@@ -304,7 +304,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                     //activity.updateDirectory(item)
                     //dirs.remove(item)
                     //activity.saveDirectoryGroup(item.path, name)
-                    activity.saveDirChanges(item)
+                    activity.saveDirChangesAsync(item)
                 }
             }
 
@@ -340,7 +340,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 val innerDirs = item.innerDirs
                 innerDirs.forEach {
                     it.groupName = ""
-                    activity.saveDirChanges(it)
+                    activity.saveDirChangesAsync(it)
                 }
 
                 dirs.remove(item)
@@ -348,7 +348,7 @@ class DirectoryAdapter(activity: SimpleActivity,
             }
             else if (item is Directory){
                 item.groupName = ""
-                activity.saveDirChanges(item)
+                activity.saveDirChangesAsync(item)
                 dirs.remove(item)
             }
         }
@@ -678,7 +678,7 @@ class DirectoryAdapter(activity: SimpleActivity,
     }
 
     private fun pinFolders(pin: Boolean) {
-        activity.saveIsPinned(selectedPaths, pin)
+        activity.saveIsPinnedAsync(selectedPaths, pin)
 
 //        if (pin) {
 //            config.addPinnedFolders(selectedPaths.toHashSet())

@@ -301,8 +301,8 @@ open class MediaAdapterBase (
 
     private fun confirmSelection() {
         if(isChangeOrderAction){
-            activity.saveCustomMediaOrder(media.getMediums())
             activity.saveSorting(path, SORT_BY_CUSTOM)
+            activity.saveCustomMediaOrder(media.getMediums())
             finishActionMode()
         }
         else

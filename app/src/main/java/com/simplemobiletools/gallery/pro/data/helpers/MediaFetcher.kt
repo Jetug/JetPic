@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Files
 import android.provider.MediaStore.Images
 import android.text.format.DateFormat
+import android.util.Log
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
@@ -753,6 +754,10 @@ class MediaFetcher(val context: Context) {
     }
 
     fun sortMedia(media: ArrayList<Medium>, sorting: Int) {
+        if(media.size == 6){
+            val size = media.size
+            Log.w(JET, "" + size)
+        }
         if (sorting and SORT_BY_RANDOM != 0) {
             media.shuffle()
             return
@@ -768,16 +773,16 @@ class MediaFetcher(val context: Context) {
             var result = when {
                 sorting and SORT_BY_NAME != 0 -> {
                     if (sorting and SORT_USE_NUMERIC_VALUE != 0) {
-                        AlphanumericComparator().compare(o1.name.toLowerCase(), o2.name.toLowerCase())
+                        AlphanumericComparator().compare(o1.name.lowercase(), o2.name.lowercase())
                     } else {
-                        o1.name.toLowerCase().compareTo(o2.name.toLowerCase())
+                        o1.name.lowercase().compareTo(o2.name.lowercase())
                     }
                 }
                 sorting and SORT_BY_PATH != 0 -> {
                     if (sorting and SORT_USE_NUMERIC_VALUE != 0) {
-                        AlphanumericComparator().compare(o1.path.toLowerCase(), o2.path.toLowerCase())
+                        AlphanumericComparator().compare(o1.path.lowercase(), o2.path.lowercase())
                     } else {
-                        o1.path.toLowerCase().compareTo(o2.path.toLowerCase())
+                        o1.path.lowercase().compareTo(o2.path.lowercase())
                     }
                 }
                 sorting and SORT_BY_SIZE != 0 -> o1.size.compareTo(o2.size)
@@ -790,11 +795,11 @@ class MediaFetcher(val context: Context) {
             }
             result
         }
-
+        Log.d(JET, "F")
     }
 
     fun groupMedia(media: ArrayList<Medium>, path: String): ArrayList<ThumbnailItem> {
-        val pathToCheck = if (path.isEmpty()) SHOW_ALL else path
+        val pathToCheck = path.ifEmpty { SHOW_ALL }
         val currentGrouping = context.config.getFolderGrouping(pathToCheck)
         if (currentGrouping and GROUP_BY_NONE != 0) {
             return media as ArrayList<ThumbnailItem>

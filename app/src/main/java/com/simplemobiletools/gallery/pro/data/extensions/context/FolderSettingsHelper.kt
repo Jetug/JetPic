@@ -14,13 +14,14 @@ import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.coroutines.*
 import java.io.File
 import java.lang.reflect.Type
-import kotlin.system.measureTimeMillis
 
 const val SETTINGS_FILE_NAME = "settings.txt"
 val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
 suspend fun <A, B> Iterable<A>.pmap(action: suspend (A) -> B): List<B> = coroutineScope {
-    map { async { action(it) } }.awaitAll()
+    map {
+        async { action(it) }
+    }.awaitAll()
 }
 
 fun Context.startSettingsScanner() = launchIO{
@@ -50,26 +51,26 @@ fun Context.startSettingsScanner() = launchIO{
     }
 }
 
-fun Context.saveIsPinned(paths: ArrayList<String>, pin: Boolean) {
+fun Context.saveIsPinnedAsync(paths: ArrayList<String>, pin: Boolean) {
     if (pin)
         config.addPinnedFolders(paths.toHashSet())
     else
         config.removePinnedFolders(paths.toHashSet())
 
-    paths.forEach { path -> saveIsPinned(path, pin) }
+    paths.forEach { path -> saveIsPinnedAsync(path, pin) }
 }
 
-fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String){
+fun Context.renameGroupAsync(dirGroup: DirectoryGroup, newName: String){
     val groups = dirGroup.innerDirs
     groups.forEach { it.groupName = newName }
-    saveDirChanges(groups)
+    saveDirChangesAsync(groups)
 }
 
-fun Context.saveDirChanges(directories: ArrayList<Directory>) = launchIO{
-    directories.forEach{ saveDirChanges(it) }
+fun Context.saveDirChangesAsync(directories: ArrayList<Directory>) = launchIO{
+    directories.forEach { saveDirChangesAsync(it) }
 }
 
-fun Context.saveDirChanges(directory: Directory) = launchIO{
+fun Context.saveDirChangesAsync(directory: Directory) = launchIO{
     val settings = getSettings(directory.path)
     settings.addDirectoryData(directory)
     settings.sorting = config.getCustomFolderSorting(directory.path)
@@ -101,13 +102,17 @@ fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
     sortAs(source, getSettings(source[0].parentPath).order)
 }
 
-fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) = launchIO {
-    if (medias.isNotEmpty()) {
-        val path = medias[0].parentPath
-        val settings = getSettings(path)
-        settings.order = medias.names
+fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) {
+    if (medias.isEmpty()) return
 
-        saveSettings(settings)
+    val path = medias[0].parentPath
+    val settings = getSettings(path)
+    settings.order = medias.names
+
+    folderSettingsDao.insert(settings)
+
+    launchIO {
+        writeSettings(settings)
     }
 }
 
@@ -187,7 +192,7 @@ private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
     source.reverse()
 }
 
-private fun Context.saveIsPinned(path: String, pin: Boolean) = launchIO{
+private fun Context.saveIsPinnedAsync(path: String, pin: Boolean) = launchIO{
     val settings = getSettings(path)
     settings.pinned = pin
     saveSettings(settings)

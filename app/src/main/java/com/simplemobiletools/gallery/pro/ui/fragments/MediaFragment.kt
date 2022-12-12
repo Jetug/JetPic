@@ -592,9 +592,9 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
     private fun showSortingDialog() {
         ChangeSortingDialog(activity, false, true, mPath) {
             mLoadedInitialPhotos = false
-            //binding.media_grid.adapter = null
-            mediaAdapter?.sort()
-            //getMedia()
+            binding.media_grid.adapter = null
+            //mediaAdapter?.sort()
+            getMedia()
         }
     }
 
