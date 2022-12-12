@@ -754,10 +754,6 @@ class MediaFetcher(val context: Context) {
     }
 
     fun sortMedia(media: ArrayList<Medium>, sorting: Int) {
-        if(media.size == 6){
-            val size = media.size
-            Log.w(JET, "" + size)
-        }
         if (sorting and SORT_BY_RANDOM != 0) {
             media.shuffle()
             return
@@ -795,7 +791,6 @@ class MediaFetcher(val context: Context) {
             }
             result
         }
-        Log.d(JET, "F")
     }
 
     fun groupMedia(media: ArrayList<Medium>, path: String): ArrayList<ThumbnailItem> {

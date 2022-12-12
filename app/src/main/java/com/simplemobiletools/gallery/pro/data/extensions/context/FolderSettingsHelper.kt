@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
+import com.simplemobiletools.commons.extensions.moveLastItemToFront
 import com.simplemobiletools.commons.helpers.FAVORITES
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.JET
@@ -173,23 +174,21 @@ private fun Context.writeSettings(settings: FolderSettings){
 
 private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
     if (source.isEmpty()) return
+    var offset = 0
+    for (i in 0..sample.lastIndex){
 
-    val path = source[0].parentPath
-    sample.forEach {
-        var offset = 0
-        if (it != "" && File(path, it).exists()) {
-            for (i in offset until source.size){
-                val medium = source[i]
-                if(medium.name == it){
-                    source.removeAt(i)
-                    source.add(offset, medium)
-                    offset += 1
-                    break
-                }
-            }
+        if (!File(source[0].parentPath, sample[i]).exists())
+            continue
+
+        for(j in offset..source.lastIndex){
+            val src = source[j]
+            if (src.name != sample[i]) continue
+            source.remove(src)
+            source.add(offset, src)
+            offset++
+            break
         }
     }
-    source.reverse()
 }
 
 private fun Context.saveIsPinnedAsync(path: String, pin: Boolean) = launchIO{
