@@ -76,6 +76,7 @@ fun Context.saveDateToExif(paths: ArrayList<String>, showToasts: Boolean, callba
 
 fun alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
 
+    val list2 = list.clone() as ArrayList<Medium>
     val list = list.clone() as ArrayList<Medium>
 
     if(list.isEmpty() || list.size == 1)
@@ -107,7 +108,7 @@ fun alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
             }
         }
 
-        //File(list[i].path).setLastModified(list[i].modified)
+        File(list[i].path).setLastModified(list[i].modified)
     }
 
     callback()
