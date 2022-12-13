@@ -1,6 +1,7 @@
 package com.simplemobiletools.gallery.pro.ui.adapters
 
 import android.annotation.SuppressLint
+import android.view.Menu
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.simplemobiletools.gallery.pro.ui.dialogs.DateEditingDialog
 import com.simplemobiletools.commons.helpers.*
@@ -42,16 +43,24 @@ class MediaAdapter(
     val controls: MediaAdapterControls = mediaEmpty, itemClick: (Any) -> Unit):
     MediaAdapterBase(mediaActivity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
+    override fun prepareActionMode(menu: Menu) {
+        super.prepareActionMode(menu)
+        menu.apply {
+            findItem(R.id.align_date).isVisible = true
+        }
+    }
+
     override fun actionItemPressed(id: Int) {
         super.actionItemPressed(id)
 
         when (id) {
             R.id.editDate -> showDateEditionDialog()
             R.id.saveDateToExif -> saveDateToExif()
+            R.id.align_date -> alignDate()
             R.id.cab_change_order -> changeOrder()
         }
     }
-    
+
     override fun onItemMoved(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
@@ -102,8 +111,21 @@ class MediaAdapter(
         activity.updateDirectory(directory)
     }
 
+    private fun saveDateToExif() {
+        mediums
+        activity.saveDateToExif(selectedPaths, true){
+            listener?.refreshItems()
+        }
+    }
+
+    private fun alignDate() {
+        alignDate(selectedItems){
+
+        }
+    }
+
     private fun showDateEditionDialog() = launchDefault{
-        val paths = getSelectedPaths()
+        val paths = selectedPaths
         DateEditingDialog(activity, paths) { dateMap ->
             dateMap.forEach{
                 try {
@@ -129,13 +151,6 @@ class MediaAdapter(
                 sort()
                 //controls.recreateAdapter()
             }
-        }
-    }
-
-    private fun saveDateToExif() {
-        val paths = getSelectedPaths()
-        activity.saveDateToExif(paths, true){
-            listener?.refreshItems()
         }
     }
 }

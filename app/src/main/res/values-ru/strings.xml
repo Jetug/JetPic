@@ -450,5 +450,6 @@
     <string name="save_exif">Сохранение даты в EXIF</string>
     <string name="save_exif_success">Дата сохранена в EXIF</string>
     <string name="tasks">Задачи </string>
+    <string name="align_date">Align date</string>
 
 </resources>

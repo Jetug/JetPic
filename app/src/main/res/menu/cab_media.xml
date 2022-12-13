@@ -63,6 +63,11 @@
         android:title="@string/write_date_to_exif"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/align_date"
+        android:title="@string/align_date"
+        android:visible="false"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/exifDate"
         android:title="EXIF date"
         app:showAsAction="never"

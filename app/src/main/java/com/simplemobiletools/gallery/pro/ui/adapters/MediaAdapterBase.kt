@@ -75,7 +75,10 @@ open class MediaAdapterBase (
 
     override val itemList = media
 
+    val selectedItems get() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<Medium>
     val mediums: ArrayList<Medium> get() = ArrayList(media.takeWhile { it is Medium } as List<Medium>)
+    val selectedPaths get() = selectedItems.map { it.path } as ArrayList<String>
+
 
     init {
         setupDragListener(true)
@@ -137,7 +140,7 @@ open class MediaAdapterBase (
     }
 
     override fun prepareActionMode(menu: Menu) {
-        val selectedItems = getSelectedItems()
+        val selectedItems = selectedItems
         if (selectedItems.isEmpty())
             return
 
@@ -306,7 +309,7 @@ open class MediaAdapterBase (
             finishActionMode()
         }
         else
-            listener?.selectedPaths(getSelectedPaths())
+            listener?.selectedPaths(selectedPaths)
     }
 
     private fun showProperties() {
@@ -314,7 +317,7 @@ open class MediaAdapterBase (
             val path = getFirstSelectedItemPath() ?: return
             PropertiesDialog(activity, path, config.shouldShowHidden)
         } else {
-            val paths = getSelectedPaths()
+            val paths = selectedPaths
             PropertiesDialog(activity, paths, config.shouldShowHidden)
         }
     }
@@ -334,7 +337,7 @@ open class MediaAdapterBase (
                 }
             }
         } else {
-            RenameDialog(activity, getSelectedPaths(), true) {
+            RenameDialog(activity, selectedPaths, true) {
                 enableInstantLoad()
                 listener?.refreshItems()
                 finishActionMode()
@@ -359,7 +362,7 @@ open class MediaAdapterBase (
 
     private fun toggleFileVisibility(hide: Boolean) {
         ensureBackgroundThread {
-            getSelectedItems().forEach {
+            selectedItems.forEach {
                 activity.toggleFileVisibility(it.path, hide)
             }
             activity.runOnUiThread {
@@ -371,7 +374,7 @@ open class MediaAdapterBase (
 
     private fun toggleFavorites(add: Boolean) {
         ensureBackgroundThread {
-            getSelectedItems().forEach {
+            selectedItems.forEach {
                 it.isFavorite = add
                 activity.updateFavorite(it.path, add)
             }
@@ -383,7 +386,7 @@ open class MediaAdapterBase (
     }
 
     private fun restoreFiles() {
-        activity.restoreRecycleBinPaths(getSelectedPaths()) {
+        activity.restoreRecycleBinPaths(selectedPaths) {
             listener?.refreshItems()
             finishActionMode()
         }
@@ -391,16 +394,16 @@ open class MediaAdapterBase (
 
     private fun shareMedia() {
         if (selectedKeys.size == 1 && selectedKeys.first() != -1) {
-            activity.shareMediumPath(getSelectedItems().first().path)
+            activity.shareMediumPath(selectedItems.first().path)
         } else if (selectedKeys.size > 1) {
-            activity.shareMediaPaths(getSelectedPaths())
+            activity.shareMediaPaths(selectedPaths)
         }
     }
 
     private fun rotateSelection(degrees: Int) {
         activity.toast(R.string.saving)
         ensureBackgroundThread {
-            val paths = getSelectedPaths().filter { it.isImageFast() }
+            val paths = selectedPaths.filter { it.isImageFast() }
             var fileCnt = paths.size
             rotatedImagePaths.clear()
             paths.forEach {
@@ -425,7 +428,7 @@ open class MediaAdapterBase (
     }
 
     private fun copyMoveTo(isCopyOperation: Boolean) {
-        val paths = getSelectedPaths()
+        val paths = selectedPaths
 
         val recycleBinPath = activity.recycleBinPath
         val fileDirItems = paths.asSequence().filter { isCopyOperation || !it.startsWith(recycleBinPath) }.map {
@@ -462,7 +465,7 @@ open class MediaAdapterBase (
     private fun createShortcut() {
         val manager = activity.getSystemService(ShortcutManager::class.java)
         if (manager.isRequestPinShortcutSupported) {
-            val path = getSelectedPaths().first()
+            val path = selectedPaths.first()
             val drawable = resources.getDrawable(R.drawable.shortcut_image).mutate()
             activity.getShortcutImage(path, drawable) {
                 val intent = Intent(activity, ViewPagerActivity::class.java).apply {
@@ -487,7 +490,7 @@ open class MediaAdapterBase (
 
     private fun fixDateTaken() {
         ensureBackgroundThread {
-            activity.fixDateTaken(getSelectedPaths(), true) {
+            activity.fixDateTaken(selectedPaths, true) {
                 listener?.refreshItems()
                 finishActionMode()
             }
@@ -508,7 +511,7 @@ open class MediaAdapterBase (
 
     private fun askConfirmDelete() {
         val itemsCnt = selectedKeys.size
-        val firstPath = getSelectedPaths().first()
+        val firstPath = selectedPaths.first()
         val items = if (itemsCnt == 1) {
             "\"${firstPath.getFilenameFromPath()}\""
         } else {
@@ -529,7 +532,7 @@ open class MediaAdapterBase (
             return
         }
 
-        val SAFPath = getSelectedPaths().firstOrNull { activity.needsStupidWritePermissions(it) } ?: getFirstSelectedItemPath() ?: return
+        val SAFPath = selectedPaths.firstOrNull { activity.needsStupidWritePermissions(it) } ?: getFirstSelectedItemPath() ?: return
         activity.handleSAFDialog(SAFPath) {
             if (!it) {
                 return@handleSAFDialog
@@ -539,7 +542,7 @@ open class MediaAdapterBase (
             val removeMedia = ArrayList<Medium>(selectedKeys.size)
             val positions = getSelectedItemPositions()
 
-            getSelectedItems().forEach {
+            selectedItems.forEach {
                 fileDirItems.add(FileDirItem(it.path, it.name))
                 removeMedia.add(it)
             }
@@ -552,9 +555,7 @@ open class MediaAdapterBase (
         }
     }
 
-    private fun getSelectedItems() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<Medium>
 
-    fun getSelectedPaths() = getSelectedItems().map { it.path } as ArrayList<String>
 
     private fun getFirstSelectedItemPath() = getItemWithKey(selectedKeys.first())?.path
 
