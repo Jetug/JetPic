@@ -74,8 +74,7 @@ fun Context.saveDateToExif(paths: ArrayList<String>, showToasts: Boolean, callba
 //
 //            list[i].modified = dateTime.toDate().time;//
 
-fun alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
-
+fun Context.alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
     val list2 = list.clone() as ArrayList<Medium>
     val list = list.clone() as ArrayList<Medium>
 
@@ -83,6 +82,9 @@ fun alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
         return
 
     val isUp = list.isAscending()
+
+    val dates = dateTakensDB.getAllDateTakens()
+    val newDates = arrayListOf<DateTaken>()
 
     for (i in 0 .. list.lastIndex){
         if(i == 0){
@@ -93,24 +95,23 @@ fun alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
         }
         else{
             val perv = list[i - 1]
-            var next = list[i + 1]
 
             if(perv.modified > list[i].modified == isUp){
-                for (j in i + 1 .. list.lastIndex) {
-                    next = list[j]
-
-                    if (perv.modified < next.modified == isUp){
-                        break
-                    }
-                }
-
                 list[i].modified = add(perv.modified, 1, isUp)
             }
         }
 
         File(list[i].path).setLastModified(list[i].modified)
-    }
 
+        dates.forEach {
+            if (list[i].path == it.fullPath){
+                var date = it
+                date.lastModified = list[i].modified
+                newDates.add(date)
+            }
+        }
+    }
+    dateTakensDB.insertAll(newDates);
     callback()
 }
 
