@@ -93,24 +93,22 @@ fun Context.alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
         else if(i == list.lastIndex){
             list[i].modified = add(list[i - 1].modified, 1, isUp)
         }
-        else{
-            val perv = list[i - 1]
-
-            if(perv.modified > list[i].modified == isUp){
-                list[i].modified = add(perv.modified, 1, isUp)
-            }
+        else if(list[i - 1].modified > list[i].modified == isUp){
+            list[i].modified = add(list[i - 1].modified, 1, isUp)
         }
+        else continue
 
         File(list[i].path).setLastModified(list[i].modified)
 
         dates.forEach {
             if (list[i].path == it.fullPath){
-                var date = it
+                val date = it
                 date.lastModified = list[i].modified
                 newDates.add(date)
             }
         }
     }
+
     dateTakensDB.insertAll(newDates);
     callback()
 }

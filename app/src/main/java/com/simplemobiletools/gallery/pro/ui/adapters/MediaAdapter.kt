@@ -119,7 +119,7 @@ class MediaAdapter(
     }
 
     private fun alignDate() {
-        alignDate(selectedItems){
+        activity.alignDate(selectedItems){
 
         }
     }
