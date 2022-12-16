@@ -1,6 +1,7 @@
 package com.simplemobiletools.gallery.pro.data.jetug
 
 import android.content.Context
+import android.util.Log
 import androidx.exifinterface.media.ExifInterface
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getParentPath
@@ -9,6 +10,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.IOScope
 import com.simplemobiletools.gallery.pro.data.extensions.context.dateTakensDB
+import com.simplemobiletools.gallery.pro.data.helpers.JET
 import com.simplemobiletools.gallery.pro.data.models.DateTaken
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import kotlinx.coroutines.launch
@@ -75,42 +77,42 @@ fun Context.saveDateToExif(paths: ArrayList<String>, showToasts: Boolean, callba
 //            list[i].modified = dateTime.toDate().time;//
 
 fun Context.alignDate(list: ArrayList<Medium>, callback: (() -> Unit) = {}) {
+    //For test
     val list2 = list.clone() as ArrayList<Medium>
-    val list = list.clone() as ArrayList<Medium>
+    //val list = list.clone() as ArrayList<Medium>
 
     if(list.isEmpty() || list.size == 1)
         return
 
     val isUp = list.isAscending()
-
-    val dates = dateTakensDB.getAllDateTakens()
     val newDates = arrayListOf<DateTaken>()
 
-    for (i in 0 .. list.lastIndex){
-        if(i == 0){
-            list[i].modified = add(list[i + 1].modified, 1, !isUp)
-        }
-        else if(i == list.lastIndex){
-            list[i].modified = add(list[i - 1].modified, 1, isUp)
-        }
-        else if(list[i - 1].modified > list[i].modified == isUp){
-            list[i].modified = add(list[i - 1].modified, 1, isUp)
-        }
-        else continue
-
-        File(list[i].path).setLastModified(list[i].modified)
-
-        dates.forEach {
-            if (list[i].path == it.fullPath){
-                val date = it
-                date.lastModified = list[i].modified
-                newDates.add(date)
+    try {
+        for (i in 0 .. list.lastIndex){
+            if(i == 0){
+                list[i].modified = add(list[i + 1].modified, 1, !isUp)
             }
-        }
-    }
+            else if(i == list.lastIndex){
+                list[i].modified = add(list[i - 1].modified, 1, isUp)
+            }
+            else if(list[i - 1].modified > list[i].modified == isUp){
+                list[i].modified = add(list[i - 1].modified, 1, isUp)
+            }
+            else continue
 
-    dateTakensDB.insertAll(newDates);
-    callback()
+            File(list[i].path).setLastModified(list[i].modified)
+
+            val date = dateTakensDB.getDateTakenFromPath(list[i].path)
+            date.lastModified = list[i].modified
+            newDates.add(date)
+        }
+
+        dateTakensDB.insertAll(newDates)
+        callback()
+    }
+    catch (e: Exception){
+        Log.e(JET, "Context.alignDate: ", e)
+    }
 }
 
 fun add(a: Long, b: Long, arg: Boolean): Long = if (arg) a + b else a - b
