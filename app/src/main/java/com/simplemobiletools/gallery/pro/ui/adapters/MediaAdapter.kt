@@ -148,7 +148,7 @@ class MediaAdapter(
 
             val sorting = activity.getFolderSorting(path)
             if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
-                sort()
+                launchMain { sort() }
                 //controls.recreateAdapter()
             }
         }
