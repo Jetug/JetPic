@@ -1,6 +1,5 @@
-package com.simplemobiletools.gallery.pro.data.extensions
+package com.simplemobiletools.gallery.pro.data.extensions.context
 
-import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
@@ -35,6 +34,7 @@ import com.simplemobiletools.gallery.pro.data.helpers.asynctasks.GetMediaAsyncta
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.databases.dao.*
+import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.models.*
 import com.simplemobiletools.gallery.pro.data.svg.SvgSoftwareLayerSetter
 import com.simplemobiletools.gallery.pro.ui.views.MySquareImageView
@@ -778,7 +778,7 @@ fun Context.getCachedMedia(path: String, getVideosOnly: Boolean = false, getImag
         }) as ArrayList<Medium>
 
         val pathToUse = if (path.isEmpty()) SHOW_ALL else path
-        mediaFetcher.sortMedia(media, getSorting(pathToUse))
+        mediaFetcher.sortMedia(media, getFolderSorting(pathToUse))
         val grouped = mediaFetcher.groupMedia(media, pathToUse)
         callback(grouped.clone() as ArrayList<ThumbnailItem>)
         val OTGPath = config.OTGPath
@@ -991,7 +991,7 @@ fun Context.addPathToDB(path: String) {
             val isFavorite = favoritesDB.isFavorite(path)
             val videoDuration = if (type == TYPE_VIDEOS) getDuration(path) ?: 0 else 0
             val medium = Medium(null, path.getFilenameFromPath(), path, path.getParentPath(), System.currentTimeMillis(), System.currentTimeMillis(),
-                File(path).length(), type, videoDuration, isFavorite, 0L)
+                File(path).length(), type, videoDuration, isFavorite, 0L, 0L)
 
             mediaDB.insert(medium)
         } catch (ignored: Exception) {
@@ -1021,7 +1021,7 @@ fun Context.createDirectoryFromMedia(path: String, curMedia: ArrayList<Medium>, 
     }
 
     val isSortingAscending = config.directorySorting.isSortingAscending()
-    val defaultMedium = Medium(0, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L)
+    val defaultMedium = Medium(0, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0L)
     val firstItem = curMedia.firstOrNull() ?: defaultMedium
     val lastItem = curMedia.lastOrNull() ?: defaultMedium
     val dirName = checkAppendingHidden(path, hiddenString, includedFolders, noMediaFolders)
@@ -1042,7 +1042,7 @@ fun Context.updateDirectoryPath(path: String) {
     val includedFolders = config.includedFolders
     val noMediaFolders = getNoMediaFoldersSync()
 
-    val sorting = getSorting(path)
+    val sorting = getFolderSorting(path)
     val grouping = config.getFolderGrouping(path)
     val getProperDateTaken = config.directorySorting and SORT_BY_DATE_TAKEN != 0 ||
         sorting and SORT_BY_DATE_TAKEN != 0 ||
@@ -1060,7 +1060,7 @@ fun Context.updateDirectoryPath(path: String) {
     val dateTakens = mediaFetcher.getFolderDateTakens(path)
     val favoritePaths = getFavoritePaths()
     val curMedia = mediaFetcher.getFilesFrom(path, getImagesOnly, getVideosOnly, getProperDateTaken, getProperLastModified, getProperFileSize,
-        favoritePaths, false, lastModifieds, dateTakens)
+        favoritePaths, false, lastModifieds, dateTakens, null)
     val directory = createDirectoryFromMedia(path, curMedia, albumCovers, hiddenString, includedFolders, getProperFileSize, noMediaFolders)
     updateDirectory(directory)
 }

@@ -1,8 +1,9 @@
 package com.simplemobiletools.gallery.pro.ui.adapters
 
 import android.annotation.SuppressLint
+import android.view.Menu
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.unipicdev.views.dialogs.DateEditingDialog
+import com.simplemobiletools.gallery.pro.ui.dialogs.DateEditingDialog
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -13,6 +14,8 @@ import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.MediaFetcher
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.*
+import com.simplemobiletools.gallery.pro.data.models.Directory
+import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.ui.activities.mDirs
@@ -26,8 +29,7 @@ interface MediaAdapterControls{
 val mediaEmpty = object : MediaAdapterControls{
     override fun recreateAdapter() { }
 }
-
-@SuppressLint("ClickableViewAccessibility")
+@SuppressLint("ClickableViewAccessibility", "NotifyDataSetChanged")
 class MediaAdapter(
     private val mediaActivity: SimpleActivity,
     media: ArrayList<ThumbnailItem>,
@@ -41,20 +43,23 @@ class MediaAdapter(
     val controls: MediaAdapterControls = mediaEmpty, itemClick: (Any) -> Unit):
     MediaAdapterBase(mediaActivity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
+    override fun prepareActionMode(menu: Menu) {
+        super.prepareActionMode(menu)
+        menu.apply {
+            findItem(R.id.align_date).isVisible = true
+        }
+    }
+
     override fun actionItemPressed(id: Int) {
         super.actionItemPressed(id)
 
         when (id) {
             R.id.editDate -> showDateEditionDialog()
             R.id.saveDateToExif -> saveDateToExif()
-            //R.id.exifDate -> exifDate()
+            R.id.align_date -> alignDate()
+            R.id.cab_change_order -> changeOrder()
         }
     }
-
-//    private fun exifDate() {
-//        val path = getSelectedPaths()[0]
-//        activity.toast(getDateFromExif(path) ?: "")
-//    }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int){
         if (fromPosition < toPosition) {
@@ -71,30 +76,56 @@ class MediaAdapter(
     }
 
     override fun onDragAndDroppingEnded(){
-        launchIO {
-            activity.saveCustomMediaOrder(media.getMediums())
-            activity.saveSorting(path, SORT_BY_CUSTOM)
+
+    }
+
+    fun sort() {
+        val mediaFetcher = MediaFetcher(activity)
+        val buffMediums = mediums
+        mediaFetcher.sortMedia(buffMediums, activity.getFolderSorting(path))
+        media = mediaFetcher.groupMedia(buffMediums, path)
+        notifyDataSetChanged()
+        updateDirectoryTmb()
+    }
+
+    private fun updateDirectoryTmb (){
+        if(mediums.isEmpty()) return
+        val tmb = mediums.first().path
+        var directory = Directory()
+        for (dir in mDirs) {
+            if(dir is Directory && dir.path == path){
+                dir.tmb = tmb
+                directory = dir
+                break
+            }
+            else if(dir is DirectoryGroup){
+                for (inDir in dir.innerDirs) {
+                    if (inDir.path == path) {
+                        inDir.tmb = tmb
+                        directory = inDir
+                        break
+                    }
+                }
+            }
+        }
+        activity.updateDirectory(directory)
+    }
+
+    private fun saveDateToExif() {
+        mediums
+        activity.saveDateToExif(selectedPaths, true){
+            listener?.refreshItems()
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun sort() = launchDefault{
-        val mediaFetcher = MediaFetcher(activity)
-        val sorting = activity.getSorting(path)
-        mediaFetcher.sortMedia(mediums, sorting)
-        withMainContext { notifyDataSetChanged() }
-        //updateDirectory()
-    }
+    private fun alignDate() {
+        activity.alignDate(selectedItems){
 
-    private fun updateDirectory(){
-        //Jet
-        var dir = mDirs.getDirectories().first { it.path == path }
-        dir.tmb = mediums[0].path
-        activity.updateDirectory(dir)
+        }
     }
 
     private fun showDateEditionDialog() = launchDefault{
-        val paths = getSelectedPaths()
+        val paths = selectedPaths
         DateEditingDialog(activity, paths) { dateMap ->
             dateMap.forEach{
                 try {
@@ -114,18 +145,12 @@ class MediaAdapter(
                 }
                 catch (ignored: NoSuchElementException){}
             }
-            sort()
-            val sorting = activity.getSorting(path)
-            if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
-                controls.recreateAdapter()
-            }
-        }
-    }
 
-    private fun saveDateToExif() {
-        val paths = getSelectedPaths()
-        activity.saveDateToExif(paths, true){
-            listener?.refreshItems()
+            val sorting = activity.getFolderSorting(path)
+            if(sorting and SORT_BY_DATE_TAKEN != 0 || sorting and SORT_BY_DATE_MODIFIED != 0){
+                launchMain { sort() }
+                //controls.recreateAdapter()
+            }
         }
     }
 }

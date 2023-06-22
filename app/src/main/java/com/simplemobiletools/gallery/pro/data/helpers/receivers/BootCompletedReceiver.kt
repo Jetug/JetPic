@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.gallery.pro.data.extensions.updateDirectoryPath
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateDirectoryPath
 import com.simplemobiletools.gallery.pro.data.helpers.MediaFetcher
 
 class BootCompletedReceiver : BroadcastReceiver() {

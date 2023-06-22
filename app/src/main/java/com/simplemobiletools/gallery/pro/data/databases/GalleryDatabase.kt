@@ -12,7 +12,7 @@ import com.simplemobiletools.gallery.pro.data.databases.dao.*
 import com.simplemobiletools.gallery.pro.data.models.*
 
 @TypeConverters(JsonToStringConverter::class)
-@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class, FolderSettings::class], version = 12)
+@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class, FolderSettings::class], version = 14)
 abstract class GalleryDatabase : RoomDatabase() {
 
     abstract fun DirectoryDao(): DirectoryDao

@@ -19,7 +19,9 @@ import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.activities.contracts.PickDirectoryContract
-import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.addPathToDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateDirectoryPath
 import com.simplemobiletools.gallery.pro.data.helpers.MANAGE_STORAGE_RC
 
 open class SimpleActivity : BaseSimpleActivity() {
@@ -88,34 +90,7 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
     }
 
-    fun handleStoragePermission(callback: (granted: Boolean) -> Unit) {
-        actionOnPermission = null
-        if (hasStoragePermission) {
-            callback(true)
-        } else {
-            if (isRPlus()) {
-                ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
-                    if (success) {
-                        isAskingPermissions = true
-                        actionOnPermission = callback
-                        try {
-                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                            intent.addCategory("android.intent.category.DEFAULT")
-                            intent.data = Uri.parse("package:$packageName")
-                            startActivityForResult(intent, MANAGE_STORAGE_RC)
-                        } catch (e: Exception) {
-                            showErrorToast(e)
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                            startActivityForResult(intent, MANAGE_STORAGE_RC)
-                        }
-                    }
-                }
-            } else {
-                handlePermission(PERMISSION_WRITE_STORAGE, callback)
-            }
-        }
-    }
+
 
     //Jet
     fun registerFileUpdateListener() {

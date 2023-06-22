@@ -12,7 +12,7 @@ import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import java.util.*
 
 @SuppressLint("NotifyDataSetChanged")
@@ -32,7 +32,8 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         if (isDragAndDropping) {
             onDragAndDroppingEnded()
         }
-        isDragAndDropping = false
+        finishDragMode()
+        //isDragAndDropping = false
         notifyDataSetChanged()
     }
 
@@ -49,22 +50,6 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         }
     }
 
-
-    private fun moveItem(fromPosition: Int, toPosition: Int){
-        if (fromPosition < toPosition) {
-            for (i in fromPosition until toPosition) {
-                Collections.swap(itemList, i, i + 1)
-            }
-        } else {
-            for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(itemList, i, i - 1)
-            }
-        }
-
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-
     override fun onRowSelected(myViewHolder: ViewHolder?) {
         swipeRefreshLayout?.isEnabled = false
     }
@@ -73,9 +58,10 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
         swipeRefreshLayout?.isEnabled = activity.config.enablePullToRefresh
     }
 
-    fun changeOrder() {
-        enterSelectionMode()
-        isDragAndDropping = true
+    open fun changeOrder() {
+        enterSelectionMode(false)
+        enterDragMode()
+        //isDragAndDropping = true
         notifyDataSetChanged()
         actMode?.invalidate()
 
@@ -89,10 +75,5 @@ abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
                 }
             }
         }
-    }
-
-    protected fun createDialog(dialog: DialogFragment, tag: String){
-        val manager = activity.supportFragmentManager
-        dialog.show(manager, tag)
     }
 }

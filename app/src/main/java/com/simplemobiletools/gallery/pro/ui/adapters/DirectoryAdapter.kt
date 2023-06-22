@@ -139,14 +139,13 @@ class DirectoryAdapter(activity: SimpleActivity,
 
     override fun prepareActionMode(menu: Menu) {
         val selectedPaths = selectedPaths
-        if (selectedPaths.isEmpty()) {
+        if (selectedPaths.isEmpty())
             return
-        }
+        val selectedItems = selectedItems
+        val selectedItemsSize = selectedItems.size
+        val selectedGroupsSize = selectedGroups.size
 
         menu.apply {
-            val selectedItemsSize = selectedItems.size
-            val selectedGroupsSize = selectedGroups.size
-
             findItem(R.id.cab_move_to_top).isVisible = isDragAndDropping
             findItem(R.id.cab_move_to_bottom).isVisible = isDragAndDropping
 
@@ -162,7 +161,8 @@ class DirectoryAdapter(activity: SimpleActivity,
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus() && isOneItemSelected
 
             findItem(R.id.cab_group).isVisible = selectedItemsSize > 1 && selectedGroupsSize <= 1
-            findItem(R.id.cab_ungroup).isVisible = isOneItemSelected && selectedItems[0] is DirectoryGroup
+            findItem(R.id.cab_ungroup).isVisible = (isOneItemSelected && selectedItems[0] is DirectoryGroup) ||
+                selectedItems.all{it is Directory && it.groupName != ""}
 
             findItem(R.id.cab_rename).isVisible = selectedItemsSize == selectedGroupsSize || selectedGroupsSize == 0
 
@@ -304,7 +304,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                     //activity.updateDirectory(item)
                     //dirs.remove(item)
                     //activity.saveDirectoryGroup(item.path, name)
-                    activity.saveDirChanges(item)
+                    activity.saveDirChangesAsync(item)
                 }
             }
 
@@ -316,7 +316,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 controls.clearAdapter()
                 controls.recreateAdapter(dirsToShow)
                 notifyDataSetChanged()
-                finishActMode()
+                finishActionMode()
             }
         }
 
@@ -332,37 +332,36 @@ class DirectoryAdapter(activity: SimpleActivity,
         }
     }
 
-    private fun ungroupDirs() {
-        if(selectedItems.isEmpty()) return
+    private fun ungroupDirs() = launchDefault {
+        if(selectedItems.isEmpty()) return@launchDefault
 
-        launchDefault{
-            val items = selectedItems
-            for (item in items) {
-                if (item !is DirectoryGroup)
-                    continue
-
+        for (item in selectedItems) {
+            if (item is DirectoryGroup) {
                 val innerDirs = item.innerDirs
                 innerDirs.forEach {
                     it.groupName = ""
-                    activity.saveDirChanges(it)
-                    //activity.saveDirectoryGroup(it.path, "")
+                    activity.saveDirChangesAsync(it)
                 }
 
                 dirs.remove(item)
-//            innerDirs.forEach {
-//                it.groupName = ""
-//            }
                 dirs.addAll(innerDirs)
             }
-            dirs = activity.getDirsToShow(dirs.getDirectories())
-            mDirs = dirs
-
-            withMainContext {
-                notifyDataSetChanged()
-                finishActMode()
+            else if (item is Directory){
+                item.groupName = ""
+                activity.saveDirChangesAsync(item)
+                dirs.remove(item)
             }
         }
+
+        dirs = activity.getDirsToShow(dirs.getDirectories())
+        mDirs = dirs
+
+        withMainContext {
+            notifyDataSetChanged()
+            finishActionMode()
+        }
     }
+
 
     private fun checkHideBtnVisibility(menu: Menu, selectedPaths: ArrayList<String>) {
         menu.findItem(R.id.cab_hide).isVisible = selectedPaths.any { !it.doesThisOrParentHaveNoMedia(HashMap(), null) }
@@ -484,7 +483,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
             }
         }
-        finishActMode()
+        finishActionMode()
     }
 
     private fun toggleFoldersVisibility(hide: Boolean) {
@@ -493,7 +492,7 @@ class DirectoryAdapter(activity: SimpleActivity,
             config.showRecycleBinAtFolders = false
             if (selectedPaths.size == 1) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
 
@@ -518,7 +517,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                                 } else {
                                     activity.runOnUiThread {
                                         listener?.refreshItems()
-                                        finishActMode()
+                                        finishActionMode()
                                     }
                                 }
                             }
@@ -606,7 +605,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                     currentDirectoriesHash = newDirs.hashCode()
                     dirs = newDirs
 
-                    finishActMode()
+                    finishActionMode()
                     listener?.updateDirectories(newDirs)
                 }
             }
@@ -620,19 +619,19 @@ class DirectoryAdapter(activity: SimpleActivity,
             config.showRecycleBinAtFolders = false
             if (selectedPaths.size == 1) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
 
         if (paths.size == 1) {
             ExcludeFolderDialog(activity, paths.toMutableList()) {
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         } else if (paths.size > 1) {
             config.addExcludedFolders(paths)
             listener?.refreshItems()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -655,7 +654,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
 
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
@@ -673,22 +672,24 @@ class DirectoryAdapter(activity: SimpleActivity,
                 }
 
                 listener?.refreshItems()
-                finishActMode()
+                finishActionMode()
             }
         }
     }
 
     private fun pinFolders(pin: Boolean) {
-        if (pin) {
-            config.addPinnedFolders(selectedPaths.toHashSet())
-        } else {
-            config.removePinnedFolders(selectedPaths.toHashSet())
-        }
+        activity.saveIsPinnedAsync(selectedPaths, pin)
+
+//        if (pin) {
+//            config.addPinnedFolders(selectedPaths.toHashSet())
+//        } else {
+//            config.removePinnedFolders(selectedPaths.toHashSet())
+//        }
 
         currentDirectoriesHash = 0
         pinnedFolders = config.pinnedFolders
         listener?.recheckPinnedFolders()
-        finishActMode()
+        finishActionMode()
     }
 
     private fun moveFilesTo() {
@@ -700,7 +701,7 @@ class DirectoryAdapter(activity: SimpleActivity,
     private fun copyMoveTo(isCopyOperation: Boolean) {
         val paths = ArrayList<String>()
         val showHidden = config.shouldShowHidden
-        selectedPaths.forEach {
+        selectedPaths.forEach { it ->
             val filter = config.filterMedia
             File(it).listFiles()?.filter {
                 !File(it.absolutePath).isDirectory &&
@@ -721,7 +722,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
             config.tempFolderPath = ""
             listener?.refreshItems()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -829,7 +830,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                     }
 
                     if (selectedKeys.size == 1) {
-                        finishActMode()
+                        finishActionMode()
                     }
                 } else {
                     foldersToDelete.add(File(it.path))
@@ -888,7 +889,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
     private fun storeCovers(albumCovers: ArrayList<AlbumCover>) {
         config.albumCovers = Gson().toJson(albumCovers)
-        finishActMode()
+        finishActionMode()
         listener?.refreshItems()
     }
 

@@ -16,8 +16,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        //applicationId "com.jetugapps.gallery.plus"
         //applicationId "com.jetugapps.gallery.plus.jetug"
+        //applicationId "com.jetugapps.gallery.plus"
         applicationId "com.jetugapps.gallery.plus.dev"
         //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
@@ -25,9 +25,9 @@ android {
 
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 29
-        versionCode 30
-        versionName "1.7.0"
+        targetSdkVersion 30
+        versionCode 32
+        versionName "1.6.4"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
@@ -119,6 +119,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
     compileOnly 'com.squareup.okhttp3:okhttp:4.9.0'
 
@@ -141,8 +142,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'org.json:json:20220320'
 
-    //implementation "com.github.jkcclemens:khttp:0.1.0"
-    //implementation 'khttp:khttp:1.0.0'
+    def work_version = "2.5.0"
+
+    // Kotlin + coroutines
+    //implementation "androidx.work:work-runtime-ktx:2.4.0"
+    // optional - GCMNetworkManager support
+//    implementation "androidx.work:work-gcm:$work_version"
+//    // optional - Test helpers
+//    androidTestImplementation "androidx.work:work-testing:$work_version"
 
     implementation project(':commons')
     implementation project(':library')

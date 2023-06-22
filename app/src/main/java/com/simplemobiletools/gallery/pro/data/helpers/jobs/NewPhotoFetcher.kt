@@ -18,8 +18,8 @@ import android.provider.MediaStore.Video
 import com.simplemobiletools.commons.extensions.getParentPath
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.gallery.pro.data.extensions.addPathToDB
-import com.simplemobiletools.gallery.pro.data.extensions.updateDirectoryPath
+import com.simplemobiletools.gallery.pro.data.extensions.context.addPathToDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateDirectoryPath
 
 // based on https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)
 @TargetApi(Build.VERSION_CODES.N)

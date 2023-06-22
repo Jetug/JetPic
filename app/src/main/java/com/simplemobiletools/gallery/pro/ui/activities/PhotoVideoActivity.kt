@@ -17,6 +17,8 @@ import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.parseFileChannel
 import com.simplemobiletools.gallery.pro.ui.fragments.PhotoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.VideoFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.ViewPagerFragment
@@ -149,7 +151,7 @@ open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentList
         }
 
         mIsVideo = type == TYPE_VIDEOS
-        mMedium = Medium(null, filename, mUri.toString(), mUri!!.path!!.getParentPath(), 0, 0, file.length(), type, 0, false, 0L)
+        mMedium = Medium(null, filename, mUri.toString(), mUri!!.path!!.getParentPath(), 0, 0, file.length(), type, 0, false, 0L, 0L)
         supportActionBar?.title = mMedium!!.name
         bundle.putSerializable(MEDIUM, mMedium)
 

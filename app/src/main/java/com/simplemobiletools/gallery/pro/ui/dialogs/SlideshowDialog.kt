@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.helpers.SLIDESHOW_ANIMATION_FADE
 import com.simplemobiletools.gallery.pro.data.helpers.SLIDESHOW_ANIMATION_NONE
 import com.simplemobiletools.gallery.pro.data.helpers.SLIDESHOW_ANIMATION_SLIDE

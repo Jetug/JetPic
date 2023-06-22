@@ -1,7 +1,6 @@
 package com.simplemobiletools.commons.adapters
 
 import android.annotation.SuppressLint
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,18 +9,13 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.baseConfig
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getContrastColor
-import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.commons.interfaces.ItemMoveCallback
-import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.MyActionModeCallback
-import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import java.util.*
@@ -50,6 +44,7 @@ abstract class MyRecyclerViewAdapter(
     private var actBarTextView: TextView? = null
     private var lastLongPressedItem = -1
     private var dragMode:Boolean = true
+    private var finishOnEmpty: Boolean = true
 
     abstract fun getActionMenuId(): Int
     abstract fun prepareActionMode(menu: Menu)
@@ -85,7 +80,7 @@ abstract class MyRecyclerViewAdapter(
                 actMode!!.customView = actBarTextView
                 actBarTextView!!.setOnClickListener {
                     if (getSelectableItemCount() == selectedKeys.size && !isDragAndDropping) {
-                        finishActMode()
+                        finishActionMode()
                     } else {
                         selectAll()
                     }
@@ -141,8 +136,8 @@ abstract class MyRecyclerViewAdapter(
             updateTitle()
         }
 
-        if (selectedKeys.isEmpty() && !isDragAndDropping) {
-            finishActMode()
+        if (selectedKeys.isEmpty() && !isDragAndDropping && finishOnEmpty) {
+            finishActionMode()
         }
     }
 
@@ -270,7 +265,8 @@ abstract class MyRecyclerViewAdapter(
         }
     }
 
-    fun finishActMode() {
+    open fun finishActionMode() {
+        finishOnEmpty = true
         actMode?.finish()
     }
 
@@ -302,7 +298,7 @@ abstract class MyRecyclerViewAdapter(
         positions.forEach {
             notifyItemRemoved(it)
         }
-        finishActMode()
+        finishActionMode()
         fastScroller?.measureRecyclerView()
     }
 
@@ -313,7 +309,9 @@ abstract class MyRecyclerViewAdapter(
 
                 if (allowSingleClick) {
                     setOnClickListener { viewClicked(any) }
-                    setOnLongClickListener { if (allowLongClick) viewLongClicked() else viewClicked(any); true }
+                    setOnLongClickListener {
+                        if (allowLongClick) viewLongClicked() else viewClicked(any); true
+                    }
                 } else {
                     setOnClickListener(null)
                     setOnLongClickListener(null)
@@ -340,9 +338,18 @@ abstract class MyRecyclerViewAdapter(
         }
     }
 
-    fun enterSelectionMode(){
+    fun enterSelectionMode(finishOnEmpty: Boolean = true){
+        this.finishOnEmpty = finishOnEmpty
         if (!actModeCallback.isSelectable) {
             activity.startSupportActionMode(actModeCallback)
         }
+    }
+
+    fun enterDragMode(){
+        isDragAndDropping = true
+    }
+
+    fun finishDragMode(){
+        isDragAndDropping = false
     }
 }

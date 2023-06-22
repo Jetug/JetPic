@@ -20,4 +20,3 @@ interface FolderSettingsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(settings: List<FolderSettings>)
 }
-

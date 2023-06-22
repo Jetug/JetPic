@@ -6,7 +6,7 @@ import com.simplemobiletools.commons.extensions.getDoesFilePathExist
 import com.simplemobiletools.commons.extensions.internalStoragePath
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.ui.activities.mDirs
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.launchDefault
 import java.io.File
 

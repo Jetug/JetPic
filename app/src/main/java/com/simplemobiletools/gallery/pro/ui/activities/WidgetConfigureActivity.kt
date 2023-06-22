@@ -14,7 +14,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.ui.dialogs.PickDirectoryDialog
-import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.helpers.MyWidgetProvider
 import com.simplemobiletools.gallery.pro.data.helpers.ROUNDED_CORNERS_NONE
 import com.simplemobiletools.gallery.pro.data.models.Directory

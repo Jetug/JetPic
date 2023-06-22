@@ -99,7 +99,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         window.decorView.setBackgroundColor(config.backgroundColor)
         top_shadow.layoutParams.height = statusBarHeight + actionBarHeight
         checkNotchSupport()
-        (mMedia.clone() as ArrayList<ThumbnailItem>).filter { it is Medium }.mapTo(mMediaFiles) { it as Medium }
+        (mMedia.clone() as ArrayList<*>).filterIsInstance<Medium>().mapTo(mMediaFiles) { it }
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
@@ -396,22 +396,43 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         if (intent.action == "com.android.camera.action.REVIEW") {
             ensureBackgroundThread {
                 if (mediaDB.getMediaFromPath(mPath).isEmpty()) {
-                    val type = when {
-                        mPath.isVideoFast() -> TYPE_VIDEOS
-                        mPath.isGif() -> TYPE_GIFS
-                        mPath.isSvg() -> TYPE_SVGS
-                        mPath.isRawFast() -> TYPE_RAWS
-                        mPath.isPortrait() -> TYPE_PORTRAITS
-                        else -> TYPE_IMAGES
-                    }
 
+                    val filename = mPath.getFilenameFromPath()
+                    val parent = mPath.getParentPath()
+                    val type = getTypeFromPath(mPath)
                     val isFavorite = favoritesDB.isFavorite(mPath)
                     val duration = if (type == TYPE_VIDEOS) getDuration(mPath) ?: 0 else 0
                     val ts = System.currentTimeMillis()
-                    val medium = Medium(null, mPath.getFilenameFromPath(), mPath, mPath.getParentPath(), ts, ts, File(mPath).length(), type, duration, isFavorite, 0)
+                    val medium = Medium(null, filename, mPath, parent, ts, ts, File(mPath).length(), type, duration, isFavorite, 0, 0L)
                     mediaDB.insert(medium)
+
+//                    val type = when {
+//                        mPath.isVideoFast() -> TYPE_VIDEOS
+//                        mPath.isGif() -> TYPE_GIFS
+//                        mPath.isSvg() -> TYPE_SVGS
+//                        mPath.isRawFast() -> TYPE_RAWS
+//                        mPath.isPortrait() -> TYPE_PORTRAITS
+//                        else -> TYPE_IMAGES
+//                    }
+//
+//                    val isFavorite = favoritesDB.isFavorite(mPath)
+//                    val duration = if (type == TYPE_VIDEOS) getDuration(mPath) ?: 0 else 0
+//                    val ts = System.currentTimeMillis()
+//                    val medium = Medium(null, mPath.getFilenameFromPath(), mPath, mPath.getParentPath(), ts, ts, File(mPath).length(), type, duration, isFavorite, 0)
+//                    mediaDB.insert(medium)
                 }
             }
+        }
+    }
+
+    private fun getTypeFromPath(path: String): Int {
+        return when {
+            path.isVideoFast() -> TYPE_VIDEOS
+            path.isGif() -> TYPE_GIFS
+            path.isSvg() -> TYPE_SVGS
+            path.isRawFast() -> TYPE_RAWS
+            path.isPortrait() -> TYPE_PORTRAITS
+            else -> TYPE_IMAGES
         }
     }
 
@@ -1133,7 +1154,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     }
 
     private fun refreshViewPager() {
-        if (getSorting(mDirectory) and SORT_BY_RANDOM == 0) {
+        if (getFolderSorting(mDirectory) and SORT_BY_RANDOM == 0) {
             GetMediaAsynctask(applicationContext, mDirectory, false, false, mShowAll) {
                 gotMedia(it)
             }.execute()
@@ -1309,9 +1330,6 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             currentMedia[Math.min(mPos, currentMedia.size - 1)]
         }
     }
-
-
-
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 

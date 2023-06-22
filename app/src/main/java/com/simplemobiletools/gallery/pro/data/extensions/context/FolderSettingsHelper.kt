@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.hasStoragePermission
+import com.simplemobiletools.commons.extensions.moveLastItemToFront
 import com.simplemobiletools.commons.helpers.FAVORITES
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.JET
@@ -14,88 +15,63 @@ import com.simplemobiletools.gallery.pro.data.models.*
 import kotlinx.coroutines.*
 import java.io.File
 import java.lang.reflect.Type
-import kotlin.system.measureTimeMillis
 
 const val SETTINGS_FILE_NAME = "settings.txt"
 val systemPaths = arrayOf("", RECYCLE_BIN, FAVORITES)
 
-class Synchronizer{
-    private val pool: ArrayList<()->Any> = arrayListOf()
-
-    var isAlreadyRunning: Boolean = false
-
-    fun <T:Any> launch(block: ()->T){
-        if(isAlreadyRunning){
-            pool.add(block)
-        }
-        else{
-            isAlreadyRunning = true
-            block()
-            isAlreadyRunning = false
-            if (pool.isNotEmpty()){
-                val savedBlock = pool.takeFirst()
-                launch{savedBlock}
-            }
-        }
-    }
+suspend fun <A, B> Iterable<A>.pmap(action: suspend (A) -> B): List<B> = coroutineScope {
+    map {
+        async { action(it) }
+    }.awaitAll()
 }
-
-private val sync = Synchronizer()
 
 fun Context.startSettingsScanner() = launchIO{
     while (true){
         try {
             val directories = directoryDao.getAll() as ArrayList<Directory>
-            directories.forEach{ dir ->
-                val settings = readSettings(dir.path)
-                val group = if(settings.group == NO_VALUE) "" else settings.group
+
+            directories.pmap{ dir ->
+                val path = dir.path
+                val settings = readSettings(path)
                 dir.apply {
+                    val group = if(settings.group == NO_VALUE) "" else settings.group
                     groupName = group
                     customSorting = settings.sorting
                 }
 
-                directoryDao.update(dir)
-                config.saveCustomSorting(dir.path, settings.sorting)
+                if(settings.pinned)
+                    config.addPinnedFolders(setOf(path))
+                config.saveCustomSorting(path, settings.sorting)
                 folderSettingsDao.insert(settings)
+                directoryDao.update(dir)
             }
-        } catch (e: Exception) {
-            Log.e(JET, e.message, e)
         }
+        catch (e: Exception) { Log.e(JET, e.message, e) }
 
-        delay(5000)
+        delay(10000)
     }
 }
 
-fun Context.pinDir(dirGroup: DirectoryGroup, newName: String){
+fun Context.saveIsPinnedAsync(paths: ArrayList<String>, pin: Boolean) {
+    if (pin)
+        config.addPinnedFolders(paths.toHashSet())
+    else
+        config.removePinnedFolders(paths.toHashSet())
 
+    paths.forEach { path -> saveIsPinnedAsync(path, pin) }
 }
 
-fun Context.renameGroup(dirGroup: DirectoryGroup, newName: String) = launchIO{
+fun Context.renameGroupAsync(dirGroup: DirectoryGroup, newName: String){
     val groups = dirGroup.innerDirs
-
-    groups.forEach {
-        it.groupName = newName
-    }
-
-    saveDirChanges(groups)
+    groups.forEach { it.groupName = newName }
+    saveDirChangesAsync(groups)
 }
 
-fun Context.getDirectoryGroup(path: String): String{
-    val settings = getSettings(path)
-    var group = settings.group
-
-    if(group == NO_VALUE) group = ""
-
-    return group
+fun Context.saveDirChangesAsync(directories: ArrayList<Directory>) = launchIO{
+    directories.forEach { saveDirChangesAsync(it) }
 }
 
-fun Context.saveDirChanges(directories: ArrayList<Directory>) = launchIO{
-    directories.forEach{
-        saveDirChanges(it)
-    }
-}
-
-fun Context.saveDirChanges(directory: Directory) = launchIO{
+fun Context.saveDirChangesAsync(directory: Directory) = launchIO{
     val settings = getSettings(directory.path)
     settings.addDirectoryData(directory)
     settings.sorting = config.getCustomFolderSorting(directory.path)
@@ -110,50 +86,34 @@ fun Context.saveDirectoryGroup(path: String, groupName: String) = launchIO{
     saveSettings(settings)
 }
 
-fun Context.getSorting(path: String): Int{
-    var sorting: Int
-    val time = measureTimeMillis {
-        val settings = getSettings(path)
-
-        sorting = if(settings.sorting != 0)
-            settings.sorting
-        else
-            config.getCustomFolderSorting(path)
-    }
-    //Log.e(JET,"getSorting $time ms")
-    return sorting
+fun Context.getFolderSorting(path: String): Int{
+    return config.getCustomFolderSorting(path)
 }
 
-fun Context.saveSorting(path: String, sorting: Int){
-    sync.launch {
-        launchIO {
-            val settings = getSettings(path)
-            settings.sorting = sorting
-            config.saveCustomSorting(path, sorting)
-            saveSettings(settings)
-        }
+fun Context.saveSorting(path: String, sorting: Int) {
+    config.saveCustomSorting(path, sorting)
+    launchIO {
+        val settings = getSettings(path)
+        settings.sorting = sorting
+        saveSettings(settings)
     }
 }
 
 fun Context.getCustomMediaOrder(source: ArrayList<Medium>){
-    if (source.isEmpty()) return
-
-    val path = source[0].parentPath
-    val settings: FolderSettings = getSettings(path)
-    sortAs(source, settings.order)
+    sortAs(source, getSettings(source[0].parentPath).order)
 }
 
-fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>){
-    sync.launch{
-        launchIO {
-            if (medias.isNotEmpty()) {
-                val path = medias[0].parentPath
-                val settings = getSettings(path)
-                settings.order = medias.names
+fun Context.saveCustomMediaOrder(medias:ArrayList<Medium>) {
+    if (medias.isEmpty()) return
 
-                saveSettings(settings)
-            }
-        }
+    val path = medias[0].parentPath
+    val settings = getSettings(path)
+    settings.order = medias.names
+
+    folderSettingsDao.insert(settings)
+
+    launchIO {
+        writeSettings(settings)
     }
 }
 
@@ -161,10 +121,10 @@ fun Context.getSettings(path: String): FolderSettings{
     var settings: FolderSettings? = folderSettingsDao.getByPath(path)
 
     if(settings == null) {
-        if(hasStoragePermission)
-            settings = readSettings(path)
+        settings = if(hasStoragePermission)
+            readSettings(path)
         else
-            settings = FolderSettings(null, path, "", arrayListOf())
+            FolderSettings(null, path, "", arrayListOf())
 
         launchIO {
             folderSettingsDao.insert(settings)
@@ -175,11 +135,9 @@ fun Context.getSettings(path: String): FolderSettings{
 
 fun Context.saveSettings(settings: FolderSettings) = launchIO {
     folderSettingsDao.insert(settings)
-    //GalleryDatabase.getInstance(applicationContext).isOpen
     writeSettings(settings)
 }
 
-////////////////////////////
 private fun getOrCreateSettingsFile(path: String): File{
     val settingsFile = File(File(path), SETTINGS_FILE_NAME)
     if (!settingsFile.exists())
@@ -215,23 +173,26 @@ private fun Context.writeSettings(settings: FolderSettings){
 }
 
 private fun sortAs(source: ArrayList<Medium>, sample: ArrayList<String>){
-    if (source.isEmpty())
-        return
+    if (source.isEmpty()) return
+    var offset = 0
+    for (i in 0..sample.lastIndex){
 
-    val path = source[0].parentPath
-    sample.forEach {
-        var offset = 0
-        if (it != "" && File(path, it).exists()) {
-            for (i in offset until source.size){
-                val medium = source[i]
-                if(medium.name == it){
-                    source.removeAt(i)
-                    source.add(offset, medium)
-                    offset += 1
-                    break
-                }
-            }
+        if (!File(source[0].parentPath, sample[i]).exists())
+            continue
+
+        for(j in offset..source.lastIndex){
+            val src = source[j]
+            if (src.name != sample[i]) continue
+            source.remove(src)
+            source.add(offset, src)
+            offset++
+            break
         }
     }
-    source.reverse()
+}
+
+private fun Context.saveIsPinnedAsync(path: String, pin: Boolean) = launchIO{
+    val settings = getSettings(path)
+    settings.pinned = pin
+    saveSettings(settings)
 }

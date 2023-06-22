@@ -7,6 +7,7 @@ import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -25,6 +26,7 @@ import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.activities.ViewPagerActivity
 import com.simplemobiletools.gallery.pro.ui.dialogs.DeleteWithRememberDialog
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.data.jetug.searchInYandex
@@ -69,9 +71,14 @@ open class MediaAdapterBase (
     private var displayFilenames = config.displayFileNames
     private var showFileTypes = config.showThumbnailFileTypes
 
+    private var isChangeOrderAction = false
+
     override val itemList = media
 
+    val selectedItems get() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<Medium>
     val mediums: ArrayList<Medium> get() = ArrayList(media.takeWhile { it is Medium } as List<Medium>)
+    val selectedPaths get() = selectedItems.map { it.path } as ArrayList<String>
+
 
     init {
         setupDragListener(true)
@@ -133,7 +140,7 @@ open class MediaAdapterBase (
     }
 
     override fun prepareActionMode(menu: Menu) {
-        val selectedItems = getSelectedItems()
+        val selectedItems = selectedItems
         if (selectedItems.isEmpty())
             return
 
@@ -148,7 +155,7 @@ open class MediaAdapterBase (
             findItem(R.id.cab_fix_date_taken).isVisible = !isInRecycleBin
             findItem(R.id.cab_move_to).isVisible = !isInRecycleBin
             findItem(R.id.cab_open_with).isVisible = isOneItemSelected
-            findItem(R.id.cab_confirm_selection).isVisible = isAGetIntent && allowMultiplePicks && selectedKeys.isNotEmpty()
+            findItem(R.id.cab_confirm_selection).isVisible = (isAGetIntent && allowMultiplePicks && selectedKeys.isNotEmpty()) || isChangeOrderAction
             findItem(R.id.cab_restore_recycle_bin_files).isVisible = selectedPaths.all { it.startsWith(activity.recycleBinPath) }
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus && isOneItemSelected
             findItem(R.id.cab_create_shortcut).isVisible = isOreoPlus && isOneItemSelected
@@ -192,13 +199,26 @@ open class MediaAdapterBase (
         }
     }
 
-
-
-    override fun getSelectableItemCount() = media.filter { it is Medium }.size
+    override fun getSelectableItemCount() = media.filterIsInstance<Medium>().size
     override fun getIsItemSelectable(position: Int) = !isASectionTitle(position)
     override fun getItemSelectionKey(position: Int) = (media.getOrNull(position) as? Medium)?.path?.hashCode()
     override fun getItemKeyPosition(key: Int) = media.indexOfFirst { (it as? Medium)?.path?.hashCode() == key }
     override fun onActionModeCreated() {}
+
+    override fun changeOrder() {
+        if(selectedKeys.isEmpty()) {
+            val itemKey = getItemSelectionKey(0) ?: return
+            selectedKeys.add(itemKey)
+        }
+
+        isChangeOrderAction = true
+        super.changeOrder()
+    }
+
+    override fun finishActionMode() {
+        super.finishActionMode()
+        isChangeOrderAction = false
+    }
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
@@ -214,293 +234,6 @@ open class MediaAdapterBase (
 
     fun isASectionTitle(position: Int) = media.getOrNull(position) is ThumbnailSection
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupView(view: View, holder: ViewHolder, position: Int){
-        view.apply {
-            if (media_drag_handle != null) {
-                media_drag_handle.beVisibleIf(isDragAndDropping)
-
-                if (isDragAndDropping) {
-                    media_drag_handle.applyColorFilter(textColor)
-                    //drag
-                    media_drag_handle.setOnTouchListener { _, event ->
-                        if (event.action == MotionEvent.ACTION_DOWN) {
-                            startReorderDragListener?.requestDrag(holder)
-                        }
-                        false
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    private fun checkHideBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
-        val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true
-        menu.findItem(R.id.cab_hide).isVisible = !isInRecycleBin && selectedItems.any { !it.isHidden() }
-        menu.findItem(R.id.cab_unhide).isVisible = !isInRecycleBin && selectedItems.any { it.isHidden() }
-    }
-
-    private fun checkFavoriteBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
-        menu.findItem(R.id.cab_add_to_favorites).isVisible = selectedItems.none { it.getIsInRecycleBin() } && selectedItems.any { !it.isFavorite }
-        menu.findItem(R.id.cab_remove_from_favorites).isVisible = selectedItems.none { it.getIsInRecycleBin() } && selectedItems.any { it.isFavorite }
-    }
-
-    private fun confirmSelection() {
-        listener?.selectedPaths(getSelectedPaths())
-    }
-
-    private fun showProperties() {
-        if (selectedKeys.size <= 1) {
-            val path = getFirstSelectedItemPath() ?: return
-            PropertiesDialog(activity, path, config.shouldShowHidden)
-        } else {
-            val paths = getSelectedPaths()
-            PropertiesDialog(activity, paths, config.shouldShowHidden)
-        }
-    }
-
-    private fun renameFile() {
-        if (selectedKeys.size == 1) {
-            val oldPath = getFirstSelectedItemPath() ?: return
-            RenameItemDialog(activity, oldPath) {
-                ensureBackgroundThread {
-                    activity.updateDBMediaPath(oldPath, it)
-
-                    activity.runOnUiThread {
-                        enableInstantLoad()
-                        listener?.refreshItems()
-                        finishActMode()
-                    }
-                }
-            }
-        } else {
-            RenameDialog(activity, getSelectedPaths(), true) {
-                enableInstantLoad()
-                listener?.refreshItems()
-                finishActMode()
-            }
-        }
-    }
-
-    private fun editFile() {
-        val path = getFirstSelectedItemPath() ?: return
-        activity.openEditor(path)
-    }
-
-    private fun openPath() {
-        val path = getFirstSelectedItemPath() ?: return
-        activity.openPath(path, true)
-    }
-
-    private fun setAs() {
-        val path = getFirstSelectedItemPath() ?: return
-        activity.setAs(path)
-    }
-
-    private fun toggleFileVisibility(hide: Boolean) {
-        ensureBackgroundThread {
-            getSelectedItems().forEach {
-                activity.toggleFileVisibility(it.path, hide)
-            }
-            activity.runOnUiThread {
-                listener?.refreshItems()
-                finishActMode()
-            }
-        }
-    }
-
-    private fun toggleFavorites(add: Boolean) {
-        ensureBackgroundThread {
-            getSelectedItems().forEach {
-                it.isFavorite = add
-                activity.updateFavorite(it.path, add)
-            }
-            activity.runOnUiThread {
-                listener?.refreshItems()
-                finishActMode()
-            }
-        }
-    }
-
-    private fun restoreFiles() {
-        activity.restoreRecycleBinPaths(getSelectedPaths()) {
-            listener?.refreshItems()
-            finishActMode()
-        }
-    }
-
-    private fun shareMedia() {
-        if (selectedKeys.size == 1 && selectedKeys.first() != -1) {
-            activity.shareMediumPath(getSelectedItems().first().path)
-        } else if (selectedKeys.size > 1) {
-            activity.shareMediaPaths(getSelectedPaths())
-        }
-    }
-
-    private fun rotateSelection(degrees: Int) {
-        activity.toast(R.string.saving)
-        ensureBackgroundThread {
-            val paths = getSelectedPaths().filter { it.isImageFast() }
-            var fileCnt = paths.size
-            rotatedImagePaths.clear()
-            paths.forEach {
-                rotatedImagePaths.add(it)
-                activity.saveRotatedImageToFile(it, it, degrees, true) {
-                    fileCnt--
-                    if (fileCnt == 0) {
-                        activity.runOnUiThread {
-                            listener?.refreshItems()
-                            finishActMode()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun moveFilesTo() {
-        activity.handleDeletePasswordProtection {
-            copyMoveTo(false)
-        }
-    }
-
-    private fun copyMoveTo(isCopyOperation: Boolean) {
-        val paths = getSelectedPaths()
-
-        val recycleBinPath = activity.recycleBinPath
-        val fileDirItems = paths.asSequence().filter { isCopyOperation || !it.startsWith(recycleBinPath) }.map {
-            FileDirItem(it, it.getFilenameFromPath())
-        }.toMutableList() as ArrayList
-
-        if (!isCopyOperation && paths.any { it.startsWith(recycleBinPath) }) {
-            activity.toast(R.string.moving_recycle_bin_items_disabled, Toast.LENGTH_LONG)
-        }
-
-        if (fileDirItems.isEmpty()) {
-            return
-        }
-
-        finishActMode()
-
-        (activity as SimpleActivity).tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
-            val destinationPath = it
-            config.tempFolderPath = ""
-            activity.applicationContext.rescanFolderMedia(destinationPath)
-            activity.applicationContext.rescanFolderMedia(fileDirItems.first().getParentPath())
-
-            val newPaths = fileDirItems.map { "$destinationPath/${it.name}" }.toMutableList() as ArrayList<String>
-            activity.fixDateTaken(newPaths, false)
-
-            if (!isCopyOperation) {
-                listener?.refreshItems()
-                activity.updateFavoritePaths(fileDirItems, destinationPath)
-            }
-        }
-    }
-
-    @SuppressLint("NewApi")
-    private fun createShortcut() {
-        val manager = activity.getSystemService(ShortcutManager::class.java)
-        if (manager.isRequestPinShortcutSupported) {
-            val path = getSelectedPaths().first()
-            val drawable = resources.getDrawable(R.drawable.shortcut_image).mutate()
-            activity.getShortcutImage(path, drawable) {
-                val intent = Intent(activity, ViewPagerActivity::class.java).apply {
-                    putExtra(PATH, path)
-                    putExtra(SHOW_ALL, config.showAll)
-                    putExtra(SHOW_FAVORITES, path == FAVORITES)
-                    putExtra(SHOW_RECYCLE_BIN, path == RECYCLE_BIN)
-                    action = Intent.ACTION_VIEW
-                    flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
-
-                val shortcut = ShortcutInfo.Builder(activity, path)
-                    .setShortLabel(path.getFilenameFromPath())
-                    .setIcon(Icon.createWithBitmap(drawable.convertToBitmap()))
-                    .setIntent(intent)
-                    .build()
-
-                manager.requestPinShortcut(shortcut, null)
-            }
-        }
-    }
-
-    private fun fixDateTaken() {
-        ensureBackgroundThread {
-            activity.fixDateTaken(getSelectedPaths(), true) {
-                listener?.refreshItems()
-                finishActMode()
-            }
-        }
-    }
-
-    private fun checkDeleteConfirmation() {
-        if (config.isDeletePasswordProtectionOn) {
-            activity.handleDeletePasswordProtection {
-                deleteFiles()
-            }
-        } else if (config.tempSkipDeleteConfirmation || config.skipDeleteConfirmation) {
-            deleteFiles()
-        } else {
-            askConfirmDelete()
-        }
-    }
-
-    private fun askConfirmDelete() {
-        val itemsCnt = selectedKeys.size
-        val firstPath = getSelectedPaths().first()
-        val items = if (itemsCnt == 1) {
-            "\"${firstPath.getFilenameFromPath()}\""
-        } else {
-            resources.getQuantityString(R.plurals.delete_items, itemsCnt, itemsCnt)
-        }
-
-        val isRecycleBin = firstPath.startsWith(activity.recycleBinPath)
-        val baseString = if (config.useRecycleBin && !isRecycleBin) R.string.move_to_recycle_bin_confirmation else R.string.deletion_confirmation
-        val question = String.format(resources.getString(baseString), items)
-        DeleteWithRememberDialog(activity, question) {
-            config.tempSkipDeleteConfirmation = it
-            deleteFiles()
-        }
-    }
-
-    private fun deleteFiles() {
-        if (selectedKeys.isEmpty()) {
-            return
-        }
-
-        val SAFPath = getSelectedPaths().firstOrNull { activity.needsStupidWritePermissions(it) } ?: getFirstSelectedItemPath() ?: return
-        activity.handleSAFDialog(SAFPath) {
-            if (!it) {
-                return@handleSAFDialog
-            }
-
-            val fileDirItems = ArrayList<FileDirItem>(selectedKeys.size)
-            val removeMedia = ArrayList<Medium>(selectedKeys.size)
-            val positions = getSelectedItemPositions()
-
-            getSelectedItems().forEach {
-                fileDirItems.add(FileDirItem(it.path, it.name))
-                removeMedia.add(it)
-            }
-
-            media.removeAll(removeMedia)
-            listener?.tryDeleteFiles(fileDirItems)
-            listener?.updateMediaGridDecoration(media)
-            removeSelectedItems(positions)
-            currentMediaHash = media.hashCode()
-        }
-    }
-
-    private fun getSelectedItems() = selectedKeys.mapNotNull { getItemWithKey(it) } as ArrayList<Medium>
-
-    fun getSelectedPaths() = getSelectedItems().map { it.path } as ArrayList<String>
-
-    private fun getFirstSelectedItemPath() = getItemWithKey(selectedKeys.first())?.path
-
-    private fun getItemWithKey(key: Int): Medium? = media.firstOrNull { (it as? Medium)?.path?.hashCode() == key } as? Medium
 
     fun updateMedia(newMedia: ArrayList<ThumbnailItem>) {
         val thumbnailItems = newMedia.clone() as ArrayList<ThumbnailItem>
@@ -509,7 +242,7 @@ open class MediaAdapterBase (
             media = thumbnailItems
             enableInstantLoad()
             notifyDataSetChanged()
-            finishActMode()
+            finishActionMode()
         }
     }
 
@@ -534,15 +267,305 @@ open class MediaAdapterBase (
         notifyDataSetChanged()
     }
 
+    fun getItemBubbleText(position: Int, sorting: Int, dateFormat: String, timeFormat: String): String {
+        return (media[position] as? Medium)?.getBubbleText(sorting, activity, dateFormat, timeFormat) ?: ""
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupView(view: View, holder: ViewHolder, position: Int){
+        view.apply {
+            if (media_drag_handle != null) {
+                media_drag_handle.beVisibleIf(isDragAndDropping)
+
+                if (isDragAndDropping) {
+                    media_drag_handle.applyColorFilter(textColor)
+                    //drag
+                    media_drag_handle.setOnTouchListener { _, event ->
+                        if (event.action == MotionEvent.ACTION_DOWN) {
+                            startReorderDragListener?.requestDrag(holder)
+                        }
+                        false
+                    }
+                }
+            }
+        }
+    }
+
+    private fun checkHideBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
+        val isInRecycleBin = selectedItems.firstOrNull()?.getIsInRecycleBin() == true
+        menu.findItem(R.id.cab_hide).isVisible = !isInRecycleBin && selectedItems.any { !it.isHidden() }
+        menu.findItem(R.id.cab_unhide).isVisible = !isInRecycleBin && selectedItems.any { it.isHidden() }
+    }
+
+    private fun checkFavoriteBtnVisibility(menu: Menu, selectedItems: ArrayList<Medium>) {
+        menu.findItem(R.id.cab_add_to_favorites).isVisible = selectedItems.none { it.getIsInRecycleBin() } && selectedItems.any { !it.isFavorite }
+        menu.findItem(R.id.cab_remove_from_favorites).isVisible = selectedItems.none { it.getIsInRecycleBin() } && selectedItems.any { it.isFavorite }
+    }
+
+    private fun confirmSelection() {
+        if(isChangeOrderAction){
+            activity.saveSorting(path, SORT_BY_CUSTOM)
+            activity.saveCustomMediaOrder(media.getMediums())
+            finishActionMode()
+        }
+        else
+            listener?.selectedPaths(selectedPaths)
+    }
+
+    private fun showProperties() {
+        if (selectedKeys.size <= 1) {
+            val path = getFirstSelectedItemPath() ?: return
+            PropertiesDialog(activity, path, config.shouldShowHidden)
+        } else {
+            val paths = selectedPaths
+            PropertiesDialog(activity, paths, config.shouldShowHidden)
+        }
+    }
+
+    private fun renameFile() {
+        if (selectedKeys.size == 1) {
+            val oldPath = getFirstSelectedItemPath() ?: return
+            RenameItemDialog(activity, oldPath) {
+                ensureBackgroundThread {
+                    activity.updateDBMediaPath(oldPath, it)
+
+                    activity.runOnUiThread {
+                        enableInstantLoad()
+                        listener?.refreshItems()
+                        finishActionMode()
+                    }
+                }
+            }
+        } else {
+            RenameDialog(activity, selectedPaths, true) {
+                enableInstantLoad()
+                listener?.refreshItems()
+                finishActionMode()
+            }
+        }
+    }
+
+    private fun editFile() {
+        val path = getFirstSelectedItemPath() ?: return
+        activity.openEditor(path)
+    }
+
+    private fun openPath() {
+        val path = getFirstSelectedItemPath() ?: return
+        activity.openPath(path, true)
+    }
+
+    private fun setAs() {
+        val path = getFirstSelectedItemPath() ?: return
+        activity.setAs(path)
+    }
+
+    private fun toggleFileVisibility(hide: Boolean) {
+        ensureBackgroundThread {
+            selectedItems.forEach {
+                activity.toggleFileVisibility(it.path, hide)
+            }
+            activity.runOnUiThread {
+                listener?.refreshItems()
+                finishActionMode()
+            }
+        }
+    }
+
+    private fun toggleFavorites(add: Boolean) {
+        ensureBackgroundThread {
+            selectedItems.forEach {
+                it.isFavorite = add
+                activity.updateFavorite(it.path, add)
+            }
+            activity.runOnUiThread {
+                listener?.refreshItems()
+                finishActionMode()
+            }
+        }
+    }
+
+    private fun restoreFiles() {
+        activity.restoreRecycleBinPaths(selectedPaths) {
+            listener?.refreshItems()
+            finishActionMode()
+        }
+    }
+
+    private fun shareMedia() {
+        if (selectedKeys.size == 1 && selectedKeys.first() != -1) {
+            activity.shareMediumPath(selectedItems.first().path)
+        } else if (selectedKeys.size > 1) {
+            activity.shareMediaPaths(selectedPaths)
+        }
+    }
+
+    private fun rotateSelection(degrees: Int) {
+        activity.toast(R.string.saving)
+        ensureBackgroundThread {
+            val paths = selectedPaths.filter { it.isImageFast() }
+            var fileCnt = paths.size
+            rotatedImagePaths.clear()
+            paths.forEach {
+                rotatedImagePaths.add(it)
+                activity.saveRotatedImageToFile(it, it, degrees, true) {
+                    fileCnt--
+                    if (fileCnt == 0) {
+                        activity.runOnUiThread {
+                            listener?.refreshItems()
+                            finishActionMode()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun moveFilesTo() {
+        activity.handleDeletePasswordProtection {
+            copyMoveTo(false)
+        }
+    }
+
+    private fun copyMoveTo(isCopyOperation: Boolean) {
+        val paths = selectedPaths
+
+        val recycleBinPath = activity.recycleBinPath
+        val fileDirItems = paths.asSequence().filter { isCopyOperation || !it.startsWith(recycleBinPath) }.map {
+            FileDirItem(it, it.getFilenameFromPath())
+        }.toMutableList() as ArrayList
+
+        if (!isCopyOperation && paths.any { it.startsWith(recycleBinPath) }) {
+            activity.toast(R.string.moving_recycle_bin_items_disabled, Toast.LENGTH_LONG)
+        }
+
+        if (fileDirItems.isEmpty()) {
+            return
+        }
+
+        finishActionMode()
+
+        (activity as SimpleActivity).tryCopyMoveFilesTo(fileDirItems, isCopyOperation) {
+            val destinationPath = it
+            config.tempFolderPath = ""
+            activity.applicationContext.rescanFolderMedia(destinationPath)
+            activity.applicationContext.rescanFolderMedia(fileDirItems.first().getParentPath())
+
+            val newPaths = fileDirItems.map { "$destinationPath/${it.name}" }.toMutableList() as ArrayList<String>
+            activity.fixDateTaken(newPaths, false)
+
+            if (!isCopyOperation) {
+                listener?.refreshItems()
+                activity.updateFavoritePaths(fileDirItems, destinationPath)
+            }
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private fun createShortcut() {
+        val manager = activity.getSystemService(ShortcutManager::class.java)
+        if (manager.isRequestPinShortcutSupported) {
+            val path = selectedPaths.first()
+            val drawable = resources.getDrawable(R.drawable.shortcut_image).mutate()
+            activity.getShortcutImage(path, drawable) {
+                val intent = Intent(activity, ViewPagerActivity::class.java).apply {
+                    putExtra(PATH, path)
+                    putExtra(SHOW_ALL, config.showAll)
+                    putExtra(SHOW_FAVORITES, path == FAVORITES)
+                    putExtra(SHOW_RECYCLE_BIN, path == RECYCLE_BIN)
+                    action = Intent.ACTION_VIEW
+                    flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+
+                val shortcut = ShortcutInfo.Builder(activity, path)
+                    .setShortLabel(path.getFilenameFromPath())
+                    .setIcon(Icon.createWithBitmap(drawable.convertToBitmap()))
+                    .setIntent(intent)
+                    .build()
+
+                manager.requestPinShortcut(shortcut, null)
+            }
+        }
+    }
+
+    private fun fixDateTaken() {
+        ensureBackgroundThread {
+            activity.fixDateTaken(selectedPaths, true) {
+                listener?.refreshItems()
+                finishActionMode()
+            }
+        }
+    }
+
+    private fun checkDeleteConfirmation() {
+        if (config.isDeletePasswordProtectionOn) {
+            activity.handleDeletePasswordProtection {
+                deleteFiles()
+            }
+        } else if (config.tempSkipDeleteConfirmation || config.skipDeleteConfirmation) {
+            deleteFiles()
+        } else {
+            askConfirmDelete()
+        }
+    }
+
+    private fun askConfirmDelete() {
+        val itemsCnt = selectedKeys.size
+        val firstPath = selectedPaths.first()
+        val items = if (itemsCnt == 1) {
+            "\"${firstPath.getFilenameFromPath()}\""
+        } else {
+            resources.getQuantityString(R.plurals.delete_items, itemsCnt, itemsCnt)
+        }
+
+        val isRecycleBin = firstPath.startsWith(activity.recycleBinPath)
+        val baseString = if (config.useRecycleBin && !isRecycleBin) R.string.move_to_recycle_bin_confirmation else R.string.deletion_confirmation
+        val question = String.format(resources.getString(baseString), items)
+        DeleteWithRememberDialog(activity, question) {
+            config.tempSkipDeleteConfirmation = it
+            deleteFiles()
+        }
+    }
+
+    private fun deleteFiles() {
+        if (selectedKeys.isEmpty()) {
+            return
+        }
+
+        val SAFPath = selectedPaths.firstOrNull { activity.needsStupidWritePermissions(it) } ?: getFirstSelectedItemPath() ?: return
+        activity.handleSAFDialog(SAFPath) {
+            if (!it) {
+                return@handleSAFDialog
+            }
+
+            val fileDirItems = ArrayList<FileDirItem>(selectedKeys.size)
+            val removeMedia = ArrayList<Medium>(selectedKeys.size)
+            val positions = getSelectedItemPositions()
+
+            selectedItems.forEach {
+                fileDirItems.add(FileDirItem(it.path, it.name))
+                removeMedia.add(it)
+            }
+
+            media.removeAll(removeMedia)
+            listener?.tryDeleteFiles(fileDirItems)
+            listener?.updateMediaGridDecoration(media)
+            removeSelectedItems(positions)
+            currentMediaHash = media.hashCode()
+        }
+    }
+
+
+
+    private fun getFirstSelectedItemPath() = getItemWithKey(selectedKeys.first())?.path
+
+    private fun getItemWithKey(key: Int): Medium? = media.firstOrNull { (it as? Medium)?.path?.hashCode() == key } as? Medium
+
     private fun enableInstantLoad() {
         loadImageInstantly = true
         delayHandler.postDelayed({
             loadImageInstantly = false
         }, INSTANT_LOAD_DURATION)
-    }
-
-    fun getItemBubbleText(position: Int, sorting: Int, dateFormat: String, timeFormat: String): String {
-        return (media[position] as? Medium)?.getBubbleText(sorting, activity, dateFormat, timeFormat) ?: ""
     }
 
     private fun setupThumbnail(view: View, medium: Medium) {

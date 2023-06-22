@@ -3,10 +3,10 @@ package com.simplemobiletools.gallery.pro.ui.activities
 import android.content.Intent
 import com.simplemobiletools.commons.activities.BaseSplashActivity
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.gallery.pro.data.extensions.config
-import com.simplemobiletools.gallery.pro.data.extensions.favoritesDB
-import com.simplemobiletools.gallery.pro.data.extensions.getFavoriteFromPath
-import com.simplemobiletools.gallery.pro.data.extensions.mediaDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.favoritesDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.getFavoriteFromPath
+import com.simplemobiletools.gallery.pro.data.extensions.context.mediaDB
 import com.simplemobiletools.gallery.pro.data.models.Favorite
 
 class SplashActivity : BaseSplashActivity() {

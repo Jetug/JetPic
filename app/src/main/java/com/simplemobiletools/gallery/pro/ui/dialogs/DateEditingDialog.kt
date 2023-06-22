@@ -1,4 +1,4 @@
-package com.example.unipicdev.views.dialogs
+package com.simplemobiletools.gallery.pro.ui.dialogs
 
 import android.content.DialogInterface
 import android.util.Log
@@ -10,7 +10,6 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.launchIO
 import com.simplemobiletools.gallery.pro.data.extensions.launchMain
 import com.simplemobiletools.gallery.pro.data.helpers.JET
-import com.simplemobiletools.gallery.pro.data.jetug.setLastModified
 import kotlinx.android.synthetic.main.dialog_date_editing.view.*
 import org.joda.time.*
 import java.io.File

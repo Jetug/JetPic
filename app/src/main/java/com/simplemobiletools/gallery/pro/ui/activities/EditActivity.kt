@@ -40,7 +40,7 @@ import com.simplemobiletools.gallery.pro.ui.adapters.FiltersAdapter
 import com.simplemobiletools.gallery.pro.ui.dialogs.OtherAspectRatioDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ResizeDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.SaveAsDialog
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.copyNonDimensionAttributesTo
 import com.simplemobiletools.gallery.pro.data.extensions.fixDateTaken
 import com.simplemobiletools.gallery.pro.data.extensions.openEditor

@@ -3,27 +3,36 @@ package com.simplemobiletools.gallery.pro.ui.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.TasksActivity
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.launchSettings
 import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsScanner
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateWidgets
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.helpers.khttp.post
-import com.simplemobiletools.gallery.pro.data.helpers.khttp.structures.files.FileLike
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
-import java.io.File
 import java.net.InetAddress
 import kotlin.system.measureTimeMillis
 
@@ -41,6 +50,12 @@ private var currentMediaFragment: MediaFragment? = null
 
 class MainActivity : SimpleActivity() {
     private var toggle: ActionBarDrawerToggle? = null
+
+    private val isProApp: Boolean get(){
+        val info: PackageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+        val permissions: Array<String> = info.requestedPermissions //This array contains the requested permissions.
+        return permissions.contains("android.permission.MANAGE_EXTERNAL_STORAGE")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +79,7 @@ class MainActivity : SimpleActivity() {
                              appLaunched(BuildConfig.APPLICATION_ID)
                          //}
                     }
-                    Log.e(JET, "!!!!!!!!!!!!!!!!!!! $time2 ms")
+                    Log.i(JET, "!!!!!!!!!!appLaunched!!!!!!!!! $time2 ms")
                     updateWidgets()
                     registerFileUpdateListener()
                     startSettingsScanner()
@@ -75,7 +90,8 @@ class MainActivity : SimpleActivity() {
                 }
                 Log.e(JET, "on Create background $time ms")
             //}
-            handlePermissions()
+
+            handleStoragePermission()
 
             if (savedInstanceState == null) {
                 if (config.showAll)
@@ -85,47 +101,6 @@ class MainActivity : SimpleActivity() {
             }
         }
         Log.e(JET, "on Create $createTime ms")
-
-        launchDefault {
-            val te = isInternetAvailable()
-            val r = isNetworkConnected()
-
-            Log.i(JET, "CONNECT $r")
-            Log.i(JET, "NET $te")
-
-            val searchUrl = "https://yandex.ru/images/search"
-//            val filePath = "C:\\Users\\Professional\\Desktop\\2018-11-09_23-44-58.png"
-//            val file = File(filePath)
-//            val fileLike = FileLike("upfile", file.name, file.readBytes())
-
-            val values = mapOf(
-                "rpt" to "imageview",
-                "format" to "json",
-                "request" to "{\"blocks\":[{\"block\":\"b-page_type_search-by-image__link\"}]}",
-            )
-
-            val result = post(
-                url = searchUrl,
-                params = values,
-                //files = listOf(fileLike)
-            )
-            Log.i(JET, "NET ${result.jsonObject}")
-        }
-    }
-
-    private fun isInternetAvailable(): Boolean {
-        return try {
-            val ipAddr = InetAddress.getByName("google.com");
-            !ipAddr.equals("")
-
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private fun isNetworkConnected(): Boolean {
-        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
     }
 
     override fun onDestroy() {
@@ -191,15 +166,20 @@ class MainActivity : SimpleActivity() {
 
     private fun onNavigationItemSelected(item: MenuItem):Boolean{
         when(item.itemId){
-            R.id.settings -> launchSettings()
-            R.id.about -> launchAbout()
             R.id.folders -> showDirectories()
             R.id.all_images -> showAllImages()
             R.id.favorites -> showFavorites()
             R.id.recycle_bin -> showRecyclerBin()
+            R.id.tasks -> task()
             R.id.download -> downloadFullApp()
+            R.id.settings -> launchSettings()
+            R.id.about -> launchAbout()
         }
         return true
+    }
+
+    private fun task(){
+        Intent(this, TasksActivity::class.java)
     }
 
     private fun downloadFullApp(){
@@ -259,15 +239,40 @@ class MainActivity : SimpleActivity() {
             .commit()
     }
 
-    private fun handlePermissions(){
-        handlePermission(PERMISSION_WRITE_STORAGE) {
-            if (!it) {
-                toast(R.string.no_storage_permissions)
-                finish()
+    private fun handleStoragePermission() {
+        actionOnPermission = null
+        if (hasStoragePermission)
+            return
+        if (isRPlus() && isProApp && baseConfig.appRunCount <= 5) {
+            requestManageAllFilesPermission()
+        } else {
+            handlePermission(PERMISSION_WRITE_STORAGE) {
+                if (!it) {
+                    toast(R.string.no_storage_permissions)
+                    finish()
+                }
             }
         }
-
-        if (packageName.startsWith(PACKAGE_NAME_PRO))
-            handleStoragePermission {}
     }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun requestManageAllFilesPermission() {
+        ConfirmationAdvancedDialog(this, "", R.string.access_storage_prompt, R.string.ok, 0) { success ->
+            if (success) {
+                isAskingPermissions = true
+                try {
+                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    intent.addCategory("android.intent.category.DEFAULT")
+                    intent.data = Uri.parse("package:$packageName")
+                    startActivityForResult(intent, MANAGE_STORAGE_RC)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                    startActivityForResult(intent, MANAGE_STORAGE_RC)
+                }
+            }
+        }
+    }
+
 }

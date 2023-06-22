@@ -12,12 +12,12 @@
         android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/nav_menu_main"
-        android:id="@+id/navView"
         android:background="@color/color_action_bar_main"
         app:theme="@style/NavigationDrawerStyle"/>
 

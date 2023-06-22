@@ -25,6 +25,11 @@
             android:title="@string/recycle_bin"
             android:icon="@drawable/ic_delete_vector"
             app:showAsAction="always" />
+        <item
+            android:id="@+id/tasks"
+            android:title="@string/tasks"
+            android:icon="@drawable/ic_add_task"
+            app:showAsAction="always" />
     </group>
     <group android:id="@+id/misc">
         <item

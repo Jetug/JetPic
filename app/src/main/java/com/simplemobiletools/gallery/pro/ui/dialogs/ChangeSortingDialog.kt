@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.isVisible
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.helpers.SHOW_ALL
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
@@ -23,7 +23,7 @@ class ChangeSortingDialog(val activity: BaseSimpleActivity, val isDirectorySorti
     private var view: View
 
     init {
-        currSorting = if (isDirectorySorting) config.directorySorting else activity.getSorting(pathToUse)
+        currSorting = if (isDirectorySorting) config.directorySorting else activity.getFolderSorting(pathToUse)
         view = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null).apply {
             use_for_this_folder_divider.beVisibleIf(showFolderCheckbox || (currSorting and SORT_BY_NAME != 0 || currSorting and SORT_BY_PATH != 0))
 

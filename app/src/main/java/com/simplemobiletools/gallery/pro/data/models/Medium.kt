@@ -25,37 +25,31 @@ data class Medium(
     @ColumnInfo(name = "filename") var name: String,
     @ColumnInfo(name = "full_path") var path: String,
     @ColumnInfo(name = "parent_path") var parentPath: String,
-    @ColumnInfo(name = "last_modified") var modified: Long,
+    @ColumnInfo(name = "last_modified") var modified_: Long,
     @ColumnInfo(name = "date_taken") var taken: Long,
     @ColumnInfo(name = "size") var size: Long,
     @ColumnInfo(name = "type") var type: Int,
     @ColumnInfo(name = "video_duration") var videoDuration: Int,
     @ColumnInfo(name = "is_favorite") var isFavorite: Boolean,
     @ColumnInfo(name = "deleted_ts") var deletedTS: Long,
+    @ColumnInfo(name = "media_store_id") var mediaStoreId: Long,
 
     @Ignore var gridPosition: Int = 0   // used at grid view decoration at Grouping enabled
 ) : Serializable, ThumbnailItem() {
 
-    init {
-        launchIO {
-            val file = File(path)
-            while (true){
-                modified = file.lastModified()
-                delay(5000)
-            }
+    
+    var modified: Long
+        get(){
+            return File(path).lastModified()
+            //return modified_
         }
-    }
+        set(value){
+            modified_ = value
+        }
 
-    constructor() : this(null, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0){
-        CoroutineScope(Dispatchers.Default).launch {
-            while (true) {
-                delay(5000)
-                val file = File(path)
-                if (file.exists())
-                    modified = file.lastModified()
-            }
-        }
-    }
+    init {}
+
+    constructor() : this(null, "", "", "", 0L, 0L, 0L, 0, 0, false, 0L, 0L, 0){}
 
     companion object {
         private const val serialVersionUID = -6553149366975655L
