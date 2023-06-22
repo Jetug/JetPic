@@ -1,379 +1,966 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">심플 갤러리</string>
-    <string name="app_launcher_name">갤러리</string>
-    <string name="edit">편집</string>
-    <string name="open_camera">카메라 열기</string>
-    <string name="hidden">(숨겨짐)</string>
-    <string name="excluded">(제외됨)</string>
-    <string name="pin_folder">폴더 고정</string>
-    <string name="unpin_folder">폴더 고정 해제</string>
-    <string name="pin_to_the_top">상단에 고정</string>
-    <string name="show_all">모두 펼쳐보기</string>
-    <string name="all_folders">모든 폴더</string>
-    <string name="folder_view">폴더 보기로 변경</string>
-    <string name="other_folder">다른 폴더</string>
-    <string name="show_on_map">지도에서 보기</string>
-    <string name="unknown_location">위치정보 없음</string>
-    <string name="volume">볼륨</string>
-    <string name="brightness">밝기</string>
-    <string name="lock_orientation">화면 회전 잠금</string>
-    <string name="unlock_orientation">화면 회전 해제</string>
-    <string name="change_orientation">화면 회전 전환</string>
-    <string name="force_portrait">세로 보기</string>
-    <string name="force_landscape">가로 보기</string>
-    <string name="use_default_orientation">기본 설정 사용</string>
-    <string name="fix_date_taken">찍은 날짜 값 교정</string>
-    <string name="fixing">교정 중…</string>
-    <string name="dates_fixed_successfully">교정이 완료되었습니다</string>
-    <string name="no_date_takens_found">No Date Taken values have been found</string>
-    <string name="share_resized">크기변경 버전 공유</string>
-    <string name="upgraded_from_free">Hey,
-\n
-\nseems like you upgraded from the old free app. You can now uninstall the old version, which has an \'Upgrade to Pro\' button at the top of the app settings.
-\n
-\nYou will only have the Recycle bin items deleted, favorite items unmarked and you will also have to reset your app settings.
-\n
-\nThanks!</string>
-    <string name="switch_to_file_search">Switch to file search across all visible folders</string>
-    <string name="set_as_default_folder">Set as default folder</string>
-    <string name="unset_as_default_folder">Unset as default folder</string>
-    <string name="reorder_by_dragging">Reorder folders by dragging</string>
-    <string name="reorder_by_dragging_pro">Reorder folders by dragging (Pro)</string>
-    <string name="restore_to_path">Restoring to \'%s\'</string>
-    <!-- Filter -->
-    <string name="filter_media">필터 설정</string>
-    <string name="images">사진</string>
-    <string name="videos">동영상</string>
-    <string name="gifs">GIF</string>
-    <string name="raw_images">RAW</string>
-    <string name="svgs">SVG</string>
-    <string name="portraits">세로 사진</string>
-    <string name="no_media_with_filters">설정된 필터와 일치하는 컨텐츠가 존재하지 않습니다.</string>
-    <string name="change_filters_underlined"><u>필터 변경</u></string>
-    <!-- Hide / Exclude -->
-    <string name="hide_folder_description">현재 폴더에 \'.nomedia\' 파일을 생성하여 현재 및 모든 하위 폴더를 숨김니다. 숨김 처리된 모든 폴더는 설정의 \'숨김파일 보기\' 메뉴를 이용하여 다시 볼 수 있습니다. 계속 하시겠습니까\?</string>
-    <string name="exclude">제외하기</string>
-    <string name="excluded_folders">제외된 폴더</string>
-    <string name="manage_excluded_folders">제외된 폴더 관리</string>
-    <string name="exclude_folder_description">현재 및 모든 하위 폴더를 심플 갤러리에서 제외시킵니다. 제외된 폴더는 설정에서 관리 할 수 있습니다.</string>
-    <string name="exclude_folder_parent">상위 폴더를 제외 하시겠습니까\?</string>
-    <string name="excluded_activity_placeholder">폴더를 제외하면 심플 갤러리에서만 폴더가 보이지 않게 됩니다.
-\n
-\n다른 앱에서도 보이지 않게 하려면 숨김기능을 사용하십시오.</string>
-    <string name="remove_all">모두 제거</string>
-    <string name="remove_all_description">제외된 폴더를 모두 해제하시겠습니까\?</string>
-    <string name="hidden_folders">숨겨진 폴더</string>
-    <string name="manage_hidden_folders">숨겨진 폴더 관리</string>
-    <string name="hidden_folders_placeholder">\".nomedia\"파일로 숨겨진 폴더가 존재하지 않습니다.</string>
-    <string name="temporarily_show_excluded">Temporarily show excluded</string>
-    <string name="stop_showing_excluded">Stop showing excluded</string>
-    <!-- Include folders -->
-    <string name="include_folders">포함된 폴더</string>
-    <string name="manage_included_folders">포함된 폴더 관리</string>
-    <string name="add_folder">폴더 추가</string>
-    <string name="included_activity_placeholder">앱에서 인식하지 못한 사진이나 동영상이 있는 경우 이곳에서 수동으로 추가 할 수 있습니다.
-\n
-\n이 작업은 다른 폴더에 영향을 미치지 않습니다.</string>
-    <string name="no_media_add_included">사진이나 동영상이 발견되지 않았습니다. 이는 파일을 포함하고 있는 폴더를 수동으로 추가하여 해결할 수 있습니다.</string>
-    <!-- Resizing -->
-    <string name="resize">크기 변경</string>
-    <string name="resize_and_save">크기 변경 및 저장</string>
-    <string name="width">가로</string>
-    <string name="height">세로</string>
-    <string name="keep_aspect_ratio">비율 유지</string>
-    <string name="invalid_values">잘못된 비율입니다.</string>
-    <!-- Editor -->
-    <string name="editor">편집</string>
-    <string name="rotate">회전</string>
-    <string name="invalid_image_path">유효하지 않은 사진 경로</string>
-    <string name="invalid_video_path">Invalid video path</string>
-    <string name="image_editing_failed">사진 편집 실패</string>
-    <string name="video_editing_failed">Video editing failed</string>
-    <string name="image_editing_cancelled">Image editing cancelled</string>
-    <string name="video_editing_cancelled">Video editing cancelled</string>
-    <string name="file_edited_successfully">File edited successfully</string>
-    <string name="image_edited_successfully">Image edited successfully</string>
-    <string name="video_edited_successfully">Video edited successfully</string>
-    <string name="edit_image_with">사진 편집 프로그램 연결:</string>
-    <string name="edit_video_with">Edit video with:</string>
-    <string name="no_image_editor_found">사진 편집 프로그램 없음</string>
-    <string name="no_video_editor_found">No video editor found</string>
-    <string name="unknown_file_location">알 수 없는 파일 위치</string>
-    <string name="error_saving_file">원본 파일 덮어쓰기 실패</string>
-    <string name="rotate_left">왼쪽으로 회전</string>
-    <string name="rotate_right">오른쪽으로 회전</string>
-    <string name="rotate_one_eighty">180도 회전</string>
-    <string name="flip">뒤집기</string>
-    <string name="flip_horizontally">가로 뒤집기</string>
-    <string name="flip_vertically">세로 뒤집기</string>
-    <string name="free_aspect_ratio">자유</string>
-    <!-- available as an option: 1:1, 4:3, 16:9, free -->
-    <string name="other_aspect_ratio">기타</string>
-    <!-- available as an option: 1:1, 4:3, 16:9, free, other -->
-    <!-- Set wallpaper -->
-    <string name="simple_wallpaper">심플 배경화면</string>
-    <string name="set_as_wallpaper">배경화면으로 설정</string>
-    <string name="set_as_wallpaper_failed">배경화면 설정 실패</string>
-    <string name="set_as_wallpaper_with">배경화면으로 설정하기:</string>
-    <string name="setting_wallpaper">배경화면 설정 중…</string>
-    <string name="wallpaper_set_successfully">배경화면이 성공적으로 설정되었습니다.</string>
-    <string name="portrait_aspect_ratio">세로보기 비율</string>
-    <string name="landscape_aspect_ratio">가로보기 비율</string>
-    <string name="home_screen">홈 화면</string>
-    <string name="lock_screen">잠금화면</string>
-    <string name="home_and_lock_screen">홈 화면과 잠금화면</string>
-    <string name="allow_changing_aspect_ratio">Allow changing the aspect ratio</string>
-    <!-- Slideshow -->
-    <string name="slideshow">슬라이드 쇼</string>
-    <string name="interval">간격</string>
-    <string name="include_photos">포함된 사진</string>
-    <string name="include_videos">포함된 동영상</string>
-    <string name="include_gifs">포함된 GIF</string>
-    <string name="random_order">순서 랜덤</string>
-    <string name="move_backwards">뒤로 이동</string>
-    <string name="loop_slideshow">슬라이드 쇼 반복</string>
-    <string name="animation">전환 효과</string>
-    <string name="no_animation">없음</string>
-    <string name="fade">페이드</string>
-    <string name="slide">슬라이드</string>
-    <string name="slideshow_ended">슬라이드 쇼 종료</string>
-    <string name="no_media_for_slideshow">슬라이드 쇼를 표시할 사진이 없습니다.</string>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="nothing">Nothing</string>
+    <string name="later">나중</string>
+    <string name="save_as">다른 이름으로 저장</string>
+    <string name="file_saved">파일저장 성공</string>
+    <string name="invalid_file_format">잘못된 파일 형식</string>
+    <string name="out_of_memory_error">메모리 부족 오류</string>
+    <string name="an_error_occurred">에러발생: %s</string>
+    <string name="open_with">다른 앱으로 열기</string>
+    <string name="edit_with">편집 앱으로 열기</string>
+    <string name="edit">Edit</string>
+    <string name="no_app_found">연결 가능한 앱 없음</string>
+    <string name="set_as">다른 앱에 설정</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="copy_number_to_clipboard">Copy number to clipboard</string>
+    <string name="value_copied_to_clipboard">클립보드에 복사됨</string>
+    <string name="value_copied_to_clipboard_show">클립보드에 복사됨:\n%s</string>
+    <string name="dial_number">Dial number</string>
+    <string name="unknown">알 수 없음</string>
+    <string name="always">항상</string>
+    <string name="never">사용 안함</string>
+    <string name="details">세부 정보</string>
+    <string name="notes">추가 정보</string>
+    <string name="deleting_folder">\'%s\' 폴더를 삭제</string>
+    <string name="none">없음</string>
+    <string name="label">라벨</string>
+    <string name="transparent">투명</string>
+    <string name="transparent_color">투명 색상</string>
+    <string name="select_a_different_color">다른 색을 선택해 주세요</string>
+    <string name="download">다운로드</string>
+    <string name="notification">알림</string>
+    <string name="notifications">Notifications</string>
+    <string name="email">이메일</string>
+    <string name="previous">이전</string>
+    <string name="playpause">재생 / 정지</string>
+    <string name="next">다음</string>
+    <string name="number">연락처</string>
+    <string name="no_contacts_found">No contacts found</string>
+    <string name="request_the_required_permissions">Request the required permissions</string>
+    <string name="no_access_to_contacts">The app could not access your contacts</string>
+    <string name="no_phone_call_permission">App does not have the permission to initiate phone calls, please grant it in the device settings</string>
+    <string name="insert_text_here">Insert text here</string>
+    <string name="call_person">Call %s</string>
+    <string name="zero">Zero</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
+    <string name="four">Four</string>
+    <string name="five">Five</string>
+    <string name="six">Six</string>
+    <string name="seven">Seven</string>
+    <string name="eight">Eight</string>
+    <string name="nine">Nine</string>
+    <string name="value_cannot_be_empty">Value cannot be empty</string>
+    <!-- Emails -->
+    <string name="home">집</string>
+    <string name="work">회사</string>
+
+    <!-- Phone numbers -->
+    <string name="mobile">핸드폰</string>
+    <string name="main_number">Main</string>
+    <string name="work_fax">회사 팩스</string>
+    <string name="home_fax">집 팩스</string>
+    <string name="pager">호출기</string>
+    <string name="no_phone_number_found">전화번호를 찾지 못함</string>
+
     <!-- View types -->
-    <string name="group_direct_subfolders">상위 폴더 표시</string>
-    <!-- Grouping at media thumbnails -->
-    <string name="group_by">그룹 방식</string>
-    <string name="do_not_group_files">없음</string>
-    <string name="by_folder">폴더</string>
-    <string name="by_last_modified">마지막 변경 날짜</string>
-    <string name="by_last_modified_daily">마지막 변경 날짜 (일간)</string>
-    <string name="by_last_modified_monthly">마지막 변경 날짜 (월간)</string>
-    <string name="by_date_taken">찍은 날짜</string>
-    <string name="by_date_taken_daily">찍은 날짜 (일간)</string>
-    <string name="by_date_taken_monthly">찍은 날짜 (월간)</string>
-    <string name="by_file_type">파일 종류</string>
-    <string name="by_extension">파일 확장자</string>
-    <string name="show_file_count_section_header">Show file count at section headers</string>
-    <string name="grouping_and_sorting">그룹 방식과 정렬 방식은 다른 항목입니다.</string>
-    <!-- Widgets -->
-    <string name="folder_on_widget">위젯에 표시된 폴더:</string>
-    <string name="show_folder_name">폴더 이름 보이기</string>
+    <string name="change_view_type">보기 방식 변경</string>
+    <string name="grid">타일</string>
+    <string name="uneven_grid">Uneven Grid</string>
+    <string name="list">목록</string>
+    <string name="increase_column_count">섬네일크기 축소</string>
+    <string name="reduce_column_count">섬네일크기 확대</string>
+    <string name="change_cover_image">커버 사진 변경</string>
+    <string name="select_photo">사진 선택</string>
+
+    <!-- Blocked numbers -->
+    <string name="manage_blocked_numbers">Manage blocked numbers</string>
+    <string name="not_blocking_anyone">You are not blocking anyone.</string>
+    <string name="add_a_blocked_number">Add a blocked number</string>
+    <string name="block_number">Block number</string>
+    <string name="block_numbers">Block numbers</string>
+    <string name="blocked_numbers">Blocked numbers</string>
+    <string name="export_blocked_numbers">Export blocked numbers</string>
+    <string name="import_blocked_numbers">Import blocked numbers</string>
+    <string name="must_make_default_dialer">You have to make this app the default dialer app to make use of blocked numbers.</string>
+    <string name="set_as_default">Set as default</string>
+    <string name="block_confirmation">Are you sure you want to block \"%s\"?</string>
+
+    <!-- Favorites -->
+    <string name="favorites">즐겨찾기</string>
+    <string name="add_favorites">즐겨찾기 추가</string>
+    <string name="add_to_favorites">즐겨찾기에 추가</string>
+    <string name="remove_from_favorites">즐겨찾기에서 제거</string>
+
+    <!-- Search -->
+    <string name="search">검색</string>
+    <string name="type_2_characters">최소 두 글자를 입력해 주세요</string>
+
+    <!-- Filters -->
+    <string name="filter">필터</string>
+    <string name="no_items_found">항목을 찾지 못함</string>
+    <string name="change_filter">필터 변경</string>
+
+    <!-- Permissions -->
+    <string name="no_storage_permissions">저장 권한이 필요함</string>
+    <string name="no_contacts_permission">주소록 사용 권한이 필요함</string>
+    <string name="no_camera_permissions">카메라 사용 권한이 필요함</string>
+    <string name="no_audio_permissions">오디오 사용 권한이 필요함</string>
+
+    <!-- Renaming -->
+    <string name="rename_file">파일명 변경</string>
+    <string name="rename_folder">폴더명 변경</string>
+    <string name="rename_file_error">파일명을 변경 할 수 없음</string>
+    <string name="rename_folder_error">폴더명을 변경 할 수 없음</string>
+    <string name="rename_folder_empty">폴더명이 입력되지 않았습니다</string>
+    <string name="rename_folder_exists">폴더명이 이미 존재합니다</string>
+    <string name="rename_folder_root">저장소의 루트폴더 이름은 변경 할 수 없습니다</string>
+    <string name="rename_folder_ok">폴더명 변경 성공</string>
+    <string name="renaming_folder">폴더명 변경</string>
+    <string name="filename_cannot_be_empty">파일명이 입력되지 않았습니다</string>
+    <string name="filename_invalid_characters">파일명에 사용할 수 없는 문자가 있습니다</string>
+    <string name="filename_invalid_characters_placeholder">파일명 \'%s\'에 사용할 수 없는 문자가 있습니다</string>
+    <string name="extension_cannot_be_empty">확장자가 입력되지 않았습니다</string>
+    <string name="source_file_doesnt_exist">원본 파일 %s 이(가) 존재하지 않습니다</string>
+    <string name="prepend_filenames">앞에 이름 덧붙이기</string>
+    <string name="append_filenames">뒤에 이름 덧붙이기</string>
+    <string name="simple_renaming">심플 이름 바꾸기</string>
+    <string name="pattern_renaming">패턴</string>
+    <string name="string_to_add">추가할 문장</string>
+    <string name="rename_date_time_pattern">%Y - 년\n%M - 월\n%D - 일\n%h - 시\n%m - 분\n%s - 초\n%i - number increasing from 1</string>
+    <string name="filename_without_txt">Filename (without .txt)</string>
+    <string name="filename_without_json">Filename (without .json)</string>
+    <string name="cannot_hide_files">Starting from Android 11 you cannot hide files and folders like that anymore</string>
+
+    <!-- Copy / Move -->
+    <string name="copy">복사</string>
+    <string name="move">이동</string>
+    <string name="copy_move">복사 / 이동</string>
+    <string name="copy_to">복사하기</string>
+    <string name="move_to">이동하기</string>
+    <string name="source">원본</string>
+    <string name="destination">대상</string>
+    <string name="select_destination">대상 선택</string>
+    <string name="click_select_destination">대상을 선택하려면 여기를 탭하세요.</string>
+    <string name="invalid_destination">대상경로에 생성 불가</string>
+    <string name="please_select_destination">대상 경로를 선택하세요</string>
+    <string name="source_and_destination_same">대상과 원본이 같습니다.</string>
+    <string name="copy_failed">파일복사 실패</string>
+    <string name="copying">복사중…</string>
+    <string name="copying_success">파일복사 성공</string>
+    <string name="copying_success_one">File copied successfully</string>
+    <string name="copy_move_failed">오류발생</string>
+    <string name="moving">이동중…</string>
+    <string name="moving_success">파일이동 성공</string>
+    <string name="moving_success_one">File moved successfully</string>
+    <string name="moving_success_partial">일부 파일을 이동 할 수 없음</string>
+    <string name="copying_success_partial">일부 파일을 복사 할 수 없음</string>
+    <string name="no_files_selected">파일이 선택되지 않았습니다</string>
+    <string name="saving">저장중…</string>
+    <string name="could_not_create_folder">%s 폴더 생성에 실패함</string>
+    <string name="could_not_create_file">%s 파일 생성에 실패함</string>
+    <string name="no_new_items">새 항목을 찾을 수 없음</string>
+    <string name="no_space">대상 경로의 공간이 부족합니다.\n필요 공간: %1$s, 사용 가능: %2$s</string>
+
+    <!-- Create new -->
+    <string name="create_new">새로 만들기</string>
+    <string name="folder">폴더</string>
+    <string name="file">파일</string>
+    <string name="create_new_folder">새 폴더 만들기</string>
+    <string name="name_taken">동일한 이름의 파일 또는 폴더가 이미 존재합니다</string>
+    <string name="invalid_name">이름에 사용 할 수 없는 문자가 있습니다</string>
+    <string name="empty_name">이름이 입력되지 않았습니다</string>
+    <string name="unknown_error_occurred">알 수 없는 에러가 발생하였습니다</string>
+
+    <!-- File operation conflicts -->
+    <string name="file_already_exists">\"%s\" 파일이 이미 존재합니다.</string>
+    <string name="file_already_exists_overwrite">\"%s\" 파일이 이미 존재합니다. 덮어쓰시겠습니까?</string>
+    <string name="folder_already_exists">\"%s\" 폴더가 이미 존재합니다.</string>
+    <string name="merge">합치기</string>
+    <string name="keep_both">둘 다 유지</string>
+    <string name="overwrite">덮어쓰기</string>
+    <string name="skip">건너뛰기</string>
+    <string name="append">\'_1\' 문자열을 추가하기</string>
+    <string name="apply_to_all">모든 충돌에 적용</string>
+
+    <!-- File picker -->
+    <string name="select_folder">폴더 선택</string>
+    <string name="select_file">파일 선택</string>
+    <string name="confirm_storage_access_title">외장 메모리 접근 허용</string>
+    <string name="confirm_folder_access_title">Confirm folder access</string>
+    <string name="confirm_storage_access_text">쓰기 권한을 부여하려면 다음 화면에서 SD 카드의 루트 폴더를 선택하세요.</string>
+    <string name="confirm_storage_access_text_sd">SD 카드가 보이지 않으면 시도해보세요.</string>
+    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
+    <string name="confirm_selection">선택 확인</string>
+    <string name="loading">Loading…</string>
+
+    <plurals name="items">
+        <item quantity="other">%d개 항목</item>
+    </plurals>
+
+    <!-- Are you sure you want to delete 5 items? -->
+    <plurals name="delete_items">
+        <item quantity="other">%d개 항목</item>
+    </plurals>
+
+    <plurals name="deleting_items">
+        <item quantity="other">%d개 항목 삭제중</item>
+    </plurals>
+
+    <!-- Are you sure you want to delete 5 contacts? -->
+    <plurals name="delete_contacts">
+        <item quantity="one">%d contact</item>
+        <item quantity="other">%d contacts</item>
+    </plurals>
+
+    <!-- Storages -->
+    <string name="select_storage">저장공간 선택</string>
+    <string name="internal">내장 메모리</string>
+    <string name="sd_card">외장 메모리</string>
+    <string name="root">루트</string>
+    <string name="wrong_root_selected">잘못된 폴더가 선택되었습니다. SD 카드의 루트 폴더를 선택하세요.</string>
+    <string name="sd_card_usb_same">SD카드와 USB 장치의 경로가 중복되었습니다.</string>
+    <string name="app_on_sd_card">시스템 제한으로 SD카드에 설치한 앱은 위젯을 사용할 수 없습니다. 위젯을 사용하시려면 내장 메모리에 앱을 옮겨 주시기 바랍니다</string>
+    <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
+
+    <!-- File properties -->
+    <string name="properties">속성</string>
+    <string name="path">경로</string>
+    <string name="items_selected">선택한 항목 수</string>
+    <string name="direct_children_count">하위 항목 수</string>
+    <string name="files_count">전체 파일 수</string>
+    <string name="resolution">해상도</string>
+    <string name="duration">길이</string>
+    <string name="artist">가수</string>
+    <string name="album">앨범</string>
+    <string name="focal_length">초점 거리</string>
+    <string name="exposure_time">노출 시간</string>
+    <string name="iso_speed">ISO 속도</string>
+    <string name="f_number">F-number</string>
+    <string name="camera">카메라</string>
+    <string name="exif">EXIF</string>
+    <string name="song_title">음악 제목</string>
+    <string name="gps_coordinates">GPS 좌표</string>
+    <string name="altitude">고도</string>
+
+    <!-- Color customization -->
+    <string name="background_color">배경 색상</string>
+    <string name="text_color">텍스트 색상</string>
+    <string name="primary_color">주요 색상(테마)</string>
+    <string name="accent_color_white">Accent color of white theme</string>
+    <string name="accent_color_black_and_white">Accent color of Black &amp; White theme</string>
+    <string name="foreground_color">그리기 색상</string>
+    <string name="app_icon_color">앱 아이콘 색상</string>
+    <string name="bottom_navigation_bar_color">네비게이션 바 색상</string>
+    <string name="restore_defaults">기본설정으로 되돌리기</string>
+    <string name="use_default">기본설정 사용</string>
+    <string name="default_color">기본값</string>
+    <string name="change_color">색상 변경</string>
+    <string name="theme">테마</string>
+    <string name="changing_color_description">주요 색상(테마)을 변경하면 사용자 정의 테마로 전환됩니다.</string>
+    <string name="save">저장</string>
+    <string name="discard">취소</string>
+    <string name="undo_changes">변경사항 되돌리기</string>
+    <string name="undo_changes_confirmation">변경된 사항을 취소하시겠습니까?</string>
+    <string name="save_before_closing">아직 변경사항을 저장하지 않았습니다. 종료전에 저장 하시겠습니까?</string>
+    <string name="apply_to_all_apps">심플 시리즈 앱에 일괄적용</string>
+    <string name="app_icon_color_warning">경고 : 일부 런처는 앱 아이콘 커스터마이징을 제대로 지원하지 않습니다. 앱의 아이콘이 사라졌다면, 플레이 스토어나 위젯을 통하여 앱을 실행한 뒤 기본값인 주황색(#F57C00)으로 다시 변경해주시기 바랍니다. 최악의 경우에는 앱을 재설치 해야할 수도 있습니다.</string>
+    <string name="share_colors_success">색상이 성공적으로 변경되었습니다. \'공유\'라는 새로운 테마가 추가되었습니다. 앞으로 모든 앱의 색상을 변경할때 사용하세요.</string>
+    <string name="shared_theme_note">Note that even though you are using the Pro app version, you still need Simple Thank You for technical reasons. It takes care of the color synchronization.</string>
+    <string name="purchase_thank_you">
+        <![CDATA[
+            이 기능을 이용하시려면 개발지원을 위해 <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> 앱을 구매해주세요. 감사합니다!
+        ]]>
+    </string>
+
+    <!-- Themes -->
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string name="auto_theme">Auto</string>
+    <string name="solarized">Solarized</string>
+    <string name="dark_red">Dark red</string>
+    <string name="white">White</string>
+    <string name="black_white">Black &amp; White</string>
+    <string name="custom">사용자 정의</string>
+    <string name="shared">공유</string>
+
+    <!-- What's new -->
+    <string name="whats_new">새로운 기능</string>
+    <string name="whats_new_disclaimer">* 주요 업데이트만 여기에 표시됩니다. 작은 업데이트도 항상 진행되고 있습니다.</string>
+
+    <!-- Actionbar items -->
+    <string name="delete">삭제</string>
+    <string name="remove">제거</string>
+    <string name="rename">이름 변경</string>
+    <string name="share">공유</string>
+    <string name="share_via">공유 방법</string>
+    <string name="select_all">전체 선택</string>
+    <string name="select_text">Select text</string>
+    <string name="hide">숨김</string>
+    <string name="unhide">숨김 해제</string>
+    <string name="hide_folder">폴더 숨김</string>
+    <string name="unhide_folder">폴더숨김 해제</string>
+    <string name="temporarily_show_hidden">숨김파일 임시보기</string>
+    <string name="stop_showing_hidden">숨김파일 임시보기 해제</string>
+    <string name="maximum_share_reached">한 번에 공유 할 수 있는 항목 수를 초과하였습니다.</string>
+    <string name="empty_and_disable_recycle_bin">휴지통을 비우고 비활성화하기</string>
+    <string name="undo">뒤로</string>
+    <string name="redo">앞으로</string>
+    <string name="print">인쇄</string>
+    <string name="create_shortcut">바로가기 생성</string>
+    <string name="add_number_to_contact">Add number to contact</string>
+    <string name="view_contact_details">View contact details</string>
+    <string name="call_from_sim_1">Call from SIM 1</string>
+    <string name="call_from_sim_2">Call from SIM 2</string>
+    <string name="toggle_filename">파일 이름 보기</string>
+    <string name="move_to_top">Move to the top</string>
+    <string name="move_to_bottom">Move to the bottom</string>
+    <string name="pin_item">Pin item</string>
+    <string name="unpin_item">Unpin item</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="send_email">Send email</string>
+    <string name="call">Call</string>
+
+    <!-- Sorting -->
+    <string name="sort_by">정렬 방식</string>
+    <string name="name">이름</string>
+    <string name="size">크기</string>
+    <string name="last_modified">최종 수정시간</string>
+    <string name="date_created">Date created</string>
+    <string name="date_taken">촬영 날짜</string>
+    <string name="title">제목</string>
+    <string name="filename">파일명</string>
+    <string name="extension">파일 확장자</string>
+    <string name="random">랜덤</string>
+    <string name="sort_randomly">랜덤 정렬</string>
+    <string name="ascending">오름차순</string>
+    <string name="descending">내림차순</string>
+    <string name="use_for_this_folder">현재 폴더만 적용</string>
+    <string name="sort_numeric_parts">실제 숫자 값으로 숫자 정렬</string>
+    <string name="first_name">이름</string>
+    <string name="middle_name">중간 이름</string>
+    <string name="surname">성</string>
+    <string name="full_name">Full name</string>
+    <string name="use_custom_sorting">Use custom sorting</string>
+    <string name="change_order">Change order</string>
+
+    <!-- Confirmation dialog -->
+    <string name="proceed_with_deletion">정말로 삭제 하시겠습니까?</string>
+    <string name="deletion_confirmation">%s을 정말 삭제 하시겠습니까?</string>    <!-- Are you sure you want to delete 5 items? -->
+    <string name="move_to_recycle_bin_confirmation">%s을 정말 휴지통으로 이동하시겠습니까?</string>    <!-- Are you sure you want to move 3 items into the Recycle Bin? -->
+    <string name="are_you_sure_delete">이 항목을 정말 삭제하시겠습니까?</string>
+    <string name="are_you_sure_recycle_bin">이 항목을 정말 휴지통으로 이동하시겠습니까?</string>
+    <string name="do_not_ask_again">다시 물어보지 않기</string>
+    <string name="do_not_show_again">Do not show again</string>
+    <string name="yes">네</string>
+    <string name="no">아니요</string>
+    <string name="maybe">아마도</string>
+
+    <plurals name="delete_warning">
+        <item quantity="other">경고 : %d개 폴더를 삭제합니다</item>
+    </plurals>
+
+    <!-- Password protection -->
+    <string name="pin">PIN</string>
+    <string name="enter_pin">PIN 번호 입력</string>
+    <string name="please_enter_pin">PIN 번호를 입력하세요.</string>
+    <string name="wrong_pin">PIN 번호가 일치하지 않습니다.</string>
+    <string name="repeat_pin">PIN 번호 확인</string>
+    <string name="pattern">패턴</string>
+    <string name="insert_pattern">패턴 입력</string>
+    <string name="wrong_pattern">패턴이 잘못 입력되었습니다.</string>
+    <string name="repeat_pattern">패턴 확인</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="fingerprint">지문</string>
+    <string name="add_fingerprint">지문 추가</string>
+    <string name="place_finger">지문 센서에 손가락을 올려주세요.</string>
+    <string name="open_biometric_dialog">Open biometric ID verification dialog</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="authentication_failed">인증 실패</string>
+    <string name="authentication_blocked">인증이 차단 되었습니다. 잠시 후 다시 시도하십시오.</string>
+    <string name="no_fingerprints_registered">등록 된 지문이 없습니다. 기기의 설정에서 지문을 추가하십시오.</string>
+    <string name="go_to_settings">설정으로 이동</string>
+    <string name="protection_setup_successfully">암호 설정이 완료되었습니다. 암호를 기억하지 못하는 경우 앱을 다시 설치하시기 바랍니다.</string>
+    <string name="fingerprint_setup_successfully">보안 설정이 성공적으로 완료되었습니다. 재설정 시 문제가 발생하면 앱을 다시 설치하시기 바랍니다.</string>
+    <string name="lock_folder">폴더 잠그기</string>
+    <string name="unlock_folder">폴더 잠금 해제</string>
+    <string name="lock_folder_notice">이 보안 설정은 이 앱에서만 작동하며, 실제 시스템 폴더 암호화를 대체할 수 없습니다.</string>
+
+    <!-- Times -->
+    <string name="yesterday">어제</string>
+    <string name="today">오늘</string>
+    <string name="tomorrow">내일</string>
+    <string name="hide_year">Hide year</string>
+    <string name="seconds_raw">초</string>
+    <string name="minutes_raw">분</string>
+    <string name="hours_raw">시간</string>
+    <string name="days_raw">일</string>
+    <string name="seconds_letter">s</string>
+    <string name="minutes_letter">m</string>
+    <string name="hours_letter">h</string>
+
+    <plurals name="seconds">
+        <item quantity="other">%d초</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="other">%d분</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="other">%d시간</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="other">%d일</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="other">%d주</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="other">%d달</item>
+    </plurals>
+    <plurals name="years">
+        <item quantity="other">%d년</item>
+    </plurals>
+
+    <!-- For example: I will be there in 5 minutes -->
+    <plurals name="in_seconds">
+        <item quantity="other">%d초 내</item>
+    </plurals>
+    <plurals name="in_minutes">
+        <item quantity="other">%d분 내</item>
+    </plurals>
+    <plurals name="in_hours">
+        <item quantity="other">%d시간 내</item>
+    </plurals>
+    <plurals name="in_days">
+        <item quantity="other">%d일 내</item>
+    </plurals>
+    <plurals name="in_weeks">
+        <item quantity="other">%d주 내</item>
+    </plurals>
+    <plurals name="in_months">
+        <item quantity="other">%d달 내</item>
+    </plurals>
+    <plurals name="in_years">
+        <item quantity="other">%d년 내</item>
+    </plurals>
+
+    <!-- For example: Event reminder: 3 minutes before -->
+    <plurals name="seconds_before">
+        <item quantity="other">%d초 전</item>
+    </plurals>
+    <plurals name="minutes_before">
+        <item quantity="other">%d분 전</item>
+    </plurals>
+    <plurals name="hours_before">
+        <item quantity="other">%d시간 전</item>
+    </plurals>
+    <plurals name="days_before">
+        <item quantity="other">%d일 전</item>
+    </plurals>
+    <plurals name="weeks_before">
+        <item quantity="other">%d일 전</item>
+    </plurals>
+    <plurals name="months_before">
+        <item quantity="other">%d달 전</item>
+    </plurals>
+    <plurals name="years_before">
+        <item quantity="other">%d년 전</item>
+    </plurals>
+
+    <!-- For example: Postpone reminder by 3 minutes -->
+    <plurals name="by_seconds">
+        <item quantity="other">%d초간</item>
+    </plurals>
+    <plurals name="by_minutes">
+        <item quantity="other">%d분간</item>
+    </plurals>
+    <plurals name="by_hours">
+        <item quantity="other">%d시간</item>
+    </plurals>
+    <plurals name="by_days">
+        <item quantity="other">%d일간</item>
+    </plurals>
+    <plurals name="by_weeks">
+        <item quantity="other">%d주간</item>
+    </plurals>
+    <plurals name="by_months">
+        <item quantity="other">%d달간</item>
+    </plurals>
+    <plurals name="by_years">
+        <item quantity="other">%d년간</item>
+    </plurals>
+
+    <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
+    <string name="alarm_goes_off_in">알람이 울리기까지 남은 시간:\n%s</string>
+    <string name="reminder_triggers_in">알림이 작동하기까지 남은 시간:\n%s</string>
+    <string name="time_remaining">Time remaining:\n%s</string>
+    <string name="alarm_warning">알람을 사용하기 전 제대로 작동하는지 먼저 확인하시기 바랍니다. 배터리 절약과 관련된 시스템 제한으로 오작동 할 가능성이 있습니다.</string>
+    <string name="reminder_warning">알림을 사용하기 전 제대로 작동하는지 먼저 확인하시기 바랍니다. 배터리 절약과 관련된 시스템 제한으로 오작동 할 가능성이 있습니다.</string>
+    <string name="notifications_disabled">이 앱의 알림 설정이 비활성화 되어 있습니다. 기기 설정에서 활성화 해 주시기 바랍니다.</string>
+
+    <!-- Alarms -->
+    <string name="alarm">알람</string>
+    <string name="snooze">스누즈</string>
+    <string name="dismiss">취소</string>
+    <string name="no_reminder">알림 없음</string>
+    <string name="at_start">시작할 때</string>
+    <string name="system_sounds">시스템 소리</string>
+    <string name="your_sounds">사용자 소리</string>
+    <string name="add_new_sound">소리 추가</string>
+    <string name="no_sound">소리 없음</string>
+    <string name="during_day_at_hh_mm">During the day at hh:mm</string>
+    <string name="during_day_at">During the day at %02d:%02d</string>
+
     <!-- Settings -->
-    <string name="autoplay_videos">동영상 자동재생</string>
-    <string name="remember_last_video_position">마지막 재생 위치 기억</string>
-    <string name="loop_videos">동영상 반복</string>
-    <string name="animate_gifs">섬네일에서 GIF 애니메이션 활성화</string>
-    <string name="max_brightness">전체화면 시 최대 밝기로 보기</string>
-    <string name="crop_thumbnails">섬네일을 사각형으로 자르기</string>
-    <string name="show_thumbnail_video_duration">동영상 길이 표시</string>
-    <string name="screen_rotation_by">전체화면 회전 기준</string>
-    <string name="screen_rotation_system_setting">시스템 설정</string>
-    <string name="screen_rotation_device_rotation">화면 회전</string>
-    <string name="screen_rotation_aspect_ratio">사진 비율</string>
-    <string name="black_background_at_fullscreen">전체화면 모드에서 검정 배경 사용</string>
-    <string name="scroll_thumbnails_horizontally">섬네일 수평 스크롤</string>
-    <string name="hide_system_ui_at_fullscreen">전체화면 모드에서 시스템 UI 숨김</string>
-    <string name="delete_empty_folders">파일 삭제 후 빈 폴더도 삭제</string>
-    <string name="allow_photo_gestures">상하 제스처로 사진 밝기 제어</string>
-    <string name="allow_video_gestures">수직 제스처로 동영상 음량 및 밝기 제어</string>
-    <string name="show_media_count">폴더 파일 수 표시</string>
-    <string name="show_extended_details">전체화면 모드에서 세부정보 표시</string>
-    <string name="manage_extended_details">표시할 세부정보 편집</string>
-    <string name="one_finger_zoom">전체화면 모드에서 한 손가락으로 확대 및 축소</string>
-    <string name="allow_instant_change">측면 터치로 사진 이동</string>
-    <string name="allow_deep_zooming_images">확대 범위 확장</string>
-    <string name="hide_extended_details">상태 표시줄 숨김 시 세부정보 같이 숨기기</string>
-    <string name="show_at_bottom">화면 하단에 UI 표시</string>
-    <string name="show_recycle_bin">첫화면에 휴지통 표시</string>
-    <string name="deep_zoomable_images">큰 사진</string>
-    <string name="show_highest_quality">가능한 최고 화질로 사진 표시</string>
-    <string name="show_recycle_bin_last">첫화면에서 휴지통을 마지막 항목으로 표시</string>
-    <string name="allow_down_gesture">아래로 스와이프하여 전체화면 나가기</string>
-    <string name="allow_one_to_one_zoom">두번 탭하여 1:1 크기로 보기</string>
-    <string name="open_videos_on_separate_screen">동영상을 따로 열어 새 수평 제스처 사용</string>
-    <string name="show_notch">가능한 경우 노치 표시</string>
-    <string name="allow_rotating_gestures">제스처로 사진 회전</string>
-    <string name="file_loading_priority">파일 로딩 우선권</string>
-    <string name="speed">속도</string>
-    <string name="compromise">균형</string>
-    <string name="avoid_showing_invalid_files">잘못된 파일 보이지 않기</string>
-    <string name="show_image_file_types">사진 파일 종류 표시</string>
-    <string name="allow_zooming_videos">Allow zooming videos with double tapping them</string>
-    <string name="folder_thumbnail_style">Folder thumbnail style</string>
-    <string name="file_thumbnail_style">File thumbnail style</string>
-    <string name="mark_favorite_items">Mark favorite items</string>
-    <string name="thumbnail_spacing">Thumbnail spacing</string>
-    <string name="show_file_count_line">Show file count on a separate line</string>
-    <string name="show_file_count_brackets">Show file count in brackets</string>
-    <string name="show_file_count_none">Do not show file count</string>
-    <string name="limit_folder_title">Limit long folder titles to 1 line</string>
-    <string name="square">Square</string>
-    <string name="rounded_corners">Rounded corners</string>
-    <string name="export_favorite_paths">Export favorite file paths</string>
-    <string name="media_management_prompt">To make sure that all file operations work reliably, please make this app a Media management app in your device settings.</string>
-    <string name="password_protect_excluded">Password protect excluded folder visibility</string>
-    <string name="media_management_manual">Something went wrong, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
-    <string name="media_management_note">If the redirection does not work, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
-    <string name="media_management_alternative">If you do not want to do it, you can also go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
+    <string name="settings">설정</string>
+    <string name="purchase_simple_thank_you">심플 Thank You 구매하기</string>
+    <string name="general_settings">General</string>
+    <string name="color_customization">Color customization</string>
+    <string name="customize_colors">테마 및 색상 설정</string>
+    <string name="customize_colors_locked">테마 및 색상 설정 (Locked)</string>
+    <string name="customize_widget_colors">위젯 색상 설정</string>
+    <string name="customize_notifications">Customize notifications</string>
+    <string name="use_english_language">영어로 언어 전환</string>
+    <string name="language">Language</string>
+    <string name="show_hidden_items">숨김 항목 보이기</string>
+    <string name="font_size">폰트 크기</string>
+    <string name="small">작게</string>
+    <string name="medium">중간</string>
+    <string name="large">크게</string>
+    <string name="extra_large">아주 크게</string>
+    <string name="password_protect_hidden_items">숨김 파일 보기 암호설정</string>
+    <string name="password_protect_whole_app">앱 전체에 암호설정</string>
+    <string name="password_protect_file_deletion">파일 삭제와 이동에 암호설정</string>
+    <string name="keep_last_modified">파일 작업 시 오래된 마지막 변경 값을 유지</string>
+    <string name="show_info_bubble">스크롤바 드래그 시 툴팁 활성화</string>
+    <string name="prevent_phone_from_sleeping">앱 실행중 화면 자동 꺼짐 방지</string>
+    <string name="skip_delete_confirmation">삭제 확인창 비활성화</string>
+    <string name="enable_pull_to_refresh">아래로 스와이프하여 새로고침하기</string>
+    <string name="use_24_hour_time_format">24시간 표시 사용</string>
+    <string name="change_date_and_time_format">날짜 및 시간 표시 형식 변경</string>
+    <string name="sunday_first">일요일부터 한 주 시작</string>
+    <string name="widgets">위젯</string>
+    <string name="use_same_snooze">항상 같은 스누즈 시간 사용</string>
+    <string name="snooze_time">스누즈 시간</string>
+    <string name="vibrate_on_button_press">버튼 진동 피드백 사용</string>
+    <string name="move_items_into_recycle_bin">삭제 시 휴지통으로 이동</string>
+    <string name="recycle_bin_cleaning_interval">휴지통 비움 주기</string>
+    <string name="empty_recycle_bin">휴지통 비우기</string>
+    <string name="force_portrait_mode">세로보기 강제</string>
+    <string name="export_settings">설정 내보내기</string>
+    <string name="import_settings">설정 가져오기</string>
+    <string name="settings_exported_successfully">설정 내보내기 완료</string>
+    <string name="settings_imported_successfully">설정 가져오기 완료</string>
+    <string name="start_name_with_surname">성을 먼저 표시</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="show_call_confirmation_dialog">Show a call confirmation dialog before initiating a call</string>
+
     <!-- Setting sections -->
-    <string name="thumbnails">섬네일</string>
-    <string name="fullscreen_media">전체화면</string>
-    <string name="extended_details">추가 세부정보</string>
-    <string name="bottom_actions">하단 UI 설정</string>
-    <!-- Bottom actions -->
-    <string name="manage_bottom_actions">하단 UI 편집</string>
-    <string name="toggle_favorite">즐겨찾기</string>
-    <string name="toggle_file_visibility">파일 제외</string>
-    <!-- New editor strings -->
-    <string name="pesdk_transform_button_freeCrop">Custom</string>
-    <string name="pesdk_transform_button_resetCrop">Reset</string>
-    <string name="pesdk_transform_button_squareCrop">Square</string>
-    <string name="pesdk_transform_title_name">Transform</string>
-    <string name="pesdk_filter_title_name">Filter</string>
-    <string name="pesdk_filter_asset_none">None</string>
-    <string name="pesdk_adjustments_title_name">Adjust</string>
-    <string name="pesdk_adjustments_button_shadowTool">Shadows</string>
-    <string name="pesdk_adjustments_button_exposureTool">Exposure</string>
-    <string name="pesdk_adjustments_button_highlightTool">Highlights</string>
-    <string name="pesdk_adjustments_button_brightnessTool">Brightness</string>
-    <string name="pesdk_adjustments_button_contrastTool">Contrast</string>
-    <string name="pesdk_adjustments_button_saturationTool">Saturation</string>
-    <string name="pesdk_adjustments_button_clarityTool">Clarity</string>
-    <string name="pesdk_adjustments_button_gammaTool">Gamma</string>
-    <string name="pesdk_adjustments_button_blacksTool">Blacks</string>
-    <string name="pesdk_adjustments_button_whitesTool">Whites</string>
-    <string name="pesdk_adjustments_button_temperatureTool">Temperature</string>
-    <string name="pesdk_adjustments_button_sharpnessTool">Sharpness</string>
-    <string name="pesdk_adjustments_button_reset">Reset</string>
-    <string name="pesdk_focus_title_name">Focus</string>
-    <string name="pesdk_focus_title_disabled">None</string>
-    <string name="pesdk_focus_button_radial">Radial</string>
-    <string name="pesdk_focus_button_linear">Linear</string>
-    <string name="pesdk_focus_button_mirrored">Mirrored</string>
-    <string name="pesdk_focus_button_gaussian">Gaussian</string>
-    <string name="pesdk_text_title_input">Add text</string>
-    <string name="pesdk_text_title_name">Text</string>
-    <string name="pesdk_text_title_options">Text Options</string>
-    <string name="pesdk_text_title_textColor">Text Color</string>
-    <string name="pesdk_text_title_font">Font</string>
-    <string name="pesdk_text_button_add">Add</string>
-    <string name="pesdk_text_button_edit">Edit</string>
-    <string name="pesdk_text_button_straighten">Straighten</string>
-    <string name="pesdk_text_button_font">Font</string>
-    <string name="pesdk_text_button_color">Color</string>
-    <string name="pesdk_text_button_backgroundColor">BG Color</string>
-    <string name="pesdk_text_button_alignment">Alignment</string>
-    <string name="pesdk_text_button_bringToFront">To Front</string>
-    <string name="pesdk_text_button_delete">Delete</string>
-    <string name="pesdk_text_text_editTextPlaceholder">Your text</string>
-    <string name="pesdk_brush_title_name">Brush</string>
-    <string name="pesdk_brush_button_color">Color</string>
-    <string name="pesdk_brush_button_size">Size</string>
-    <string name="pesdk_brush_button_hardness">Hardness</string>
-    <string name="pesdk_brush_button_bringToFront">To Front</string>
-    <string name="pesdk_brush_button_delete">Delete</string>
-    <string name="pesdk_brush_title_brushColor">Brush Color</string>
-    <string name="pesdk_editor_title_name">Editor</string>
-    <string name="pesdk_editor_title_closeEditorAlert">Close Editor\?</string>
-    <string name="pesdk_editor_text_closeEditorAlert">Do you really want to discard the changes\?</string>
-    <string name="pesdk_editor_button_closeEditorAlertConfirmation">Yes</string>
-    <string name="pesdk_editor_button_closeEditorAlertCancelation">No</string>
-    <string name="pesdk_editor_cancel">Cancel</string>
-    <string name="pesdk_editor_accept">Accept</string>
-    <string name="pesdk_editor_save">Save</string>
-    <string name="pesdk_editor_text_exportProgressUnknown">Exporting…</string>
-    <string name="pesdk_editor_text_exportProgress" formatted="false">Exporting %s.</string>
-    <string name="pesdk_sticker_title_name">Sticker</string>
-    <string name="pesdk_sticker_title_color">Sticker Color</string>
-    <string name="pesdk_sticker_title_options">Sticker Options</string>
-    <string name="pesdk_sticker_button_add">Add</string>
-    <string name="pesdk_sticker_button_color">Color</string>
-    <string name="pesdk_sticker_button_delete">Delete</string>
-    <string name="pesdk_sticker_button_bringToFront">To Front</string>
-    <string name="pesdk_sticker_button_straighten">Straighten</string>
-    <string name="pesdk_sticker_button_replace">Replace</string>
-    <string name="pesdk_sticker_button_opacity">Opacity</string>
-    <string name="pesdk_sticker_button_contrast">Contrast</string>
-    <string name="pesdk_sticker_button_saturation">Saturation</string>
-    <string name="pesdk_sticker_button_brightness">Brightness</string>
-    <string name="pesdk_sticker_category_name_custom">Uploads</string>
-    <string name="pesdk_overlay_title_name">Overlay</string>
-    <string name="pesdk_overlay_button_blendModeNormal">Normal</string>
-    <string name="pesdk_overlay_button_blendModeDarken">Darken</string>
-    <string name="pesdk_overlay_button_blendModeScreen">Screen</string>
-    <string name="pesdk_overlay_button_blendModeOverlay">Overlay</string>
-    <string name="pesdk_overlay_button_blendModeLighten">Lighten</string>
-    <string name="pesdk_overlay_button_blendModeMultiply">Multiply</string>
-    <string name="pesdk_overlay_button_blendModeColorBurn">Color Burn</string>
-    <string name="pesdk_overlay_button_blendModeSoftLight">Soft Light</string>
-    <string name="pesdk_overlay_button_blendModeHardLight">Hard Light</string>
-    <string name="pesdk_overlay_asset_none">None</string>
-    <string name="pesdk_overlay_asset_golden">Golden</string>
-    <string name="pesdk_overlay_asset_lightleak1">Lightleak 1</string>
-    <string name="pesdk_overlay_asset_mosaic">Mosaic</string>
-    <string name="pesdk_overlay_asset_paper">Paper</string>
-    <string name="pesdk_overlay_asset_rain">Rain</string>
-    <string name="pesdk_overlay_asset_vintage">Vintage</string>
-    <string name="pesdk_common_button_flipH">Flip H</string>
-    <string name="pesdk_common_button_flipV">Flip V</string>
-    <string name="pesdk_common_button_undo">Undo</string>
-    <string name="pesdk_common_button_redo">Redo</string>
-    <string name="pesdk_common_title_colorPicker">Color Picker</string>
-    <string name="pesdk_common_title_transparentColor">Transparent</string>
-    <string name="pesdk_common_title_whiteColor">White</string>
-    <string name="pesdk_common_title_grayColor">Gray</string>
-    <string name="pesdk_common_title_blackColor">Black</string>
-    <string name="pesdk_common_title_lightBlueColor">Light blue</string>
-    <string name="pesdk_common_title_blueColor">Blue</string>
-    <string name="pesdk_common_title_purpleColor">Purple</string>
-    <string name="pesdk_common_title_orchidColor">Orchid</string>
-    <string name="pesdk_common_title_pinkColor">Pink</string>
-    <string name="pesdk_common_title_redColor">Red</string>
-    <string name="pesdk_common_title_orangeColor">Orange</string>
-    <string name="pesdk_common_title_goldColor">Gold</string>
-    <string name="pesdk_common_title_yellowColor">Yellow</string>
-    <string name="pesdk_common_title_oliveColor">Olive</string>
-    <string name="pesdk_common_title_greenColor">Green</string>
-    <string name="pesdk_common_title_aquamarinColor">Aquamarin</string>
-    <string name="pesdk_common_title_pipettableColor">Pipettable color</string>
-    <string name="vesdk_video_trim_title_name">Trim</string>
+    <string name="visibility">표시</string>
+    <string name="security">보안</string>
+    <string name="scrolling">스크롤</string>
+    <string name="file_operations">파일 작업</string>
+    <string name="recycle_bin">휴지통</string>
+    <string name="saving_label">저장</string>
+    <string name="startup">시작</string>
+    <string name="text">텍스트</string>
+    <string name="migrating">옮기기</string>
+    <string name="quality">Quality</string>
+    <string name="main_screen">Main screen</string>
+    <string name="thumbnails">Thumbnails</string>
+    <string name="list_view">List view</string>
+
+    <!-- Default tab to open -->
+    <string name="manage_shown_tabs">Manage shown tabs</string>
+    <string name="default_tab_to_open">Tab to open at app start</string>
+    <string name="contacts_tab">Contacts</string>
+    <string name="favorites_tab">Favorites</string>
+    <string name="call_history_tab">Call History</string>
+    <string name="groups_tab">Groups</string>
+    <string name="last_used_tab">Last used one</string>
+    <string name="files_tab">Files</string>
+    <string name="recent_files_tab">Recent files</string>
+
+    <!-- Recycle Bin -->
+    <string name="restore_this_file">이 파일 복원하기</string>
+    <string name="restore_selected_files">선택한 파일 복원하기</string>
+    <string name="restore_all_files">모든 파일 복원하기</string>
+    <string name="recycle_bin_emptied">휴지통이 성공적으로 비워졌습니다.</string>
+    <string name="files_restored_successfully">파일이 성공적으로 복원되었습니다.</string>
+    <string name="empty_recycle_bin_confirmation">휴지통을 비우시겠습니까? 비워진 파일은 복구할 수 없습니다.</string>
+    <string name="recycle_bin_empty">휴지통이 비어있습니다.</string>
+    <string name="moving_recycle_bin_items_disabled">휴지통 내의 파일은 복원하기 전까진 옮길 수 없습니다.</string>
+    <string name="show_the_recycle_bin">휴지통 보이기</string>
+    <string name="hide_the_recycle_bin">휴지통 숨기기</string>
+
+    <plurals name="moving_items_into_bin">
+        <item quantity="other">%d개 항목을 휴지통으로 이동하고 있습니다</item>
+    </plurals>
+
+    <!-- Import / Export -->
+    <string name="importing">가져오는 중…</string>
+    <string name="exporting">내보내는 중…</string>
+    <string name="importing_successful">가져오기 성공</string>
+    <string name="exporting_successful">내보내기 성공</string>
+    <string name="importing_failed">가져오기 실패</string>
+    <string name="exporting_failed">내보내기 실패</string>
+    <string name="importing_some_entries_failed">일부 항목 가져오기에 실패함</string>
+    <string name="exporting_some_entries_failed">일부 항목 내보내기에 실패함</string>
+    <string name="no_entries_for_importing">가져올 항복을 찾을 수 없음</string>
+    <string name="no_new_entries_for_importing">No new entries for importing have been found</string>
+    <string name="no_entries_for_exporting">내보낼 항목을 찾을 수 없음</string>
+
+    <!-- OTG devices -->
+    <string name="usb">USB</string>
+    <string name="usb_detected">기기에 USB장치가 연결되어 있습니다. USB의 파일을 표시하려면 추가 권한이 필요합니다.</string>
+    <string name="confirm_usb_storage_access_text">다음에 표시되는 화면에서 USB의 루트 폴더를 선택해 주시기 바랍니다.</string>
+    <string name="wrong_root_selected_usb">잘못된 폴더가 선택되었습니다. USB의 루트 폴더(가장 윗 폴더)를 선택해 주시기 바랍니다.</string>
+
+    <!-- Dates -->
+    <string name="january">1월</string>
+    <string name="february">2월</string>
+    <string name="march">3월</string>
+    <string name="april">4월</string>
+    <string name="may">5월</string>
+    <string name="june">6월</string>
+    <string name="july">7월</string>
+    <string name="august">8월</string>
+    <string name="september">9월</string>
+    <string name="october">10월</string>
+    <string name="november">11월</string>
+    <string name="december">12월</string>
+
+    <!-- in January -->
+    <string name="in_january">in 1월</string>
+    <string name="in_february">in 2월</string>
+    <string name="in_march">in 3월</string>
+    <string name="in_april">in 4월</string>
+    <string name="in_may">in 5월</string>
+    <string name="in_june">in 6월</string>
+    <string name="in_july">in 7월</string>
+    <string name="in_august">in 8월</string>
+    <string name="in_september">in 9월</string>
+    <string name="in_october">in 10월</string>
+    <string name="in_november">in 11월</string>
+    <string name="in_december">in 12월</string>
+
+    <string name="monday">월요일</string>
+    <string name="tuesday">화요일</string>
+    <string name="wednesday">수요일</string>
+    <string name="thursday">목요일</string>
+    <string name="friday">금요일</string>
+    <string name="saturday">토요일</string>
+    <string name="sunday">일요일</string>
+
+    <string name="monday_letter">월</string>
+    <string name="tuesday_letter">화</string>
+    <string name="wednesday_letter">수</string>
+    <string name="thursday_letter">목</string>
+    <string name="friday_letter">금</string>
+    <string name="saturday_letter">토</string>
+    <string name="sunday_letter">일</string>
+
+    <string name="monday_short">월요일</string>
+    <string name="tuesday_short">화요일</string>
+    <string name="wednesday_short">수요일</string>
+    <string name="thursday_short">목요일</string>
+    <string name="friday_short">금요일</string>
+    <string name="saturday_short">토요일</string>
+    <string name="sunday_short">일요일</string>
+
+    <!-- Pro version -->
+    <string name="upgrade_to_pro_long">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements.</string>
+    <string name="upgrade_to_pro_long_click">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements by clicking here.</string>
+    <string name="it_is_free">It is free till: %s. If you download it till then, you will be able to use it for free forever.</string>
+    <string name="more_info">More info</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="upgrade_calendar">You have to migrate locally stored events manually via exporting in an .ics file, then importing. You can find both export/import buttons at the main screen menu.</string>
+
+    <!-- About -->
+    <string name="about">앱 정보</string>
+    <string name="website">Website</string>
+    <string name="website_label">소스코드 공개 링크</string>
+    <string name="email_label">피드백 또는 제안 요청</string>
+    <string name="upgrade_to_pro">Pro버전으로 업데이트</string>
+    <string name="more_apps">앱 더보기</string>
+    <string name="more_apps_from_us">More apps from us</string>
+    <string name="invite_friends">친구에게 공유</string>
+    <string name="share_text">%1$s 앱을 다운받으세요. %2$s</string>
+    <string name="invite_via">공유 선택</string>
+    <string name="rate_us">앱 평가하기</string>
+    <string name="rate">평점 주기</string>
+    <string name="donate">기부하기</string>
+    <string name="donate_underlined"><u>기부하기</u></string>
+    <string name="follow_us">팔로우</string>
+    <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
+    <string name="support">Support</string>
+    <string name="help_us">Help us</string>
+    <string name="social">Social</string>
+    <string name="other">Other</string>
+    <string name="version_placeholder">Version %s</string>
+    <string name="hello">Hello :)</string>
+    <string name="about_footer">Made with &#10084;&#65039; in Slovakia</string>
+    <string name="additional_info">추가 정보</string>
+    <string name="app_version">앱 버전: %s</string>
+    <string name="device_os">기기 OS: %s</string>
+    <string name="donate_please">
+        <![CDATA[
+            안녕하세요.<br>
+            우리의 애플리케이션이 도움이 되길 바랍니다.<br>
+            사용하고 계신 애플리케이션은 광고 및 인앱 결제가 없는 무료 애플리케이션으로 별도의 수익이 발생하지 않습니다.<br>
+            당신이 원하신다면 개발지원을 위해 <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> 앱을 다운받아 지원 하실 수 있습니다.<br>
+            \'Simple Thank You\' 앱이 설치되면 이 다이얼로그는 비 활성화 됩니다.<br>
+            감사합니다.
+        ]]>
+    </string>
+    <string name="purchase">구매</string>
+    <string name="update_thank_you">Simple Thank You를 최신 버전으로 업데이트 해 주세요.</string>
+    <string name="before_asking_question_read_faq">질문하기 전에 FAQ를 먼저 읽어 주세요. 해답이 있을지도 모릅니다.</string>
+    <string name="before_rate_read_faq">Before you rate us, please check the app settings and read the Frequently Asked Questions first. If you have any problems, maybe the solution is there.</string>
+    <string name="make_sure_latest">Also make sure that you are using the latest app version.</string>
+    <string name="read_it">읽어보기</string>
+    <string name="read_faq">Read FAQ</string>
+    <string name="rate_us_prompt">이 앱을 자주 사용하시는군요! 혹시 시간이 되신다면 구글 플레이스토어에서 평점을 부탁드립니다. 평점은 저희에게 많은 도움이 됩니다. 감사합니다! (이 메시지는 다시 표시되지 않습니다)</string>
+    <string name="rate_our_app">Rate our app please :)</string>
+    <string name="thank_you">Thank you</string>
+    <string name="widget_locked_pro">The widget is locked.\nPlease upgrade to the Pro version to unlock it.</string>
+    <string name="widget_locked">
+        <![CDATA[
+            The widget is locked.<br>Please purchase <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> to unlock it.
+        ]]>
+    </string>
+
+    <!-- New app (do not translate anything on the 4th line) -->
+    <string name="new_app">
+        <![CDATA[
+            안녕하세요,<br><br>
+            저희의 새로운 앱이 출시되었습니다:<br><br>
+            <a href="%1$s">%2$s</a><br><br>
+            <a href="%3$s">%4$s</a><br><br>
+            <a href="%5$s">%6$s</a><br><br>
+            위 링크를 탭하여 받을 수 있습니다.<br><br>
+            감사합니다.
+        ]]>
+    </string>
+
+    <string name="simple_app_launcher">Simple App Launcher</string>
+    <string name="simple_calculator">Simple Calculator</string>
+    <string name="simple_calendar">Simple Calendar</string>
+    <string name="simple_camera">Simple Camera</string>
+    <string name="simple_clock">Simple Clock</string>
+    <string name="simple_contacts">Simple Contacts</string>
+    <string name="simple_dialer">Simple Dialer</string>
+    <string name="simple_draw">Simple Draw</string>
+    <string name="simple_file_manager">Simple File Manager</string>
+    <string name="simple_flashlight">Simple Flashlight</string>
+    <string name="simple_gallery">Simple Gallery</string>
+    <string name="simple_keyboard">Simple Keyboard</string>
+    <string name="simple_music_player">Simple Music Player</string>
+    <string name="simple_notes">Simple Notes</string>
+    <string name="simple_sms_messenger">Simple SMS Messenger</string>
+    <string name="simple_thank_you">Simple Thank You</string>
+    <string name="simple_voice_recorder">Simple Voice Recorder</string>
+
+    <string name="app_launcher_short">App Launcher</string>
+    <string name="calculator_short">Calculator</string>
+    <string name="calendar_short">Calendar</string>
+    <string name="camera_short">Camera</string>
+    <string name="clock_short">Clock</string>
+    <string name="contacts_short">Contacts</string>
+    <string name="dialer_short">Dialer</string>
+    <string name="draw_short">Draw</string>
+    <string name="file_manager_short">File Manager</string>
+    <string name="flashlight_short">Flashlight</string>
+    <string name="gallery_short">Gallery</string>
+    <string name="keyboard_short">Keyboard</string>
+    <string name="music_player_short">Music Player</string>
+    <string name="notes_short">Notes</string>
+    <string name="sms_messenger_short">SMS Messenger</string>
+    <string name="thank_you_short">Thank You</string>
+    <string name="voice_recorder_short">Voice Recorder</string>
+
+    <string name="sideloaded_app">
+        <![CDATA[
+            앱 버전이 유효하지 않습니다. 원본을 설치해 주세요. <a href="%s">here</a>.
+        ]]>
+    </string>
+
     <!-- FAQ -->
-    <string name="faq_1_title">How can I make Simple Gallery the default device gallery\?</string>
-    <string name="faq_1_text">First you have to find the currently default gallery in the Apps section of your device settings, look for a button that says something like \"Open by default\", click on it, then select \"Clear defaults\". The next time you will try opening an image or video you should see an app picker, where you can select Simple Gallery and make it the default app.</string>
-    <string name="faq_2_title">I locked the app with a password, but I forgot it. What can I do\?</string>
-    <string name="faq_2_text">You can solve it in 2 ways. You can either reinstall the app, or find the app in your device settings and select \"Clear data\". It will reset all your settings, it will not remove any media files.</string>
-    <string name="faq_3_title">How can I make an album always appear at the top\?</string>
-    <string name="faq_3_text">You can long press the desired album and select the Pin icon at the actions menu, that will pin it to the top. You can pin multiple folders too, pinned items will be sorted by the default sorting method.</string>
-    <string name="faq_4_title">How can I fast forward videos\?</string>
-    <string name="faq_4_text">You can do it by double tapping the side of the screen, or tapping the current or max duration texts near the seekbar. If you enable opening videos on a separate screen in the app settings, you can use horizontal gestures too.</string>
-    <string name="faq_5_title">What is the difference between hiding and excluding a folder\?</string>
-    <string name="faq_5_text">Exclude prevents displaying the folder only in Simple Gallery, while Hide works system-wise and it hides the folder from other galleries too. It works by creating an empty \".nomedia\" file in the given folder, which you can then remove with any file manager too. Note that some devices do not allow hiding folders like Camera, Screenshots and Downloads.</string>
-    <string name="faq_6_title">Why do folders with music cover art or stickers show up\?</string>
-    <string name="faq_6_text">It can happen that you will see some unusual albums show up. You can easily exclude them by long pressing them and selecting Exclude. In the next dialog you can then select the parent folder, chances are it will prevent the other related albums showing up too.</string>
-    <string name="faq_7_title">A folder with images isn\'t showing up, or it doesn\'t show all items. What can I do\?</string>
-    <string name="faq_7_text">That can have multiple reasons, but solving it is easy. Just go in Settings -&gt; Manage Included Folders, select Plus and navigate to the required folder.</string>
-    <string name="faq_8_title">What if I want just a few particular folders visible\?</string>
-    <string name="faq_8_text">Adding a folder at the Included Folders doesn\'t automatically exclude anything. What you can do is go in Settings -&gt; Manage Excluded Folders, exclude the root folder \"/\", then add the desired folders at Settings -&gt; Manage Included Folders. That will make only the selected folders visible, as both excluding and including are recursive and if a folder is both excluded and included, it will show up.</string>
-    <string name="faq_10_title">Can I crop images with this app\?</string>
-    <string name="faq_10_text">Yes, you can crop images in the editor, by dragging the image corners. You can get to the editor either by long pressing an image thumbnail and selecting Edit, or selecting Edit from the fullscreen view.</string>
-    <string name="faq_11_title">Can I somehow group media file thumbnails\?</string>
-    <string name="faq_11_text">Sure, just use the \"Group by\" menu item while at the thumbnails view. You can group files by multiple criteria, including Date Taken. If you use the \"Show all folders content\" function you can group them by folders too.</string>
-    <string name="faq_12_title">Sorting by Date Taken doesn\'t seem to work properly, how can I fix it\?</string>
-    <string name="faq_12_text">It is most likely caused by the files being copied from somewhere. You can fix it by selecting the file thumbnails and selecting \"Fix Date Taken value\".</string>
-    <string name="faq_13_title">I see some color banding on the images. How can I improve the quality\?</string>
-    <string name="faq_13_text">The current solution for displaying images works fine in the vast majority of cases, but if you want even better image quality, you can enable the \"Show images in the highest possible quality\" at the app settings, in the \"Deep zoomable images\" section.</string>
-    <string name="faq_14_title">I have hidden a file/folder. How can I unhide it\?</string>
-    <string name="faq_14_text">You can either press the \"Temporarily show hidden items\" menu item at the main screen, or toggle \"Show hidden items\" in the app settings to see the hidden item. If you want to unhide it, just long press it and select \"Unhide\". Folders are hidden by adding a hidden \".nomedia\" file into them, you can delete the file with any file manager too. Note that hiding works recursively though, so if you hide a folder, all subfolders will become hidden too. So for unhiding the subfolders you have to unhide the parent folder.</string>
-    <string name="faq_15_title">Why does the app take up so much space\?</string>
-    <string name="faq_15_text">App cache can take up to 250MB, it ensures quicker image loading. If the app is taking up even more space, it is most likely caused by you having items in the Recycle Bin. Those files count to the app size. You can clear the Recycle bin by opening it and deleting all files, or from the app settings. Every file in the Bin is deleted automatically after 30 days.</string>
-    <string name="faq_16_title">What happened to file and folder hiding and why cannot I see hidden items anymore\?</string>
-    <string name="faq_16_text">Starting with Android 11 you cannot hide or unhide files or folders anymore, you cannot see the hidden ones in gallery apps either. You will have to use some file manager for that.</string>
-    <string name="faq_17_title">Why cannot I include missing folders anymore\?</string>
-    <string name="faq_17_text">That stopped working due to the system changes that came with Android 11 too, the app cannot browse real folders anymore, it relies on the so called MediaStore at fetching data.</string>
-    <string name="faq_18_title">Why do I see ads during video playback\?</string>
-    <string name="faq_18_text">Our apps have no ads whatsoever. If you see them during video playback, you must be using some other apps video player. Try finding your default video player in the device settings, then do a \"Clear defaults\" on it. The next time you invoke some video intent you will see an app picker prompt, where you can select what app you want to use.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
+    <string name="frequently_asked_questions">자주 묻는 질문</string>
+    <string name="before_asking_question">Before you ask a question, please first read the</string>
+    <string name="faq_1_title_commons">위젯 목록에 이 앱이 표시되지 않으면 어떻게 해야 하나요?</string>
+    <string name="faq_1_text_commons">앱을 SD카드에 설치했기 때문인 가능성이 큽니다. 안드로이드 시스템 제한으로 SD카드에 설치한 앱은 위젯을 사용할 수 없습니다. 이런 경우에는 위젯을 사용하시려면 내장 메모리로 앱을 옮기는 방법밖에는 없습니다.</string>
+    <string name="faq_2_title_commons">기부가 아닌 다른 방법으로 앱을 지원하고 싶습니다. 다른 방법이 있나요?</string>
+    <string name="faq_2_text_commons">
+        <![CDATA[
+            Yes, of course. You can spread the word about the apps or give good feedback and ratings. You can also help by translating the apps in a new language, or just update some existing translations.
+            The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+        ]]>
+    </string>
+    <string name="faq_3_title_commons">실수로 일부 파일을 삭제했는데 어떻게 복구 할 수 있습니까?</string>
+    <string name="faq_3_text_commons">아쉽게도 불가능합니다. 휴지통을 거치지 않고 삭제를 선택한 파일은 바로 삭제됩니다.</string>
+    <string name="faq_4_title_commons">위젯 색상이 마음에 들지 않는데 변경할 수 있나요?</string>
+    <string name="faq_4_text_commons">네, 홈 화면에서 위젯을 드래그하면 나오는 위젯 설정 화면에서, 화면 하단 왼쪽에 있는 색 사각형을 터치하여 색상을 변경할 수 있습니다. 슬라이더를 사용하여 투명도를 조정할 수도 있습니다.</string>
+    <string name="faq_5_title_commons">어떻게든 삭제된 파일을 복구할 수는 없을까요?</string>
+    <string name="faq_5_text_commons">파일이 정말로 삭제되었다면 그건 불가능합니다. 그러나 휴지통으로 옮기는 옵션이 활성화 되어 있었다면, 파일은 휴지통으로 이동하여 있을 것입니다.</string>
+    <string name="faq_6_title_commons">앱 아이콘이 사라졌습니다. 어떻게 해야 하나요?</string>
+    <string name="faq_6_text_commons">일부 런처는 앱 아이콘 커스터마이징을 제대로 지원하지 않아 앱의 아이콘이 사라질 수 있습니다. 이런 경우에는 플레이 스토어나 위젯을 통하여 앱을 실행한 뒤 기본값인 주황색(#F57C00)으로 다시 변경해주시기 바랍니다. 최악의 경우에는 앱을 재설치 해야할 수도 있습니다.</string>
+    <string name="faq_7_title_commons">앱 결제를 완료했는데 앱을 다운받을 수 없습니다. 어떻게 해야 하나요?</string>
+    <string name="faq_7_text_commons">앱의 결제는 구글이 관리합니다. 때때로 구글의 시스템에서 오류가 발생할 수도 있습니다. 플레이스토어 앱의 캐시를 지우고, 다시 다운받아 보시기 바랍니다.</string>
+    <string name="faq_8_title_commons">Why should I upgrade to the Pro version?</string>
+    <string name="faq_8_text_commons">As your app version is no longer updated, the bugs you have maybe spotted will never be fixed. There will also be no new functions added. You can purchase the Pro version on Google Play for a small sum of money.
+        It is a one time payment, which means that once you purchase it, you will never have to pay again. Not even after getting a new device. If you won\'t like the Pro version, you can just uninstall it within a few hours and you will automatically get your money back.
+        If you want a refund anytime later, just contact us at hello@simplemobiletools.com and you will get it.</string>
+    <string name="faq_9_title_commons">How can I select multiple items at once?</string>
+    <string name="faq_9_text_commons">There are multiple ways of doing that. The first one is starting the selection mode by long pressing one item, then short clicking on others to select them. The second way is similar to selecting items on PCs with a mouse,
+        just start the selection mode by long pressing one item, then with your finger still down drag it across other items for selecting. The third way of selecting multiple items is long pressing one item, then long pressing another one and everything in between gets selected. If you
+        want to select all items, just long press one item, then click at the selected item counter at the top left corner. That will select or unselect all everything.</string>
+    <string name="faq_10_title_commons">I have purchased the app, but I cannot download it on another device.</string>
+    <string name="faq_10_text_commons">Try clearing your Google Play app cache and restarting your device. It is some Google Play glitch, not really related to the app itself.</string>
+
+    <!-- Contributors -->
+    <string name="contributors">Contributors</string>
+    <string name="translation">Translation</string>
+    <string name="development">Development</string>
+    <string name="other_help">Other help</string>
+    <string name="contributors_label">
+        <![CDATA[
+            This list contains everyone that noticeably helped any app within the Simple Mobile Tools suite, not only this one. Translations are handled by volunteers,
+            let us know if you want to help too. The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+            Thanks to all contributors and other supporters!
+        ]]>
+    </string>
+
+    <string name="translation_arabic">Arabic</string>
+    <string name="translation_azerbaijani">Azerbaijani</string>
+    <string name="translation_bengali">Bengali</string>
+    <string name="translation_breton">Breton</string>
+    <string name="translation_catalan">Catalan</string>
+    <string name="translation_czech">Czech</string>
+    <string name="translation_welsh">Welsh</string>
+    <string name="translation_danish">Danish</string>
+    <string name="translation_english">English</string>
+    <string name="translation_german">German</string>
+    <string name="translation_greek">Greek</string>
+    <string name="translation_spanish">Spanish</string>
+    <string name="translation_basque">Basque</string>
+    <string name="translation_persian">Persian</string>
+    <string name="translation_finnish">Finnish</string>
+    <string name="translation_french">French</string>
+    <string name="translation_galician">Galician</string>
+    <string name="translation_hindi">Hindi</string>
+    <string name="translation_croatian">Croatian</string>
+    <string name="translation_hungarian">Hungarian</string>
+    <string name="translation_indonesian">Indonesian</string>
+    <string name="translation_italian">Italian</string>
+    <string name="translation_hebrew">Hebrew</string>
+    <string name="translation_japanese">Japanese</string>
+    <string name="translation_korean">Korean</string>
+    <string name="translation_lithuanian">Lithuanian</string>
+    <string name="translation_nepali">Nepali</string>
+    <string name="translation_norwegian">Norwegian</string>
+    <string name="translation_dutch">Dutch</string>
+    <string name="translation_polish">Polish</string>
+    <string name="translation_portuguese">Portuguese</string>
+    <string name="translation_romanian">Romanian</string>
+    <string name="translation_russian">Russian</string>
+    <string name="translation_slovak">Slovak</string>
+    <string name="translation_slovenian">Slovenian</string>
+    <string name="translation_serbian">Serbian</string>
+    <string name="translation_swedish">Swedish</string>
+    <string name="translation_tamil">Tamil</string>
+    <string name="translation_turkish">Turkish</string>
+    <string name="translation_ukrainian">Ukrainian</string>
+    <string name="translation_vietnamese">Vietnamese</string>
+    <string name="translation_chinese_hk">Chinese (Hong Kong)</string>
+    <string name="translation_chinese_cn">Chinese (Simplified)</string>
+    <string name="translation_chinese_tw">Chinese (Traditional)</string>
+
+    <!-- Pro comparison (shown in the deprecated free apps) -->
+    <string name="why_upgrade">지금 Pro 버전으로 업그레이드 해보세요!</string>
+    <string name="why_upgrade_basic_version">일반</string>
+    <string name="why_upgrade_pro_version">Pro</string>
+    <string name="why_upgrade_no_ads">광고 없음</string>
+    <string name="why_upgrade_no_internet_access">인터넷 차단</string>
+    <string name="why_upgrade_footer">불만족시 + 100% 환불제도</string>
+    <string name="why_upgrade_improved_design">Improved design</string>
+
+    <!-- Gallery Pro -->
+    <string name="why_upgrade_advanced_photo_editor">고급 사진 편집 앱</string>
+    <string name="why_upgrade_heic_support">HEIC/HEIF 파일 지원</string>
+    <string name="why_upgrade_batch_renaming">고급 배치 파일 이름 변경</string>
+    <string name="why_upgrade_folder_locking">개별 폴더 잠금</string>
+    <string name="why_upgrade_printing_support">인쇄 지원</string>
+
+    <!-- Calendar Pro -->
+    <string name="why_upgrade_time_zone_support">세계 각국 시간 지원</string>
+    <string name="why_upgrade_attendees_emails">참석자 및 이메일 알림</string>
+    <string name="why_upgrade_easy_event_importing">간편한 이벤트 가져오기 </string>
+    <string name="why_upgrade_new_widgets">새로운 위젯 </string>
+
+    <!-- Contacts Pro -->
+    <string name="why_upgrade_duplicate_contact_merging">중복된 연락처 덮어쓰기 기능 개선 </string>
+    <string name="why_upgrade_font_size_customization">글꼴 크기 설정 가능 </string>
+    <string name="why_upgrade_private_contact_sharing">사용자 선택 시, 비공개로 연락처 공유할 수 있음</string>
+    <string name="why_upgrade_customizable_contact_ringtones">Customizable contact ringtones</string>
+    <string name="why_upgrade_contact_filtering">Contact filtering</string>
+
+    <!-- Notes Pro -->
+    <string name="why_upgrade_checklists">체크리스트</string>
+    <string name="why_upgrade_different_note_per_widget">위젯별로 다양한 노트 및 색깔 지원 </string>
+    <string name="why_upgrade_note_locking">Note locking</string>
+
+    <!-- File Manager Pro -->
+    <string name="why_upgrade_date_and_time_format">날짜 및 시간 설정 가능 </string>
+    <string name="why_upgrade_shortcuts">홈 화면 바로가기</string>
+    <string name="why_upgrade_file_compression">파일 압축 기능 지원 </string>
+    <string name="why_upgrade_recents_tab">Tab with recent files</string>
+
+    <!-- Draw Pro -->
+    <string name="why_upgrade_background_color_customization">바탕화면 설정 가능</string>
+    <string name="why_upgrade_file_importing">파일 가져오기 지원</string>
+    <string name="why_upgrade_zooming">Zooming</string>
+
+    <!-- License -->
+    <string name="notice">이 앱은 삶을 간편하게 만들어주는 다음의 서드파티 라이브버리를 사용합니다. 감사합니다.</string>
+    <string name="third_party_licences">서드파티 라이선스</string>
+    <string name="kotlin_title">Kotlin (프로그래밍 언어)</string>
+    <string name="subsampling_title">Subsampling Scale Image View (확대 가능한 이미지 보기)</string>
+    <string name="glide_title">Glide (이미지 로딩과 캐싱)</string>
+    <string name="picasso_title">Picasso (이미지 로딩과 캐싱)</string>
+    <string name="cropper_title">Android Image Cropper (이미지 자르기와 회전)</string>
+    <string name="rtl_viewpager_title">RtlViewPager (Right-to-left 스와이핑)</string>
+    <string name="joda_title">Joda-Time (Java 날짜 대체)</string>
+    <string name="stetho_title">Stetho (데이터베이스 디버깅)</string>
+    <string name="otto_title">Otto (이벤트 bus)</string>
+    <string name="photoview_title">PhotoView (확대 가능한 GIF)</string>
+    <string name="pattern_title">PatternLockView (패턴 보안 기능)</string>
+    <string name="reprint_title">Reprint (지문 보안 기능)</string>
+    <string name="gif_drawable_title">Gif Drawable (GIF 로딩)</string>
+    <string name="autofittextview_title">AutoFitTextView (텍스트 크기 변경)</string>
+    <string name="robolectric_title">Robolectric (프레임워크 테스팅)</string>
+    <string name="espresso_title">Espresso (테스트 도움)</string>
+    <string name="gson_title">Gson (JSON parser)</string>
+    <string name="leak_canary_title">Leak Canary (메모리 누수 감지기)</string>
+    <string name="number_picker_title">Number Picker (편집가능 숫자 선택기)</string>
+    <string name="exoplayer_title">ExoPlayer (영상 재생기)</string>
+    <string name="panorama_view_title">VR Panorama View (파노라마 뷰어)</string>
+    <string name="sanselan_title">Apache Sanselan (이미지 메타데이터 읽기)</string>
+    <string name="filters_title">Android Photo Filters (이미지 필터)</string>
+    <string name="gesture_views_title">Gesture Views (확대 가능한 이미지)</string>
+    <string name="indicator_fast_scroll_title">Indicator Fast Scroll (letters on scrollbar)</string>
+    <string name="event_bus_title">Event Bus (communication within the app)</string>
+    <string name="audio_record_view_title">Audio Record View (audio visualization)</string>
+    <string name="sms_mms_title">SMS MMS (SMS and MMS handling)</string>
+    <string name="apng_title">APNG Android (animated WebP support)</string>
+
+    <!-- Google Play listing -->
+    <string name="deprecated_app">구버전 경고: 이 버전의 앱은 더이상 관리되지 않습니다. Pro 버전을 설치해 주세요: https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>
+    <string name="pro_app_refund">플레이스토어에서 구매한 앱은 2시간 내에 삭제하면 자동으로 환불받을 수 있다는 사실을 항상 잊지 마시기 바랍니다. 만약 이후에 환불이 필요하시다면, hello@simplemobiletools.com 으로 연락 주시면 해결해 드리겠습니다. 이제 한번 써보는 것도 나쁘지 않겠죠 :)</string>
+
+    <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
+    <string name="developer_description">A group of simple, open source Android apps with customizable widgets, without ads and unnecessary permissions.</string>
 </resources>

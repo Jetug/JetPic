@@ -1,25 +1,8 @@
 <resources>
 
-    <!--    Jetug   -->
-
-    <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.Base">
-        <item name="windowActionBarOverlay">true</item>
-        <item name="colorPrimary">@color/color_action_bar_main</item>
-        <item name="colorPrimaryDark">@color/color_action_bar_main</item>
-        <item name="colorAccent">@color/color_accent</item>
-        <!--        <item name="android:colorPrimaryDark">@color/color_action_bar_main</item>-->
-    </style>
-
-
-    <style name="AppTheme.ActionBar.Transparent.NoAnimation" parent="AppTheme.ActionBar.Transparent">
-        <item name="android:windowAnimationStyle">@null</item>
-    </style>
-
     <style name="AppTheme" parent="AppTheme.Base">
 <!--        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>-->
     </style>
-
-    <!--    -->
 
     <style name="PopupMenuListView" parent="@style/Widget.AppCompat.ListView.DropDown">
         <item name="android:divider">#404040</item>

@@ -16,13 +16,6 @@ import kotlin.system.measureTimeMillis
 
 const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
 
-enum class NavigationIcon {
-    Cross,
-    Arrow,
-    None
-}
-
-
 //Jet{
 const val GITHUB_LINK = "https://github.com/Jetug/JetPic "
 
@@ -30,7 +23,7 @@ const val GITHUB_LINK = "https://github.com/Jetug/JetPic "
 val marketLink = "https://play.google.com/store/apps/details?id=com.jetugapps.gallery"
 
 //}
-const val IS_USING_SYSTEM_THEME = "is_using_system_theme"
+
 const val APP_NAME = "app_name"
 const val APP_LICENSES = "app_licenses"
 const val APP_FAQ = "app_faq"
@@ -253,11 +246,6 @@ const val SORT_USE_NUMERIC_VALUE = 32768
 const val SORT_BY_FULL_NAME = 65536
 const val SORT_BY_CUSTOM = 131072
 const val SORT_BY_DATE_CREATED = 262144
-
-//excluded
-const val EXCLUDED_PASSWORD_PROTECTION = "excluded_password_protection"
-const val EXCLUDED_PASSWORD_HASH = "excluded_password_hash"
-const val EXCLUDED_PROTECTION_TYPE = "excluded_protection_type"
 
 // security
 const val WAS_PROTECTION_HANDLED = "was_protection_handled"

@@ -9,13 +9,10 @@
     <string name="invalid_file_format">无效文件格式</string>
     <string name="out_of_memory_error">内存不足</string>
     <string name="an_error_occurred">啊哦，出错啦：%s</string>
-    <string name="error">Error: %s</string>
     <string name="open_with">打开方式</string>
     <string name="edit_with">编辑方式</string>
     <string name="edit">编辑</string>
     <string name="no_app_found">未找到可用应用</string>
-    <string name="no_browser_found">未找到浏览器</string>
-    <string name="no_email_client_found">未找到电子邮件客户端</string>
     <string name="set_as">设置为</string>
     <string name="copy_to_clipboard">复制到剪贴板</string>
     <string name="copy_number_to_clipboard">复制号码到剪贴板</string>
@@ -57,17 +54,7 @@
     <string name="seven">七</string>
     <string name="eight">八</string>
     <string name="nine">九</string>
-    <string name="value">值</string>
     <string name="value_cannot_be_empty">值不能为空</string>
-    <string name="create_new_contact">建立新联系人</string>
-    <string name="add_to_existing_contact">添加至已存在的联系人</string>
-    <string name="app_corrupt">应用损坏</string>
-    <string name="disclaimer">免责声明</string>
-    <string name="take_photo">拍照</string>
-    <string name="choose_photo">选择照片</string>
-    <!-- Events -->
-    <string name="birthday">生日</string>
-    <string name="anniversary">纪念日</string>
     <!-- Emails -->
     <string name="home">家庭</string>
     <string name="work">工作</string>
@@ -81,14 +68,10 @@
     <!-- View types -->
     <string name="change_view_type">更改视图类型</string>
     <string name="grid">网格</string>
-    <string name="grid_pro">网格 (Pro)</string>
     <string name="uneven_grid">非均匀网格</string>
     <string name="list">列表</string>
     <string name="increase_column_count">显示更多项目</string>
     <string name="reduce_column_count">显示更少项目</string>
-    <string name="column_count">列数</string>
-    <string name="portrait_column_count">垂直列数</string>
-    <string name="landscape_column_count">水平列数</string>
     <string name="change_cover_image">更换封面图片</string>
     <string name="select_photo">选择图片</string>
     <!-- Blocked numbers -->
@@ -103,8 +86,6 @@
     <string name="must_make_default_dialer">您必须将这应用程序设为默认的拨号程序来使用黑名单。</string>
     <string name="set_as_default">设为默认</string>
     <string name="block_confirmation">您确定要将 \"%s\" 添加到黑名单吗？</string>
-    <string name="block_unknown_calls">拦截来自未存储联系人的通话</string>
-    <string name="block_unknown_messages">拦截来自未存储联系人的消息</string>
     <!-- Favorites -->
     <string name="favorites">收藏</string>
     <string name="add_favorites">添加收藏</string>
@@ -115,7 +96,6 @@
     <string name="type_2_characters">请输入至少两个字符来开始搜索。</string>
     <!-- Filters -->
     <string name="filter">过滤</string>
-    <string name="filter_pro">过滤 (Pro)</string>
     <string name="no_items_found">找不到任何项目。</string>
     <string name="change_filter">更改过滤器</string>
     <!-- Permissions -->
@@ -123,7 +103,6 @@
     <string name="no_contacts_permission">请授予通讯录权限</string>
     <string name="no_camera_permissions">请授予相机权限</string>
     <string name="no_audio_permissions">请授予音频权限</string>
-    <string name="no_post_notifications_permissions">需要发送通知权限</string>
     <!-- Renaming -->
     <string name="rename_file">重命名文件</string>
     <string name="rename_folder">重命名文件夹</string>
@@ -147,7 +126,6 @@
     <string name="rename_date_time_pattern">%Y - 年\n%M - 月\n%D - 日\n%h - 时\n%m - 分\n%s - 秒\n%i - 数字从1递增</string>
     <string name="filename_without_txt">文件名（不带 .txt）</string>
     <string name="filename_without_json">文件名（不带 .json）</string>
-    <string name="filename_without_zip">文件名（不带 .zip）</string>
     <string name="cannot_hide_files">从 Android 11 开始，你再也不能像这样隐藏文件和文件夹了</string>
     <!-- Copy / Move -->
     <string name="copy">复制</string>
@@ -178,7 +156,6 @@
     <string name="could_not_create_file">创建文件 %s 失败</string>
     <string name="no_new_items">没有找到新的项目</string>
     <string name="no_space">目标位置没有足够的可用空间。\n需要 %1$s，可用 %2$s</string>
-    <string name="system_service_disabled">选择文件和文件夹的系统服务不可用</string>
     <!-- Create new -->
     <string name="create_new">新建</string>
     <string name="folder">文件夹</string>
@@ -198,11 +175,6 @@
     <string name="skip">跳过</string>
     <string name="append">应用到 \'_1\'</string>
     <string name="apply_to_all">应用到全部冲突项</string>
-    <string name="system_folder_restriction">系统不允许在此文件夹中操作，请选择另一个文件夹</string>
-    <string name="system_folder_copy_restriction">系统不允许复制到此文件夹，请选择另一个文件夹</string>
-    <string name="rename_in_sd_card_system_restriction">系统不允许在此文件夹内重命名</string>
-    <string name="rename_internal_system_restriction">不能在内部存储上直接重命名文件夹，只能重命名子文件夹</string>
-    <string name="cannot_rename_folder">无法重命名此文件夹</string>
     <!-- File picker -->
     <string name="select_folder">选择文件夹</string>
     <string name="select_file">选择文件</string>
@@ -211,11 +183,8 @@
     <string name="confirm_storage_access_text">请选择 SD 卡根目录并授予写权限</string>
     <string name="confirm_storage_access_text_sd">如果您未找到 SD 卡目录，请尝试</string>
     <string name="confirm_storage_access_android_text">请在下一个屏幕上按下底部的“使用此文件夹”，允许应用程序访问所选的存储空间。</string>
-    <string name="confirm_storage_access_android_text_specific">请在下个屏幕上允许访问 \'&lt;b&gt;%s&lt;/b&gt;\'，方法是按下底部的“&lt;b&gt;使用此文件夹&lt;/b&gt;”。</string>
-    <string name="confirm_create_doc_for_new_folder_text">请按下下个屏幕底部的“&lt;b&gt;保存&lt;/b&gt;”按钮来创建新文件夹。</string>
     <string name="confirm_selection">确认选择</string>
     <string name="loading">加载中…</string>
-    <string name="access_storage_prompt">请允许我们的应用程序访问您的所有文件，没有此权限它可能不能正常工作。</string>
     <plurals name="items">
         <item quantity="other">%d 个项目</item>
     </plurals>
@@ -233,7 +202,6 @@
     </plurals>
     <!-- Storages -->
     <string name="select_storage">选择存储器</string>
-    <string name="storage">存储</string>
     <string name="internal">内部存储器</string>
     <string name="sd_card">SD 卡</string>
     <string name="root">根目录</string>
@@ -261,9 +229,6 @@
     <string name="song_title">歌曲标题</string>
     <string name="gps_coordinates">GPS 坐标</string>
     <string name="altitude">海拔高度</string>
-    <string name="remove_exif">删除 EXIF</string>
-    <string name="remove_exif_confirmation">你确定你想删除 EXIF 值，如 GPS 坐标，相机型号等\?</string>
-    <string name="exif_removed">成功删除了 EXIF 值</string>
     <!-- Color customization -->
     <string name="background_color">背景色</string>
     <string name="text_color">文本颜色</string>
@@ -288,20 +253,22 @@
     <string name="app_icon_color_warning">警告：某些桌面应用无法正确处理自定义应用图标。如果图标消失，请尝试通过 Google Play 或某个小部件启动应用（如果有的话）。
 在成功启动之后，请将图标颜色设置为默认的橙色#F57C00。在最坏的情况下，您可能必须重新安装本应用。</string>
     <string name="share_colors_success">颜色更改成功。已添加名为“共享”的新主题，以后您可以使用它来更改所有应用的颜色。</string>
-    <string name="shared_theme_note">注意尽管您已经使用 Pro 版本的应用，由于技术原因您仍然需要简单感谢。它用来负责颜色同步。</string>
-    <string name="purchase_thank_you">请购买 &lt;a href=https://play.google.com/store/apps/details\?id=com.simplemobiletools.thankyou&gt;简单感谢&lt;/a&gt; 以解锁此功能并支持开发。感谢！</string>
+    <string name="shared_theme_note">注意尽管您已经使用 Pro 版本的应用，由于技术原因您仍然需要简易感谢。它用来负责颜色同步。</string>
+    <string name="purchase_thank_you">
+        <![CDATA[
+            请购买 <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">简易感谢</a> 以解锁此功能并支持开发。感谢！
+        ]]>
+    </string>
     <!-- Themes -->
     <string name="light_theme">浅色主题</string>
     <string name="dark_theme">深色主题</string>
     <string name="auto_theme">自动</string>
-    <string name="auto_light_dark_theme">自动切换浅色/深色主题</string>
     <string name="solarized">曝光过度</string>
     <string name="dark_red">深红</string>
     <string name="white">白色</string>
     <string name="black_white">黑白</string>
     <string name="custom">自定义</string>
     <string name="shared">共享</string>
-    <string name="system_default">System default</string>
     <!-- What's new -->
     <string name="whats_new">更新日志</string>
     <string name="whats_new_disclaimer">* 此处仅列举了重大更新，更多修正可在使用中体验</string>
@@ -324,9 +291,7 @@
     <string name="undo">撤销</string>
     <string name="redo">重做</string>
     <string name="print">打印</string>
-    <string name="print_pro">打印 (Pro)</string>
     <string name="create_shortcut">创建快捷方式</string>
-    <string name="create_shortcut_pro">创建快捷方式 (Pro)</string>
     <string name="add_number_to_contact">添加号码至联系人</string>
     <string name="view_contact_details">查看联系人详情</string>
     <string name="call_from_sim_1">来自 SIM 1 的通话</string>
@@ -339,8 +304,6 @@
     <string name="send_sms">发送短信</string>
     <string name="send_email">Send email</string>
     <string name="call">呼叫</string>
-    <string name="contact_details">Contact details</string>
-    <string name="add_contact">Add contact</string>
     <!-- Sorting -->
     <string name="sort_by">排序方式</string>
     <string name="name">名称</string>
@@ -402,14 +365,12 @@
     <string name="protection_setup_successfully">密码设置成功。如果您不慎遗忘了，请重新安装本应用。</string>
     <string name="fingerprint_setup_successfully">指纹保护设置成功。如果出现问题，请重新安装本应用。</string>
     <string name="lock_folder">锁定文件夹</string>
-    <string name="lock_folder_pro">锁定文件夹 (Pro)</string>
     <string name="unlock_folder">解锁文件夹</string>
     <string name="lock_folder_notice">此保护仅适用于此应用程序，不应取代真正的系统级文件夹加密。</string>
     <!-- Times -->
     <string name="yesterday">昨天</string>
     <string name="today">今天</string>
     <string name="tomorrow">明天</string>
-    <string name="every_day">每天</string>
     <string name="hide_year">隐藏年份</string>
     <string name="seconds_raw">秒</string>
     <string name="minutes_raw">分钟</string>
@@ -508,7 +469,6 @@
     <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
     <string name="alarm_goes_off_in">距闹钟响起还有：\n%s</string>
     <string name="reminder_triggers_in">距提醒触发还有：\n%s</string>
-    <string name="time_remaining">剩余时间：\n%s</string>
     <string name="alarm_warning">在依赖它之前，请确保闹钟能够正常工作。由于系统与节电有关的限制，它有时可能会失灵。</string>
     <string name="reminder_warning">在依赖它们之前，请确保提醒能够正常工作。由于系统与节电有关的限制，它们有时可能会失灵。</string>
     <string name="notifications_disabled">此应用程序的通知已被禁用。请在您的设备设置中启用它们。</string>
@@ -531,7 +491,6 @@
     <string name="color_customization">颜色定制</string>
     <string name="customize_colors">自定义颜色</string>
     <string name="customize_colors_locked">自定义颜色 (锁定)</string>
-    <string name="feature_locked">已锁定</string>
     <string name="customize_widget_colors">自定义小部件颜色</string>
     <string name="customize_notifications">自定义通知</string>
     <string name="use_english_language">强制使用英语语言</string>
@@ -560,7 +519,7 @@
     <string name="move_items_into_recycle_bin">将项目转移到回收站而不是直接删除</string>
     <string name="recycle_bin_cleaning_interval">回收站清理间隔</string>
     <string name="empty_recycle_bin">清空回收站</string>
-    <string name="force_portrait_mode">固定竖屏使用</string>
+    <string name="force_portrait_mode">强制人像模式</string>
     <string name="export_settings">导出设置</string>
     <string name="import_settings">导入设置</string>
     <string name="settings_exported_successfully">设置导出成功</string>
@@ -677,12 +636,6 @@
     <string name="more_info">更多信息</string>
     <string name="upgrade">升级</string>
     <string name="upgrade_calendar">您必须通过导出/导入.ics文件来自行转移本地存储的事件。您可以在主界面菜单中找到导出/导入选项。</string>
-    <string name="upgraded_to_pro">嘿，
-\n
-\n你似乎已经有了专业版的应用程序。你不再需要这个，你可以卸载它。</string>
-    <string name="upgraded_to_pro_calendar">你必须通过在 .ics 文件中导出，然后导入的方式手动迁移本地存储的事件。你可以在顶部菜单中找到导出和导入按钮。</string>
-    <string name="upgraded_to_pro_notes">你必须手动将笔记迁移到专业版。</string>
-    <string name="upgraded_to_pro_contacts">你必须通过在 .vcf 文件中导出，然后导入的方式手动迁移私有存储的联系人。你可以在顶部菜单中找到导出和导入按钮。</string>
     <!-- About -->
     <string name="about">关于</string>
     <string name="website">Website</string>
@@ -697,6 +650,7 @@
     <string name="rate_us">为我们评分</string>
     <string name="rate">评分</string>
     <string name="donate">捐赠</string>
+    <string name="donate_underlined"><u>捐赠</u></string>
     <string name="follow_us">关注我们</string>
     <string name="copyright">v %1$s
 \n版权所有 © Simple Mobile Tools %2$d</string>
@@ -704,7 +658,6 @@
     <string name="help_us">帮助我们</string>
     <string name="social">社交网络</string>
     <string name="other">其他</string>
-    <string name="privacy_policy">隐私政策</string>
     <string name="version_placeholder">版本 %s</string>
     <string name="hello">你好 :)</string>
     <string name="about_footer">饱含 ❤️ 于斯洛伐克制作</string>
@@ -718,14 +671,11 @@
             非常感谢！
         ]]>
     </string>
-    <string name="donate_new">你好，&lt;br&gt;&lt;br&gt;希望您喜欢这个应用程序。它不包含广告，我们也不收集您的数据，要支持它的开发， 请购买 &lt;a href=https://play.google.com/store/apps/details\?id=com.simplemobiletools.thankyou&gt;Simple Thank You&lt;/a&gt;. 您将解锁所有的应用功能和颜色自定义。&lt;br&gt;&lt;br&gt;谢谢你！</string>
     <string name="purchase">购买</string>
-    <string name="get_simple_phone">订购 Simple Phone</string>
-    <string name="update_thank_you">请更新简单感谢到最新版本</string>
+    <string name="update_thank_you">请更新简易感谢到最新版本</string>
     <string name="before_asking_question_read_faq">提问之前，请先打开应用设置并阅读常见问题。也许您可以在那里找到答案。</string>
     <string name="before_rate_read_faq">评分之前，请先打开应用设置并阅读常见问题。也许您可以在那里找到答案。</string>
     <string name="make_sure_latest">另外，请确保您正在使用的是最新版本的应用。</string>
-    <string name="make_sure_upgrade">还请注意，作者不再开发这个应用版本，请获取有多处改进的专业版。</string>
     <string name="read_it">阅读</string>
     <string name="read_faq">阅读常见问题</string>
     <string name="rate_us_prompt">您好，\n\n看来您使用这个应用已经有一段时间了，我们真的很感激。\n\n如果您喜欢，请在Google Play上为我们评分。这对我们很有帮助。\n\n无论您做何决定，您都不会再看到这个消息了。\n\n感谢！</string>
@@ -733,26 +683,26 @@
     <string name="thank_you">非常感谢</string>
     <string name="widget_locked_pro">小部件被锁定。
 \n请升级到专业版解锁。</string>
-    <string name="features_locked">此功能被锁，请购买 &lt;a href=https://play.google.com/store/apps/details\?id=com.simplemobiletools.thankyou&gt;Simple Thank You&lt;/a&gt; 解锁完整版应用。&lt;br&gt;&lt;br&gt;这是一次性付款，如果您不满意，我们可以退款给您。</string>
+    <string name="widget_locked">小部件被锁定。&lt;br&gt;请购买&lt;a href=https://play.google.com/store/apps/details\?id=com.simplemobiletools.thankyou&gt;Simple Thank You&lt;/a&gt; 解锁此功能。</string>
     <!-- New app (do not translate anything on the 4th line) -->
     <string name="new_app">嘿，&lt;br&gt;&lt;br&gt;我们最近发布了一些新的应用：&lt;br&gt;&lt;br&gt; &lt;a href=%1$s&gt;%2$s&lt;/a&gt;&lt;br&gt;&lt;br&gt; &lt;a href=%3$s&gt;%4$s&lt;/a&gt;&lt;br&gt;&lt;br&gt; &lt;a href=%5$s&gt;%6$s&lt;/a&gt;&lt;br&gt;&lt;br&gt; 您可以点击标题或图标来下载。&lt;br&gt;&lt;br&gt; 谢谢</string>
-    <string name="simple_app_launcher">简单应用启动器</string>
-    <string name="simple_calculator">简单计算器</string>
-    <string name="simple_calendar">简单日历</string>
-    <string name="simple_camera">简单相机</string>
-    <string name="simple_clock">简单时钟</string>
-    <string name="simple_contacts">简单通讯录</string>
-    <string name="simple_dialer">简单拨号器</string>
-    <string name="simple_draw">简单绘图</string>
-    <string name="simple_file_manager">简单文件管理器</string>
-    <string name="simple_flashlight">简单手电筒</string>
-    <string name="simple_gallery">简单图库</string>
-    <string name="simple_keyboard">简单键盘</string>
-    <string name="simple_music_player">简单音乐播放器</string>
-    <string name="simple_notes">简单笔记</string>
-    <string name="simple_sms_messenger">简单短信</string>
-    <string name="simple_thank_you">简单感谢</string>
-    <string name="simple_voice_recorder">简单录音机</string>
+    <string name="simple_app_launcher">简易应用启动器</string>
+    <string name="simple_calculator">简易计算器</string>
+    <string name="simple_calendar">简易日历</string>
+    <string name="simple_camera">简易相机</string>
+    <string name="simple_clock">简易时钟</string>
+    <string name="simple_contacts">简易通讯录</string>
+    <string name="simple_dialer">简易拨号器</string>
+    <string name="simple_draw">简易绘图</string>
+    <string name="simple_file_manager">简易文件管理器</string>
+    <string name="simple_flashlight">简易手电筒</string>
+    <string name="simple_gallery">简易图库</string>
+    <string name="simple_keyboard">简易键盘</string>
+    <string name="simple_music_player">简易音乐播放器</string>
+    <string name="simple_notes">简易笔记</string>
+    <string name="simple_sms_messenger">简易短信</string>
+    <string name="simple_thank_you">简易感谢</string>
+    <string name="simple_voice_recorder">简易录音机</string>
     <string name="app_launcher_short">应用启动器</string>
     <string name="calculator_short">计算器</string>
     <string name="calendar_short">日历</string>
@@ -813,7 +763,6 @@
     <string name="translation_azerbaijani">Azerbaijani</string>
     <string name="translation_bengali">Bengali</string>
     <string name="translation_breton">Breton</string>
-    <string name="translation_bulgarian">Bulgarian</string>
     <string name="translation_catalan">Catalan</string>
     <string name="translation_czech">Czech</string>
     <string name="translation_welsh">Welsh</string>
@@ -860,8 +809,7 @@
     <string name="why_upgrade_pro_version">专业版</string>
     <string name="why_upgrade_no_ads">无广告</string>
     <string name="why_upgrade_no_internet_access">无互联网访问权限</string>
-    <string name="why_upgrade_footer">100% 退款保证</string>
-    <string name="why_upgrade_footer_one_time_payment">一次性付款</string>
+    <string name="why_upgrade_footer">+ 100% 退款保证</string>
     <string name="why_upgrade_improved_design">改进的设计</string>
     <!-- Gallery Pro -->
     <string name="why_upgrade_advanced_photo_editor">高级照片编辑器</string>
@@ -880,7 +828,6 @@
     <string name="why_upgrade_private_contact_sharing">应用内可选的私密联系人共享</string>
     <string name="why_upgrade_customizable_contact_ringtones">可自定义的联系人铃声</string>
     <string name="why_upgrade_contact_filtering">联系人过滤</string>
-    <string name="why_upgrade_contact_private_contacts">私密地保存联系人</string>
     <!-- Notes Pro -->
     <string name="why_upgrade_checklists">清单</string>
     <string name="why_upgrade_different_note_per_widget">每个小部件不同的注释和颜色</string>
@@ -926,12 +873,9 @@
     <string name="audio_record_view_title">Audio Record View (音频可视化)</string>
     <string name="sms_mms_title">SMS MMS (短信和彩信处理)</string>
     <string name="apng_title">APNG Android (动画 WebP 支持)</string>
-    <string name="pdf_viewer_title">Android PdfViewer (PDF 查看器)</string>
-    <string name="m3u_parser_title">M3U 解析器 (m3u 播放列表文件处理)</string>
-    <string name="android_lame_title">AndroidLame (mp3 编码器)</string>
     <!-- Google Play listing -->
     <string name="deprecated_app">已弃用：该应用版本已不再维护，请在以下链接获取专业版 https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>
     <string name="pro_app_refund">别忘了如果您在2小时内卸载任何付费应用将会自动退款。如果您想在之后退款，只需通过 hello@simplemobiletools.com 联系我们即可。这样您就可以放心试用了 :)</string>
     <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
-    <string name="developer_description">一组简单且开源的 Android 应用程序，可自定义小部件，并且没有广告和不必要的权限。</string>
+    <string name="developer_description">一组简易且开源的 Android 应用程序，可自定义小部件，并且没有广告和不必要的权限。</string>
 </resources>

@@ -1,379 +1,968 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">簡易相簿</string>
-    <string name="app_launcher_name">簡易相簿</string>
-    <string name="edit">編輯</string>
-    <string name="open_camera">開啟相機</string>
-    <string name="hidden">(隱藏)</string>
-    <string name="excluded">(排除)</string>
-    <string name="pin_folder">釘選資料夾</string>
-    <string name="unpin_folder">取消釘選資料夾</string>
-    <string name="pin_to_the_top">釘選在頂端</string>
-    <string name="show_all">資料夾內容全部顯示</string>
-    <string name="all_folders">全部資料夾</string>
-    <string name="folder_view">切換成資料夾檢視</string>
-    <string name="other_folder">其他資料夾</string>
-    <string name="show_on_map">在地圖上顯示</string>
-    <string name="unknown_location">未知的位置</string>
-    <string name="volume">音量</string>
-    <string name="brightness">亮度</string>
-    <string name="lock_orientation">鎖定方向</string>
-    <string name="unlock_orientation">解除鎖定方向</string>
-    <string name="change_orientation">改變方向</string>
-    <string name="force_portrait">強制直向</string>
-    <string name="force_landscape">強制橫向</string>
-    <string name="use_default_orientation">使用預設方向</string>
-    <string name="fix_date_taken">修復拍攝日期數值</string>
-    <string name="fixing">修復中…</string>
-    <string name="dates_fixed_successfully">日期修復成功</string>
-    <string name="no_date_takens_found">未發現拍攝日期數值</string>
-    <string name="share_resized">分享調整大小的版本</string>
-    <string name="upgraded_from_free">嘿
-\n
-\n你似乎從舊版免費 APP 升級了。現在你能解除安裝舊版了，在應用程式設定的頂端有個\'升級至專業版\'按鈕。
-\n
-\n將只有回收桶項目會被刪除，我的最愛項目會被解除標記，以及也會重置你的應用程式設定。
-\n
-\n感謝!</string>
-    <string name="switch_to_file_search">檔案搜尋目標切換成全部的可見資料夾</string>
-    <string name="set_as_default_folder">設為預設資料夾</string>
-    <string name="unset_as_default_folder">取消設為預設資料夾</string>
-    <string name="reorder_by_dragging">透過拖曳來重新排序資料夾</string>
-    <string name="reorder_by_dragging_pro">透過拖曳來重新排序資料夾 (Pro)</string>
-    <string name="restore_to_path">還原到「%s」</string>
-    <!-- Filter -->
-    <string name="filter_media">篩選媒體檔案</string>
-    <string name="images">圖片</string>
-    <string name="videos">影片</string>
-    <string name="gifs">GIF</string>
-    <string name="raw_images">RAW圖檔</string>
-    <string name="svgs">SVG</string>
-    <string name="portraits">人像</string>
-    <string name="no_media_with_filters">選擇的篩選條件未發現媒體檔案。</string>
-    <string name="change_filters_underlined"><u>更改篩選條件</u></string>
-    <!-- Hide / Exclude -->
-    <string name="hide_folder_description">這功能藉由新增一個\".nomedia\"檔案，來隱藏資料夾和所有子資料夾。您可以透過[設定]中的\"顯示隱藏的項目\"選項來檢視。
-\n是否繼續？</string>
-    <string name="exclude">排除</string>
-    <string name="excluded_folders">排除資料夾</string>
-    <string name="manage_excluded_folders">管理排除資料夾</string>
-    <string name="exclude_folder_description">此資料夾與子資料夾將只會都從簡易相簿中排除。您可以在設定中進行管理。</string>
-    <string name="exclude_folder_parent">是否排除上層資料夾？</string>
-    <string name="excluded_activity_placeholder">[排除資料夾]只會將選擇的資料夾與子資料夾一起從簡易相簿中隱藏，它們仍會出現在其他應用程式中。
-\n
-\n如果您要在其他應用程式中也隱藏，請使用[隱藏]功能。</string>
-    <string name="remove_all">移除全部</string>
-    <string name="remove_all_description">是否將排除列表中的所有資料夾都移除？這不會刪除資料夾。</string>
-    <string name="hidden_folders">隱藏資料夾</string>
-    <string name="manage_hidden_folders">管理隱藏資料夾</string>
-    <string name="hidden_folders_placeholder">看來沒有以「.nomedia」檔案來隱藏的資料夾。</string>
-    <string name="temporarily_show_excluded">暫時顯示已排除的項目</string>
-    <string name="stop_showing_excluded">停止顯示已排除的項目</string>
-    <!-- Include folders -->
-    <string name="include_folders">包含資料夾</string>
-    <string name="manage_included_folders">管理包含資料夾</string>
-    <string name="add_folder">增加資料夾</string>
-    <string name="included_activity_placeholder">如果有些資料夾含有媒體檔案，但本 app 沒有辨識到，您可以在此手動加入。
-\n在此加入項目不會排除其他資料夾。</string>
-    <string name="no_media_add_included">未發現媒體檔案。您可以手動加入包含媒體檔案的資料夾來解決。</string>
-    <!-- Resizing -->
-    <string name="resize">縮放</string>
-    <string name="resize_and_save">縮放所選區域並儲存</string>
-    <string name="width">寬度</string>
-    <string name="height">高度</string>
-    <string name="keep_aspect_ratio">保持長寬比</string>
-    <string name="invalid_values">請輸入有效的解析度</string>
-    <!-- Editor -->
-    <string name="editor">編輯器</string>
-    <string name="rotate">旋轉</string>
-    <string name="invalid_image_path">無效的圖片路徑</string>
-    <string name="invalid_video_path">無效的影片路徑</string>
-    <string name="image_editing_failed">圖片編輯失敗</string>
-    <string name="video_editing_failed">影片編輯失敗</string>
-    <string name="image_editing_cancelled">圖片編輯取消</string>
-    <string name="video_editing_cancelled">影片編輯取消</string>
-    <string name="file_edited_successfully">檔案編輯成功</string>
-    <string name="image_edited_successfully">圖片編輯成功</string>
-    <string name="video_edited_successfully">影片編輯成功</string>
-    <string name="edit_image_with">編輯圖片:</string>
-    <string name="edit_video_with">編輯影片:</string>
-    <string name="no_image_editor_found">找不到圖片編輯器</string>
-    <string name="no_video_editor_found">找不到影片編輯器</string>
-    <string name="unknown_file_location">未知的檔案位置</string>
-    <string name="error_saving_file">無法覆蓋原始檔案</string>
-    <string name="rotate_left">向左轉</string>
-    <string name="rotate_right">向右轉</string>
-    <string name="rotate_one_eighty">旋轉180º</string>
-    <string name="flip">翻轉</string>
-    <string name="flip_horizontally">水平翻轉</string>
-    <string name="flip_vertically">垂直翻轉</string>
-    <string name="free_aspect_ratio">自由</string>
-    <!-- available as an option: 1:1, 4:3, 16:9, free -->
-    <string name="other_aspect_ratio">其它</string>
-    <!-- available as an option: 1:1, 4:3, 16:9, free, other -->
-    <!-- Set wallpaper -->
-    <string name="simple_wallpaper">簡易桌布</string>
-    <string name="set_as_wallpaper">設為桌布</string>
-    <string name="set_as_wallpaper_failed">設為桌布失敗</string>
-    <string name="set_as_wallpaper_with">用其他程式設為桌布:</string>
-    <string name="setting_wallpaper">桌布設定中…</string>
-    <string name="wallpaper_set_successfully">成功設為桌布</string>
-    <string name="portrait_aspect_ratio">直向長寬比</string>
-    <string name="landscape_aspect_ratio">橫向長寬比</string>
-    <string name="home_screen">主畫面</string>
-    <string name="lock_screen">鎖定畫面</string>
-    <string name="home_and_lock_screen">主畫面及鎖定畫面</string>
-    <string name="allow_changing_aspect_ratio">允許變更長寬比</string>
-    <!-- Slideshow -->
-    <string name="slideshow">投影片</string>
-    <string name="interval">間隔</string>
-    <string name="include_photos">包含照片</string>
-    <string name="include_videos">包含影片</string>
-    <string name="include_gifs">包含GIF</string>
-    <string name="random_order">隨機順序</string>
-    <string name="move_backwards">反向播放</string>
-    <string name="loop_slideshow">投影片循環</string>
-    <string name="animation">動畫</string>
-    <string name="no_animation">無</string>
-    <string name="fade">漸變</string>
-    <string name="slide">滑動</string>
-    <string name="slideshow_ended">投影片結束</string>
-    <string name="no_media_for_slideshow">找不到投影片的媒體檔案</string>
+    <string name="ok">確定</string>
+    <string name="cancel">取消</string>
+    <string name="nothing">Nothing</string>
+    <string name="later">Later</string>
+    <string name="save_as">儲存</string>
+    <string name="file_saved">成功儲存檔案</string>
+    <string name="invalid_file_format">無效的檔案格式</string>
+    <string name="out_of_memory_error">記憶體不足</string>
+    <string name="an_error_occurred">發生錯誤: %s</string>
+    <string name="open_with">以其他應用程式開啟</string>
+    <string name="edit_with">用其他程式編輯</string>
+    <string name="edit">Edit</string>
+    <string name="no_app_found">找不到應用程式</string>
+    <string name="set_as">設為</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="copy_number_to_clipboard">Copy number to clipboard</string>
+    <string name="value_copied_to_clipboard">數值複製到剪貼簿</string>
+    <string name="value_copied_to_clipboard_show">數值複製到剪貼簿:\n%s</string>
+    <string name="dial_number">Dial number</string>
+    <string name="unknown">未知的</string>
+    <string name="always">總是</string>
+    <string name="never">從不</string>
+    <string name="details">詳細資訊</string>
+    <string name="notes">筆記</string>
+    <string name="deleting_folder">資料夾 \'%s\' 刪除中</string>
+    <string name="none">無</string>
+    <string name="label">標籤</string>
+    <string name="transparent">透明</string>
+    <string name="transparent_color">透明顏色</string>
+    <string name="select_a_different_color">選取不同的顏色</string>
+    <string name="download">下載</string>
+    <string name="notification">通知</string>
+    <string name="notifications">Notifications</string>
+    <string name="email">電子信箱</string>
+    <string name="previous">上一首</string>
+    <string name="playpause">播放 / 暫停</string>
+    <string name="next">下一首</string>
+    <string name="number">號碼</string>
+    <string name="no_contacts_found">未發現聯絡人</string>
+    <string name="request_the_required_permissions">請求必要的權限</string>
+    <string name="no_access_to_contacts">The app could not access your contacts</string>
+    <string name="no_phone_call_permission">App does not have the permission to initiate phone calls, please grant it in the device settings</string>
+    <string name="insert_text_here">Insert text here</string>
+    <string name="call_person">打電話給 %s</string>
+    <string name="zero">Zero</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
+    <string name="four">Four</string>
+    <string name="five">Five</string>
+    <string name="six">Six</string>
+    <string name="seven">Seven</string>
+    <string name="eight">Eight</string>
+    <string name="nine">Nine</string>
+    <string name="value_cannot_be_empty">Value cannot be empty</string>
+
+    <!-- Emails -->
+    <string name="home">住家</string>
+    <string name="work">工作</string>
+
+    <!-- Phone numbers -->
+    <string name="mobile">手機</string>
+    <string name="main_number">主用</string>
+    <string name="work_fax">工作傳真</string>
+    <string name="home_fax">住家傳真</string>
+    <string name="pager">呼叫器</string>
+    <string name="no_phone_number_found">未發現電話號碼</string>
+
     <!-- View types -->
-    <string name="group_direct_subfolders">歸類子資料夾</string>
-    <!-- Grouping at media thumbnails -->
-    <string name="group_by">歸類</string>
-    <string name="do_not_group_files">不歸類檔案</string>
-    <string name="by_folder">資料夾</string>
-    <string name="by_last_modified">最後修改</string>
-    <string name="by_last_modified_daily">最後修改 (按日)</string>
-    <string name="by_last_modified_monthly">最後修改 (按月)</string>
-    <string name="by_date_taken">拍攝日期</string>
-    <string name="by_date_taken_daily">拍攝日期 (按日)</string>
-    <string name="by_date_taken_monthly">拍攝日期 (按月)</string>
-    <string name="by_file_type">檔案類型</string>
-    <string name="by_extension">副檔名</string>
-    <string name="show_file_count_section_header">Show file count at section headers</string>
-    <string name="grouping_and_sorting">請注意，歸類和排序兩者是獨立的</string>
-    <!-- Widgets -->
-    <string name="folder_on_widget">在小工具顯示資料夾:</string>
-    <string name="show_folder_name">顯示資料夾名稱</string>
+    <string name="change_view_type">改變瀏覽類型</string>
+    <string name="grid">格狀</string>
+    <string name="uneven_grid">Uneven Grid</string>
+    <string name="list">列表</string>
+    <string name="increase_column_count">增加欄數</string>
+    <string name="reduce_column_count">減少欄數</string>
+    <string name="change_cover_image">更換封面圖片</string>
+    <string name="select_photo">選擇相片</string>
+
+    <!-- Blocked numbers -->
+    <string name="manage_blocked_numbers">管理黑名單</string>
+    <string name="not_blocking_anyone">你沒有封鎖任何人</string>
+    <string name="add_a_blocked_number">添加封鎖的號碼</string>
+    <string name="block_number">封鎖號碼</string>
+    <string name="block_numbers">封鎖號碼</string>
+    <string name="blocked_numbers">黑名單</string>
+    <string name="export_blocked_numbers">Export blocked numbers</string>
+    <string name="import_blocked_numbers">Import blocked numbers</string>
+    <string name="must_make_default_dialer">你必須將這應用程式設為預設的撥號程式來使用黑名單。</string>
+    <string name="set_as_default">設為預設</string>
+    <string name="block_confirmation">Are you sure you want to block \"%s\"?</string>
+
+    <!-- Favorites -->
+    <string name="favorites">我的最愛</string>
+    <string name="add_favorites">添加我的最愛</string>
+    <string name="add_to_favorites">加入我的最愛</string>
+    <string name="remove_from_favorites">移除我的最愛</string>
+
+    <!-- Search -->
+    <string name="search">搜尋</string>
+    <string name="type_2_characters">輸入兩個字以上來開始搜尋。</string>
+
+    <!-- Filters -->
+    <string name="filter">篩選</string>
+    <string name="no_items_found">未發現項目</string>
+    <string name="change_filter">更改篩選條件</string>
+
+    <!-- Permissions -->
+    <string name="no_storage_permissions">儲存空間權限是必要的</string>
+    <string name="no_contacts_permission">聯絡人權限是必要的</string>
+    <string name="no_camera_permissions">相機權限是必要的</string>
+    <string name="no_audio_permissions">音訊權限是必要的</string>
+
+    <!-- Renaming -->
+    <string name="rename_file">重新命名檔案</string>
+    <string name="rename_folder">重新命名資料夾</string>
+    <string name="rename_file_error">無法重新命名檔案</string>
+    <string name="rename_folder_error">無法重新命名資料夾</string>
+    <string name="rename_folder_empty">資料夾名稱不得空白</string>
+    <string name="rename_folder_exists">已經存在這名稱的資料夾</string>
+    <string name="rename_folder_root">無法重新命名根目錄</string>
+    <string name="rename_folder_ok">成功重新命名資料夾</string>
+    <string name="renaming_folder">資料夾重新命名中</string>
+    <string name="filename_cannot_be_empty">檔名不得空白</string>
+    <string name="filename_invalid_characters">檔名包含無效字元</string>
+    <string name="filename_invalid_characters_placeholder">檔名 \'%s\' 包含無效字元</string>
+    <string name="extension_cannot_be_empty">副檔名不得空白</string>
+    <string name="source_file_doesnt_exist">原始檔案 %s 不存在</string>
+    <string name="prepend_filenames">檔名前綴</string>
+    <string name="append_filenames">附加檔名</string>
+    <string name="simple_renaming">簡易重新命名</string>
+    <string name="pattern_renaming">格式重新命名</string>
+    <string name="string_to_add">添加文字</string>
+    <string name="rename_date_time_pattern">%Y - 年\n%M - 月\n%D - 日\n%h - 小時\n%m - 分鐘\n%s - 秒鐘\n%i - 數字從1增加起</string>
+    <string name="filename_without_txt">Filename (without .txt)</string>
+    <string name="filename_without_json">Filename (without .json)</string>
+    <string name="cannot_hide_files">Starting from Android 11 you cannot hide files and folders like that anymore</string>
+
+    <!-- Copy / Move -->
+    <string name="copy">複製</string>
+    <string name="move">移動</string>
+    <string name="copy_move">複製 / 移動</string>
+    <string name="copy_to">複製</string>
+    <string name="move_to">移動</string>
+    <string name="source">來源</string>
+    <string name="destination">目標</string>
+    <string name="select_destination">選擇目標</string>
+    <string name="click_select_destination">點此選擇目標</string>
+    <string name="invalid_destination">無法寫入選擇的目標</string>
+    <string name="please_select_destination">請選擇目標</string>
+    <string name="source_and_destination_same">目標跟來源不能相同</string>
+    <string name="copy_failed">無法複製檔案</string>
+    <string name="copying">複製中…</string>
+    <string name="copying_success">成功複製檔案</string>
+    <string name="copying_success_one">File copied successfully</string>
+    <string name="copy_move_failed">發生錯誤</string>
+    <string name="moving">移動中…</string>
+    <string name="moving_success">成功移動檔案</string>
+    <string name="moving_success_one">File moved successfully</string>
+    <string name="moving_success_partial">部分檔案無法被移動</string>
+    <string name="copying_success_partial">部分檔案無法被複製</string>
+    <string name="no_files_selected">未選擇檔案</string>
+    <string name="saving">儲存中…</string>
+    <string name="could_not_create_folder">無法建立資料夾 %s</string>
+    <string name="could_not_create_file">無法建立檔案 %s</string>
+    <string name="no_new_items">未發現新的項目</string>
+    <string name="no_space">目標沒有足夠的可用空間。\n需求 %1$s, 可用 %2$s</string>
+
+    <!-- Create new -->
+    <string name="create_new">新增</string>
+    <string name="folder">資料夾</string>
+    <string name="file">檔案</string>
+    <string name="create_new_folder">新增資料夾</string>
+    <string name="name_taken">已經存在相同名稱的檔案或資料夾</string>
+    <string name="invalid_name">名稱包含無效的字元</string>
+    <string name="empty_name">請輸入一個名稱</string>
+    <string name="unknown_error_occurred">發生未知的錯誤</string>
+
+    <!-- File operation conflicts -->
+    <string name="file_already_exists">檔案 \"%s\" 已經存在</string>
+    <string name="file_already_exists_overwrite">檔案 \"%s\" 已經存在。 要覆蓋嗎?</string>
+    <string name="folder_already_exists">資料夾 \"%s\" 已經存在</string>
+    <string name="merge">合併</string>
+    <string name="keep_both">雙方皆保留</string>
+    <string name="overwrite">覆蓋</string>
+    <string name="skip">跳過</string>
+    <string name="append">附加 \'_1\'</string>
+    <string name="apply_to_all">添加到全部衝突</string>
+
+    <!-- File picker -->
+    <string name="select_folder">選擇資料夾</string>
+    <string name="select_file">選擇檔案</string>
+    <string name="confirm_storage_access_title">確認外部儲存空間存取權限</string>
+    <string name="confirm_folder_access_title">Confirm folder access</string>
+    <string name="confirm_storage_access_text">請在下個畫面選擇SD卡的根目錄，以授予存取權限</string>
+    <string name="confirm_storage_access_text_sd">"如果看不到SD卡，試試這個"</string>
+    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
+    <string name="confirm_selection">確認選擇</string>
+    <string name="loading">Loading…</string>
+
+    <plurals name="items">
+        <item quantity="other">%d個項目</item>
+    </plurals>
+
+    <!-- Are you sure you want to delete 5 items? -->
+    <plurals name="delete_items">
+        <item quantity="other">%d個項目</item>
+    </plurals>
+
+    <plurals name="deleting_items">
+        <item quantity="other">%d個項目刪除中</item>
+    </plurals>
+
+    <!-- Are you sure you want to delete 5 contacts? -->
+    <plurals name="delete_contacts">
+        <item quantity="one">%d個聯絡人</item>
+        <item quantity="other">%d個聯絡人</item>
+    </plurals>
+
+    <!-- Storages -->
+    <string name="select_storage">選擇儲存空間</string>
+    <string name="internal">內部儲存空間</string>
+    <string name="sd_card">SD卡</string>
+    <string name="root">根目錄</string>
+    <string name="wrong_root_selected">選擇了錯誤的資料夾，請選擇SD卡的根目錄</string>
+    <string name="sd_card_usb_same">SD卡和USB裝置的路徑不能相同</string>
+    <string name="app_on_sd_card">你似乎將應用程式安裝在SD卡，那會造成應用程式小工具無法使用。你甚至不會在可用的小工具列表中見到它們。
+        那是個系統限制，所以如果你想要使用小工具，你必須把應用程式移動回內部儲存空間。</string>
+    <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
+
+    <!-- File properties -->
+    <string name="properties">屬性</string>
+    <string name="path">路徑</string>
+    <string name="items_selected">選擇的項目</string>
+    <string name="direct_children_count">子目錄數</string>
+    <string name="files_count">總檔案數</string>
+    <string name="resolution">解析度</string>
+    <string name="duration">時間長度</string>
+    <string name="artist">演唱者</string>
+    <string name="album">專輯</string>
+    <string name="focal_length">焦距</string>
+    <string name="exposure_time">曝光時間</string>
+    <string name="iso_speed">ISO速度</string>
+    <string name="f_number">光圈</string>
+    <string name="camera">相機</string>
+    <string name="exif">EXIF</string>
+    <string name="song_title">歌名</string>
+    <string name="gps_coordinates">GPS座標</string>
+    <string name="altitude">海拔高度</string>
+
+    <!-- Color customization -->
+    <string name="background_color">背景顏色</string>
+    <string name="text_color">文字顏色</string>
+    <string name="primary_color">主體顏色</string>
+    <string name="accent_color_white">Accent color of white theme</string>
+    <string name="accent_color_black_and_white">Accent color of Black &amp; White theme</string>
+    <string name="foreground_color">前景顏色</string>
+    <string name="app_icon_color">應用程式圖標顏色</string>
+    <string name="bottom_navigation_bar_color">底部導航列顏色</string>
+    <string name="restore_defaults">恢復預設</string>
+    <string name="use_default">使用預設</string>
+    <string name="default_color">預設</string>
+    <string name="change_color">改變顏色</string>
+    <string name="theme">主題</string>
+    <string name="changing_color_description">改變顏色將切換成[自訂]主題</string>
+    <string name="save">儲存</string>
+    <string name="discard">丟棄</string>
+    <string name="undo_changes">恢復變更</string>
+    <string name="undo_changes_confirmation">確定要恢復變更嗎?</string>
+    <string name="save_before_closing">尚未儲存變更。離開前是否儲存?</string>
+    <string name="apply_to_all_apps">將顏色套用於[簡易]系列全部應用程式</string>
+    <string name="app_icon_color_warning">警告:部分啟動器無法正確地處理應用程式圖標自訂化。要是圖標消失了，如果可以，試著透過Google Play或某些小工具來啟動應用程式。
+        一旦啟動了，只要設回預設的橘色圖標 #F57C00 即可。最糟的情況，你可能必須重新安裝應用程式。</string>
+    <string name="share_colors_success">顏色更新成功。新增了一個名為 \'Shared\' 的新主題，以後請使用那個來更新全部應用程式顏色。</string>
+    <string name="shared_theme_note">Note that even though you are using the Pro app version, you still need Simple Thank You for technical reasons. It takes care of the color synchronization.</string>
+    <string name="purchase_thank_you">
+        <![CDATA[
+            請購買 <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> 來解鎖此功能及支持開發者。謝謝!
+        ]]>
+    </string>
+
+    <!-- Themes -->
+    <string name="light_theme">明亮主題</string>
+    <string name="dark_theme">灰暗主題</string>
+    <string name="auto_theme">Auto</string>
+    <string name="solarized">Solarized</string>
+    <string name="dark_red">深紅主題</string>
+    <string name="white">White</string>
+    <string name="black_white">黑白主題</string>
+    <string name="custom">自訂</string>
+    <string name="shared">分享</string>
+
+    <!-- What's new -->
+    <string name="whats_new">更新了什麼</string>
+    <string name="whats_new_disclaimer">*此處僅列出大更新，尚有一些小改善</string>
+
+    <!-- Actionbar items -->
+    <string name="delete">刪除</string>
+    <string name="remove">移除</string>
+    <string name="rename">重新命名</string>
+    <string name="share">分享</string>
+    <string name="share_via">分享方式</string>
+    <string name="select_all">全選</string>
+    <string name="select_text">Select text</string>
+    <string name="hide">隱藏</string>
+    <string name="unhide">取消隱藏</string>
+    <string name="hide_folder">隱藏資料夾</string>
+    <string name="unhide_folder">取消隱藏資料夾</string>
+    <string name="temporarily_show_hidden">暫時顯示隱藏的檔案</string>
+    <string name="stop_showing_hidden">停止顯示隱藏的檔案</string>
+    <string name="maximum_share_reached">你不能一次分享這麼多內容</string>
+    <string name="empty_and_disable_recycle_bin">清空並停用回收桶</string>
+    <string name="undo">復原</string>
+    <string name="redo">取消復原</string>
+    <string name="print">列印</string>
+    <string name="create_shortcut">建立捷徑</string>
+    <string name="add_number_to_contact">Add number to contact</string>
+    <string name="view_contact_details">View contact details</string>
+    <string name="call_from_sim_1">Call from SIM 1</string>
+    <string name="call_from_sim_2">Call from SIM 2</string>
+    <string name="toggle_filename">顯示檔案名稱</string>
+    <string name="move_to_top">Move to the top</string>
+    <string name="move_to_bottom">Move to the bottom</string>
+    <string name="pin_item">Pin item</string>
+    <string name="unpin_item">Unpin item</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="send_email">Send email</string>
+    <string name="call">Call</string>
+
+    <!-- Sorting -->
+    <string name="sort_by">排序</string>
+    <string name="name">名稱</string>
+    <string name="size">大小</string>
+    <string name="last_modified">最後修改</string>
+    <string name="date_created">Date created</string>
+    <string name="date_taken">拍照日期</string>
+    <string name="title">標題</string>
+    <string name="filename">檔案名稱</string>
+    <string name="extension">副檔名</string>
+    <string name="random">隨機</string>
+    <string name="sort_randomly">隨機排序</string>
+    <string name="ascending">遞增</string>
+    <string name="descending">遞減</string>
+    <string name="use_for_this_folder">僅套用於此資料夾</string>
+    <string name="sort_numeric_parts">以實際值來排序數字部分</string>
+    <string name="first_name">名字</string>
+    <string name="middle_name">中間名</string>
+    <string name="surname">姓氏</string>
+    <string name="full_name">Full name</string>
+    <string name="use_custom_sorting">Use custom sorting</string>
+    <string name="change_order">Change order</string>
+
+    <!-- Confirmation dialog -->
+    <string name="proceed_with_deletion">確定要進行刪除嗎?</string>
+    <string name="deletion_confirmation">你確定要刪除%s嗎?</string>    <!-- Are you sure you want to delete 5 items? -->
+    <string name="move_to_recycle_bin_confirmation">你確定要把%s移到回收桶嗎?</string>    <!-- Are you sure you want to move 3 items into Recycle Bin? -->
+    <string name="are_you_sure_delete">你確定要刪除這個項目嗎?</string>
+    <string name="are_you_sure_recycle_bin">你確定要把這個項目移到回收桶嗎?</string>
+    <string name="do_not_ask_again">這情況不再詢問</string>
+    <string name="do_not_show_again">Do not show again</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="maybe">或許</string>
+
+    <plurals name="delete_warning">
+        <item quantity="other">注意: 你正在刪除%d個資料夾</item>
+    </plurals>
+
+    <!-- Password protection -->
+    <string name="pin">PIN碼</string>
+    <string name="enter_pin">輸入PIN碼</string>
+    <string name="please_enter_pin">請輸入PIN碼</string>
+    <string name="wrong_pin">PIN碼錯誤</string>
+    <string name="repeat_pin">再次輸入PIN碼</string>
+    <string name="pattern">圖形</string>
+    <string name="insert_pattern">畫出解鎖圖形</string>
+    <string name="wrong_pattern">解鎖圖形錯誤</string>
+    <string name="repeat_pattern">再次畫出解鎖圖形</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="fingerprint">指紋</string>
+    <string name="add_fingerprint">添加指紋</string>
+    <string name="place_finger">請將您的手指放置在指紋感應器上</string>
+    <string name="open_biometric_dialog">Open biometric ID verification dialog</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="authentication_failed">驗證失敗</string>
+    <string name="authentication_blocked">驗證被限制，請稍後再重試</string>
+    <string name="no_fingerprints_registered">你尚未有登錄的指紋，請在裝置的[設定]內添加</string>
+    <string name="go_to_settings">前往[設定]</string>
+    <string name="protection_setup_successfully">密碼設置成功。若遺忘了，請重新安裝應用程式。</string>
+    <string name="fingerprint_setup_successfully">保護設置成功。若再次設置時發生問題，請重新安裝應用程式。</string>
+    <string name="lock_folder">上鎖資料夾</string>
+    <string name="unlock_folder">解鎖資料夾</string>
+    <string name="lock_folder_notice">這保護僅限作用於此應用程式，並不該用來取代真正系統級的資料夾加密。</string>
+
+    <!-- Times -->
+    <string name="yesterday">昨天</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="hide_year">Hide year</string>
+    <string name="seconds_raw">秒鐘</string>
+    <string name="minutes_raw">分鐘</string>
+    <string name="hours_raw">小時</string>
+    <string name="days_raw">天</string>
+    <string name="seconds_letter">s</string>
+    <string name="minutes_letter">m</string>
+    <string name="hours_letter">h</string>
+
+    <plurals name="seconds">
+        <item quantity="other">%d秒鐘</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="other">%d分鐘</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="other">%d小時</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="other">%d天</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="other">%d週</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="other">%d個月</item>
+    </plurals>
+    <plurals name="years">
+        <item quantity="other">%d年</item>
+    </plurals>
+
+    <!-- For example: I will be there in 5 minutes -->
+    <plurals name="in_seconds">
+        <item quantity="other">%d秒鐘內</item>
+    </plurals>
+    <plurals name="in_minutes">
+        <item quantity="other">%d分鐘內</item>
+    </plurals>
+    <plurals name="in_hours">
+        <item quantity="other">%d小時內</item>
+    </plurals>
+    <plurals name="in_days">
+        <item quantity="other">%d天內</item>
+    </plurals>
+    <plurals name="in_weeks">
+        <item quantity="other">%d週內</item>
+    </plurals>
+    <plurals name="in_months">
+        <item quantity="other">%d個月內</item>
+    </plurals>
+    <plurals name="in_years">
+        <item quantity="other">%d年內</item>
+    </plurals>
+
+    <!-- For example: Event reminder: 3 minutes before -->
+    <plurals name="seconds_before">
+        <item quantity="other">%d秒鐘前</item>
+    </plurals>
+    <plurals name="minutes_before">
+        <item quantity="other">%d分鐘前</item>
+    </plurals>
+    <plurals name="hours_before">
+        <item quantity="other">%d小時前</item>
+    </plurals>
+    <plurals name="days_before">
+        <item quantity="other">%d天前</item>
+    </plurals>
+    <plurals name="weeks_before">
+        <item quantity="other">%d週前</item>
+    </plurals>
+    <plurals name="months_before">
+        <item quantity="other">%d個月前</item>
+    </plurals>
+    <plurals name="years_before">
+        <item quantity="other">%d年前</item>
+    </plurals>
+
+    <!-- For example: Postpone reminder by 3 minutes -->
+    <plurals name="by_seconds">
+        <item quantity="other">%d秒鐘</item>
+    </plurals>
+    <plurals name="by_minutes">
+        <item quantity="other">%d分鐘</item>
+    </plurals>
+    <plurals name="by_hours">
+        <item quantity="other">%d小時</item>
+    </plurals>
+    <plurals name="by_days">
+        <item quantity="other">%d天</item>
+    </plurals>
+    <plurals name="by_weeks">
+        <item quantity="other">%d週</item>
+    </plurals>
+    <plurals name="by_months">
+        <item quantity="other">%d個月</item>
+    </plurals>
+    <plurals name="by_years">
+        <item quantity="other">%d年</item>
+    </plurals>
+
+    <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
+    <string name="alarm_goes_off_in">鬧鐘響起剩餘時間:\n%s</string>
+    <string name="reminder_triggers_in">提醒觸發剩餘時間:\n%s</string>
+    <string name="time_remaining">Time remaining:\n%s</string>
+    <string name="alarm_warning">依靠鬧鐘功能之前，請先確認是否正常運作，有可能因為省電相關的系統限制而導致失靈。</string>
+    <string name="reminder_warning">依靠提醒功能之前，請先確認是否正常運作，有可能因為省電相關的系統限制而導致失靈。</string>
+    <string name="notifications_disabled">這應用程式的通知被停用了。請到你的裝置設定中去啟用。</string>
+
+    <!-- Alarms -->
+    <string name="alarm">鬧鐘</string>
+    <string name="snooze">延遲</string>
+    <string name="dismiss">關閉</string>
+    <string name="no_reminder">不提醒</string>
+    <string name="at_start">準時</string>
+    <string name="system_sounds">系統音效</string>
+    <string name="your_sounds">你的音效</string>
+    <string name="add_new_sound">添加新的音效</string>
+    <string name="no_sound">無音效</string>
+    <string name="during_day_at_hh_mm">During the day at hh:mm</string>
+    <string name="during_day_at">During the day at %02d:%02d</string>
+
     <!-- Settings -->
-    <string name="autoplay_videos">自動播放影片</string>
-    <string name="remember_last_video_position">記住影片上次播放位置</string>
-    <string name="loop_videos">影片循環播放</string>
-    <string name="animate_gifs">縮圖顯示GIF動畫</string>
-    <string name="max_brightness">瀏覽時將亮度設為最亮</string>
-    <string name="crop_thumbnails">縮圖裁剪成正方形</string>
-    <string name="show_thumbnail_video_duration">顯示影片長度</string>
-    <string name="screen_rotation_by">全螢幕時旋轉方向</string>
-    <string name="screen_rotation_system_setting">系統設定方向</string>
-    <string name="screen_rotation_device_rotation">裝置實際方向</string>
-    <string name="screen_rotation_aspect_ratio">圖片長寬比</string>
-    <string name="black_background_at_fullscreen">全螢幕時將背景設成黑色</string>
-    <string name="scroll_thumbnails_horizontally">橫向滑動縮圖</string>
-    <string name="hide_system_ui_at_fullscreen">全螢幕時自動隱藏系統介面</string>
-    <string name="delete_empty_folders">刪除資料夾內所有檔案後自動刪除空資料夾</string>
-    <string name="allow_photo_gestures">使用上下手勢來控制相片的亮度</string>
-    <string name="allow_video_gestures">使用上下手勢來控制影片的音量和亮度</string>
-    <string name="show_media_count">在主畫面顯示資料夾內的媒體檔案數量</string>
-    <string name="show_extended_details">全螢幕時顯示詳細資訊</string>
-    <string name="manage_extended_details">管理詳細資訊</string>
-    <string name="one_finger_zoom">全螢幕時使用單指縮放</string>
-    <string name="allow_instant_change">輕觸螢幕邊緣來快速切換媒體檔案</string>
-    <string name="allow_deep_zooming_images">深度縮放圖片</string>
-    <string name="hide_extended_details">狀態欄隱藏時，同時隱藏詳細資訊</string>
-    <string name="show_at_bottom">在螢幕底部顯示一些操作按鈕</string>
-    <string name="show_recycle_bin">在資料夾畫面顯示回收桶</string>
-    <string name="deep_zoomable_images">可深度縮放的圖片</string>
-    <string name="show_highest_quality">以最高品質顯示圖片</string>
-    <string name="show_recycle_bin_last">回收桶顯示在主畫面最後一項</string>
-    <string name="allow_down_gesture">以下滑手勢關閉全螢幕檢視</string>
-    <string name="allow_one_to_one_zoom">按兩下螢幕兩次來1:1縮放</string>
-    <string name="open_videos_on_separate_screen">總是用新的水平手勢在獨立畫面開啟影片</string>
-    <string name="show_notch">如果可以，顯示螢幕凹口</string>
-    <string name="allow_rotating_gestures">使用手勢來旋轉圖片</string>
-    <string name="file_loading_priority">檔案讀取優先權</string>
-    <string name="speed">速度</string>
-    <string name="compromise">妥協</string>
-    <string name="avoid_showing_invalid_files">避免顯示無效的檔案</string>
-    <string name="show_image_file_types">顯示圖片檔案類型</string>
-    <string name="allow_zooming_videos">點兩下螢幕來縮放影片</string>
-    <string name="folder_thumbnail_style">資料夾縮圖樣式</string>
-    <string name="file_thumbnail_style">檔案縮圖樣式</string>
-    <string name="mark_favorite_items">Mark favorite items</string>
-    <string name="thumbnail_spacing">縮圖的間隔</string>
-    <string name="show_file_count_line">獨立一行顯示檔案數量</string>
-    <string name="show_file_count_brackets">在括號內顯示檔案數量</string>
-    <string name="show_file_count_none">不顯示檔案數量</string>
-    <string name="limit_folder_title">資料夾名稱最長只顯示一行</string>
-    <string name="square">方形</string>
-    <string name="rounded_corners">圓角</string>
-    <string name="export_favorite_paths">Export favorite file paths</string>
-    <string name="media_management_prompt">To make sure that all file operations work reliably, please make this app a Media management app in your device settings.</string>
-    <string name="password_protect_excluded">Password protect excluded folder visibility</string>
-    <string name="media_management_manual">出錯了，請至裝置的設定 - 應用程式（和通知） - 特殊應用程式存取權 - 媒體管理應用程式，允許本 app 管理媒體。</string>
-    <string name="media_management_note">若重新導向未順利運作，請至裝置的設定 - 應用程式（和通知） - 特殊應用程式存取權 - 媒體管理應用程式，允許本 app 管理媒體。</string>
-    <string name="media_management_alternative">If you do not want to do it, you can also go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
+    <string name="settings">設定</string>
+    <string name="purchase_simple_thank_you">購買Simple Thank You</string>
+    <string name="general_settings">General</string>
+    <string name="color_customization">Color customization</string>
+    <string name="customize_colors">自訂顏色</string>
+    <string name="customize_colors_locked">自訂顏色 (Locked)</string>
+    <string name="customize_widget_colors">自訂小工具顏色</string>
+    <string name="customize_notifications">Customize notifications</string>
+    <string name="use_english_language">強制使用英語</string>
+    <string name="language">Language</string>
+    <string name="show_hidden_items">顯示隱藏的項目</string>
+    <string name="font_size">字體大小</string>
+    <string name="small">小</string>
+    <string name="medium">中</string>
+    <string name="large">大</string>
+    <string name="extra_large">特大</string>
+    <string name="password_protect_hidden_items">用密碼保護隱藏的物件</string>
+    <string name="password_protect_whole_app">用密碼保護整個應用程式</string>
+    <string name="password_protect_file_deletion">用密碼保護檔案刪除或移動</string>
+    <string name="keep_last_modified">當檔案操作時，保留舊的[最後修改]數值</string>
+    <string name="show_info_bubble">拖曳滾動條時，顯示訊息氣泡</string>
+    <string name="prevent_phone_from_sleeping">當程式在前景使用時，防止手機進入睡眠</string>
+    <string name="skip_delete_confirmation">刪除不再進行確認</string>
+    <string name="enable_pull_to_refresh">啟用頂端下拉更新</string>
+    <string name="use_24_hour_time_format">使用24小時制</string>
+    <string name="change_date_and_time_format">更改日期和時間格式</string>
+    <string name="sunday_first">每周由星期日開始</string>
+    <string name="widgets">小工具</string>
+    <string name="use_same_snooze">總是使用相同延遲間隔</string>
+    <string name="snooze_time">延遲時間</string>
+    <string name="vibrate_on_button_press">按下按鈕時震動</string>
+    <string name="move_items_into_recycle_bin">將項目移入回收桶取代刪除</string>
+    <string name="recycle_bin_cleaning_interval">回收桶清理間隔</string>
+    <string name="empty_recycle_bin">清空回收桶</string>
+    <string name="force_portrait_mode">強制直向模式</string>
+    <string name="export_settings">匯出設定</string>
+    <string name="import_settings">匯入設定</string>
+    <string name="settings_exported_successfully">設定匯出成功</string>
+    <string name="settings_imported_successfully">設定匯入成功</string>
+    <string name="start_name_with_surname">姓氏在前</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="show_call_confirmation_dialog">開始通話前顯示通話確認框</string>
+
     <!-- Setting sections -->
-    <string name="thumbnails">縮圖</string>
-    <string name="fullscreen_media">全螢幕媒體檔案</string>
-    <string name="extended_details">詳細資訊</string>
-    <string name="bottom_actions">底部操作</string>
-    <!-- Bottom actions -->
-    <string name="manage_bottom_actions">管理要顯示的底部操作</string>
-    <string name="toggle_favorite">我的最愛</string>
-    <string name="toggle_file_visibility">檔案顯示</string>
-    <!-- New editor strings -->
-    <string name="pesdk_transform_button_freeCrop">自訂</string>
-    <string name="pesdk_transform_button_resetCrop">重置</string>
-    <string name="pesdk_transform_button_squareCrop">正方形</string>
-    <string name="pesdk_transform_title_name">變形</string>
-    <string name="pesdk_filter_title_name">濾鏡</string>
-    <string name="pesdk_filter_asset_none">無</string>
-    <string name="pesdk_adjustments_title_name">調整</string>
-    <string name="pesdk_adjustments_button_shadowTool">暗部</string>
-    <string name="pesdk_adjustments_button_exposureTool">曝光</string>
-    <string name="pesdk_adjustments_button_highlightTool">高光</string>
-    <string name="pesdk_adjustments_button_brightnessTool">亮度</string>
-    <string name="pesdk_adjustments_button_contrastTool">對比</string>
-    <string name="pesdk_adjustments_button_saturationTool">飽和度</string>
-    <string name="pesdk_adjustments_button_clarityTool">清晰度</string>
-    <string name="pesdk_adjustments_button_gammaTool">Gamma</string>
-    <string name="pesdk_adjustments_button_blacksTool">黑色</string>
-    <string name="pesdk_adjustments_button_whitesTool">白色</string>
-    <string name="pesdk_adjustments_button_temperatureTool">色溫</string>
-    <string name="pesdk_adjustments_button_sharpnessTool">銳利度</string>
-    <string name="pesdk_adjustments_button_reset">重置</string>
-    <string name="pesdk_focus_title_name">聚焦</string>
-    <string name="pesdk_focus_title_disabled">無</string>
-    <string name="pesdk_focus_button_radial">放射</string>
-    <string name="pesdk_focus_button_linear">線性</string>
-    <string name="pesdk_focus_button_mirrored">鏡像</string>
-    <string name="pesdk_focus_button_gaussian">高斯</string>
-    <string name="pesdk_text_title_input">Add text</string>
-    <string name="pesdk_text_title_name">文字</string>
-    <string name="pesdk_text_title_options">文字選項</string>
-    <string name="pesdk_text_title_textColor">文字顏色</string>
-    <string name="pesdk_text_title_font">字型</string>
-    <string name="pesdk_text_button_add">新增</string>
-    <string name="pesdk_text_button_edit">編輯</string>
-    <string name="pesdk_text_button_straighten">拉伸</string>
-    <string name="pesdk_text_button_font">字型</string>
-    <string name="pesdk_text_button_color">顏色</string>
-    <string name="pesdk_text_button_backgroundColor">背景顏色</string>
-    <string name="pesdk_text_button_alignment">對齊</string>
-    <string name="pesdk_text_button_bringToFront">移到最上層</string>
-    <string name="pesdk_text_button_delete">刪除</string>
-    <string name="pesdk_text_text_editTextPlaceholder">你的文字</string>
-    <string name="pesdk_brush_title_name">筆刷</string>
-    <string name="pesdk_brush_button_color">顏色</string>
-    <string name="pesdk_brush_button_size">尺寸</string>
-    <string name="pesdk_brush_button_hardness">硬度</string>
-    <string name="pesdk_brush_button_bringToFront">移到最上層</string>
-    <string name="pesdk_brush_button_delete">刪除</string>
-    <string name="pesdk_brush_title_brushColor">筆刷顏色</string>
-    <string name="pesdk_editor_title_name">編輯器</string>
-    <string name="pesdk_editor_title_closeEditorAlert">關閉編輯器？</string>
-    <string name="pesdk_editor_text_closeEditorAlert">確定捨棄所做的編輯？</string>
-    <string name="pesdk_editor_button_closeEditorAlertConfirmation">是</string>
-    <string name="pesdk_editor_button_closeEditorAlertCancelation">否</string>
-    <string name="pesdk_editor_cancel">取消</string>
-    <string name="pesdk_editor_accept">接受</string>
-    <string name="pesdk_editor_save">儲存</string>
-    <string name="pesdk_editor_text_exportProgressUnknown">輸出中…</string>
-    <string name="pesdk_editor_text_exportProgress" formatted="false">正在匯出 %s。</string>
-    <string name="pesdk_sticker_title_name">貼圖</string>
-    <string name="pesdk_sticker_title_color">貼圖顏色</string>
-    <string name="pesdk_sticker_title_options">貼圖選項</string>
-    <string name="pesdk_sticker_button_add">新增</string>
-    <string name="pesdk_sticker_button_color">顏色</string>
-    <string name="pesdk_sticker_button_delete">刪除</string>
-    <string name="pesdk_sticker_button_bringToFront">移到最上層</string>
-    <string name="pesdk_sticker_button_straighten">Straighten</string>
-    <string name="pesdk_sticker_button_replace">更改</string>
-    <string name="pesdk_sticker_button_opacity">不透明度</string>
-    <string name="pesdk_sticker_button_contrast">對比</string>
-    <string name="pesdk_sticker_button_saturation">飽和度</string>
-    <string name="pesdk_sticker_button_brightness">亮度</string>
-    <string name="pesdk_sticker_category_name_custom">Uploads</string>
-    <string name="pesdk_overlay_title_name">Overlay</string>
-    <string name="pesdk_overlay_button_blendModeNormal">Normal</string>
-    <string name="pesdk_overlay_button_blendModeDarken">Darken</string>
-    <string name="pesdk_overlay_button_blendModeScreen">Screen</string>
-    <string name="pesdk_overlay_button_blendModeOverlay">Overlay</string>
-    <string name="pesdk_overlay_button_blendModeLighten">Lighten</string>
-    <string name="pesdk_overlay_button_blendModeMultiply">Multiply</string>
-    <string name="pesdk_overlay_button_blendModeColorBurn">Color Burn</string>
-    <string name="pesdk_overlay_button_blendModeSoftLight">Soft Light</string>
-    <string name="pesdk_overlay_button_blendModeHardLight">Hard Light</string>
-    <string name="pesdk_overlay_asset_none">無</string>
-    <string name="pesdk_overlay_asset_golden">Golden</string>
-    <string name="pesdk_overlay_asset_lightleak1">Lightleak 1</string>
-    <string name="pesdk_overlay_asset_mosaic">Mosaic</string>
-    <string name="pesdk_overlay_asset_paper">Paper</string>
-    <string name="pesdk_overlay_asset_rain">Rain</string>
-    <string name="pesdk_overlay_asset_vintage">Vintage</string>
-    <string name="pesdk_common_button_flipH">水平翻轉</string>
-    <string name="pesdk_common_button_flipV">垂直翻轉</string>
-    <string name="pesdk_common_button_undo">復原</string>
-    <string name="pesdk_common_button_redo">取消復原</string>
-    <string name="pesdk_common_title_colorPicker">顏色挑選器</string>
-    <string name="pesdk_common_title_transparentColor">透明</string>
-    <string name="pesdk_common_title_whiteColor">白色</string>
-    <string name="pesdk_common_title_grayColor">灰色</string>
-    <string name="pesdk_common_title_blackColor">黑色</string>
-    <string name="pesdk_common_title_lightBlueColor">淺藍</string>
-    <string name="pesdk_common_title_blueColor">藍色</string>
-    <string name="pesdk_common_title_purpleColor">紫色</string>
-    <string name="pesdk_common_title_orchidColor">淡紫</string>
-    <string name="pesdk_common_title_pinkColor">粉紅</string>
-    <string name="pesdk_common_title_redColor">紅色</string>
-    <string name="pesdk_common_title_orangeColor">橘色</string>
-    <string name="pesdk_common_title_goldColor">金色</string>
-    <string name="pesdk_common_title_yellowColor">黃色</string>
-    <string name="pesdk_common_title_oliveColor">橄欖</string>
-    <string name="pesdk_common_title_greenColor">綠色</string>
-    <string name="pesdk_common_title_aquamarinColor">藍綠</string>
-    <string name="pesdk_common_title_pipettableColor">顏色吸取器</string>
-    <string name="vesdk_video_trim_title_name">Trim</string>
+    <string name="visibility">可見度</string>
+    <string name="security">安全性</string>
+    <string name="scrolling">滑動</string>
+    <string name="file_operations">檔案操作</string>
+    <string name="recycle_bin">回收桶</string>
+    <string name="saving_label">儲存中</string>
+    <string name="startup">啟動</string>
+    <string name="text">文字</string>
+    <string name="migrating">搬移</string>
+    <string name="quality">Quality</string>
+    <string name="main_screen">Main screen</string>
+    <string name="thumbnails">Thumbnails</string>
+    <string name="list_view">List view</string>
+
+    <!-- Default tab to open -->
+    <string name="manage_shown_tabs">管理顯示的頁面</string>
+    <string name="default_tab_to_open">Tab to open at app start</string>
+    <string name="contacts_tab">Contacts</string>
+    <string name="favorites_tab">Favorites</string>
+    <string name="call_history_tab">Call History</string>
+    <string name="groups_tab">Groups</string>
+    <string name="last_used_tab">Last used one</string>
+    <string name="files_tab">Files</string>
+    <string name="recent_files_tab">Recent files</string>
+
+    <!-- Recycle Bin -->
+    <string name="restore_this_file">還原這個檔案</string>
+    <string name="restore_selected_files">還原選擇的檔案</string>
+    <string name="restore_all_files">還原全部檔案</string>
+    <string name="recycle_bin_emptied">回收桶已成功清空</string>
+    <string name="files_restored_successfully">檔案已成功還原</string>
+    <string name="empty_recycle_bin_confirmation">你確定要清空回收桶嗎?檔案將會永久消失。</string>
+    <string name="recycle_bin_empty">回收桶是空的</string>
+    <string name="moving_recycle_bin_items_disabled">移動回收桶項目的功能已停用，請使用復原</string>
+    <string name="show_the_recycle_bin">顯示回收桶</string>
+    <string name="hide_the_recycle_bin">隱藏回收桶</string>
+ 
+    <plurals name="moving_items_into_bin">
+        <item quantity="other">正在移動%d個項目進回收桶</item>
+    </plurals>
+
+    <!-- Import / Export -->
+    <string name="importing">正在匯入…</string>
+    <string name="exporting">正在匯出…</string>
+    <string name="importing_successful">匯入成功</string>
+    <string name="exporting_successful">匯出成功</string>
+    <string name="importing_failed">匯入成功</string>
+    <string name="exporting_failed">匯出失敗</string>
+    <string name="importing_some_entries_failed">部分項目匯入失敗</string>
+    <string name="exporting_some_entries_failed">部分項目匯出失敗</string>
+    <string name="no_entries_for_importing">未發現供匯入的項目</string>
+    <string name="no_new_entries_for_importing">No new entries for importing have been found</string>
+    <string name="no_entries_for_exporting">未發現供匯出的項目</string>
+
+    <!-- OTG devices -->
+    <string name="usb">USB</string>
+    <string name="usb_detected">似乎有USB裝置接上了你的裝置。為確保檔案正確顯示，你必須授予額外的權限。</string>
+    <string name="confirm_usb_storage_access_text">請在下個畫面選擇USB裝置的根目錄，以授予存取權限</string>
+    <string name="wrong_root_selected_usb">選擇到錯誤資料夾，請選擇你USB裝置的根目錄</string>
+
+    <!-- Dates -->
+    <string name="january">一月</string>
+    <string name="february">二月</string>
+    <string name="march">三月</string>
+    <string name="april">四月</string>
+    <string name="may">五月</string>
+    <string name="june">六月</string>
+    <string name="july">七月</string>
+    <string name="august">八月</string>
+    <string name="september">九月</string>
+    <string name="october">十月</string>
+    <string name="november">十一月</string>
+    <string name="december">十二月</string>
+
+    <!-- in January -->
+    <string name="in_january">在一月</string>
+    <string name="in_february">在二月</string>
+    <string name="in_march">在三月</string>
+    <string name="in_april">在四月</string>
+    <string name="in_may">在五月</string>
+    <string name="in_june">在六月</string>
+    <string name="in_july">在七月</string>
+    <string name="in_august">在八月</string>
+    <string name="in_september">在九月</string>
+    <string name="in_october">在十月</string>
+    <string name="in_november">在十一月</string>
+    <string name="in_december">在十二月</string>
+
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+
+    <string name="monday_letter">一</string>
+    <string name="tuesday_letter">二</string>
+    <string name="wednesday_letter">三</string>
+    <string name="thursday_letter">四</string>
+    <string name="friday_letter">五</string>
+    <string name="saturday_letter">六</string>
+    <string name="sunday_letter">日</string>
+
+    <string name="monday_short">週一</string>
+    <string name="tuesday_short">週二</string>
+    <string name="wednesday_short">週三</string>
+    <string name="thursday_short">週四</string>
+    <string name="friday_short">週五</string>
+    <string name="saturday_short">週六</string>
+    <string name="sunday_short">週日</string>
+
+    <!-- Pro version -->
+    <string name="upgrade_to_pro_long">你的應用程式版本將不再更新。請更新到專業版以獲得新的修復和其他改善。</string>
+    <string name="upgrade_to_pro_long_click">你的應用程式版本將不再更新。請點擊這裡，更新到專業版以獲得新的修復和其他改善。</string>
+    <string name="it_is_free">它在此日期前免費：%s。如果您在到期前下載，將能夠永久免費使用。</string>
+    <string name="more_info">更多資訊</string>
+    <string name="upgrade">升級</string>
+    <string name="upgrade_calendar">你必須手動搬移儲存在本機端的活動，透過匯出.ics檔案再接著匯入。你可以在主畫面選單中，找到 匯出/匯入 兩個按鈕。</string>
+
+    <!-- About -->
+    <string name="about">關於</string>
+    <string name="website">Website</string>
+    <string name="website_label">觀看原始碼</string>
+    <string name="email_label">傳送您的反饋或建議</string>
+    <string name="upgrade_to_pro">升級至專業版</string>
+    <string name="more_apps">更多應用程式</string>
+    <string name="more_apps_from_us">更多我們的應用程式</string>
+    <string name="invite_friends">邀請朋友</string>
+    <string name="share_text">嘿，來試試看「%1$s」吧！ %2$s</string>
+    <string name="invite_via">邀請</string>
+    <string name="rate_us">為我們評分</string>
+    <string name="rate">評分</string>
+    <string name="donate">捐贈</string>
+    <string name="donate_underlined"><u>捐贈</u></string>
+    <string name="follow_us">追蹤我們</string>
+    <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
+    <string name="support">Support</string>
+    <string name="help_us">Help us</string>
+    <string name="social">Social</string>
+    <string name="other">Other</string>
+    <string name="version_placeholder">Version %s</string>
+    <string name="hello">Hello :)</string>
+    <string name="about_footer">Made with &#10084;&#65039; in Slovakia</string>
+    <string name="additional_info">進階資訊</string>
+    <string name="app_version">應用程式版本: %s</string>
+    <string name="device_os">裝置系統: %s</string>
+    <string name="donate_please">
+        <![CDATA[
+            哈囉 <br><br>
+            希望您喜愛這應用程式。 它不含廣告，所以請購買應用程式 <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> 來支持開發者，這對話框也不會再出現。<br><br>
+            感謝!
+        ]]>
+    </string>
+    <string name="purchase">購買</string>
+    <string name="update_thank_you">請更新[Simple Thank You]至最新版本</string>
+    <string name="before_asking_question_read_faq">在您發問前，請先檢查程式設定及閱讀[常見問題]。或許解決方法就在那裡。</string>
+    <string name="before_rate_read_faq">在您給我們評價前，請先檢查程式設定及閱讀[常見問題]。如果您遇到任何困難，或許解決方法就在那裡。</string>
+    <string name="make_sure_latest">並且確保您正使用最新的應用程式版本。</string>
+    <string name="read_it">讀它</string>
+    <string name="read_faq">閱讀FAQ</string>
+    <string name="rate_us_prompt">哈囉\n\n您似乎已經使用這應用程式一段時間了，我們相當感激。\n\n如果我們能請您幫個忙，請在Google Play上為我們評分。這對我們很有幫助。\n\n無論您的決定如何，都不會再看到這則訊息。\n\n感謝!</string>
+    <string name="rate_our_app">請給我們的應用程式評分 :)</string>
+    <string name="thank_you">感謝</string>
+    <string name="widget_locked_pro">The widget is locked.\nPlease upgrade to the Pro version to unlock it.</string>
+    <string name="widget_locked">
+        <![CDATA[
+            The widget is locked.<br>Please purchase <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> to unlock it.
+        ]]>
+    </string>
+
+    <!-- New app (do not translate anything on the 4th line) -->
+    <string name="new_app">
+        <![CDATA[
+            嗨，<br><br>
+            告訴你最近有一個新的應用程式剛發布:<br><br>
+            <a href="%1$s">%2$s</a><br><br>
+            <a href="%3$s">%4$s</a><br><br>
+            <a href="%5$s">%6$s</a><br><br>
+            點標題下載來試試看吧<br><br>
+            謝謝
+        ]]>
+    </string>
+
+    <string name="simple_app_launcher">Simple App Launcher</string>
+    <string name="simple_calculator">Simple Calculator</string>
+    <string name="simple_calendar">Simple Calendar</string>
+    <string name="simple_camera">Simple Camera</string>
+    <string name="simple_clock">Simple Clock</string>
+    <string name="simple_contacts">Simple Contacts</string>
+    <string name="simple_dialer">Simple Dialer</string>
+    <string name="simple_draw">Simple Draw</string>
+    <string name="simple_file_manager">Simple File Manager</string>
+    <string name="simple_flashlight">Simple Flashlight</string>
+    <string name="simple_gallery">Simple Gallery</string>
+    <string name="simple_keyboard">Simple Keyboard</string>
+    <string name="simple_music_player">Simple Music Player</string>
+    <string name="simple_notes">Simple Notes</string>
+    <string name="simple_sms_messenger">Simple SMS Messenger</string>
+    <string name="simple_thank_you">Simple Thank You</string>
+    <string name="simple_voice_recorder">Simple Voice Recorder</string>
+
+    <string name="app_launcher_short">App Launcher</string>
+    <string name="calculator_short">計算機</string>
+    <string name="calendar_short">行事曆</string>
+    <string name="camera_short">相機</string>
+    <string name="clock_short">簡易時鐘</string>
+    <string name="contacts_short">通訊錄</string>
+    <string name="dialer_short">Dialer</string>
+    <string name="draw_short">繪圖</string>
+    <string name="file_manager_short">檔案管理器</string>
+    <string name="flashlight_short">手電筒</string>
+    <string name="gallery_short">相簿</string>
+    <string name="keyboard_short">Keyboard</string>
+    <string name="music_player_short">音樂播放器</string>
+    <string name="notes_short">筆記</string>
+    <string name="sms_messenger_short">SMS Messenger</string>
+    <string name="thank_you_short">Thank You</string>
+    <string name="voice_recorder_short">Voice Recorder</string>
+
+    <string name="sideloaded_app">
+        <![CDATA[
+            你的應用程式版本似乎是損壞的。請從 <a href="%s">這裡</a> 下載原始版本。
+        ]]>
+    </string>
+
     <!-- FAQ -->
-    <string name="faq_1_title">如何將簡易相簿設為裝置的預設相簿？</string>
-    <string name="faq_1_text">首先開啟裝置的設定，在應用程式相關設定處找到目前的預設相簿。 選擇「預設為開啟」或類似的選項，然後按「清除預設值」。 之後開啟圖片或影片檔案時會出現選擇 APP 的畫面，此時即可將簡易相簿設為預設相簿。</string>
-    <string name="faq_2_title">用密碼把這個 APP 上鎖後忘記密碼該怎麼辦？</string>
-    <string name="faq_2_text">有兩種解決方法。一是重新安裝本 APP。一是在裝置的設定中找到本 APP，然後按「清除資料」（或「清除儲存空間」等類似的字眼），APP 的設定將會被重設，但不會移除任何媒體檔案。</string>
-    <string name="faq_3_title">如何使某個相簿顯示在最頂端？</string>
-    <string name="faq_3_text">長按該相簿，接著按圖釘圖示或選單中的「釘選在頂端」。您可以同時釘選數個相簿，它們將會依照預設排序方式排序。</string>
-    <string name="faq_4_title">如何快轉影片？</string>
-    <string name="faq_4_text">按兩下螢幕邊邊，或者按一下進度條旁邊的目前播放時間／影片時長文字。若您在設定中啟用了「總是用新的水平手勢在獨立畫面開啟影片」，則您也可以使用水平手勢快轉。</string>
-    <string name="faq_5_title">「隱藏」與「排除」資料夾的差別是？</string>
-    <string name="faq_5_text">「排除」只會使該資料夾在簡易相簿中隱藏；而「隱藏」則會影響整個系統，使其也會在其他的相簿 APP 中隱藏，其運作原理是在該資料夾中建立一個空的「.nomedia」檔案（您可使用任意檔案管理器移除此檔案）。另外，某些裝置不允許隱藏相片、螢幕擷圖、下載等資料夾。</string>
-    <string name="faq_6_title">為何出現了音樂的封面圖或是貼圖的資料夾？</string>
-    <string name="faq_6_text">有時候會出現一些異常的相簿。長按並點選排除可排除它們，在接下來的對話框選擇它們的上層資料夾的話，有機會避免相關的相簿出現。</string>
-    <string name="faq_7_title">有個含有圖片的資料夾沒出現，抑或是沒有顯示所有項目時，該怎麼辦？</string>
-    <string name="faq_7_text">可能有很多種原因，但解法很簡單。前往「設定」 -&gt; 「管理包含資料夾」、按加號(+)、選擇該資料夾即可。</string>
-    <string name="faq_8_title">如果只想顯示特定資料夾呢？</string>
-    <string name="faq_8_text">如果只將某資料夾加入至「包含資料夾」的話，其他的資料夾並不會被自動排除。請前往「設定」-&gt;「管理排除資料夾」、將根資料夾「/」排除，並在「設定」-&gt;「管理包含資料夾」中加入欲顯示的資料夾。 這樣就只會顯示所選的資料夾，因為排除與包含都是遞迴的，所以若某資料夾同時被包含及排除，其將會顯示。</string>
-    <string name="faq_10_title">這個 APP 可以裁剪圖片嗎？</string>
-    <string name="faq_10_text">可以，在編輯器中拖動圖片的角落即可裁剪圖片。對縮圖長按並選擇編輯，或者在全螢幕檢視時選擇編輯皆可進入編輯器。</string>
-    <string name="faq_11_title">有辦法分類縮圖嗎？</string>
-    <string name="faq_11_text">可以，在檢視縮圖時使用選單中的「歸類」即可，有多種分類方式可供選擇，包含拍攝日期等。若使用了「資料夾內容全部顯示」功能，則也可以依資料夾來分類。</string>
-    <string name="faq_12_title">依照拍攝日期的排序好像排得不太對，要怎麼修正？</string>
-    <string name="faq_12_text">很有可能是因為檔案是從其他地方複製過來的。選擇縮圖並選擇「修復拍攝日期數值」即可修正。</string>
-    <string name="faq_13_title">看到圖片上出現了色帶問題，要如何改善畫質？</string>
-    <string name="faq_13_text">目前顯示圖片的方式在大多數情況下都能正常運作，但若想要更好的畫質，可以啟用「設定」-&gt;「可深度縮放的圖片」段落中的「以最高品質顯示圖片」。</string>
-    <string name="faq_14_title">如何取消隱藏檔案／資料夾？</string>
-    <string name="faq_14_text">按主畫面選單中的「暫時顯示隱藏的檔案」或設定中的「顯示隱藏的項目」就能看到隱藏的項目。若要取消隱藏，長按並選擇「取消隱藏」即可。資料夾隱藏的原理是在其內新增一個「.nomedia」檔案，因此可用任意檔案管理器將其刪除。檔案／資料夾是以遞迴的方式被隱藏的，因此若某資料夾被隱藏，其子資料夾也會被隱藏。若要取消隱藏子資料夾，其上層資料夾需先被取消隱藏。</string>
-    <string name="faq_15_title">這個 APP 怎麼佔用了這麼多空間？</string>
-    <string name="faq_15_text">APP 快取最高會佔用 250MB，來讓圖片載入得更快。如果本 APP 佔用了超過 250MB 的空間，很有可能是因為有檔案在回收桶裡，這些檔案也會算在 APP 佔用的空間上。您可以開啟回收桶並刪除所有檔案，或是從設定中清空它。檔案被丟入回收桶 30 天後將會自動被刪除。</string>
-    <string name="faq_16_title">檔案／資料夾隱藏怎麼了？為什麼我看不到隱藏的項目了？</string>
-    <string name="faq_16_text">自 Android 11 開始，因系統限制，無法隱藏或解除隱藏檔案或資料夾，也無法在相簿 app 中看到已隱藏的項目。請使用檔案管理程式達成上述操作。</string>
-    <string name="faq_17_title">為什麼不能再包含缺漏的資料夾了？</string>
-    <string name="faq_17_text">因 Android 11 的系統變更，這項功能無法再運作。app 沒辦法瀏覽實際的資料夾，而是透過所謂的 MediaStorage 來擷取資料。</string>
-    <string name="faq_18_title">Why do I see ads during video playback\?</string>
-    <string name="faq_18_text">Our apps have no ads whatsoever. If you see them during video playback, you must be using some other apps video player. Try finding your default video player in the device settings, then do a \"Clear defaults\" on it. The next time you invoke some video intent you will see an app picker prompt, where you can select what app you want to use.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
+    <string name="frequently_asked_questions">常見問題</string>
+    <string name="before_asking_question">在你發問之前，請先閱讀</string>
+    <string name="faq_1_title_commons">為什麼我在小工具列表中沒看到這應用程式的小工具?</string>
+    <string name="faq_1_text_commons">這很可能是因為你把應用程式移動到SD卡。那樣的話，有個隱藏特定程式小工具的Android系統限制存在。
+	    只有一個解決方法，就是經由你的裝置設定，把應用程式移動回內部儲存空間。</string>
+    <string name="faq_2_title_commons">我想要支持您，但我無法捐款。還有什麼我能做的嗎?</string>
+    <string name="faq_2_text_commons">
+        <![CDATA[
+            Yes, of course. You can spread the word about the apps or give good feedback and ratings. You can also help by translating the apps in a new language, or just update some existing translations.
+            The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+        ]]>
+    </string>
+    <string name="faq_3_title_commons">我誤刪了一些檔案，如何復原?</string>
+    <string name="faq_3_text_commons">不幸地，沒有辦法。檔案經確認後就立即刪除了，沒有垃圾筒可用。</string>
+    <string name="faq_4_title_commons">我不喜歡小工具的顏色，我能更改嗎?</string>
+    <string name="faq_4_text_commons">可啊，當你在主畫面拖動小工具時，會出現小工具設置畫面。你會在左下角看到顏色方塊，點下去再挑個新顏色就好了。你也能用拉條來調整透明度。</string>
+    <string name="faq_5_title_commons">我有辦法恢復被刪除的檔案嗎?</string>
+    <string name="faq_5_text_commons">如果它們確實被刪除了，那沒辦法。然而，預設情況下啟用了回收桶，使得檔案並沒有被刪除，只是被移動到桶內。</string>
+    <string name="faq_6_title_commons">應用程式啟動器上的圖標消失了。我該怎麼辦?</string>
+    <string name="faq_6_text_commons">這是由於你的啟動器無法正確地支援圖標自訂。如果可以，試著透過Google Play或某些小工具來啟動應用程式。
+        一旦啟動，只要設回預設的橘色圖標 #F57C00 即可。最糟的情況，你可能必須重新安裝應用程式。</string>
+    <string name="faq_7_title_commons">錢已經從我的銀行帳戶扣除，但我無法下載這應用程式。我能怎麼做?</string>
+    <string name="faq_7_text_commons">支付完全交由Google處理，他們的系統偶爾會發生故障。只要清除您的Google Play應用程式快取並重新啟動裝置，然後再次嘗試下載。</string>
+    <string name="faq_8_title_commons">為什麼我應該升級到專業版?</string>
+    <string name="faq_8_text_commons">由於你的程式版本不再更新，將永遠不會修復可能遇到的錯誤，也不會再添加新功能。你可以在Google Play上用一小筆錢購買專業版。
+        這是一次性付款。也就是說，一旦你購買了將不必再次付費，即使之後有新裝置也不用。如果你不喜歡專業版，則可以在幾個小時內解除安裝，將自動拿回你的錢。
+        之後如果何時想退款，只要你以 hello@simplemobiletools.com 聯絡我們然後就能獲得退款了。</string>
+    <string name="faq_9_title_commons">How can I select multiple items at once?</string>
+    <string name="faq_9_text_commons">There are multiple ways of doing that. The first one is starting the selection mode by long pressing one item, then short clicking on others to select them. The second way is similar to selecting items on PCs with a mouse,
+        just start the selection mode by long pressing one item, then with your finger still down drag it across other items for selecting. The third way of selecting multiple items is long pressing one item, then long pressing another one and everything in between gets selected. If you
+        want to select all items, just long press one item, then click at the selected item counter at the top left corner. That will select or unselect all everything.</string>
+    <string name="faq_10_title_commons">I have purchased the app, but I cannot download it on another device.</string>
+    <string name="faq_10_text_commons">Try clearing your Google Play app cache and restarting your device. It is some Google Play glitch, not really related to the app itself.</string>
+
+    <!-- Contributors -->
+    <string name="contributors">Contributors</string>
+    <string name="translation">Translation</string>
+    <string name="development">Development</string>
+    <string name="other_help">Other help</string>
+    <string name="contributors_label">
+        <![CDATA[
+            This list contains everyone that noticeably helped any app within the Simple Mobile Tools suite, not only this one. Translations are handled by volunteers,
+            let us know if you want to help too. The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+            Thanks to all contributors and other supporters!
+        ]]>
+    </string>
+
+    <string name="translation_arabic">Arabic</string>
+    <string name="translation_azerbaijani">Azerbaijani</string>
+    <string name="translation_bengali">Bengali</string>
+    <string name="translation_breton">Breton</string>
+    <string name="translation_catalan">Catalan</string>
+    <string name="translation_czech">Czech</string>
+    <string name="translation_welsh">Welsh</string>
+    <string name="translation_danish">Danish</string>
+    <string name="translation_english">English</string>
+    <string name="translation_german">German</string>
+    <string name="translation_greek">Greek</string>
+    <string name="translation_spanish">Spanish</string>
+    <string name="translation_basque">Basque</string>
+    <string name="translation_persian">Persian</string>
+    <string name="translation_finnish">Finnish</string>
+    <string name="translation_french">French</string>
+    <string name="translation_galician">Galician</string>
+    <string name="translation_hindi">Hindi</string>
+    <string name="translation_croatian">Croatian</string>
+    <string name="translation_hungarian">Hungarian</string>
+    <string name="translation_indonesian">Indonesian</string>
+    <string name="translation_italian">Italian</string>
+    <string name="translation_hebrew">Hebrew</string>
+    <string name="translation_japanese">Japanese</string>
+    <string name="translation_korean">Korean</string>
+    <string name="translation_lithuanian">Lithuanian</string>
+    <string name="translation_nepali">Nepali</string>
+    <string name="translation_norwegian">Norwegian</string>
+    <string name="translation_dutch">Dutch</string>
+    <string name="translation_polish">Polish</string>
+    <string name="translation_portuguese">Portuguese</string>
+    <string name="translation_romanian">Romanian</string>
+    <string name="translation_russian">Russian</string>
+    <string name="translation_slovak">Slovak</string>
+    <string name="translation_slovenian">Slovenian</string>
+    <string name="translation_serbian">Serbian</string>
+    <string name="translation_swedish">Swedish</string>
+    <string name="translation_tamil">Tamil</string>
+    <string name="translation_turkish">Turkish</string>
+    <string name="translation_ukrainian">Ukrainian</string>
+    <string name="translation_vietnamese">Vietnamese</string>
+    <string name="translation_chinese_hk">Chinese (Hong Kong)</string>
+    <string name="translation_chinese_cn">Chinese (Simplified)</string>
+    <string name="translation_chinese_tw">Chinese (Traditional)</string>
+
+    <!-- Pro comparison (shown in the deprecated free apps) -->
+    <string name="why_upgrade">Get the Pro version now!</string>
+    <string name="why_upgrade_basic_version">Basic</string>
+    <string name="why_upgrade_pro_version">Pro</string>
+    <string name="why_upgrade_no_ads">No ads</string>
+    <string name="why_upgrade_no_internet_access">No internet access</string>
+    <string name="why_upgrade_footer">+ 100% Money Back Guarantee</string>
+    <string name="why_upgrade_improved_design">Improved design</string>
+
+    <!-- Gallery Pro -->
+    <string name="why_upgrade_advanced_photo_editor">Advanced photo editor</string>
+    <string name="why_upgrade_heic_support">HEIC/HEIF file support</string>
+    <string name="why_upgrade_batch_renaming">Advanced batch file renaming</string>
+    <string name="why_upgrade_folder_locking">Individual folder locking</string>
+    <string name="why_upgrade_printing_support">Printing support</string>
+
+    <!-- Calendar Pro -->
+    <string name="why_upgrade_time_zone_support">Time zone support</string>
+    <string name="why_upgrade_attendees_emails">Attendees and email reminders</string>
+    <string name="why_upgrade_easy_event_importing">Easy event importing</string>
+    <string name="why_upgrade_new_widgets">New widgets</string>
+
+    <!-- Contacts Pro -->
+    <string name="why_upgrade_duplicate_contact_merging">Improved duplicate contact merging</string>
+    <string name="why_upgrade_font_size_customization">Font size customization</string>
+    <string name="why_upgrade_private_contact_sharing">Optional private contact sharing within our apps</string>
+    <string name="why_upgrade_customizable_contact_ringtones">Customizable contact ringtones</string>
+    <string name="why_upgrade_contact_filtering">Contact filtering</string>
+
+    <!-- Notes Pro -->
+    <string name="why_upgrade_checklists">Checklists</string>
+    <string name="why_upgrade_different_note_per_widget">Different note and colors per widget</string>
+    <string name="why_upgrade_note_locking">Note locking</string>
+
+    <!-- File Manager Pro -->
+    <string name="why_upgrade_date_and_time_format">Date and time format customization</string>
+    <string name="why_upgrade_shortcuts">Home screen shortcuts</string>
+    <string name="why_upgrade_file_compression">File compression support</string>
+    <string name="why_upgrade_recents_tab">Tab with recent files</string>
+
+    <!-- Draw Pro -->
+    <string name="why_upgrade_background_color_customization">Background color customization</string>
+    <string name="why_upgrade_file_importing">File importing support</string>
+    <string name="why_upgrade_zooming">Zooming</string>
+
+    <!-- License -->
+    <string name="notice">這程式使用了下列的第三方函式庫來讓我工作簡化。感謝。</string>
+    <string name="third_party_licences">第三方授權</string>
+    <string name="kotlin_title">Kotlin（程式語言）</string>
+    <string name="subsampling_title">Subsampling Scale Image View（可縮放圖片檢視）</string>
+    <string name="glide_title">Glide（圖片載入與快取）</string>
+    <string name="picasso_title">Picasso（圖片載入與快取）</string>
+    <string name="cropper_title">Android Image Cropper（圖片裁切與旋轉）</string>
+    <string name="rtl_viewpager_title">RtlViewPager（由右向左滑）</string>
+    <string name="joda_title">Joda-Time（Java 日期取代）</string>
+    <string name="stetho_title">Stetho（除錯資料庫）</string>
+    <string name="otto_title">Otto（事件匯流排）</string>
+    <string name="photoview_title">PhotoView（可縮放的 GIF）</string>
+    <string name="pattern_title">PatternLockView（模式保護）</string>
+    <string name="reprint_title">Reprint（指紋保護）</string>
+    <string name="gif_drawable_title">Gif Drawable（載入 GIF）</string>
+    <string name="autofittextview_title">AutoFitTextView（調整文字大小）</string>
+    <string name="robolectric_title">Robolectric（測試框架）</string>
+    <string name="espresso_title">Espresso（測試助理程式）</string>
+    <string name="gson_title">Gson（JSON 解析器）</string>
+    <string name="leak_canary_title">Leak Canary（記憶體洩露偵測器）</string>
+    <string name="number_picker_title">Number Picker（可自訂的號碼挑選器）</string>
+    <string name="exoplayer_title">ExoPlayer（影片播放器）</string>
+    <string name="panorama_view_title">VR Panorama View（顯示全景）</string>
+    <string name="sanselan_title">Apache Sanselan（讀取圖片詮釋資料）</string>
+    <string name="filters_title">Android Photo Filters（圖片過濾器）</string>
+    <string name="gesture_views_title">Gesture Views (可縮放的圖片)</string>
+    <string name="indicator_fast_scroll_title">Indicator Fast Scroll (滾動條上字母)</string>
+    <string name="event_bus_title">Event Bus (應用程式溝通)</string>
+    <string name="audio_record_view_title">Audio Record View (音訊視覺化)</string>
+    <string name="sms_mms_title">SMS MMS (SMS and MMS handling)</string>
+    <string name="apng_title">APNG Android (animated WebP support)</string>
+
+    <!-- Google Play listing -->
+    <string name="deprecated_app">已捨棄: 這版本的應用程式不再維護，在這取得專業版  https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>
+    <string name="pro_app_refund">別忘記如果您在2小時內解除安裝任何付費應用程式，將會自動被退款。若您在之後隨時想退款，只要透過 @simplemobiletools.com 聯絡我們，即可收到退款。這麼一來輕鬆就能試用了 :)</string>
+
+    <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
+    <string name="developer_description">A group of simple, open source Android apps with customizable widgets, without ads and unnecessary permissions.</string>
 </resources>

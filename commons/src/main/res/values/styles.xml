@@ -6,65 +6,9 @@
         <item name="colorPrimary">@color/color_action_bar_main</item>
         <item name="colorPrimaryDark">@color/color_action_bar_main</item>
         <item name="colorAccent">@color/color_accent</item>
-        <!--        <item name="android:colorPrimaryDark">@color/color_action_bar_main</item>-->
+<!--        <item name="android:colorPrimaryDark">@color/color_action_bar_main</item>-->
     </style>
 
-<!--    new     -->
-
-    <style name="SettingsSectionLabelStyle">
-        <item name="android:layout_marginTop">@dimen/activity_margin</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">@dimen/big_text_size</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
-    </style>
-
-    <style name="SettingsCheckboxStyle">
-        <item name="android:background">@null</item>
-        <item name="android:clickable">false</item>
-        <item name="android:layoutDirection">rtl</item>
-        <item name="android:paddingStart">@dimen/medium_margin</item>
-        <item name="android:textSize">@dimen/normal_text_size</item>
-    </style>
-
-    <style name="SettingsTextLabelStyle">
-        <item name="android:textSize">@dimen/normal_text_size</item>
-    </style>
-
-    <style name="SettingsTextValueStyle">
-        <item name="android:alpha">0.6</item>
-        <item name="android:textFontWeight">300</item>
-        <item name="android:textSize">@dimen/normal_text_size</item>
-    </style>
-
-    <style name="SettingsHolderCheckboxStyle">
-        <item name="android:paddingStart">@dimen/activity_margin</item>
-        <item name="android:paddingTop">@dimen/medium_margin</item>
-        <item name="android:paddingEnd">@dimen/activity_margin</item>
-        <item name="android:paddingBottom">@dimen/medium_margin</item>
-    </style>
-
-    <style name="SettingsHolderTextViewStyle">
-        <item name="android:paddingStart">@dimen/activity_margin</item>
-        <item name="android:paddingTop">@dimen/activity_margin</item>
-        <item name="android:paddingEnd">@dimen/activity_margin</item>
-        <item name="android:paddingBottom">@dimen/activity_margin</item>
-    </style>
-
-    <style name="SettingsHolderTextViewOneLinerStyle" parent="@style/SettingsHolderTextViewStyle">
-        <item name="android:paddingTop">@dimen/bigger_margin</item>
-        <item name="android:paddingBottom">@dimen/bigger_margin</item>
-    </style>
-
-    <style name="DragHandleIconStyle">
-        <item name="android:src">@drawable/ic_drag_handle_vector</item>
-        <item name="android:layout_width">@dimen/normal_icon_size</item>
-        <item name="android:layout_height">@dimen/normal_icon_size</item>
-        <item name="android:paddingTop">@dimen/normal_margin</item>
-        <item name="android:paddingBottom">@dimen/normal_margin</item>
-        <item name="android:visibility">gone</item>
-    </style>
-
-<!--            -->
 
     <style name="AppTheme.ActionBar.Transparent.NoAnimation" parent="AppTheme.ActionBar.Transparent">
         <item name="android:windowAnimationStyle">@null</item>
@@ -86,34 +30,6 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
 
-    <style name="MaterialDialogButtonStyle" parent="Widget.Material3.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/you_primary_color</item>
-    </style>
-
-    <style name="MyTimePickerMaterialTheme.Dark" parent="@android:style/Theme.DeviceDefault.Dialog">
-        <item name="colorAccent">@color/you_primary_color</item>
-        <item name="android:colorAccent">@color/you_primary_color</item>
-        <item name="android:windowBackground">@drawable/dialog_you_background</item>
-        <item name="android:textColor">@color/you_primary_color</item>
-        <item name="android:textColorSecondary">@color/you_neutral_text_color</item>
-        <item name="android:textColorPrimary">@color/you_neutral_text_color</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/MaterialDialogButtonStyle</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/MaterialDialogButtonStyle</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/MaterialDialogButtonStyle</item>
-    </style>
-
-    <!-- Used at both dark and light Material You Date pickers and light Time Picker, as otherwise it glitches -->
-    <style name="MyDateTimePickerMaterialTheme" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/you_primary_color</item>
-        <item name="android:colorAccent">@color/you_primary_color</item>
-        <item name="android:windowBackground">@drawable/dialog_you_background</item>
-        <item name="android:textColor">@color/you_primary_color</item>
-        <item name="android:textColorPrimary">@color/you_neutral_text_color</item>
-        <item name="android:textColorSecondary">@color/you_neutral_text_color</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/MaterialDialogButtonStyle</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/MaterialDialogButtonStyle</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/MaterialDialogButtonStyle</item>
-    </style>
 
     <style name="AppTheme.Base.Core" parent="Theme.AppCompat.NoActionBar">
         <item name="android:colorControlHighlight">@color/activated_item_foreground</item>

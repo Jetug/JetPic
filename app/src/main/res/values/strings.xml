@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Gallery</string>
+    <string name="app_name" translatable="false">JetPic Gallery</string>
     <string name="app_launcher_name">Gallery</string>
     <string name="edit">Edit</string>
     <string name="open_camera">Open camera</string>
@@ -32,8 +32,7 @@
     <string name="switch_to_file_search">Switch to file search across all visible folders</string>
     <string name="set_as_default_folder">Set as default folder</string>
     <string name="unset_as_default_folder">Unset as default folder</string>
-    <string name="reorder_by_dragging_pro">Reorder folders by dragging (Pro)</string>
-    <string name="restore_to_path">Restoring to \'%s\'</string>
+    <string name="reorder_by_dragging">Reorder folders</string>
 
     <!-- Filter -->
     <string name="filter_media">Filter media</string>
@@ -51,9 +50,9 @@
     <string name="exclude">Exclude</string>
     <string name="excluded_folders">Excluded folders</string>
     <string name="manage_excluded_folders">Manage excluded folders</string>
-    <string name="exclude_folder_description">This will exclude the selection together with its subfolders from Simple Gallery only. You can manage excluded folders in Settings.</string>
+    <string name="exclude_folder_description">This will exclude the selection together with its subfolders from JetPic Gallery only. You can manage excluded folders in Settings.</string>
     <string name="exclude_folder_parent">Exclude a parent instead?</string>
-    <string name="excluded_activity_placeholder">Excluding folders will make them together with their subfolders hidden just in Simple Gallery, they will still be visible in other applications.\n\nIf you want to hide them from other apps too, use the Hide function.</string>
+    <string name="excluded_activity_placeholder">Excluding folders will make them together with their subfolders hidden just in JetPic Gallery, they will still be visible in other applications.\n\nIf you want to hide them from other apps too, use the Hide function.</string>
     <string name="remove_all">Remove all</string>
     <string name="remove_all_description">Remove all folders from the list of excluded? This will not delete the folders.</string>
     <string name="hidden_folders">Hidden folders</string>
@@ -114,11 +113,10 @@
     <string name="home_screen">Home screen</string>
     <string name="lock_screen">Lock screen</string>
     <string name="home_and_lock_screen">Home and lock screen</string>
-    <string name="allow_changing_aspect_ratio">Allow changing the aspect ratio</string>
 
     <!-- Slideshow -->
     <string name="slideshow">Slideshow</string>
-    <string name="interval">Interval</string>
+    <string name="interval">Interval (seconds):</string>
     <string name="include_photos">Include photos</string>
     <string name="include_videos">Include videos</string>
     <string name="include_gifs">Include GIFs</string>
@@ -206,11 +204,6 @@
     <string name="square">Square</string>
     <string name="rounded_corners">Rounded corners</string>
     <string name="export_favorite_paths">Export favorite file paths</string>
-    <string name="media_management_prompt">To make sure that all file operations work reliably, please make this app a Media management app in your device settings.</string>
-    <string name="password_protect_excluded">Password protect excluded folder visibility</string>
-    <string name="media_management_manual">Something went wrong, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
-    <string name="media_management_note">If the redirection does not work, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
-    <string name="media_management_alternative">If you do not want to do it, you can also go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
 
     <!-- Setting sections -->
     <string name="thumbnails">Thumbnails</string>
@@ -338,9 +331,9 @@
     <string name="vesdk_video_trim_title_name">Trim</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I make Simple Gallery the default device gallery?</string>
+    <string name="faq_1_title">How can I make JetPic Gallery the default device gallery?</string>
     <string name="faq_1_text">First you have to find the currently default gallery in the Apps section of your device settings, look for a button that says something like \"Open by default\", click on it, then select \"Clear defaults\".
-        The next time you will try opening an image or video you should see an app picker, where you can select Simple Gallery and make it the default app.</string>
+        The next time you will try opening an image or video you should see an app picker, where you can select JetPic Gallery and make it the default app.</string>
     <string name="faq_2_title">I locked the app with a password, but I forgot it. What can I do?</string>
     <string name="faq_2_text">You can solve it in 2 ways. You can either reinstall the app, or find the app in your device settings and select \"Clear data\". It will reset all your settings, it will not remove any media files.</string>
     <string name="faq_3_title">How can I make an album always appear at the top?</string>
@@ -348,7 +341,7 @@
     <string name="faq_4_title">How can I fast forward videos?</string>
     <string name="faq_4_text">You can do it by double tapping the side of the screen, or tapping the current or max duration texts near the seekbar. If you enable opening videos on a separate screen in the app settings, you can use horizontal gestures too.</string>
     <string name="faq_5_title">What is the difference between hiding and excluding a folder?</string>
-    <string name="faq_5_text">Exclude prevents displaying the folder only in Simple Gallery, while Hide works system-wise and it hides the folder from other galleries too. It works by creating an empty \".nomedia\" file in the given folder, which you can then remove with any file manager too. Note that some devices do not allow hiding folders like Camera, Screenshots and Downloads.</string>
+    <string name="faq_5_text">Exclude prevents displaying the folder only in JetPic Gallery, while Hide works system-wise and it hides the folder from other galleries too. It works by creating an empty \".nomedia\" file in the given folder, which you can then remove with any file manager too. Note that some devices do not allow hiding folders like Camera, Screenshots and Downloads.</string>
     <string name="faq_6_title">Why do folders with music cover art or stickers show up?</string>
     <string name="faq_6_text">It can happen that you will see some unusual albums show up. You can easily exclude them by long pressing them and selecting Exclude. In the next dialog you can then select the parent folder, chances are it will prevent the other related albums showing up too.</string>
     <string name="faq_7_title">A folder with images isn\'t showing up, or it doesn\'t show all items.  What can I do?</string>
@@ -369,23 +362,71 @@
     <string name="faq_15_title">Why does the app take up so much space?</string>
     <string name="faq_15_text">App cache can take up to 250MB, it ensures quicker image loading. If the app is taking up even more space, it is most likely caused by you having items in the Recycle Bin. Those files count to the app size. You can clear the Recycle bin by opening it and deleting all files, or from the app settings. Every file in the Bin is deleted automatically after 30 days.</string>
     <string name="faq_16_title">What happened to file and folder hiding and why cannot I see hidden items anymore?</string>
-    <string name="faq_16_text">Starting with Android 11 you cannot hide or unhide files or folders anymore, you cannot see the hidden ones in gallery apps due to system restrictions either. You will have to use some file manager for that.</string>
+    <string name="faq_16_text">Starting with Android 11 you cannot hide or unhide files or folders anymore, you cannot see the hidden ones in gallery apps either. You will have to use some file manager for that.</string>
     <string name="faq_17_title">Why cannot I include missing folders anymore?</string>
     <string name="faq_17_text">That stopped working due to the system changes that came with Android 11 too, the app cannot browse real folders anymore, it relies on the so called MediaStore at fetching data.</string>
-    <string name="faq_18_title">Why do I see ads during video playback?</string>
-    <string name="faq_18_text">Our apps have no ads whatsoever. If you see them during video playback, you must be using some other apps video player. Try finding your default video player in the device settings, then do a \"Clear defaults\" on it. The next time you invoke some video intent you will see an app picker prompt, where you can select what app you want to use.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
 
-    <!--    Jetug     -->
-    <string name="access_storage_prompt">Please grant our app access to all your files, it might not work well without it.</string>
-    <string name="reorder_by_dragging">Reorder folders</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">JetPic Gallery Pro - Photo Manager &amp; Editor</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">A premium app for managing and editing your photos, videos, GIFs without ads</string>
+    <string name="app_long_description">
+        JetPic Gallery Pro is a highly customizable offline gallery. Organize &amp; edit your photos, recover deleted files with the recycle bin, protect &amp; hide files and view a huge variety of different photo &amp; video formats including RAW, SVG and much more.
 
-    <string name="temporarily_show_excluded">Show excluded</string>
-    <string name="stop_showing_excluded">Stop showing excluded</string>
+        The app contains no ads and unnecessary permissions. As the app doesn’t require internet access either, your privacy is protected.
 
+        -------------------------------------------------
+        <b>JetPic Gallery PRO – FEATURES</b>
+        -------------------------------------------------
+
+        • Offline gallery with no ads or popups
+        • JetPic Gallery photo editor – crop, rotate, resize, draw, filters &amp; more
+        • No internet access needed, giving you more privacy and security
+        • No unnecessary permissions required
+        • Quickly search images, videos &amp; files
+        • Open &amp; view many different photo and video types (RAW, SVG, panoramic etc)
+        • A variety of intuitive gestures to easily edit &amp; organize files
+        • Lots of ways to filter, group &amp; sort files
+        • Customize the appearance of JetPic Gallery Pro
+        • Available in 32 languages
+        • Mark files as favorites for quick access
+        • Protect your photos &amp; videos with a pattern, pin or fingerprint
+        • Use pin, pattern &amp; fingerprint to protect the app launch or specific functions too
+        • Recover deleted photos &amp; videos from the recycle bin
+        • Toggle visibility of files to hide photos &amp; videos
+        • Create a customizable slideshow of your files
+        • View detailed information of your files (resolution, EXIF values etc)
+        • JetPic Gallery Pro is open source
+        … and much much more!
+
+        <b>PHOTO GALLERY EDITOR</b>
+        JetPic Gallery Pro makes it easy to edit your pictures on the fly. Crop, flip, rotate and resize your pictures. If you’re feeling a little more creative you can add filters and draw on your pictures!
+
+        <b>SUPPORT FOR MANY FILE TYPES</b>
+        Unlike some other gallery viewers &amp; photo organizers, JetPic Gallery Pro supports a huge range of different file types including JPEG, PNG, MP4, MKV, RAW, SVG, Panoramic photos, Panoramic videos and many more.
+
+        <b>HIGHLY CUSTOMIZABLE GALLERY MANAGER</b>
+        From the UI to the function buttons on the bottom toolbar, JetPic Gallery Pro is highly customizable and works the way you want it to. No other gallery manager has this kind of flexibility! Thanks to being open source, we’re also available in 32 languages!
+
+        <b>RECOVER DELETED PHOTOS &amp; VIDEOS</b>
+        Accidentally deleted a precious photo or video? Don’t worry! JetPic Gallery Pro features a handy recycle bin where you can recover deleted photos &amp; videos easily.
+
+        <b>PROTECT &amp; HIDE PHOTOS, VIDEOS &amp; FILES</b>
+        Using pin, pattern or your device’s fingerprint scanner you can protect and hide photos, videos &amp; entire albums. You can protect the app itself or place locks on specific functions of the app. For example, you can’t delete a file without a fingerprint scan, helping to protect your files from accidental deletion.
+
+        <b>Check out the full suite of Simple Tools here:</b>
+        https://www.simplemobiletools.com
+
+        <b>Standalone website of JetPic Gallery Pro:</b>
+        https://www.simplemobiletools.com/gallery
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
     <string name="edit_date">Edit date</string>
     <string name="group_dirs">Group</string>
     <string name="ungroup_dirs">Ungroup</string>
@@ -393,7 +434,12 @@
         <item>+</item>
         <item>−</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="divider">:</string>
+
+    <!--    Jetug     -->
+    <string name="access_storage_prompt">Please grant our app access to all your files, it might not work well without it.</string>
 
     <string name="current">Current</string>
     <string name="of_file">Origin</string>

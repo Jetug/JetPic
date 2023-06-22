@@ -1,9 +1,4 @@
 <resources>
-
-    <dimen name="popup_menu_elevation">4dp</dimen>
-    <dimen name="material_dialog_corner_radius">28dp</dimen>
-    <dimen name="material_button_corner_radius">24dp</dimen>
-
     <dimen name="one_dp">1dp</dimen>
     <dimen name="tiny_margin">2dp</dimen>
     <dimen name="small_margin">4dp</dimen>

@@ -1,379 +1,940 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">எளிய காட்சியகம்</string>
-    <string name="app_launcher_name">காட்சியகம்</string>
-    <string name="edit">திருத்து</string>
-    <string name="open_camera">படக்கருவியைத் திற</string>
-    <string name="hidden">(மறைந்த)</string>
-    <string name="excluded">(விலக்கிய)</string>
-    <string name="pin_folder">அடைவை முள்ளிடு</string>
-    <string name="unpin_folder">அடைவை முள்ளெடு</string>
-    <string name="pin_to_the_top">மேலே முள்ளிடு</string>
-    <string name="show_all">எல்லா அடைவு உள்ளடக்கம் காட்டு</string>
-    <string name="all_folders">எல்லா அடைவுகள்</string>
-    <string name="folder_view">அடைவு பார்வைக்கு மாறு</string>
-    <string name="other_folder">பிற அடைவு</string>
-    <string name="show_on_map">வரைபடத்தில் காட்டு</string>
-    <string name="unknown_location">அறியா இடம்</string>
-    <string name="volume">ஒலியளவு</string>
-    <string name="brightness">ஒளிர்வு</string>
-    <string name="lock_orientation">நோக்குநிலையைப் பூட்டு</string>
-    <string name="unlock_orientation">நோக்குநிலையைப் பூட்டவிழ்</string>
-    <string name="change_orientation">நோக்குநிலையை மாற்று</string>
-    <string name="force_portrait">உருவப்படத்தை வற்புறுத்து</string>
-    <string name="force_landscape">அகலவாக்கை வற்புறுத்து</string>
-    <string name="use_default_orientation">இயல்புநிலை நோக்குநிலையைப் பயன்படுத்து</string>
-    <string name="fix_date_taken">எடுத்த தேதி மதிப்பைச் சரிசெய்</string>
-    <string name="fixing">சரிசெய்தல்…</string>
-    <string name="dates_fixed_successfully">தேதிகள் சரிசெய்தல் வெற்றி</string>
-    <string name="no_date_takens_found">தேதி எடுத்த மதிப்புகள் எதுவும் கண்டுபிடிக்கப்படவில்லை</string>
-    <string name="share_resized">மறுவளவிடப்பட்ட பதிப்பைப் பகிர்</string>
-    <string name="upgraded_from_free">ஏய்,
-\n
-\nபழைய இலவச செயலியிலிருந்து தரமுயர்த்தியதாகத் தெரிகிறது. செயலி அமைவுகளின் மேலே \'புரோவுக்குத் தரமுயர்த்து\' பொத்தானைக் கொண்ட பழைய பதிப்பை இப்போது நீங்கள் நிறுவல் நீக்கலாம்.
-\n
-\nமீள்சுழல் தொட்டி உருப்படிகளை மட்டுமே உமக்கு அழிக்கப்படும், அபிமான உருப்படிகள் குறிக்கப்படாமல் இருக்கும், மேலும் உம் செயலி அமைவுகளையும் அகரமாக்க வேண்டும்.
-\n
-\nநன்றி!</string>
-    <string name="switch_to_file_search">எல்லா தெரியும் அடைவுகளிலும் கோப்பு தேடலுக்கு மாறு</string>
-    <string name="set_as_default_folder">இயல்புநிலை அடைவாக அமை</string>
-    <string name="unset_as_default_folder">இயல்புநிலை அடைவாக அமைக்காதே</string>
-    <string name="reorder_by_dragging">பிடித்திழுத்து அடைவுகளை மறுசீரமை</string>
-    <string name="reorder_by_dragging_pro">பிடித்திழுத்து அடைவுகளை மறுசீரமை (Pro)</string>
-    <string name="restore_to_path">Restoring to \'%s\'</string>
-    <!-- Filter -->
-    <string name="filter_media">ஊடகத்தை வடிகட்டு</string>
-    <string name="images">படங்கள்</string>
-    <string name="videos">காணொளிகள்</string>
-    <string name="gifs">GIFகள்</string>
-    <string name="raw_images">RAW படங்கள்</string>
-    <string name="svgs">SVGகள்</string>
-    <string name="portraits">உருவப்படங்கள்</string>
-    <string name="no_media_with_filters">தேர்ந்தெடுத்த வடிகட்டிகளுடன் ஊடக கோப்புகள் ஏதுமில்லை.</string>
-    <string name="change_filters_underlined"><u>வடிகட்டிகளை மாற்று</u></string>
-    <!-- Hide / Exclude -->
-    <string name="hide_folder_description">இச்செயல்பாடு ஒரு \'.nomedia\' கோப்பைச் சேர்த்து அடைவை மறைக்கிறது, இது எல்லா துணையடைவுகளையும் மறைக்கும். அமைப்புகளில் \'மறைந்த உருப்படிகளைக் காட்டு\' விருப்பத்தை மாற்றிஅவற்றைக் காணலாம். தொடரவா\?</string>
-    <string name="exclude">விலக்கு</string>
-    <string name="excluded_folders">விலக்கிய அடைவுகள்</string>
-    <string name="manage_excluded_folders">விலக்கிய அடைவுகளை நிர்வகி</string>
-    <string name="exclude_folder_description">இது எளிய காட்சியகத்திலிருந்து தெரிவின் துணையடைவுகளுடன் அதை விலக்கும். அமைப்புகளில் விலக்கிய அடைவுகளை நீங்கள் நிர்வகிக்கலாம்.</string>
-    <string name="exclude_folder_parent">பதிலாக ஒரு பெற்றோரை விலக்கவா\?</string>
-    <string name="excluded_activity_placeholder">அடைவுகளை விலக்குதல், அவற்றின் துணையடைவுகளுடன் அவற்றை எளிய காட்சியகத்தில் மட்டுமே மறைக்கும், அவை பிற செயலிகளில் இன்னும் தெரியும்.
-\n
-\nபிற செயலிகளிலிருந்தும் அவற்றை மறைக்க, மறை செயல்பாட்டைப் பயன்படுத்து.</string>
-    <string name="remove_all">எல்லாம் நீக்கு</string>
-    <string name="remove_all_description">விலக்கப்பட்டவை பட்டியலிலிருந்து எல்லா அடைவுகளையும் நீக்கவா\? இது அடைவுகளை அழிக்காது.</string>
-    <string name="hidden_folders">மறைத்த அடைவுகள்</string>
-    <string name="manage_hidden_folders">மறைத்த அடைவுகளை நிர்வகி</string>
-    <string name="hidden_folders_placeholder">உங்களிடம் \".nomedia\" கோப்புடன் எவ்வடைகளும் மறைக்கப்படவில்லை என தெரிகிறது.</string>
-    <string name="temporarily_show_excluded">Temporarily show excluded</string>
-    <string name="stop_showing_excluded">Stop showing excluded</string>
-    <!-- Include folders -->
-    <string name="include_folders">உள்ளடக்கிய அடைவுகள்</string>
-    <string name="manage_included_folders">உள்ளடக்கிய அடைவுகளை நிர்வகி</string>
-    <string name="add_folder">அடைவு சேர்</string>
-    <string name="included_activity_placeholder">உம்மிடம் ஊடகத்துடன் சில அடைவுகள் இருக்கின்றன, ஆனால் செயலியால் ஆங்கீகரிக்கப்படவில்லையெனில், அவற்றை கைமுறையாக இங்கே சேர்க்கலாம்.
-\n
-\nசில உருப்படிகளை இங்கே சேர்ப்பது வேறு எவ்வடைவையும் விலக்காது.</string>
-    <string name="no_media_add_included">ஊடக கோப்புகள் ஏதுமில்லை. ஊடக கோப்புகளைக் கொண்ட அடைவுகளை கைமுறையாகச் சேர்த்து அதைத் தீர்க்கலாம்.</string>
-    <!-- Resizing -->
-    <string name="resize">மறுஅளவிடு</string>
-    <string name="resize_and_save">தெரிவை மறுஅளவிட்டுச் சேமி</string>
-    <string name="width">அகலம்</string>
-    <string name="height">உயரம்</string>
-    <string name="keep_aspect_ratio">கூறுவிகிதத்தை வைத்திரு</string>
-    <string name="invalid_values">செல்லத்தக்க தீர்மானத்தை உள்ளிடவும்</string>
-    <!-- Editor -->
-    <string name="editor">திருத்தி</string>
-    <string name="rotate">சுழற்று</string>
-    <string name="invalid_image_path">செல்லாத பட பாதை</string>
-    <string name="invalid_video_path">செல்லாத காணொளி பாதை</string>
-    <string name="image_editing_failed">படத்திருத்தம் தோல்வி</string>
-    <string name="video_editing_failed">காணொளித்திருத்தம் தோல்வி</string>
-    <string name="image_editing_cancelled">படத்திருத்தம் இரத்து</string>
-    <string name="video_editing_cancelled">காணொளித்திருத்தம் இரத்து</string>
-    <string name="file_edited_successfully">கோப்புத்திருத்தம் வெற்றி</string>
-    <string name="image_edited_successfully">படத்திருத்தம் வெற்றி</string>
-    <string name="video_edited_successfully">காணொளித்திருத்தம் வெற்றி</string>
-    <string name="edit_image_with">படத்தை இதனுடன் திருத்து:</string>
-    <string name="edit_video_with">காணொளியை இதனுடன் திருத்து:</string>
-    <string name="no_image_editor_found">படத்திருத்தி ஏதுமில்லை</string>
-    <string name="no_video_editor_found">காணொளித்திருத்தி ஏதுமில்லை</string>
-    <string name="unknown_file_location">அறியப்படாத கோப்பிடம்</string>
-    <string name="error_saving_file">மூல கோப்பை மேலெழுத முடியவில்லை</string>
-    <string name="rotate_left">இடதில் சுழற்று</string>
-    <string name="rotate_right">வலதில் சுழற்று</string>
-    <string name="rotate_one_eighty">180º சுழற்று</string>
-    <string name="flip">புரட்டு</string>
-    <string name="flip_horizontally">கிடைமட்டமாக புரட்டு</string>
-    <string name="flip_vertically">செங்குத்தாக புரட்டு</string>
-    <string name="free_aspect_ratio">கட்டுப்பாடற்ற</string>
-    <!-- available as an option: 1:1, 4:3, 16:9, free -->
-    <string name="other_aspect_ratio">மற்ற</string>
-    <!-- available as an option: 1:1, 4:3, 16:9, free, other -->
-    <!-- Set wallpaper -->
-    <string name="simple_wallpaper">எளிய சுவர்த்தாள்</string>
-    <string name="set_as_wallpaper">சுவர்த்தாளாக அமை</string>
-    <string name="set_as_wallpaper_failed">சுவர்த்தாளாக அமைத்தல் தோல்வி</string>
-    <string name="set_as_wallpaper_with">இதனுடன் சுவர்த்தாளாக அமை:</string>
-    <string name="setting_wallpaper">சுவர்த்தாள் அமைத்தல்…</string>
-    <string name="wallpaper_set_successfully">சுவர்த்தாள் அமைத்தல் வெற்றி</string>
-    <string name="portrait_aspect_ratio">உருவப்பட கூறுவிகிதம்</string>
-    <string name="landscape_aspect_ratio">அகலவாக்கு கூறுவிகிதம்</string>
-    <string name="home_screen">முகப்புத் திரை</string>
-    <string name="lock_screen">பூட்டுத் திரை</string>
-    <string name="home_and_lock_screen">முகப்பு மற்றும் பூட்டுத் திரை</string>
-    <string name="allow_changing_aspect_ratio">Allow changing the aspect ratio</string>
-    <!-- Slideshow -->
-    <string name="slideshow">வில்லைக்காட்சி</string>
-    <string name="interval">இடைவெளி</string>
-    <string name="include_photos">புகைப்படங்களை உள்ளடக்கு</string>
-    <string name="include_videos">காணொளிகளை உள்ளடக்கு</string>
-    <string name="include_gifs">GIFகளை உள்ளடக்கு</string>
-    <string name="random_order">சீரற்ற வரிசை</string>
-    <string name="move_backwards">பின்னோக்கி நகர்த்து</string>
-    <string name="loop_slideshow">வில்லைக்காட்சியை வட்டமடி</string>
-    <string name="animation">இயங்குபடம்</string>
-    <string name="no_animation">ஒன்றுமில்லை</string>
-    <string name="fade">மங்குதல்</string>
-    <string name="slide">வில்லை</string>
-    <string name="slideshow_ended">வில்லைக்காட்சி முடிந்தது</string>
-    <string name="no_media_for_slideshow">வில்லைக்காட்சிக்கான ஊடகங்கள் ஏதுமில்லை</string>
+    <string name="ok">சரி</string>
+    <string name="cancel">ரத்துசெய்</string>
+    <string name="nothing">Nothing</string>
+    <string name="later">பின்னர்</string>
+    <string name="save_as">இவ்வாறு சேமி</string>
+    <string name="file_saved">கோப்பு வெற்றிகரமாக சேமிக்கப்பட்டது</string>
+    <string name="invalid_file_format">தவறான கோப்பு வடிவம்</string>
+    <string name="out_of_memory_error">நினைவக பிழை இல்லை</string>
+    <string name="an_error_occurred">பிழை ஏற்பட்டது: %s</string>
+    <string name="open_with">இதனுடன் திற</string>
+    <string name="edit_with">இதனுடன் திருத்து</string>
+    <string name="edit">Edit</string>
+    <string name="no_app_found">சரியான செயலி ஏதுமில்லை</string>
+    <string name="set_as">இதுவாக அமை</string>
+    <string name="copy_to_clipboard">நினைவிக்கு நகலெடு</string>
+    <string name="copy_number_to_clipboard">நினைவிக்கு எண்ணை நகலெடு</string>
+    <string name="value_copied_to_clipboard">மதிப்பு நினைவிக்கு நகலெடுக்கப்பட்டது</string>
+    <string name="value_copied_to_clipboard_show">மதிப்பு நினைவிக்கு நகலெடுக்கப்பட்டது:\n%s</string>
+    <string name="dial_number">டயல் எண்</string>
+    <string name="unknown">தெரியவில்லை</string>
+    <string name="always">எப்போதும்</string>
+    <string name="never">ஒருபோதுமில்லை</string>
+    <string name="details">விவரங்கள்</string>
+    <string name="notes">குறிப்புகள்</string>
+    <string name="deleting_folder"> \'%s\' கோப்புறையை நீக்குகிறது</string>
+    <string name="none">ஏதுமில்லை</string>
+    <string name="label">சிட்டை</string>
+    <string name="transparent">ஒளிபுகும்</string>
+    <string name="transparent_color">ஒளிபுகு நிறம்</string>
+    <string name="select_a_different_color">வேறு நிறத்தைத் தேர்ந்தெடு</string>
+    <string name="download">பதிவிறக்கு</string>
+    <string name="notification">அறிவிப்பு</string>
+    <string name="notifications">Notifications</string>
+    <string name="email">மின்னஞ்சல்</string>
+    <string name="previous">முந்தைய</string>
+    <string name="playpause">இயக்கு / இடைநிறுத்து</string>
+    <string name="next">அடுத்தது</string>
+    <string name="number">எண்</string>
+    <string name="no_contacts_found">தொடர்புகள் ஏதுமில்லை</string>
+    <string name="request_the_required_permissions">தேவையான அனுமதிகளைக் கோருங்கள்</string>
+    <string name="no_access_to_contacts">செயலியால் உங்கள் தொடர்புகளை அணுக இயலவில்லை</string>
+    <string name="no_phone_call_permission">App does not have the permission to initiate phone calls, please grant it in the device settings</string>
+    <string name="insert_text_here">உரையை இங்கே சேர்க்கவும்</string>
+    <string name="call_person">Call %s</string>
+    <string name="zero">Zero</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
+    <string name="four">Four</string>
+    <string name="five">Five</string>
+    <string name="six">Six</string>
+    <string name="seven">Seven</string>
+    <string name="eight">Eight</string>
+    <string name="nine">Nine</string>
+    <string name="value_cannot_be_empty">Value cannot be empty</string>
+    <!-- Emails -->
+    <string name="home">Home</string>
+    <string name="work">Work</string>
+
+    <!-- Phone numbers -->
+    <string name="mobile">Mobile</string>
+    <string name="main_number">Main</string>
+    <string name="work_fax">Work Fax</string>
+    <string name="home_fax">Home Fax</string>
+    <string name="pager">Pager</string>
+    <string name="no_phone_number_found">No phone number has been found</string>
     <!-- View types -->
-    <string name="group_direct_subfolders">நேரடி துணையடைவுகளை ஒன்றிணை</string>
-    <!-- Grouping at media thumbnails -->
-    <string name="group_by">இதன்படி ஒன்றிணை</string>
-    <string name="do_not_group_files">கோப்புகளை ஒன்றிணைக்காதே</string>
-    <string name="by_folder">அடைவு</string>
-    <string name="by_last_modified">கடைசியாக மாற்றியது</string>
-    <string name="by_last_modified_daily">கடைசியாக மாற்றியது (தினசரி)</string>
-    <string name="by_last_modified_monthly">கடைசியாக மாற்றியது (மாதாந்திர)</string>
-    <string name="by_date_taken">எடுத்த தேதி</string>
-    <string name="by_date_taken_daily">எடுத்த தேதி (தினசரி)</string>
-    <string name="by_date_taken_monthly">எடுத்த தேதி (மாதாந்திர)</string>
-    <string name="by_file_type">கோப்பு வகை</string>
-    <string name="by_extension">நீட்டிப்பு</string>
-    <string name="show_file_count_section_header">கோப்பெண்ணிக்கையை பிரிவு மேற்குறிப்பில் காட்டு</string>
-    <string name="grouping_and_sorting">ஒன்றிணைத்தலும் வரிசைப்படுத்தலும் 2 சார்பிலா புலங்கள் என்பதை குறிக்கவும்</string>
-    <!-- Widgets -->
-    <string name="folder_on_widget">விட்ஜெட்டில் கோப்புறை காட்டப்பட்டுள்ளது:</string>
-    <string name="show_folder_name">அடைவு பெயரைக் காட்டு</string>
+    <string name="change_view_type">காட்சி வகையை மாற்று</string>
+    <string name="grid">கட்டம்</string>
+    <string name="uneven_grid">Uneven Grid</string>
+    <string name="list">பட்டியல்</string>
+    <string name="increase_column_count">நெடுவரிசை அதிகரி</string>
+    <string name="reduce_column_count">நெடுவரிசை குறை</string>
+    <string name="change_cover_image">அட்டைப் படத்தை மாற்று</string>
+    <string name="select_photo">புகைப்படத்தைத் தேர்ந்தெடு</string>
+    <!-- Blocked numbers -->
+    <string name="manage_blocked_numbers">தடுக்கப்பட்ட எண்களை நிர்வகி</string>
+    <string name="not_blocking_anyone">நீங்கள் யாரையும் தடுக்கவில்லை.</string>
+    <string name="add_a_blocked_number">தடுக்கப்பட்ட எண்ணைச் சேர்க்கவும்</string>
+    <string name="block_number">எண்ணைத் தடு</string>
+    <string name="block_numbers">எண்களைத் தடு</string>
+    <string name="blocked_numbers">தடுக்கப்பட்ட எண்கள்</string>
+    <string name="export_blocked_numbers">Export blocked numbers</string>
+    <string name="import_blocked_numbers">Import blocked numbers</string>
+    <string name="must_make_default_dialer">தடுக்கப்பட்ட எண்களைப் பயன்படுத்த இப்பயன்பாட்டை இயல்புநிலை டயலர் பயன்பாடாக மாற்ற வேண்டும்.</string>
+    <string name="set_as_default">இயல்புநிலையாக அமை</string>
+    <string name="block_confirmation">\"%s\" ஐத் தடுக்க விரும்புகிறீர்களா?</string>
+    <!-- Favorites -->
+    <string name="favorites">பிடித்தவை</string>
+    <string name="add_favorites">பிடித்தவற்றைச் சேர்</string>
+    <string name="add_to_favorites">பிடித்தவையில் சேர்</string>
+    <string name="remove_from_favorites">பிடித்தவையிலிருந்து அகற்று</string>
+    <!-- Search -->
+    <string name="search">தேடல்</string>
+    <string name="type_2_characters">தேடலைத் தொடங்க குறைந்தது 2 எழுத்துக்களைத் தட்டச்சு செய்க.</string>
+    <!-- Filters -->
+    <string name="filter">வடிகட்டி</string>
+    <string name="no_items_found">உருப்படிகள் எதுவும் கிடைக்கவில்லை.</string>
+    <string name="change_filter">வடிப்பானை மாற்றவும்</string>
+    <!-- Permissions -->
+    <string name="no_storage_permissions">சேமிப்பு அனுமதி தேவை</string>
+    <string name="no_contacts_permission">தொடர்புகளின் அனுமதி தேவை</string>
+    <string name="no_camera_permissions">கேமரா அனுமதி தேவை</string>
+    <string name="no_audio_permissions">ஆடியோ அனுமதி தேவை</string>
+    <!-- Renaming -->
+    <string name="rename_file">கோப்பை மறுபெயரிடு</string>
+    <string name="rename_folder">கோப்புறையை மறுபெயரிடு</string>
+    <string name="rename_file_error">கோப்பின் மறுபெயரிட முடியவில்லை</string>
+    <string name="rename_folder_error">கோப்புறையின் மறுபெயரிட முடியவில்லை</string>
+    <string name="rename_folder_empty">கோப்புறையின் பெயர் காலியாக இருக்கக்கூடாது</string>
+    <string name="rename_folder_exists">அந்த பெயருடன் ஒரு கோப்புறை ஏற்கனவே உள்ளது</string>
+    <string name="rename_folder_root">சேமிப்பகத்தின் ரூட் கோப்புறையை மறுபெயரிட முடியாது</string>
+    <string name="rename_folder_ok">கோப்புறை வெற்றிகரமாக மறுபெயரிடப்பட்டது</string>
+    <string name="renaming_folder">கோப்புறையை மறுபெயரிடுகிறது</string>
+    <string name="filename_cannot_be_empty">கோப்பு பெயர் காலியாக இருக்க முடியாது</string>
+    <string name="filename_invalid_characters">கோப்பு பெயரில் தவறான எழுத்துக்கள் உள்ளன</string>
+    <string name="filename_invalid_characters_placeholder">கோப்பு பெயர் \'%s\' தவறான எழுத்துக்களைக் கொண்டுள்ளது</string>
+    <string name="extension_cannot_be_empty">நீட்டிப்பு காலியாக இருக்க முடியாது</string>
+    <string name="source_file_doesnt_exist">மூல கோப்பு %s இல்லை</string>
+    <string name="prepend_filenames">கோப்பு பெயர்களைத் முன்சேர்க்கவும்</string>
+    <string name="append_filenames">கோப்பு பெயர்களைச் பின்சேர்க்கவும்</string>
+    <string name="simple_renaming">எளிய மறுபெயரிடுதல்</string>
+    <string name="pattern_renaming">முறை</string>
+    <string name="string_to_add">சேர்க்க வேண்டிய சரம்</string>
+    <string name="rename_date_time_pattern">%Y - ஆண்டு\n%M - மாதம்\n%D - நாள்\n%h - மணி\n%m - நிமிடம்\n%s - விநாடிகள்\n%i - 1 இலிருந்து அதிகரிக்கும் எண்</string>
+    <string name="filename_without_txt">Filename (without .txt)</string>
+    <string name="filename_without_json">Filename (without .json)</string>
+    <string name="cannot_hide_files">Starting from Android 11 you cannot hide files and folders like that anymore</string>
+    <!-- Copy / Move -->
+    <string name="copy">நகலெடுக்கவும்</string>
+    <string name="move">நகர்வு</string>
+    <string name="copy_move">நகலெடு / நகர்த்து</string>
+    <string name="copy_to">நகலெடுக்க வேண்டிய இடம்</string>
+    <string name="move_to">நகர்த்த வேண்டிய இடம்</string>
+    <string name="source">மூலம்</string>
+    <string name="destination">இலக்கு</string>
+    <string name="select_destination">இலக்கைத் தேர்ந்தெடு</string>
+    <string name="click_select_destination">இலக்கைத் தேர்ந்தெடுக்க இங்கே அழுத்து</string>
+    <string name="invalid_destination">தேர்ந்தெடுக்கப்பட்ட இலக்குக்கு எழுத முடியவில்லை</string>
+    <string name="please_select_destination">Please select a destination</string>
+    <string name="source_and_destination_same">Source and destination cannot be the same</string>
+    <string name="copy_failed">Could not copy the files</string>
+    <string name="copying">நகலெடுக்கிறது…</string>
+    <string name="copying_success">கோப்புகள் வெற்றிகரமாக நகலெடுக்கப்பட்டது</string>
+    <string name="copying_success_one">File copied successfully</string>
+    <string name="copy_move_failed">ஒரு பிழை ஏற்பட்டது</string>
+    <string name="moving">நகர்த்துகிறது…</string>
+    <string name="moving_success">கோப்புகள் வெற்றிகரமாக நகர்த்தப்பட்டது</string>
+    <string name="moving_success_one">File moved successfully</string>
+    <string name="moving_success_partial">Some files could not be moved</string>
+    <string name="copying_success_partial">Some files could not be copied</string>
+    <string name="no_files_selected">No files selected</string>
+    <string name="saving">சேமிக்கிறது…</string>
+    <string name="could_not_create_folder">Could not create folder %s</string>
+    <string name="could_not_create_file">Could not create file %s</string>
+    <string name="no_new_items">புது உருப்படிகள் ஏதுமில்லை</string>
+    <string name="no_space">The destination does not have enough space available.\nRequired %1$s, available %2$s</string>
+    <!-- Create new -->
+    <string name="create_new">Create new</string>
+    <string name="folder">கோப்புறை</string>
+    <string name="file">கோப்பு</string>
+    <string name="create_new_folder">புது கோப்புறை உருவாக்கு</string>
+    <string name="name_taken">A file or folder with that name already exists</string>
+    <string name="invalid_name">The name contains invalid characters</string>
+    <string name="empty_name">பெயரை உள்ளிடவும்</string>
+    <string name="unknown_error_occurred">ஓர் அறியா பிழை ஏற்பட்டது</string>
+    <!-- File operation conflicts -->
+    <string name="file_already_exists">கோப்பு \"%s\" ஏற்கனவே உள்ளது</string>
+    <string name="file_already_exists_overwrite">கோப்பு \"%s\" ஏற்கனவே உள்ளது. மேலெழுதவா?</string>
+    <string name="folder_already_exists">கோப்புறை \"%s\" ஏற்கனவே உள்ளது</string>
+    <string name="merge">ஒன்றுசேர்</string>
+    <string name="keep_both">இரண்டையும் வைத்திரு</string>
+    <string name="overwrite">மேலெழுது</string>
+    <string name="skip">Skip</string>
+    <string name="append">Append with \'_1\'</string>
+    <string name="apply_to_all">Apply to all</string>
+    <!-- File picker -->
+    <string name="select_folder">கோப்புறையை தேர்ந்தெடு</string>
+    <string name="select_file">கோப்பை தேர்ந்தெடு</string>
+    <string name="confirm_storage_access_title">Confirm external storage access</string>
+    <string name="confirm_folder_access_title">Confirm folder access</string>
+    <string name="confirm_storage_access_text">Please choose the top folder of the SD card on the next screen, to grant write access</string>
+    <string name="confirm_storage_access_text_sd">If you don\'t see the SD card, try this</string>
+    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
+    <string name="confirm_selection">தேர்வை உறுதிசெய்</string>
+    <string name="loading">Loading…</string>
+    <plurals name="items">
+        <item quantity="one">%d உருப்படி</item>
+        <item quantity="other">%d உருப்படிகள்</item>
+    </plurals>
+    <!-- Are you sure you want to delete 5 items? -->
+    <plurals name="delete_items">
+        <item quantity="one">%d உருப்படி</item>
+        <item quantity="other">%d உருப்படிகள்</item>
+    </plurals>
+    <plurals name="deleting_items">
+        <item quantity="one">%d உருப்படியை அழிக்கிறது</item>
+        <item quantity="other">%d உருப்படிகளை அழிக்கிறது</item>
+    </plurals>
+    <!-- Are you sure you want to delete 5 contacts? -->
+    <plurals name="delete_contacts">
+        <item quantity="one">%d தொடர்பு</item>
+        <item quantity="other">%d தொடர்புகள்</item>
+    </plurals>
+    <!-- Storages -->
+    <string name="select_storage">Select storage</string>
+    <string name="internal">Internal</string>
+    <string name="sd_card">SD Card</string>
+    <string name="root">Root</string>
+    <string name="wrong_root_selected">Wrong folder selected, please select the main folder of your SD card</string>
+    <string name="sd_card_usb_same">SD card and USB device paths cannot be the same</string>
+    <string name="app_on_sd_card">You seem to have the app installed on an SD card, that makes the app widgets unavailable. You won\'t even see them on the list of available widgets.
+        It is a system limitation, so if you want to use the widgets, you have to move the app back on the internal storage.</string>
+    <string name="wrong_folder_selected">Wrong folder selected, please select path \'%s\'</string>
+    <!-- File properties -->
+    <string name="properties">பண்புகள்</string>
+    <string name="path">பாதை</string>
+    <string name="items_selected">உருப்படிகள் தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="direct_children_count">Direct children count</string>
+    <string name="files_count">மொத்த கோப்புகள் எண்ணிக்கை</string>
+    <string name="resolution">Resolution</string>
+    <string name="duration">கால‌ அளவு</string>
+    <string name="artist">கலைஞர்</string>
+    <string name="album">Album</string>
+    <string name="focal_length">குவியத்தூரம்</string>
+    <string name="exposure_time">வெளிக்கொணர்தல் நேரம்</string>
+    <string name="iso_speed">ISO வேகம்</string>
+    <string name="f_number">F-number</string>
+    <string name="camera">படக்கருவி</string>
+    <string name="exif">EXIF</string>
+    <string name="song_title">பாடல் தலைப்பு</string>
+    <string name="gps_coordinates">GPS ஆய அச்சுகள்</string>
+    <string name="altitude">உயரம்</string>
+    <!-- Color customization -->
+    <string name="background_color">பின்புல நிறம்</string>
+    <string name="text_color">சொற்சர நிறம்</string>
+    <string name="primary_color">Primary color</string>
+    <string name="accent_color_white">Accent color of white theme</string>
+    <string name="accent_color_black_and_white">Accent color of Black &amp; White theme</string>
+    <string name="foreground_color">முன்புல நிறம்</string>
+    <string name="app_icon_color">செயலி படவுரு நிறம்</string>
+    <string name="bottom_navigation_bar_color">Bottom navigation bar color</string>
+    <string name="restore_defaults">இயல்புநிலைகளை மீட்டமை</string>
+    <string name="use_default">இயல்புநிலையை பயன்படுத்து</string>
+    <string name="default_color">இயல்புநிலை</string>
+    <string name="change_color">நிறம் மாற்று</string>
+    <string name="theme">Theme</string>
+    <string name="changing_color_description">Changing a color will make it switch to Custom theme</string>
+    <string name="save">சேமி</string>
+    <string name="discard">கைவிடு</string>
+    <string name="undo_changes">மாற்றங்களை செயல்தவிர்</string>
+    <string name="undo_changes_confirmation">உமது மாற்றங்களை செயல்தவிர்க்க உறுதியா?</string>
+    <string name="save_before_closing">சேமிக்காத மாற்றங்களுள்ளன. வெளியேறும்முன் சேமிக்கவா?</string>
+    <string name="apply_to_all_apps">Apply colors to all Simple Apps</string>
+    <string name="app_icon_color_warning">WARNING: Some launchers do not handle app icon customization properly. In case the icon will disappear, try launching the app via Google Play or some widget, if available.
+        Once launched, just set back the default orange icon #F57C00. You might have to reinstall the app in the worst case.</string>
+    <string name="share_colors_success">Colors updated successfully. A new Theme called \'Shared\' has been added, please use that for updating all app colors in the future.</string>
+    <string name="shared_theme_note">Note that even though you are using the Pro app version, you still need Simple Thank You for technical reasons. It takes care of the color synchronization.</string>
+    <string name="purchase_thank_you">
+        <![CDATA[
+            Please purchase <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> to unlock this function and support the development. Thanks!
+        ]]>
+    </string>
+    <!-- Themes -->
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string name="auto_theme">Auto</string>
+    <string name="solarized">Solarized</string>
+    <string name="dark_red">Dark red</string>
+    <string name="white">White</string>
+    <string name="black_white">Black &amp; White</string>
+    <string name="custom">Custom</string>
+    <string name="shared">Shared</string>
+    <!-- What's new -->
+    <string name="whats_new">பதிது என்ன</string>
+    <string name="whats_new_disclaimer">* only the bigger updates are listed here, there are always some smaller improvements too</string>
+    <!-- Actionbar items -->
+    <string name="delete">அழி</string>
+    <string name="remove">நீக்கு</string>
+    <string name="rename">மறுபெயரிடு</string>
+    <string name="share">பகிர்</string>
+    <string name="share_via">இதன்மூலம் பகிர்</string>
+    <string name="select_all">எல்லாம் தேர்ந்தெடு</string>
+    <string name="select_text">சொற்சரத்தை தேர்ந்தெடு</string>
+    <string name="hide">மறை</string>
+    <string name="unhide">மறைக்காதே</string>
+    <string name="hide_folder">கோப்புறையை மறை</string>
+    <string name="unhide_folder">கோப்புறையை மறைக்காதே</string>
+    <string name="temporarily_show_hidden">மறைத்தவையை தற்காலிகமாக காட்டு</string>
+    <string name="stop_showing_hidden">Stop showing hidden media</string>
+    <string name="maximum_share_reached">You cannot share this much content at once</string>
+    <string name="empty_and_disable_recycle_bin">Empty and disable the Recycle Bin</string>
+    <string name="undo">செயல்தவிர்</string>
+    <string name="redo">Redo</string>
+    <string name="print">அச்சிடு</string>
+    <string name="create_shortcut">குறுக்குவழி உருவாக்கு</string>
+    <string name="add_number_to_contact">எண்ணைத் தொடர்புக்குச் சேர்</string>
+    <string name="view_contact_details">தொடர்பு விவரங்களைப் பார்</string>
+    <string name="call_from_sim_1">Call from SIM 1</string>
+    <string name="call_from_sim_2">Call from SIM 2</string>
+    <string name="toggle_filename">Toggle filename visibility</string>
+    <string name="move_to_top">Move to the top</string>
+    <string name="move_to_bottom">Move to the bottom</string>
+    <string name="pin_item">Pin item</string>
+    <string name="unpin_item">Unpin item</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="send_email">Send email</string>
+    <string name="call">Call</string>
+    <!-- Sorting -->
+    <string name="sort_by">இதன்படி வரிசைபடுத்து</string>
+    <string name="name">பெயர்</string>
+    <string name="size">அளவு</string>
+    <string name="last_modified">Last modified</string>
+    <string name="date_created">Date created</string>
+    <string name="date_taken">எடுக்கப்பட்ட தேதி</string>
+    <string name="title">தலைப்பு</string>
+    <string name="filename">கோப்புப்பெயர்</string>
+    <string name="extension">நீட்டிப்பு</string>
+    <string name="random">Random</string>
+    <string name="sort_randomly">Sort randomly</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="use_for_this_folder">Use for this folder only</string>
+    <string name="sort_numeric_parts">Sort numeric parts by actual value</string>
+    <string name="first_name">முதற் பெயர்</string>
+    <string name="middle_name">Middle name</string>
+    <string name="surname">Surname</string>
+    <string name="full_name">முழு பெயர்</string>
+    <string name="use_custom_sorting">Use custom sorting</string>
+    <string name="change_order">Change order</string>
+    <!-- Confirmation dialog -->
+    <string name="proceed_with_deletion">Are you sure you want to proceed with the deletion?</string>
+    <string name="deletion_confirmation">%s-ஐ அழிக்க நீங்கள் உறுதியா?</string>
+    <!-- Are you sure you want to delete 5 items? -->
+    <string name="move_to_recycle_bin_confirmation">Are you sure you want to move %s into the Recycle Bin?</string>
+    <!-- Are you sure you want to move 3 items into the Recycle Bin? -->
+    <string name="are_you_sure_delete">இவ்வுருப்படியை அழிக்க நீங்கள் உறுதியா?</string>
+    <string name="are_you_sure_recycle_bin">Are you sure you want to move this item into the Recycle Bin?</string>
+    <string name="do_not_ask_again">இவ்வமர்வில் மீண்டும் கேட்காதே</string>
+    <string name="do_not_show_again">மீண்டும் காட்டாதே</string>
+    <string name="yes">ஆம்</string>
+    <string name="no">இல்லை</string>
+    <string name="maybe">ஒருவேலை</string>
+    <plurals name="delete_warning">
+        <item quantity="one">எச்சரிக்கை: %d கோப்புறையை அழிக்கிறீர்கள்</item>
+        <item quantity="other">எச்சரிக்கை: %d கோப்புறைகளை அழிக்கிறீர்கள்</item>
+    </plurals>
+    <!-- Password protection -->
+    <string name="pin">குறியீட்டெண்</string>
+    <string name="enter_pin">குறியீட்டெண்ணை உள்ளிடு</string>
+    <string name="please_enter_pin">ஒரு குறியீட்டெண்ணை உள்ளிடவும்</string>
+    <string name="wrong_pin">தவறான குறியீட்டெண்</string>
+    <string name="repeat_pin">Repeat PIN</string>
+    <string name="pattern">Pattern</string>
+    <string name="insert_pattern">Insert pattern</string>
+    <string name="wrong_pattern">Wrong pattern</string>
+    <string name="repeat_pattern">Repeat pattern</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="fingerprint">கைரேகை</string>
+    <string name="add_fingerprint">கைரேகை சேர்</string>
+    <string name="place_finger">கைரேகை உணர்வியில் உமது விரலை வைக்கவும்</string>
+    <string name="open_biometric_dialog">Open biometric ID verification dialog</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="authentication_blocked">Authentication blocked, please try again in a moment</string>
+    <string name="no_fingerprints_registered">You have no fingerprints registered, please add some in the Settings of your device</string>
+    <string name="go_to_settings">அமைப்புகளுக்கு செல்</string>
+    <string name="protection_setup_successfully">Password setup successfully. Please reinstall the app in case you forget it.</string>
+    <string name="fingerprint_setup_successfully">Protection setup successfully. Please reinstall the app in case of problems with reseting it.</string>
+    <string name="lock_folder">கோப்புறையை பூட்டு</string>
+    <string name="unlock_folder">கோப்புறையை பூட்டவிழ்</string>
+    <string name="lock_folder_notice">This protection works in this app only, it is not supposed to replace a real systemwide folder encryption.</string>
+    <!-- Times -->
+    <string name="yesterday">நேற்று</string>
+    <string name="today">இன்று</string>
+    <string name="tomorrow">நாளை</string>
+    <string name="hide_year">ஆண்டை மறை</string>
+    <string name="seconds_raw">விநாடிகள்</string>
+    <string name="minutes_raw">நிமிடங்கள்</string>
+    <string name="hours_raw">மணிநேரங்கள்</string>
+    <string name="days_raw">நாட்கள்</string>
+    <string name="seconds_letter">வி</string>
+    <string name="minutes_letter">நி</string>
+    <string name="hours_letter">ம</string>
+    <plurals name="seconds">
+        <item quantity="one">%d விநாடி</item>
+        <item quantity="other">%d விநாடிகள்</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d நிமிடம்</item>
+        <item quantity="other">%d நிமிடங்கள்</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d மணிநேரம்</item>
+        <item quantity="other">%d மணிநேரங்கள்</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%d நாள்</item>
+        <item quantity="other">%d நாட்கள்</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="one">%d வாரம்</item>
+        <item quantity="other">%d வாரங்கள்</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="one">%d மாதம்</item>
+        <item quantity="other">%d மாதங்கள்</item>
+    </plurals>
+    <plurals name="years">
+        <item quantity="one">%d ஆண்டு</item>
+        <item quantity="other">%d ஆண்டுகள்</item>
+    </plurals>
+    <!-- For example: I will be there in 5 minutes -->
+    <plurals name="in_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="in_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="in_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="in_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="in_weeks">
+        <item quantity="one">%d week</item>
+        <item quantity="other">%d weeks</item>
+    </plurals>
+    <plurals name="in_months">
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
+    <plurals name="in_years">
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+    <!-- For example: Event reminder: 3 minutes before -->
+    <plurals name="seconds_before">
+        <item quantity="one">%d second before</item>
+        <item quantity="other">%d seconds before</item>
+    </plurals>
+    <plurals name="minutes_before">
+        <item quantity="one">%d minute before</item>
+        <item quantity="other">%d minutes before</item>
+    </plurals>
+    <plurals name="hours_before">
+        <item quantity="one">%d hour before</item>
+        <item quantity="other">%d hours before</item>
+    </plurals>
+    <plurals name="days_before">
+        <item quantity="one">%d day before</item>
+        <item quantity="other">%d days before</item>
+    </plurals>
+    <plurals name="weeks_before">
+        <item quantity="one">%d week before</item>
+        <item quantity="other">%d weeks before</item>
+    </plurals>
+    <plurals name="months_before">
+        <item quantity="one">%d month before</item>
+        <item quantity="other">%d months before</item>
+    </plurals>
+    <plurals name="years_before">
+        <item quantity="one">%d year before</item>
+        <item quantity="other">%d years before</item>
+    </plurals>
+    <!-- For example: Postpone reminder by 3 minutes -->
+    <plurals name="by_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="by_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="by_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="by_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="by_weeks">
+        <item quantity="one">%d week</item>
+        <item quantity="other">%d weeks</item>
+    </plurals>
+    <plurals name="by_months">
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
+    <plurals name="by_years">
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+    <!-- For example: Time remaining till the alarm goes off: 6 hours, 5 minutes -->
+    <string name="alarm_goes_off_in">Time remaining till the alarm goes off:\n%s</string>
+    <string name="reminder_triggers_in">Time remaining till the reminder triggers:\n%s</string>
+    <string name="time_remaining">Time remaining:\n%s</string>
+    <string name="alarm_warning">Please make sure the alarm works properly before relying on it. It could misbehave due to system restrictions related to battery saving.</string>
+    <string name="reminder_warning">Please make sure the reminders work properly before relying on them. Check your device battery and notification settings, if there is nothing blocking the reminders, or killing the app in the background.</string>
+    <string name="notifications_disabled">Notifications of this application are disabled. Please go in your device settings for enabling them.</string>
+    <!-- Alarms -->
+    <string name="alarm">Alarm</string>
+    <string name="snooze">Snooze</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="no_reminder">No reminder</string>
+    <string name="at_start">At start</string>
+    <string name="system_sounds">System sounds</string>
+    <string name="your_sounds">Your sounds</string>
+    <string name="add_new_sound">Add a new sound</string>
+    <string name="no_sound">No sound</string>
+    <string name="during_day_at_hh_mm">During the day at hh:mm</string>
+    <string name="during_day_at">During the day at %02d:%02d</string>
     <!-- Settings -->
-    <string name="autoplay_videos">காணொளிகளைத் தானியக்கு</string>
-    <string name="remember_last_video_position">கடைசி காணொளி பின்னணி நிலையை நினைவிற்கொள்</string>
-    <string name="loop_videos">காணொளிகளை வட்டமடி</string>
-    <string name="animate_gifs">சிறுபடங்களில் GIFகளை உயிரூட்டு</string>
-    <string name="max_brightness">முழுத்திரை ஊடகத்தை பார்க்கும்போது அதிகபட்ச ஒளிர்வு</string>
-    <string name="crop_thumbnails">சிறுபடங்களை சதுரங்களாக நறுக்கு</string>
-    <string name="show_thumbnail_video_duration">காணொளி காலவளவுகளைக் காட்டு</string>
-    <string name="screen_rotation_by">முழுத்திரை ஊடகத்தை இப்படி சுழற்று</string>
-    <string name="screen_rotation_system_setting">கணினி அமைவு</string>
-    <string name="screen_rotation_device_rotation">சாதன சுழற்சி</string>
-    <string name="screen_rotation_aspect_ratio">கூறுவிகிதம்</string>
-    <string name="black_background_at_fullscreen">முழுத்திரை ஊடகங்களில் கருப்பு பின்னணி</string>
-    <string name="scroll_thumbnails_horizontally">சிறுபடங்களை கிடைமட்டமாக உருட்டு</string>
-    <string name="hide_system_ui_at_fullscreen">முழுத்திரை ஊடகத்தில் கணினி UIஐத் தானாக மறை</string>
-    <string name="delete_empty_folders">வெற்று அடைவுகளை அவற்றின் உள்ளடக்கத்தை அழித்தபின் அழி</string>
-    <string name="allow_photo_gestures">செங்குத்து சைகைகளுடன் புகைப்பட ஒளிர்வைக் கட்டுப்படுத்த அனுமதி</string>
-    <string name="allow_video_gestures">செங்குத்து சைகைகளுடன் காணொளி ஒலியளவு மற்றும் ஒளிர்வைக் கட்டுப்படுத்த அனுமதி</string>
-    <string name="show_media_count">அடைவு ஊடக எண்ணிக்கையை பிரதான பார்வையில் காட்டு</string>
-    <string name="show_extended_details">முழுத்திரை ஊடகங்களில் நீடித்த விவரங்களைக் காட்டு</string>
-    <string name="manage_extended_details">நீடித்த விவரங்களை நிர்வகி</string>
-    <string name="one_finger_zoom">முழுத்திரை ஊடகத்தில் ஒரு விரல் பெரிதாக்கத்தை அனுமதி</string>
-    <string name="allow_instant_change">திரை ஓரங்களில் சொடுக்குவதன் மூலம் உடனடியாக ஊடகத்தை மாற்ற அனுமதி</string>
-    <string name="allow_deep_zooming_images">படங்களை ஆழமாக பெரிதாக்க அனுமதி</string>
-    <string name="hide_extended_details">நிலைப்பட்டி மறைக்கப்படும்போது நீடித்த விவரங்களை மறை</string>
-    <string name="show_at_bottom">திரையின் அடிப்புறத்தில் சில செயல் பொத்தான்களைக் காட்டு</string>
-    <string name="show_recycle_bin">அடைவுகள் திரையில் மீள்சுழற்சி தொட்டியைக் காட்டு</string>
-    <string name="deep_zoomable_images">ஆழமாக பெரிதாக்கக்கூடிய படங்கள்</string>
-    <string name="show_highest_quality">படங்களைச் சாத்தியமான மிகவுயர்ந்த தரத்தில் காட்டு</string>
-    <string name="show_recycle_bin_last">பிரதான திரையில் கடைசி உருப்படியாக மீள்சுழற்சி தொட்டியைக் காட்டு</string>
-    <string name="allow_down_gesture">கீழ் சைகையுடன் முழுத்திரை காட்சியை மூட அனுமதி</string>
-    <string name="allow_one_to_one_zoom">இரு இரட்டைத் தட்டுகளுடன் 1: 1 பெரிதாக்கத்தை அனுமதி</string>
-    <string name="open_videos_on_separate_screen">புதிய கிடைமட்ட சைகைகளுடன் காணொளிகளை எப்போதும் தனித்திரையில் திற</string>
-    <string name="show_notch">கிடைத்தால் பிளப்பைக் காட்டு</string>
-    <string name="allow_rotating_gestures">சைகைகளுடன் படங்களை சுழற்ற அனுமதி</string>
-    <string name="file_loading_priority">கோப்பு ஏற்றுதல் முன்னுரிமை</string>
-    <string name="speed">வேகம்</string>
-    <string name="compromise">சமரசம்</string>
-    <string name="avoid_showing_invalid_files">செல்லா கோப்புகளைக் காட்டுவதைத் தவிர்</string>
-    <string name="show_image_file_types">பட கோப்பு வகைகளைக் காட்டு</string>
-    <string name="allow_zooming_videos">காணொளிகளை இரட்டைத் தட்டிப் பெரிதாக்க அனுமதி</string>
-    <string name="folder_thumbnail_style">கோப்புறை சிறுபட பாணி</string>
-    <string name="file_thumbnail_style">கோப்பு சிறுபட பாணி</string>
-    <string name="mark_favorite_items">அபிமானவையைக் குறி</string>
-    <string name="thumbnail_spacing">சிறுபட இடைவெளி</string>
-    <string name="show_file_count_line">கோப்பு எண்ணிக்கையை தனி வரியில் காட்டு</string>
-    <string name="show_file_count_brackets">கோப்பு எண்ணிக்கையை அடைப்புக்குறிக்குள் காட்டு</string>
-    <string name="show_file_count_none">கோப்பு எண்ணிக்கையைக் காட்டாதே</string>
-    <string name="limit_folder_title">நீண்ட அடைவு தலைப்புகளை 1 வரிக்கு வரம்பிடு</string>
-    <string name="square">சதுரம்</string>
-    <string name="rounded_corners">மழுங்கையான மூலைகள்</string>
-    <string name="export_favorite_paths">பிடித்த கோப்பு பாதைகளை ஏற்றுமதி செய்</string>
-    <string name="media_management_prompt">To make sure that all file operations work reliably, please make this app a Media management app in your device settings.</string>
-    <string name="password_protect_excluded">Password protect excluded folder visibility</string>
-    <string name="media_management_manual">Something went wrong, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
-    <string name="media_management_note">If the redirection does not work, please go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
-    <string name="media_management_alternative">If you do not want to do it, you can also go into your device Settings - Apps - Special app access - Media management apps and allow this app to manage media.</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="purchase_simple_thank_you">Purchase Simple Thank You</string>
+    <string name="general_settings">General</string>
+    <string name="color_customization">Color customization</string>
+    <string name="customize_colors">Customize colors</string>
+    <string name="customize_colors_locked">Customize colors (Locked)</string>
+    <string name="customize_widget_colors">Customize widget colors</string>
+    <string name="customize_notifications">Customize notifications</string>
+    <string name="use_english_language">ஆங்கில மொழியை பயன்படுத்து</string>
+    <string name="language">Language</string>
+    <string name="show_hidden_items">மறைத்த உருப்படிகளை காட்டு</string>
+    <string name="font_size">எழுத்துரு அளவு</string>
+    <string name="small">சிறிது</string>
+    <string name="medium">நடுத்தர</string>
+    <string name="large">பெரிது</string>
+    <string name="extra_large">மிகப் பெரிது</string>
+    <string name="password_protect_hidden_items">Password protect hidden item visibility</string>
+    <string name="password_protect_whole_app">Password protect the whole application</string>
+    <string name="password_protect_file_deletion">Password protect file deletion and moving</string>
+    <string name="keep_last_modified">Keep old last-modified value at file operations</string>
+    <string name="show_info_bubble">Show an info bubble at scrolling items by scrollbar dragging</string>
+    <string name="prevent_phone_from_sleeping">Prevent phone from sleeping while the app is in foreground</string>
+    <string name="skip_delete_confirmation">Always skip delete confirmation dialog</string>
+    <string name="enable_pull_to_refresh">Enable pull-to-refresh from the top</string>
+    <string name="use_24_hour_time_format">Use 24-hour time format</string>
+    <string name="change_date_and_time_format">தேதி மற்றும் நேர வடிவமைப்பை மாற்று</string>
+    <string name="sunday_first">Start week on Sunday</string>
+    <string name="widgets">Widgets</string>
+    <string name="use_same_snooze">Always use same snooze time</string>
+    <string name="snooze_time">Snooze time</string>
+    <string name="vibrate_on_button_press">Vibrate on button press</string>
+    <string name="move_items_into_recycle_bin">அழிப்பதற்கு பதில் மறுசுழற்சி தொட்டிக்குள் உருப்படிகளை நகர்த்து</string>
+    <string name="recycle_bin_cleaning_interval">Recycle Bin cleaning interval</string>
+    <string name="empty_recycle_bin">மறுசுழற்சி தொட்டியை காலியாக்கு</string>
+    <string name="force_portrait_mode">Force portrait mode</string>
+    <string name="export_settings">அமைப்புகள் ஏற்றுமதி</string>
+    <string name="import_settings">அமைப்புகள் இறக்குமதி</string>
+    <string name="settings_exported_successfully">அமைப்புகள் ஏற்றுமதி வெற்றி</string>
+    <string name="settings_imported_successfully">அமைப்புகள் இறக்குமதி வெற்றி</string>
+    <string name="start_name_with_surname">Start name with surname</string>
+    <string name="clear_cache">பிடிதரவை துடை</string>
+    <string name="show_call_confirmation_dialog">Show a call confirmation dialog before initiating a call</string>
     <!-- Setting sections -->
+    <string name="visibility">தெரிவுநிலை</string>
+    <string name="security">பாதுகாப்பு</string>
+    <string name="scrolling">உருட்டுதல்</string>
+    <string name="file_operations">கோப்பு செயல்பாடுகள்</string>
+    <string name="recycle_bin">மறுசுழற்சி தொட்டி</string>
+    <string name="saving_label">சேமிக்கிறது</string>
+    <string name="startup">Startup</string>
+    <string name="text">சொற்சரம்</string>
+    <string name="migrating">இடம்பெயர்கிறது</string>
+    <string name="quality">Quality</string>
+    <string name="main_screen">Main screen</string>
     <string name="thumbnails">சிறுபடங்கள்</string>
-    <string name="fullscreen_media">முழுத்திரை ஊடகம்</string>
-    <string name="extended_details">நீடித்த விவரங்கள்</string>
-    <string name="bottom_actions">அடிப்புறச் செயல்கள்</string>
-    <!-- Bottom actions -->
-    <string name="manage_bottom_actions">புலப்படும் அடிப்புறச் செயல்களை நிர்வகி</string>
-    <string name="toggle_favorite">அபிமானதை நிலைமாற்று</string>
-    <string name="toggle_file_visibility">கோப்பு கட்புலனை நிலைமாற்று</string>
-    <!-- New editor strings -->
-    <string name="pesdk_transform_button_freeCrop">தனிப்பயன்</string>
-    <string name="pesdk_transform_button_resetCrop">அகரமாக்கு</string>
-    <string name="pesdk_transform_button_squareCrop">சதுரம்</string>
-    <string name="pesdk_transform_title_name">உருமாற்று</string>
-    <string name="pesdk_filter_title_name">வடிகட்டி</string>
-    <string name="pesdk_filter_asset_none">ஒன்றுமில்லை</string>
-    <string name="pesdk_adjustments_title_name">அனுசரி</string>
-    <string name="pesdk_adjustments_button_shadowTool">நிழல்கள்</string>
-    <string name="pesdk_adjustments_button_exposureTool">திறந்தவைப்பு</string>
-    <string name="pesdk_adjustments_button_highlightTool">சிறப்புக்கூறுகள்</string>
-    <string name="pesdk_adjustments_button_brightnessTool">ஒளிர்வு</string>
-    <string name="pesdk_adjustments_button_contrastTool">உறழ்பொருவு</string>
-    <string name="pesdk_adjustments_button_saturationTool">செறிவூட்டம்</string>
-    <string name="pesdk_adjustments_button_clarityTool">தெளிவு</string>
-    <string name="pesdk_adjustments_button_gammaTool">காமா</string>
-    <string name="pesdk_adjustments_button_blacksTool">கறுப்புகள்</string>
-    <string name="pesdk_adjustments_button_whitesTool">வெள்ளைகள்</string>
-    <string name="pesdk_adjustments_button_temperatureTool">வெப்பநிலை</string>
-    <string name="pesdk_adjustments_button_sharpnessTool">கூர்மை</string>
-    <string name="pesdk_adjustments_button_reset">அகரமாக்கு</string>
-    <string name="pesdk_focus_title_name">குவியம்</string>
-    <string name="pesdk_focus_title_disabled">ஒன்றுமில்லை</string>
-    <string name="pesdk_focus_button_radial">ஆரச்சீர்</string>
-    <string name="pesdk_focus_button_linear">நேரியல்</string>
-    <string name="pesdk_focus_button_mirrored">பிரதிபலித்தது</string>
-    <string name="pesdk_focus_button_gaussian">காஸியன்</string>
-    <string name="pesdk_text_title_input">உரை சேர்</string>
-    <string name="pesdk_text_title_name">உரை</string>
-    <string name="pesdk_text_title_options">உரை விருப்பங்கள்</string>
-    <string name="pesdk_text_title_textColor">உரை நிறம்</string>
-    <string name="pesdk_text_title_font">எழுத்துரு</string>
-    <string name="pesdk_text_button_add">சேர்</string>
-    <string name="pesdk_text_button_edit">திருத்து</string>
-    <string name="pesdk_text_button_straighten">நேராக்கு</string>
-    <string name="pesdk_text_button_font">எழுத்துரு</string>
-    <string name="pesdk_text_button_color">நிறம்</string>
-    <string name="pesdk_text_button_backgroundColor">BG நிறம்</string>
-    <string name="pesdk_text_button_alignment">சீரமைப்பு</string>
-    <string name="pesdk_text_button_bringToFront">முன்னுக்கு</string>
-    <string name="pesdk_text_button_delete">அழி</string>
-    <string name="pesdk_text_text_editTextPlaceholder">உங்கள் உரை</string>
-    <string name="pesdk_brush_title_name">தூரிகை</string>
-    <string name="pesdk_brush_button_color">நிறம்</string>
-    <string name="pesdk_brush_button_size">அளவு</string>
-    <string name="pesdk_brush_button_hardness">கடினத்தன்மை</string>
-    <string name="pesdk_brush_button_bringToFront">முன்னுக்கு</string>
-    <string name="pesdk_brush_button_delete">அழி</string>
-    <string name="pesdk_brush_title_brushColor">தூரிகை நிறம்</string>
-    <string name="pesdk_editor_title_name">திருத்தி</string>
-    <string name="pesdk_editor_title_closeEditorAlert">திருத்தியை மூடவா\?</string>
-    <string name="pesdk_editor_text_closeEditorAlert">மாற்றங்களைக் கைவிட வேண்டுமா\?</string>
-    <string name="pesdk_editor_button_closeEditorAlertConfirmation">ஆம்</string>
-    <string name="pesdk_editor_button_closeEditorAlertCancelation">இல்லை</string>
-    <string name="pesdk_editor_cancel">ரத்துசெய்</string>
-    <string name="pesdk_editor_accept">ஏற்றுக்கொள்</string>
-    <string name="pesdk_editor_save">சேமி</string>
-    <string name="pesdk_editor_text_exportProgressUnknown">ஏற்றுமதி செய்கிறது…</string>
-    <string name="pesdk_editor_text_exportProgress" formatted="false">ஏற்றுமதி செய்கிறது %s.</string>
-    <string name="pesdk_sticker_title_name">ஒட்டுபடம்</string>
-    <string name="pesdk_sticker_title_color">ஒட்டுபட நிறம்</string>
-    <string name="pesdk_sticker_title_options">ஒட்டுபட விருப்பங்கள்</string>
-    <string name="pesdk_sticker_button_add">சேர்</string>
-    <string name="pesdk_sticker_button_color">நிறம்</string>
-    <string name="pesdk_sticker_button_delete">அழி</string>
-    <string name="pesdk_sticker_button_bringToFront">முன்னுக்கு</string>
-    <string name="pesdk_sticker_button_straighten">நேராக்கு</string>
-    <string name="pesdk_sticker_button_replace">மாற்று</string>
-    <string name="pesdk_sticker_button_opacity">ஒளிபுகா தன்மை</string>
-    <string name="pesdk_sticker_button_contrast">உறழ்பொருவு</string>
-    <string name="pesdk_sticker_button_saturation">செறிவூட்டம்</string>
-    <string name="pesdk_sticker_button_brightness">ஒளிர்வு</string>
-    <string name="pesdk_sticker_category_name_custom">பதிவேற்றங்கள்</string>
-    <string name="pesdk_overlay_title_name">மேலடுக்கு</string>
-    <string name="pesdk_overlay_button_blendModeNormal">இயல்பானது</string>
-    <string name="pesdk_overlay_button_blendModeDarken">இருட்டாக்கு</string>
-    <string name="pesdk_overlay_button_blendModeScreen">திரை</string>
-    <string name="pesdk_overlay_button_blendModeOverlay">மேலடுக்கு</string>
-    <string name="pesdk_overlay_button_blendModeLighten">ஒளிர்வி</string>
-    <string name="pesdk_overlay_button_blendModeMultiply">பெருக்கு</string>
-    <string name="pesdk_overlay_button_blendModeColorBurn">நிற எரிப்பு</string>
-    <string name="pesdk_overlay_button_blendModeSoftLight">மென்னொளி</string>
-    <string name="pesdk_overlay_button_blendModeHardLight">வன்னொளி</string>
-    <string name="pesdk_overlay_asset_none">ஒன்றுமில்லை</string>
-    <string name="pesdk_overlay_asset_golden">கோல்டன்</string>
-    <string name="pesdk_overlay_asset_lightleak1">ஒளிக்கசிவு 1</string>
-    <string name="pesdk_overlay_asset_mosaic">மொசைக்</string>
-    <string name="pesdk_overlay_asset_paper">தாள்</string>
-    <string name="pesdk_overlay_asset_rain">மழை</string>
-    <string name="pesdk_overlay_asset_vintage">விண்டேஜ்</string>
-    <string name="pesdk_common_button_flipH">கி. புரட்டு</string>
-    <string name="pesdk_common_button_flipV">செ. புரட்டு</string>
-    <string name="pesdk_common_button_undo">செயல்தவிர்</string>
-    <string name="pesdk_common_button_redo">மீண்டுஞ்செய்</string>
-    <string name="pesdk_common_title_colorPicker">நிற எடுப்பி</string>
-    <string name="pesdk_common_title_transparentColor">ஒளிபுகும்</string>
-    <string name="pesdk_common_title_whiteColor">வெள்ளை</string>
-    <string name="pesdk_common_title_grayColor">சாம்பல்</string>
-    <string name="pesdk_common_title_blackColor">கருப்பு</string>
-    <string name="pesdk_common_title_lightBlueColor">வெளிர் நீலம்</string>
-    <string name="pesdk_common_title_blueColor">நீலம்</string>
-    <string name="pesdk_common_title_purpleColor">செவ்வூதா</string>
-    <string name="pesdk_common_title_orchidColor">மந்தாரை</string>
-    <string name="pesdk_common_title_pinkColor">குருவகம்</string>
-    <string name="pesdk_common_title_redColor">சிவப்பு</string>
-    <string name="pesdk_common_title_orangeColor">ஆரஞ்சு</string>
-    <string name="pesdk_common_title_goldColor">தங்கம்</string>
-    <string name="pesdk_common_title_yellowColor">மஞ்சள்</string>
-    <string name="pesdk_common_title_oliveColor">இடலை</string>
-    <string name="pesdk_common_title_greenColor">பச்சை</string>
-    <string name="pesdk_common_title_aquamarinColor">நீலப்பச்சை</string>
-    <string name="pesdk_common_title_pipettableColor">பைப்பேடபில் நிறம்</string>
-    <string name="vesdk_video_trim_title_name">ஒழுங்கமை</string>
+    <string name="list_view">List view</string>
+    <!-- Default tab to open -->
+    <string name="manage_shown_tabs">காட்டப்படும் தாவல்களை நிர்வகி</string>
+    <string name="default_tab_to_open">Tab to open at app start</string>
+    <string name="contacts_tab">தொடர்புகள்</string>
+    <string name="favorites_tab">பிடித்தமானவை</string>
+    <string name="call_history_tab">அழைப்பு வரலாறு</string>
+    <string name="groups_tab">குழுக்கள்</string>
+    <string name="last_used_tab">கடைசியாக பயன்படுத்தியது</string>
+    <string name="files_tab">கோப்புகள்</string>
+    <string name="recent_files_tab">அண்மை கோப்புகள்</string>
+    <!-- Recycle Bin -->
+    <string name="restore_this_file">இககோப்பை மீட்டமை</string>
+    <string name="restore_selected_files">தேர்ந்தெடுத்த கோப்புகளை மீட்டமை</string>
+    <string name="restore_all_files">எல்லா கோப்புகளையும் மீட்டமை</string>
+    <string name="recycle_bin_emptied">மறுசுழற்சி தொட்டி வெற்றிகரமாக காலியாக்கப்பட்டது</string>
+    <string name="files_restored_successfully">கோப்புகள் வெற்றிகரமாக மீட்டமைக்கப்பட்டன</string>
+    <string name="empty_recycle_bin_confirmation">மறுசுழற்சி தொட்டியை காலியாக்க நீங்கள் உறுதியா? கோப்புகளை நிரந்தரமாக இழப்பீர்கள்.</string>
+    <string name="recycle_bin_empty">மறுசுழற்சி தொட்டி காலி</string>
+    <string name="moving_recycle_bin_items_disabled">Moving Recycle bin items is disabled, please use Restore</string>
+    <string name="show_the_recycle_bin">மறுசுழற்சி தொட்டியை காட்டு</string>
+    <string name="hide_the_recycle_bin">மறுசுழற்சி தொட்டியை மறை</string>
+    <plurals name="moving_items_into_bin">
+        <item quantity="one">%d உருப்படியை மறுசுழற்சி தொட்டிக்குள் நகர்த்துகிறது</item>
+        <item quantity="other">%d உருப்படிகளை மறுசுழற்சி தொட்டிக்குள் நகர்த்துகிறது</item>
+    </plurals>
+    <!-- Import / Export -->
+    <string name="importing">ஏற்றுகிறது…</string>
+    <string name="exporting">இறக்குகிறது…</string>
+    <string name="importing_successful">ஏற்றுமதி வெற்றி</string>
+    <string name="exporting_successful">இறக்குமதி வெற்றி</string>
+    <string name="importing_failed">ஏற்றுமதி தோல்வி</string>
+    <string name="exporting_failed">இறக்குமதி தோல்வி</string>
+    <string name="importing_some_entries_failed">Importing some entries failed</string>
+    <string name="exporting_some_entries_failed">Exporting some entries failed</string>
+    <string name="no_entries_for_importing">No entries for importing have been found</string>
+    <string name="no_new_entries_for_importing">No new entries for importing have been found</string>
+    <string name="no_entries_for_exporting">No entries for exporting have been found</string>
+    <!-- OTG devices -->
+    <string name="usb">USB</string>
+    <string name="usb_detected">You seem to have an USB device attached to your device. To make sure its files appear properly, you need to grant additional permissions.</string>
+    <string name="confirm_usb_storage_access_text">Please choose the top folder of the USB device on the next screen, to grant access</string>
+    <string name="wrong_root_selected_usb">Wrong folder selected, please select the main folder of your USB device</string>
+    <!-- Dates -->
+    <string name="january">ஜனவரி</string>
+    <string name="february">பிப்ரவரி</string>
+    <string name="march">மார்ச்</string>
+    <string name="april">ஏப்ரல்</string>
+    <string name="may">மே</string>
+    <string name="june">ஜூன்</string>
+    <string name="july">ஜூலை</string>
+    <string name="august">ஆகஸ்ட்</string>
+    <string name="september">செப்டம்பர்</string>
+    <string name="october">அக்டோபர்</string>
+    <string name="november">நவம்பர்</string>
+    <string name="december">டிசம்பர்</string>
+    <!-- in January -->
+    <string name="in_january">ஜனவரியில்</string>
+    <string name="in_february">பிப்ரவரியில்</string>
+    <string name="in_march">மார்ச்சில்</string>
+    <string name="in_april">ஏப்ரலில்</string>
+    <string name="in_may">மேயில்</string>
+    <string name="in_june">ஜூனில்</string>
+    <string name="in_july">ஜூலையில்</string>
+    <string name="in_august">ஆகஸ்டில்</string>
+    <string name="in_september">செப்டம்பரில்</string>
+    <string name="in_october">அக்டோபரில்</string>
+    <string name="in_november">நவம்பரில்</string>
+    <string name="in_december">டிசம்பரில்</string>
+    <string name="monday">திங்கள்</string>
+    <string name="tuesday">செவ்வாய்</string>
+    <string name="wednesday">புதன்</string>
+    <string name="thursday">வியாழன்</string>
+    <string name="friday">வெள்ளி</string>
+    <string name="saturday">சனி</string>
+    <string name="sunday">ஞாயிறு</string>
+    <string name="monday_letter">தி</string>
+    <string name="tuesday_letter">செ</string>
+    <string name="wednesday_letter">பு</string>
+    <string name="thursday_letter">வி</string>
+    <string name="friday_letter">வெ</string>
+    <string name="saturday_letter">ச</string>
+    <string name="sunday_letter">ஞா</string>
+    <string name="monday_short">தி</string>
+    <string name="tuesday_short">செ</string>
+    <string name="wednesday_short">பு</string>
+    <string name="thursday_short">வி</string>
+    <string name="friday_short">வெ</string>
+    <string name="saturday_short">ச</string>
+    <string name="sunday_short">ஞா</string>
+    <!-- Pro version -->
+    <string name="upgrade_to_pro_long">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements.</string>
+    <string name="upgrade_to_pro_long_click">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements by clicking here.</string>
+    <string name="it_is_free">It is free till: %s. If you download it till then, you will be able to use it for free forever.</string>
+    <string name="more_info">மேலும் தகவல்</string>
+    <string name="upgrade">தரமுயர்த்து</string>
+    <string name="upgrade_calendar">You have to migrate locally stored events manually via exporting in an .ics file, then importing. You can find both export/import buttons at the main screen menu.</string>
+    <!-- About -->
+    <string name="about">பற்றி</string>
+    <string name="website">Website</string>
+    <string name="website_label">For the source codes visit</string>
+    <string name="email_label">Send your feedback or suggestions to</string>
+    <string name="upgrade_to_pro">Upgrade to Pro</string>
+    <string name="more_apps">மேலும் செயலிகள்</string>
+    <string name="more_apps_from_us">எங்களிடமிருந்து மேலும் செயலிகள்</string>
+    <string name="invite_friends">நன்பர்களை அழைப்பிடு</string>
+    <string name="share_text">Hey, come check out %1$s at %2$s</string>
+    <string name="invite_via">Invite via</string>
+    <string name="rate_us">எம்மை மதிப்பிடு</string>
+    <string name="rate">மதிப்பிடு</string>
+    <string name="donate">நன்கொடையளி</string>
+    <string name="donate_underlined"><u>நன்கொடையளி</u></string>
+    <string name="follow_us">எம்மை பின்தொடர்</string>
+    <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
+    <string name="support">Support</string>
+    <string name="help_us">Help us</string>
+    <string name="social">Social</string>
+    <string name="other">Other</string>
+    <string name="version_placeholder">Version %s</string>
+    <string name="hello">Hello :)</string>
+    <string name="about_footer">Made with ❤️ in Slovakia</string>
+    <string name="additional_info">Additional info</string>
+    <string name="app_version">செயலி பதிப்பு: %s</string>
+    <string name="device_os">Device OS: %s</string>
+    <string name="donate_please">
+        <![CDATA[
+            Hello,<br><br>
+            hope you are enjoying the app. It contains no ads, please support its development by purchasing the <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> app, it will also prevent this dialog from showing up again.<br><br>
+            Thank you!
+        ]]>
+    </string>
+    <string name="purchase">Purchase</string>
+    <string name="update_thank_you">Please update Simple Thank You to the latest version</string>
+    <string name="before_asking_question_read_faq">Before you ask a question, please check the app settings and read the Frequently Asked Questions first. Maybe the solution is there.</string>
+    <string name="before_rate_read_faq">Before you rate us, please check the app settings and read the Frequently Asked Questions first. If you have any problems, maybe the solution is there.</string>
+    <string name="make_sure_latest">Also make sure that you are using the latest app version.</string>
+    <string name="read_it">Read it</string>
+    <string name="read_faq">Read FAQ</string>
+    <string name="rate_us_prompt">Hello,\n\nit looks like you are using this app for quite a while already, and we really appreciate it.\n\nIf we can ask you a favor, please rate us on Google Play. That would really help us a lot.\n\nNo matter how you decide, you will not see this message again.\n\nThanks!</string>
+    <string name="rate_our_app">Rate our app please :)</string>
+    <string name="thank_you">Thank you</string>
+    <string name="widget_locked_pro">The widget is locked.\nPlease upgrade to the Pro version to unlock it.</string>
+    <string name="widget_locked">
+        <![CDATA[
+            The widget is locked.<br>Please purchase <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou">Simple Thank You</a> to unlock it.
+        ]]>
+    </string>
+    <!-- New app (do not translate anything on the 4th line) -->
+    <string name="new_app">
+        <![CDATA[
+            Hey,<br><br>
+            just letting you know that some new apps have been released recently:<br><br>
+            <a href="%1$s">%2$s</a><br><br>
+            <a href="%3$s">%4$s</a><br><br>
+            <a href="%5$s">%6$s</a><br><br>
+            You can download them by pressing their titles or icons.<br><br>
+            Thanks
+        ]]>
+    </string>
+    <string name="simple_app_launcher">எளிய செயலி ஏவி</string>
+    <string name="simple_calculator">எளிய கணிப்பபொறி</string>
+    <string name="simple_calendar">எளிய நாட்காட்டி</string>
+    <string name="simple_camera">எளிய படக்கருவி</string>
+    <string name="simple_clock">எளிய கடிகாரம்</string>
+    <string name="simple_contacts">எளிய தொடர்புகள்</string>
+    <string name="simple_dialer">Simple Dialer</string>
+    <string name="simple_draw">Simple Draw</string>
+    <string name="simple_file_manager">எளிய கோப்பு நிர்வாகி</string>
+    <string name="simple_flashlight">எளிய ஒளிவிளக்கு</string>
+    <string name="simple_gallery">எளிய காட்சியகம்</string>
+    <string name="simple_keyboard">Simple Keyboard</string>
+    <string name="simple_music_player">எளிய இசை இயக்கி</string>
+    <string name="simple_notes">எளிய குறிப்புகள்</string>
+    <string name="simple_sms_messenger">எளிய குறுஞ்செய்தி தூதர்</string>
+    <string name="simple_thank_you">எளிய நன்றி</string>
+    <string name="simple_voice_recorder">எளிய குரல் பதிவான்</string>
+    <string name="app_launcher_short">செயலி ஏவி</string>
+    <string name="calculator_short">கணிப்பபொறி</string>
+    <string name="calendar_short">நாட்காட்டி</string>
+    <string name="camera_short">படக்கருவி</string>
+    <string name="clock_short">கடிகாரம்</string>
+    <string name="contacts_short">தொடர்புகள்</string>
+    <string name="dialer_short">Dialer</string>
+    <string name="draw_short">Draw</string>
+    <string name="file_manager_short">கோப்பு நிர்வாகி</string>
+    <string name="flashlight_short">ஒளிவிளக்கு</string>
+    <string name="gallery_short">காட்சியகம்</string>
+    <string name="keyboard_short">Keyboard</string>
+    <string name="music_player_short">இசை இயக்கி</string>
+    <string name="notes_short">குறிப்புகள்</string>
+    <string name="sms_messenger_short">குறுஞ்செய்தி தூதர்</string>
+    <string name="thank_you_short">நன்றி</string>
+    <string name="voice_recorder_short">குரல் பதிவான்</string>
+    <string name="sideloaded_app">
+        <![CDATA[
+            It looks like your app version is corrupt. Please download the original version <a href="%s">here</a>.
+        ]]>
+    </string>
     <!-- FAQ -->
-    <string name="faq_1_title">எளிய காட்சியகத்தை இயல்புநிலை சாதன காட்சியகமாக மாற்றுவது எப்படி\?</string>
-    <string name="faq_1_text">முதலில் உங்கள் சாதன அமைப்புகளின் செயலிகள் பிரிவில் தற்போது இயல்புநிலை காட்சியகத்தைக் கண்டுபிடிக்க வேண்டும், \"இயல்புநிலையாகத் திற\" போன்றதைக் கூறும் பொத்தானைத் தேடு, அதைக் சொடுக்கி, \"இயல்புநிலைகளைத் துடை\" என்பதைத் தேர்ந்தெடு. அடுத்த முறை நீங்கள் ஒரு படத்தை அ காணொளியை திறக்க முயற்சிப்பீர்கள், நீங்கள் ஒரு செயலி எடுப்பியைப் பார்க்க வேண்டும், அங்கு நீங்கள் எளிய காட்சியகத்தை தேர்ந்தெடுத்து அதை இயல்புநிலை செயலியாக மாற்றலாம்.</string>
-    <string name="faq_2_title">கடவுச்சொல்லுடன் செயலியைப் பூட்டினேன், ஆனால் அதை மறந்தேன். என்ன செய்வது\?</string>
-    <string name="faq_2_text">நீங்கள் அதை 2 வழிகளில் தீர்க்கலாம். நீங்கள் செயலியை மறுநிறுவலாம் அ உங்கள் சாதன அமைப்புகளில் செயலியைக் கண்டுபிடித்து \"தரவைத் துடை\" என்பதைத் தேர்ந்தெடுக்கலாம். இது உங்கள் எல்லா அமைப்புகளையும் அகரமாக்கும், இது எந்த ஊடக கோப்புகளையும் நீக்காது.</string>
-    <string name="faq_3_title">ஒரு தொகுப்பை எப்போதும் மேலே தோன்றச்செய்வது எப்படி\?</string>
-    <string name="faq_3_text">நீங்கள் விரும்பிய தொகுப்பை நீண்டழுத்தி, செயல்கள் சிறுபட்டியில் பின் உருவடியைத் தேர்ந்தெடுக்கலாம், அது அதனை மேலே முள்ளிடும். நீங்கள் பல அடைவுகளையும் முள்ளிடலாம், முள்ளிட்ட உருப்படிகள் இயல்புநிலை வரிசையாக்க முறையால் வரிசைப்படுத்தப்படும்.</string>
-    <string name="faq_4_title">காணொளிகளை எவ்வாறு வேகமாக அனுப்புவது\?</string>
-    <string name="faq_4_text">திரையின் பக்கத்தை இருமுறை தட்டியோ சீக்பார் அருகே தற்போதைய அ அதிகபட்ச கால நூல்களைத் தட்டியோ நீங்கள் இதைச் செய்யலாம். செயலி அமைப்புகளில் தனித்திரையில் காணொளிகளைத் திறக்க நீங்கள் இயக்கினால், கிடைமட்ட சைகைகளையும் பயன்படுத்தலாம்.</string>
-    <string name="faq_5_title">ஒரு அடைவை மறைப்பதற்கும் விலக்குவதற்கும் என்ன வேறுபாடு\?</string>
-    <string name="faq_5_text">விலக்கு எளிய காட்சியகத்தில் மட்டுமே அடைவைக் காண்பிப்பதைத் தடுக்கிறது, அதே சமயம் கணினி வாரியாக மறைக்கிறது, மேலும் இது மற்ற காட்சியகங்களிலிருந்தும் அடைவை மறைக்கிறது. கொடுக்கப்பட்ட அடைவில் வெற்று \".nomedia\" கோப்பை உருவாக்குவதன் மூலம் இது செயல்படுகிறது, அதை நீங்கள் எந்தக் கோப்பு நிர்வாகியுடனும் நீக்கலாம். படக்கருவி, திரைப்பிடிப்புகள் மற்றும் பதிவிறக்கங்கள் போன்ற அடைவுகளை மறைக்க சில சாதனங்கள் அனுமதிக்காது என்பதை நினைவில் கொள்க.</string>
-    <string name="faq_6_title">இசை கவர் ஆர்ட் அ ஒட்டுபடங்களைக் கொண்ட அடைவுகள் ஏன் காட்டப்படுகின்றன\?</string>
-    <string name="faq_6_text">சில அசாதாரண தொகுப்புகள் காட்டப்படுவதை நீங்கள் காண்பீர்கள். அவற்றை நீண்டழுத்தி, விலக்கு என்பதைத் தேர்ந்தெடுத்து எளிதாக விலக்கலாம். அடுத்த ஈருரையில் நீங்கள் பெற்றோர் அடைவைத் தேர்ந்தெடுக்கலாம், இது பிற உறவுடைய தொகுப்புகள் காண்பிப்பதையும் தடுக்கும் வாய்ப்புகள் உள்ளன.</string>
-    <string name="faq_7_title">படங்களைக் கொண்ட அடைவு காண்பிக்கப்படவில்லை, அல்லது அது எல்லா உருப்படிகளையும் காட்டவில்லை. என்ன செய்யலாம்\?</string>
-    <string name="faq_7_text">அதற்கு பல காரணங்கள் இருக்கலாம், ஆனால் அதைத் தீர்ப்பது எளிதானது. அமைப்புகள் -&gt; சேர்க்கப்பட்ட அடைவு நிர்வகி, பிளஸ் என்பதைத் தேர்ந்தெடுத்து தேவையான அடைவுக்குச் செல்லவும்.</string>
-    <string name="faq_8_title">ஒரு சில குறிப்பிட்ட அடைவுகளை நான் காண வேண்டுமெனில் என்ன செய்வது\?</string>
-    <string name="faq_8_text">உள்ளடக்கிய அடைவுகளில் ஒரு அடைவைச் சேர்ப்பது தானாக எதையும் விலக்காது. நீங்கள் செய்யக்கூடியது அமைப்புகள் -&gt; விலக்கிய கோப்புறைகளை நிர்வகி, \"/\" என்ற ரூட் அடைவை விலக்கி, பின்னர் அமைப்புகளில் விரும்பிய அடைவுகளைச் சேர் -&gt; உள்ளடக்கிய அடைவுகளை நிர்வகி. இது தேர்ந்தெடுக்கப்பட்ட அடைவுகளை மட்டுமே தெரியவைக்கும், ஏனெனில் தவிர்த்து, உள்ளடக்குவது இரண்டும் சுழல்நிலை மற்றும் ஒரு அடைவு விலக்கப்பட்டு உள்ளடக்கப்பட்டால், அது காண்பிக்கப்படும்.</string>
-    <string name="faq_10_title">இச்செயலியுடன் படங்களை நறுக்கலாமா\?</string>
-    <string name="faq_10_text">ஆம், பட மூலைகளை இழுப்பதன் மூலம், திருத்தியில் படங்களை நறுக்கலாம். பட சிறுபடத்தை நீண்டழுத்தி திருத்து என்பதை தேர்ந்தெடுத்தோ, முழுத்திரைக் பார்வையிலிருந்து திருத்து என்பதை தேர்ந்தெடுத்தோ நீங்கள் திருத்தியைப் பெறலாம்.</string>
-    <string name="faq_11_title">நான் எப்படியாவது குழு ஊடக கோப்பு சிறுபடங்களை ஒன்றிணைக்கலாமா\?</string>
-    <string name="faq_11_text">நிச்சயமாக, சிறுபடங்களின் பார்வையில் \"குழு மூலம்\" சிறுபட்டி உருப்படியைப் பயன்படுத்துக. எடுத்த தேதி உட்பட பல அளவுகோல்களால் கோப்புகளை ஒன்றிணைக்கலாம். \"எல்லா அடைவு உள்ளடக்கத்தையும் காட்டு\" செயல்பாட்டை நீங்கள் பயன்படுத்தினால், அவற்றை அடைவுகளாலும் ஒன்றிணைக்கலாம்.</string>
-    <string name="faq_12_title">எடுத்த தேதியின்படி வரிசைப்படுத்துவது சரியாக வேலை செய்வதாகத் தெரியவில்லை, அதை எவ்வாறு சரிசெய்வது\?</string>
-    <string name="faq_12_text">கோப்புகள் எங்கிருந்தோ நகலெடுக்கப்படுவதால் இது பெரும்பாலும் ஏற்படுகிறது. கோப்பு சிறுபடங்களைத் தேர்ந்தெடுத்து \"தேதியை எடுத்த மதிப்பை சரிசெய்\" என்பதைத் தேர்ந்தெடுத்து அதைச் சரிசெய்யலாம்.</string>
-    <string name="faq_13_title">படங்களில் சில நிற பேண்டிங்கை நான் காண்கிறேன். தரத்தை எவ்வாறு மேம்படுத்துவது\?</string>
-    <string name="faq_13_text">படங்களைக் காண்பிப்பதற்கான தற்போதைய தீர்வு பெரும்பாலான சந்தர்ப்பங்களில் சிறப்பாக செயல்படுகிறது, ஆனால் நீங்கள் இன்னும் சிறந்த படத் தரத்தை விரும்பினால், \"ஆழமாக பெரிதாக்கக்கூடிய படங்கள்\" பிரிவில், செயலி அமைப்புகளில் \"படங்களை சாத்தியமான மிகவுயர்ந்த தரத்தில் காட்டு\" என்பதை இயக்கலாம். .</string>
-    <string name="faq_14_title">நான் ஒரு கோப்பு / அடைவை மறைத்துள்ளேன். நான் அதை எப்படி மறைநீக்க முடியும்\?</string>
-    <string name="faq_14_text">பிரதான திரையில் \"தற்காலிகமாக மறைந்த உருப்படிகளைக் காண்பி\" சிறுபட்டி உருப்படியை அழுத்தவும் அ மறைந்த உருப்படியைக் காண செயலி அமைப்புகளில் \"மறைந்த உருப்படிகளைக் காட்டு\" என்பதை மாற்று. நீங்கள் அதை மறைக்க விரும்பினால், அதை நீண்டழுத்தி \"மறை\" என்பதைத் தேர்ந்தெடு. அடைவுகள் ஒரு மறைக்கப்பட்ட \".nomedia\" கோப்பைச் சேர்ப்பதால் மறைக்கப்படுகின்றன, நீங்கள் எந்த கோப்பு நிர்வாகியிடமும் கோப்பை அழிக்கலாம். மறைப்பது மீண்டும் மீண்டும் செயல்படுகிறது என்பதை நினைவில் கொள்க, எனவே நீங்கள் ஒரு அடைவை மறைத்தால், எல்லா துணையடைவுகளும் மறைக்கப்படும். எனவே துணையடைவுகளை மறைக்க நீங்கள் பெற்றோர் அடைவை மறைக்க வேண்டும்.</string>
-    <string name="faq_15_title">செயலி ஏன் அதிக இடத்தை எடுத்துக்கொள்கிறது\?</string>
-    <string name="faq_15_text">செயலி பதுக்ககம் 250MB வரை எடுக்கலாம், இது படத்தை விரைவாக ஏற்றுவதை உறுதி செய்கிறது. செயலி இன்னும் அதிக இடத்தை எடுத்துக்கொண்டால், மீள்சுழற்சி தொட்டியில் நீங்கள் உருப்படிகளை வைத்திருப்பதால் இது பெரும்பாலும் ஏற்படலாம். அந்த கோப்புகள் செயலி அளவிற்கு எண்ணப்படுகின்றன. மீள்சுழற்சி தொட்டியை அதனைத் திறந்து எல்லா கோப்புகளையும் அழித்தோ செயலி அமைவுகளிலிருந்து அழித்தோ துடைக்கலாம். தொட்டியில் உள்ள ஒவ்வொரு கோப்பும் 30 நாட்களுக்குப் பிறகு தானாகவே அழிக்கப்படும்.</string>
-    <string name="faq_16_title">What happened to file and folder hiding and why cannot I see hidden items anymore\?</string>
-    <string name="faq_16_text">Starting with Android 11 you cannot hide or unhide files or folders anymore, you cannot see the hidden ones in gallery apps either. You will have to use some file manager for that.</string>
-    <string name="faq_17_title">Why cannot I include missing folders anymore\?</string>
-    <string name="faq_17_text">That stopped working due to the system changes that came with Android 11 too, the app cannot browse real folders anymore, it relies on the so called MediaStore at fetching data.</string>
-    <string name="faq_18_title">Why do I see ads during video playback\?</string>
-    <string name="faq_18_text">Our apps have no ads whatsoever. If you see them during video playback, you must be using some other apps video player. Try finding your default video player in the device settings, then do a \"Clear defaults\" on it. The next time you invoke some video intent you will see an app picker prompt, where you can select what app you want to use.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
+    <string name="frequently_asked_questions">Frequently asked questions</string>
+    <string name="before_asking_question">Before you ask a question, please first read the</string>
+    <string name="faq_1_title_commons">How come I don\'t see this apps widget on the list of widgets?</string>
+    <string name="faq_1_text_commons">It is most likely because you moved the app on an SD card. There is an Android system limitation which hides the given app widgets
+        in that case. The only solution is to move the app back onto the Internal Storage via your device settings.</string>
+    <string name="faq_2_title_commons">I want to support you, but I cannot donate money. Is there anything else I can do?</string>
+    <string name="faq_2_text_commons">
+        <![CDATA[
+            Yes, of course. You can spread the word about the apps or give good feedback and ratings. You can also help by translating the apps in a new language, or just update some existing translations.
+            The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+        ]]>
+    </string>
+    <string name="faq_3_title_commons">I deleted some files by mistake, how can I recover them?</string>
+    <string name="faq_3_text_commons">Sadly, you cannot. Files are deleted instantly after the confirmation dialog, there is no trashbin available.</string>
+    <string name="faq_4_title_commons">I don\'t like the widget colors, can I change them?</string>
+    <string name="faq_4_text_commons">Yep, as you drag a widget on your home screen a widget config screen appears. You will see colored squares at the bottom left corner, just press them to pick a new color. You can use the slider for adjusting the alpha too.</string>
+    <string name="faq_5_title_commons">Can I somehow restore deleted files?</string>
+    <string name="faq_5_text_commons">If they were really deleted, you cannot. However, there is a Recycle Bin enabled by default, it will cause the files just be moved in the Bin instead of deleting them.</string>
+    <string name="faq_6_title_commons">The app launcher icon disappeared. What can I do?</string>
+    <string name="faq_6_text_commons">It is caused by your launcher not supporting icon customization properly. Try launching the app via Google Play or some widget, if available.
+        Once launched, just set back the default orange icon #F57C00. You might have to reinstall the app in the worst case.</string>
+    <string name="faq_7_title_commons">The money has been deducted from my bank account, but I cannot download the app. What can I do?</string>
+    <string name="faq_7_text_commons">Payments are fully handled by Google, their system glitches from time to time. Just clear your Google Play app cache and restart your device, then retry downloading it.</string>
+    <string name="faq_8_title_commons">Why should I upgrade to the Pro version?</string>
+    <string name="faq_8_text_commons">As your app version is no longer updated, the bugs you have maybe spotted will never be fixed. There will also be no new functions added. You can purchase the Pro version on Google Play for a small sum of money.
+        It is a one time payment, which means that once you purchase it, you will never have to pay again. Not even after getting a new device. If you won\'t like the Pro version, you can just uninstall it within a few hours and you will automatically get your money back.
+        If you want a refund anytime later, just contact us at hello@simplemobiletools.com and you will get it.</string>
+    <string name="faq_9_title_commons">How can I select multiple items at once?</string>
+    <string name="faq_9_text_commons">There are multiple ways of doing that. The first one is starting the selection mode by long pressing one item, then short clicking on others to select them. The second way is similar to selecting items on PCs with a mouse,
+        just start the selection mode by long pressing one item, then with your finger still down drag it across other items for selecting. The third way of selecting multiple items is long pressing one item, then long pressing another one and everything in between gets selected. If you
+        want to select all items, just long press one item, then click at the selected item counter at the top left corner. That will select or unselect all everything.</string>
+    <string name="faq_10_title_commons">I have purchased the app, but I cannot download it on another device.</string>
+    <string name="faq_10_text_commons">Try clearing your Google Play app cache and restarting your device. It is some Google Play glitch, not really related to the app itself.</string>
+    <!-- Contributors -->
+    <string name="contributors">Contributors</string>
+    <string name="translation">Translation</string>
+    <string name="development">Development</string>
+    <string name="other_help">Other help</string>
+    <string name="contributors_label">
+        <![CDATA[
+            This list contains everyone that noticeably helped any app within the Simple Mobile Tools suite, not only this one. Translations are handled by volunteers,
+            let us know if you want to help too. The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+            Thanks to all contributors and other supporters!
+        ]]>
+    </string>
+    <string name="translation_arabic">Arabic</string>
+    <string name="translation_azerbaijani">Azerbaijani</string>
+    <string name="translation_bengali">Bengali</string>
+    <string name="translation_breton">Breton</string>
+    <string name="translation_catalan">Catalan</string>
+    <string name="translation_czech">Czech</string>
+    <string name="translation_welsh">Welsh</string>
+    <string name="translation_danish">Danish</string>
+    <string name="translation_english">English</string>
+    <string name="translation_german">German</string>
+    <string name="translation_greek">Greek</string>
+    <string name="translation_spanish">Spanish</string>
+    <string name="translation_basque">Basque</string>
+    <string name="translation_persian">Persian</string>
+    <string name="translation_finnish">Finnish</string>
+    <string name="translation_french">French</string>
+    <string name="translation_galician">Galician</string>
+    <string name="translation_hindi">Hindi</string>
+    <string name="translation_croatian">Croatian</string>
+    <string name="translation_hungarian">Hungarian</string>
+    <string name="translation_indonesian">Indonesian</string>
+    <string name="translation_italian">Italian</string>
+    <string name="translation_hebrew">Hebrew</string>
+    <string name="translation_japanese">Japanese</string>
+    <string name="translation_korean">Korean</string>
+    <string name="translation_lithuanian">Lithuanian</string>
+    <string name="translation_nepali">Nepali</string>
+    <string name="translation_norwegian">Norwegian</string>
+    <string name="translation_dutch">Dutch</string>
+    <string name="translation_polish">Polish</string>
+    <string name="translation_portuguese">Portuguese</string>
+    <string name="translation_romanian">Romanian</string>
+    <string name="translation_russian">Russian</string>
+    <string name="translation_slovak">Slovak</string>
+    <string name="translation_slovenian">Slovenian</string>
+    <string name="translation_serbian">Serbian</string>
+    <string name="translation_swedish">Swedish</string>
+    <string name="translation_tamil">Tamil</string>
+    <string name="translation_turkish">Turkish</string>
+    <string name="translation_ukrainian">Ukrainian</string>
+    <string name="translation_vietnamese">Vietnamese</string>
+    <string name="translation_chinese_hk">Chinese (Hong Kong)</string>
+    <string name="translation_chinese_cn">Chinese (Simplified)</string>
+    <string name="translation_chinese_tw">Chinese (Traditional)</string>
+    <!-- Pro comparison (shown in the deprecated free apps) -->
+    <string name="why_upgrade">Get the Pro version now!</string>
+    <string name="why_upgrade_basic_version">Basic</string>
+    <string name="why_upgrade_pro_version">Pro</string>
+    <string name="why_upgrade_no_ads">No ads</string>
+    <string name="why_upgrade_no_internet_access">இணைய அணுகல் இல்லை</string>
+    <string name="why_upgrade_footer">+ 100% Money Back Guarantee</string>
+    <string name="why_upgrade_improved_design">Improved design</string>
+    <!-- Gallery Pro -->
+    <string name="why_upgrade_advanced_photo_editor">மேம்பட்ட புகைப்பட திருத்தி</string>
+    <string name="why_upgrade_heic_support">HEIC/HEIF கோப்பு ஆதரவு</string>
+    <string name="why_upgrade_batch_renaming">Advanced batch file renaming</string>
+    <string name="why_upgrade_folder_locking">Individual folder locking</string>
+    <string name="why_upgrade_printing_support">அச்சிடுதல் ஆதரவு</string>
+    <!-- Calendar Pro -->
+    <string name="why_upgrade_time_zone_support">நேர மண்டல ஆதரவு</string>
+    <string name="why_upgrade_attendees_emails">Attendees and email reminders</string>
+    <string name="why_upgrade_easy_event_importing">எளிதான நிகழ்வு இறக்குமதி</string>
+    <string name="why_upgrade_new_widgets">New widgets</string>
+    <!-- Contacts Pro -->
+    <string name="why_upgrade_duplicate_contact_merging">Improved duplicate contact merging</string>
+    <string name="why_upgrade_font_size_customization">எழுத்துரு அளவு தனிப்பயனாக்கம்</string>
+    <string name="why_upgrade_private_contact_sharing">Optional private contact sharing within our apps</string>
+    <string name="why_upgrade_customizable_contact_ringtones">Customizable contact ringtones</string>
+    <string name="why_upgrade_contact_filtering">தொடர்பு வடிகட்டல்</string>
+    <!-- Notes Pro -->
+    <string name="why_upgrade_checklists">Checklists</string>
+    <string name="why_upgrade_different_note_per_widget">Different note and colors per widget</string>
+    <string name="why_upgrade_note_locking">குறிப்பு பூட்டல்</string>
+    <!-- File Manager Pro -->
+    <string name="why_upgrade_date_and_time_format">தேதி மற்றும் நேர வடிவமைப்பு தனிப்பயனாக்கம்</string>
+    <string name="why_upgrade_shortcuts">முகப்புத்திரை குறுக்குவழிகள்</string>
+    <string name="why_upgrade_file_compression">கோப்பு சுருக்கம் ஆதரவு</string>
+    <string name="why_upgrade_recents_tab">அண்மை கோப்புகள் கொண்ட தாவல்</string>
+    <!-- Draw Pro -->
+    <string name="why_upgrade_background_color_customization">பின்புல நிறம் தனிப்பயனாக்கம்</string>
+    <string name="why_upgrade_file_importing">கோப்பு இறக்குமதி ஆதரவு</string>
+    <string name="why_upgrade_zooming">Zooming</string>
+    <!-- License -->
+    <string name="notice">This app uses the following third party libraries to make my life easier. Thank you.</string>
+    <string name="third_party_licences">மூன்றாம் தரப்பு உரிமங்கள்</string>
+    <string name="kotlin_title">Kotlin (programming language)</string>
+    <string name="subsampling_title">Subsampling Scale Image View (zoomable imageviews)</string>
+    <string name="glide_title">Glide (image loading and caching)</string>
+    <string name="picasso_title">Picasso (image loading and caching)</string>
+    <string name="cropper_title">Android Image Cropper (image crop and rotate)</string>
+    <string name="rtl_viewpager_title">RtlViewPager (right to left swiping)</string>
+    <string name="joda_title">Joda-Time (Java date replacement)</string>
+    <string name="stetho_title">Stetho (debugging databases)</string>
+    <string name="otto_title">Otto (event bus)</string>
+    <string name="photoview_title">PhotoView (zoomable GIFs)</string>
+    <string name="pattern_title">PatternLockView (pattern protection)</string>
+    <string name="reprint_title">Reprint (fingerprint protection)</string>
+    <string name="gif_drawable_title">Gif Drawable (loading GIFs)</string>
+    <string name="autofittextview_title">AutoFitTextView (resizing text)</string>
+    <string name="robolectric_title">Robolectric (testing framework)</string>
+    <string name="espresso_title">Espresso (testing helper)</string>
+    <string name="gson_title">Gson (JSON parser)</string>
+    <string name="leak_canary_title">Leak Canary (memory leak detector)</string>
+    <string name="number_picker_title">Number Picker (customizable number picker)</string>
+    <string name="exoplayer_title">ExoPlayer (video player)</string>
+    <string name="panorama_view_title">VR Panorama View (displaying panoramas)</string>
+    <string name="sanselan_title">Apache Sanselan (reading image metadata)</string>
+    <string name="filters_title">Android Photo Filters (image filters)</string>
+    <string name="gesture_views_title">Gesture Views (zoomable images)</string>
+    <string name="indicator_fast_scroll_title">Indicator Fast Scroll (letters on scrollbar)</string>
+    <string name="event_bus_title">Event Bus (communication within the app)</string>
+    <string name="audio_record_view_title">Audio Record View (audio visualization)</string>
+    <string name="sms_mms_title">SMS MMS (SMS and MMS handling)</string>
+    <string name="apng_title">APNG Android (animated WebP support)</string>
+    <!-- Google Play listing -->
+    <string name="deprecated_app">DEPRECATED: This version of the app is no longer maintained, get the Pro version at https://play.google.com/store/apps/details?id=com.simplemobiletools.xxx.pro</string>
+    <string name="pro_app_refund">Don\'t forget that if you uninstall any paid app within 2 hours, you will automatically be refunded. If you want a refund anytime later, just contact us at hello@simplemobiletools.com and you will get it. That makes it easy to try it out :)</string>
+    <!-- Description of our developer profile on Google Play, it can have max 140 characters -->
+    <string name="developer_description">A group of simple, open source Android apps with customizable widgets, without ads and unnecessary permissions.</string>
 </resources>
