@@ -16,11 +16,11 @@ import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import java.util.*
 
 @SuppressLint("NotifyDataSetChanged")
-abstract class RecyclerViewAdapterBase(activity: BaseSimpleActivity,
-                                       recyclerView: MyRecyclerView,
-                                       fastScroller: FastScroller? = null,
-                                       private val swipeRefreshLayout: SwipeRefreshLayout? = null,
-                                       itemClick: (Any) -> Unit):
+abstract class ReorderableAdapter(activity: BaseSimpleActivity,
+                                  recyclerView: MyRecyclerView,
+                                  fastScroller: FastScroller? = null,
+                                  private val swipeRefreshLayout: SwipeRefreshLayout? = null,
+                                  itemClick: (Any) -> Unit):
     MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract
 {
     protected var startReorderDragListener: StartReorderDragListener? = null

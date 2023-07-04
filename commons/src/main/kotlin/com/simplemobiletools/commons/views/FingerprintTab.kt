@@ -60,6 +60,7 @@ class FingerprintTab(context: Context, attrs: AttributeSet) : RelativeLayout(con
                 when (failureReason) {
                     AuthenticationFailureReason.AUTHENTICATION_FAILED -> context.toast(R.string.authentication_failed)
                     AuthenticationFailureReason.LOCKED_OUT -> context.toast(R.string.authentication_blocked)
+                    else -> {}
                 }
             }
         })

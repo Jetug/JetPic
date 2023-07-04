@@ -7,7 +7,6 @@ import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -47,7 +46,7 @@ open class MediaAdapterBase (
     activity: SimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
     val allowMultiplePicks: Boolean, val path: String, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null, swipeRefreshLayout: SwipeRefreshLayout? = null, itemClick: (Any) -> Unit
 ) :
-    RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick) {
+    ReorderableAdapter(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick) {
 
     private val INSTANT_LOAD_DURATION = 2000L
     private val IMAGE_LOAD_DELAY = 100L

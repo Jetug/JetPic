@@ -568,7 +568,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                         //sortValue = ""//getDirectorySortingValue(curMedia, path, name, size)
                     }
 
-                    //setupAdapter(dirs as ArrayList<FolderItem>)
+                    //setupAdapter(tasks as ArrayList<FolderItem>)
 
                     // update directories and media files in the local db, delete invalid items. Intentionally creating a new thread
                     activity.updateDirectory(directory)
@@ -656,8 +656,8 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
                 val newDir = activity.createDirectoryFromMedia(folder, newMedia, albumCovers, hiddenString, includedFolders, getProperFileSize, noMediaFolders)
                 newDirs.add(newDir)
                 //Jet
-                //            dirs.add(newDir)
-                //            setupAdapter(dirs as ArrayList<FolderItem>)
+                //            tasks.add(newDir)
+                //            setupAdapter(tasks as ArrayList<FolderItem>)
 
                 // make sure to create a new thread for these operations, dont just use the common bg thread
                 launchIO{
@@ -776,7 +776,6 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
             }.apply {
                 setupZoomListener(mZoomListener)
             }
-            //activity.runOnUiThread
             launchMain{
                 binding.directories_grid.adapter = adapter
                 setupScrollDirection()

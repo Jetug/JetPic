@@ -179,7 +179,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun task(){
-        Intent(this, TasksActivity::class.java)
+        startActivity(Intent(this, TasksActivity::class.java))
     }
 
     private fun downloadFullApp(){

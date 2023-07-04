@@ -45,7 +45,7 @@ fun ArrayList<FolderItem>.getDirectories(): ArrayList<Directory>{
             result.add(item)
         else if(item is DirectoryGroup){
             val dirs = item.innerDirs.clone() as ArrayList<Directory>
-            //dirs.forEach{d -> d.groupName = "" }
+            //tasks.forEach{d -> d.groupName = "" }
             result.addAll(dirs)
         }
     }

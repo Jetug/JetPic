@@ -16,10 +16,10 @@ android {
     compileSdk 31
 
     defaultConfig {
-        //applicationId "com.jetugapps.gallery.plus.jetug"
+        applicationId "com.jetugapps.gallery.plus.jetug"
         //applicationId "com.jetugapps.gallery.plus"
         //applicationId "com.jetugapps.gallery.plus.dev"
-        applicationId "com.jetugapps.gallery"
+        //applicationId "com.jetugapps.gallery"
         //applicationId "com.simplemobiletools.jetugapps.gallery"
         //applicationId "com.simplemobiletools.gallery.plus"
 
@@ -30,6 +30,10 @@ android {
         versionName "1.6.5"
         setProperty("archivesBaseName", "gallery-$versionCode")
         vectorDrawables.useSupportLibrary = true
+    }
+
+    buildFeatures{
+        viewBinding = true
     }
 
     signingConfigs {

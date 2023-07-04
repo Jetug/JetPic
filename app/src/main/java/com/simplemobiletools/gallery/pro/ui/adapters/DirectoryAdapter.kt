@@ -73,7 +73,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                        swipeRefreshLayout: SwipeRefreshLayout? = null,
                        fastScroller: FastScroller? = null,
                        val controls: DirectoryAdapterControls = empty, itemClick: (Any) -> Unit) :
-    RecyclerViewAdapterBase(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
+    ReorderableAdapter(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     private val ITEM_PLACEHOLDER = 0
     private val ITEM_DIRECTORY = 1
@@ -249,7 +249,7 @@ class DirectoryAdapter(activity: SimpleActivity,
 
     private fun getDirsToShow(){
         dirs = activity.getDirsToShow(dirs.getDirectories())
-        //dirs = activity.getSortedDirectories(dirs)
+        //tasks = activity.getSortedDirectories(tasks)
         notifyDataSetChanged()
     }
 
@@ -302,7 +302,7 @@ class DirectoryAdapter(activity: SimpleActivity,
                 if(item is Directory) {
                     item.groupName = name
                     //activity.updateDirectory(item)
-                    //dirs.remove(item)
+                    //tasks.remove(item)
                     //activity.saveDirectoryGroup(item.path, name)
                     activity.saveDirChangesAsync(item)
                 }

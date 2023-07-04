@@ -23,7 +23,7 @@ import kotlin.collections.ArrayList
 
 @SuppressLint("NotifyDataSetChanged")
 abstract class MyRecyclerViewAdapter(
-    open val activity: BaseSimpleActivity,
+    val activity: BaseSimpleActivity,
     val recyclerView: MyRecyclerView,
     val fastScroller: FastScroller? = null,
     val itemClick: (Any) -> Unit) : RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>()
