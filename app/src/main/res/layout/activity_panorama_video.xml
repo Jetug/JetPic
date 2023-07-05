@@ -9,9 +9,10 @@
     <com.google.vr.sdk.widgets.video.VrVideoView
         android:id="@+id/vr_video_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
-    <include layout="@layout/bottom_video_time_holder"/>
+        <include layout="@layout/bottom_video_time_holder" />
+    </com.google.vr.sdk.widgets.video.VrVideoView>
 
     <ImageView
         android:id="@+id/explore"
@@ -20,7 +21,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/activity_margin"
-        android:src="@drawable/ic_explore_vector"/>
+        android:src="@drawable/ic_explore_vector" />
 
     <ImageView
         android:id="@+id/cardboard"
