@@ -21,14 +21,13 @@ class TasksActivity : AppCompatActivity() {
 
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
         val viewPager: ViewPager2 = findViewById(R.id.view_pager)
-
         val adapter = PagerAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Tab A"
-                1 -> tab.text = "Tab B"
+                0 -> tab.text = "New task"
+                1 -> tab.text = "My tasks"
             }
         }.attach()
     }

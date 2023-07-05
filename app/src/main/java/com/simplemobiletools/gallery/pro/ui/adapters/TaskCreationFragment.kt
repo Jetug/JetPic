@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.databinding.FragmentTaskCreationBinding
 import com.simplemobiletools.gallery.pro.databinding.FragmentTaskListBinding
 
 class TaskCreationFragment : Fragment() {
-    // lateinit var binding: Bindin
+    lateinit var binding: FragmentTaskCreationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = FragmentTaskCreationBinding.inflate(layoutInflater)
+        binding = FragmentTaskCreationBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
