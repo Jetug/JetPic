@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.*
 import com.google.android.material.tabs.*
 import com.google.android.material.tabs.*
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.views.*
 import com.simplemobiletools.gallery.pro.databinding.*
+import com.simplemobiletools.gallery.pro.ui.activities.*
 import com.simplemobiletools.gallery.pro.ui.adapters.*
 
-class TasksActivity : AppCompatActivity() {
+class TasksActivity : SimpleActivity() {
     lateinit var binding: ActivityTasksBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
