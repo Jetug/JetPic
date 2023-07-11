@@ -133,7 +133,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
         <com.simplemobiletools.commons.views.MyEditText
             android:id="@+id/path"
@@ -154,4 +155,11 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.simplemobiletools.commons.views.MyButton
+        android:id="@+id/okBtn"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/ok"
+        android:layout_gravity="end" />
 </LinearLayout>

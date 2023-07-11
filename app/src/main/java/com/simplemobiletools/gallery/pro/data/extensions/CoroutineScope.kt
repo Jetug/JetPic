@@ -13,4 +13,6 @@ fun launchIO(block: suspend CoroutineScope.() -> Unit) = IOScope.launch { block(
 fun launchDefault(block: suspend CoroutineScope.() -> Unit) = DefaultScope.launch { block() }
 fun launchMain(block: suspend CoroutineScope.() -> Unit) = MainScope.launch { block() }
 
-suspend fun withMainContext(block: suspend CoroutineScope.() -> Unit) = withContext(Dispatchers.Main) { block() }
+
+suspend fun <T> withMainContext(block: suspend CoroutineScope.() -> T) : T = withContext(Dispatchers.Main) { block() }
+suspend fun <T> withIOContext  (block: suspend CoroutineScope.() -> T) : T = withContext(Dispatchers.IO)   { block() }
