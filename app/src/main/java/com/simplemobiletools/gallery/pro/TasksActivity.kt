@@ -1,5 +1,6 @@
 package com.simplemobiletools.gallery.pro
 
+import android.content.Intent
 import androidx.appcompat.app.*
 import android.os.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,12 +10,15 @@ import com.google.android.material.tabs.*
 import com.google.android.material.tabs.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.views.*
+import com.simplemobiletools.gallery.pro.data.interfaces.ResultListener
 import com.simplemobiletools.gallery.pro.databinding.*
 import com.simplemobiletools.gallery.pro.ui.activities.*
 import com.simplemobiletools.gallery.pro.ui.adapters.*
 
-class TasksActivity : SimpleActivity() {
+class TasksActivity : SimpleActivity(), ResultListener {
     lateinit var binding: ActivityTasksBinding
+
+    override var onResult: (Int, Int, Intent?) -> Unit = { _, _, _ -> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,5 +38,8 @@ class TasksActivity : SimpleActivity() {
         }.attach()
     }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        onResult(requestCode, resultCode, data)
+    }
 }

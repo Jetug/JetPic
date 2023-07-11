@@ -1,5 +1,7 @@
 package com.simplemobiletools.gallery.pro.ui.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.databinding.FragmentTaskCreationBinding
-import com.simplemobiletools.gallery.pro.databinding.FragmentTaskListBinding
-import com.simplemobiletools.gallery.pro.ui.dialogs.TaskDialog
+import com.simplemobiletools.gallery.pro.databinding.*
+import com.simplemobiletools.gallery.pro.databinding.*
+import com.simplemobiletools.gallery.pro.ui.dialogs.*
 import kotlinx.android.synthetic.main.fragment_task_creation.view.*
 
 class TaskCreationFragment : Fragment() {
@@ -19,6 +21,7 @@ class TaskCreationFragment : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentTaskCreationBinding.inflate(layoutInflater)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
