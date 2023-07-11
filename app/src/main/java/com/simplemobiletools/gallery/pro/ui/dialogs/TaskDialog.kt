@@ -67,17 +67,17 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
     }
 
 
-    private var sourceUri: String = ""
-    private var destinationUri: String = ""
+    private var sourceUri: Uri? = null
+    private var destinationUri: Uri? = null
 
     private fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            sourceUri = uriToPath(data?.data)
-            view.sourcePath.setText(sourceUri)
+            sourceUri = data?.data
+            view.sourcePath.setText(sourceUri?.path)
         }
         else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            destinationUri = uriToPath(data?.data)
-            view.path.setText(destinationUri)
+            destinationUri = data?.data
+            view.path.setText(destinationUri?.path)
         }
     }
 
@@ -101,9 +101,9 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
         return realPath ?: ""
     }
 
-    private fun onPositiveButtonClick(v: View) = launchIO{
-        if (sourceUri.isEmpty() || destinationUri.isEmpty()) return@launchIO
-        activity.createMediaMoveTask(sourceUri, destinationUri)
+    private fun onPositiveButtonClick(v: View){
+        if (sourceUri == null || destinationUri == null) return
+        activity.createMediaMoveTask(sourceUri.toString(), destinationUri.toString())
         dialog.cancel()
     }
 }

@@ -1,6 +1,8 @@
 package com.simplemobiletools.gallery.pro.data.jetug.workers
 
 import android.content.Context
+import android.net.Uri
+import androidx.documentfile.provider.DocumentFile
 import androidx.work.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,48 +24,61 @@ fun Context.createMediaMoveTask(sourcePath: String, destinationPath: String) {
 }
 
 class MediaMoveWorker(
-    context: Context,
+    val context: Context,
     params: WorkerParameters
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             // Retrieve source and destination paths from input data
-            val sourcePath = inputData.getString(KEY_SOURCE_PATH)
-            val destinationPath = inputData.getString(KEY_DESTINATION_PATH)
+            val sourcePath = Uri.parse(inputData.getString(KEY_SOURCE_PATH))
+            val destinationPath = Uri.parse(inputData.getString(KEY_DESTINATION_PATH))
 
             if (sourcePath != null && destinationPath != null) {
-                // Move media files from source directory to destination directory
-                moveMediaFiles(sourcePath, destinationPath)
+                context.movePhotosAndVideos(sourcePath, destinationPath)
             } else {
                 throw IllegalArgumentException("Invalid input data")
             }
 
             Result.success()
         } catch (e: Exception) {
-            // Handle any errors
+            e.printStackTrace()
             Result.failure()
         }
     }
 
-    private fun moveMediaFiles(sourcePath: String, destinationPath: String) {
-        val sourceDirectory = File(sourcePath)
-        val destinationDirectory = File(destinationPath)
+    fun Context.movePhotosAndVideos(sourceUri: Uri, destinationUri: Uri) {
+        val contentResolver = applicationContext.contentResolver
+        val sourceDocument = DocumentFile.fromTreeUri(this, sourceUri)
+        val destinationDocument = DocumentFile.fromTreeUri(this, destinationUri)
 
-        // Loop through files in source directory
-        sourceDirectory.listFiles()?.forEach { file ->
-            if (file.isFile && file.isMediaFile()) {
-                // Move file to destination directory
-                file.copyTo(File(destinationDirectory, file.name), true)
-                file.delete()
+        if (sourceDocument != null && sourceDocument.isDirectory) {
+            val files = sourceDocument.listFiles()
+
+            for (file in files) {
+                if (!file.isDirectory && isPhotoOrVideoFile(file)) {
+                    val sourceFileUri = file.uri
+                    val destinationFile = file.name?.let {
+                        destinationDocument?.createFile(file.type ?: "application/octet-stream", it)
+                    }
+
+                    if (destinationFile != null) {
+                        val sourceInputStream = contentResolver.openInputStream(sourceFileUri)
+                        val destinationOutputStream = contentResolver.openOutputStream(destinationFile.uri)
+                        sourceInputStream?.use { input ->
+                            destinationOutputStream?.use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    private fun File.isMediaFile(): Boolean {
-        // Add your media file extensions here
-        val mediaFileExtensions = arrayOf("png", "jpg", "jpeg", "webp", "svg", "mp4", "gif")
-        return mediaFileExtensions.contains(extension.toLowerCase())
+    fun isPhotoOrVideoFile(file: DocumentFile): Boolean {
+        val mimeType = file.type
+        return mimeType?.startsWith("image/") == true || mimeType?.startsWith("video/") == true
     }
 
     companion object {
