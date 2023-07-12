@@ -2,26 +2,19 @@ package com.simplemobiletools.gallery.pro.data.jetug.workers
 
 import android.content.Context
 import android.net.Uri
+import android.view.WindowInsets.Side.all
+import androidx.appcompat.widget.AppCompatDrawableManager.get
 import androidx.documentfile.provider.DocumentFile
 import androidx.work.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.Observer
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-fun Context.createMediaMoveTask(sourcePath: String, destinationPath: String) {
-     val inputData = Data.Builder()
-         .putString(MediaMoveWorker.KEY_SOURCE_PATH, sourcePath)
-         .putString(MediaMoveWorker.KEY_DESTINATION_PATH, destinationPath)
-         .build()
-
-     val mediaMoveWorkRequest = PeriodicWorkRequestBuilder<MediaMoveWorker>(15, TimeUnit.MINUTES)
-         .setInputData(inputData)
-         .build()
-
-     WorkManager.getInstance(this).enqueue(mediaMoveWorkRequest)
-}
+const val KEY_SOURCE_PATH = "source_path"
+const val KEY_DESTINATION_PATH = "destination_path"
 
 class MediaMoveWorker(
     val context: Context,
@@ -76,13 +69,9 @@ class MediaMoveWorker(
         }
     }
 
-    fun isPhotoOrVideoFile(file: DocumentFile): Boolean {
+    private fun isPhotoOrVideoFile(file: DocumentFile): Boolean {
         val mimeType = file.type
-        return mimeType?.startsWith("image/") == true || mimeType?.startsWith("video/") == true
-    }
-
-    companion object {
-        const val KEY_SOURCE_PATH = "source_path"
-        const val KEY_DESTINATION_PATH = "destination_path"
+        return mimeType?.startsWith("image/") == true ||
+               mimeType?.startsWith("video/") == true
     }
 }

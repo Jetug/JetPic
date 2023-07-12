@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.fragments.TaskCreationFragment">
 
-    <Button
+    <com.simplemobiletools.commons.views.MyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_new_redirect_task"
+        android:layout_gravity="center|top"
+        android:layout_margin="16dp"
+        android:textSize="23sp"/>
+
+    <com.simplemobiletools.commons.views.MyButton
         android:id="@+id/newTaskBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:drawableStart="@drawable/ic_plus_vector"
         android:drawableTint="@color/actionbar_menu_icon"
-        android:text="New task"
-        android:gravity="start|center">
-    </Button>
-</FrameLayout>
+        android:text="@string/redirect_task"
+        android:textSize="20sp"
+        android:gravity="start|center"
+        android:layout_gravity="start">
+    </com.simplemobiletools.commons.views.MyButton>
+</LinearLayout>

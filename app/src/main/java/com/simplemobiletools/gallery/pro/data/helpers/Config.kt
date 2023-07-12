@@ -10,6 +10,7 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.models.AlbumCover
 import java.util.*
 
+
 class Config(context: Context) : BaseConfig(context) {
     companion object {
         fun newInstance(context: Context) = Config(context)
@@ -96,23 +97,23 @@ class Config(context: Context) : BaseConfig(context) {
     }
 
     fun removePinnedFolders(paths: Set<String>) {
-        val currPinnedFolders = HashSet<String>(pinnedFolders)
+        val currPinnedFolders = HashSet(pinnedFolders)
         currPinnedFolders.removeAll(paths)
         pinnedFolders = currPinnedFolders
     }
 
     fun addExcludedFolder(path: String) {
-        addExcludedFolders(HashSet<String>(Arrays.asList(path)))
+        addExcludedFolders(HashSet(Arrays.asList(path)))
     }
 
     fun addExcludedFolders(paths: Set<String>) {
-        val currExcludedFolders = HashSet<String>(excludedFolders)
+        val currExcludedFolders = HashSet(excludedFolders)
         currExcludedFolders.addAll(paths)
         excludedFolders = currExcludedFolders.filter { it.isNotEmpty() }.toHashSet()
     }
 
     fun removeExcludedFolder(path: String) {
-        val currExcludedFolders = HashSet<String>(excludedFolders)
+        val currExcludedFolders = HashSet(excludedFolders)
         currExcludedFolders.remove(path)
         excludedFolders = currExcludedFolders
     }
@@ -120,6 +121,36 @@ class Config(context: Context) : BaseConfig(context) {
     var excludedFolders: MutableSet<String>
         get() = prefs.getStringSet(EXCLUDED_FOLDERS, HashSet())!!
         set(excludedFolders) = prefs.edit().remove(EXCLUDED_FOLDERS).putStringSet(EXCLUDED_FOLDERS, excludedFolders).apply()
+
+    fun addTask(id: String, name: String) {
+        val currTask = tasks
+        currTask[id] = name
+        tasks = currTask
+    }
+
+    fun removeTask(id: String) {
+        val currTask = tasks
+        currTask.remove(id)
+        tasks = currTask
+    }
+
+    var tasks: HashMap<String, String>
+        get() = mapFromJson(prefs.getString("Tasks", "")) as HashMap<String, String>
+        set(excludedFolders) = prefs.edit().remove("Tasks").putString("Tasks", mapToJson(excludedFolders)).apply()
+
+    fun mapToJson(testHashMap: HashMap<*, *>): String? {
+        val gson = Gson()
+        return gson.toJson(testHashMap)
+    }
+
+    fun mapFromJson(storedHashMapString: String?): HashMap<*, *> {
+        val gson = Gson()
+        val type = object : TypeToken<HashMap<String?, String?>?>() {}.type
+        return gson.fromJson(storedHashMapString, type)
+    }
+
+    ////
+
 
     fun addIncludedFolder(path: String) {
         val currIncludedFolders = HashSet<String>(includedFolders)

@@ -16,7 +16,7 @@ import com.simplemobiletools.commons.views.MyEditText
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.launchIO
 import com.simplemobiletools.gallery.pro.data.interfaces.ResultListener
-import com.simplemobiletools.gallery.pro.data.jetug.workers.createMediaMoveTask
+import com.simplemobiletools.gallery.pro.data.jetug.workers.*
 import kotlinx.android.synthetic.main.dialog_task.view.*
 import java.io.File
 
@@ -66,7 +66,6 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
         return textView
     }
 
-
     private var sourceUri: Uri? = null
     private var destinationUri: Uri? = null
 
@@ -81,29 +80,9 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
         }
     }
 
-    private fun uriToPath(uri: Uri?): String {
-        if(uri == null) return ""
-//        val file = File(uri.path)
-//        val split = file.path.split(":".toRegex()).toTypedArray() //split the path.
-//        return split[1]
-
-        var realPath: String? = null
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-
-        val cursor = activity.applicationContext.contentResolver.query(uri, projection, null, null, null)
-        cursor?.let {
-            if (it.moveToFirst()) {
-                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                realPath = it.getString(columnIndex)
-            }
-            cursor.close()
-        }
-        return realPath ?: ""
-    }
-
     private fun onPositiveButtonClick(v: View){
         if (sourceUri == null || destinationUri == null) return
-        activity.createMediaMoveTask(sourceUri.toString(), destinationUri.toString())
+        activity.createMediaMoveTask(sourceUri!!, destinationUri!!)
         dialog.cancel()
     }
 }

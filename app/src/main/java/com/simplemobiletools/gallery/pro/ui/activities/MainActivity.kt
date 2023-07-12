@@ -31,6 +31,7 @@ import com.simplemobiletools.gallery.pro.data.extensions.context.startSettingsSc
 import com.simplemobiletools.gallery.pro.data.extensions.context.updateWidgets
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.helpers.khttp.post
+import com.simplemobiletools.gallery.pro.data.jetug.workers.getAllTasks
 import com.simplemobiletools.gallery.pro.ui.fragments.DirectoryFragment
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment
 import java.net.InetAddress
@@ -46,6 +47,9 @@ var mIsGetAnyContentIntent = false
 var mIsSetWallpaperIntent = false
 var mAllowPickingMultiple = false
 
+private val isThirdPartyIntent get() = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent ||
+    mIsGetVideoContentIntent || mIsGetAnyContentIntent || mIsSetWallpaperIntent
+
 private var currentMediaFragment: MediaFragment? = null
 
 class MainActivity : SimpleActivity() {
@@ -60,47 +64,29 @@ class MainActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val createTime = measureTimeMillis {
-            //launchDefault {
-                val time = measureTimeMillis {
-                    mIsPickImageIntent = isPickImageIntent(intent)
-                    mIsPickVideoIntent = isPickVideoIntent(intent)
-                    mIsGetImageContentIntent = isGetImageContentIntent(intent)
-                    mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
-                    mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
-                    mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
-                    mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-                    mIsThirdPartyIntent = mIsPickImageIntent || mIsPickVideoIntent || mIsGetImageContentIntent ||
-                        mIsGetVideoContentIntent || mIsGetAnyContentIntent || mIsSetWallpaperIntent
-                    //config.showAll = false
 
-                    val time2 = measureTimeMillis {
-                         //async{
-                             appLaunched(BuildConfig.APPLICATION_ID)
-                         //}
-                    }
-                    Log.i(JET, "!!!!!!!!!!appLaunched!!!!!!!!! $time2 ms")
-                    updateWidgets()
-                    registerFileUpdateListener()
-                    startSettingsScanner()
+        //launchDefault {
+        mIsPickImageIntent = isPickImageIntent(intent)
+        mIsPickVideoIntent = isPickVideoIntent(intent)
+        mIsGetImageContentIntent = isGetImageContentIntent(intent)
+        mIsGetVideoContentIntent = isGetVideoContentIntent(intent)
+        mIsGetAnyContentIntent = isGetAnyContentIntent(intent)
+        mIsSetWallpaperIntent = isSetWallpaperIntent(intent)
+        mAllowPickingMultiple = intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+        mIsThirdPartyIntent = isThirdPartyIntent
+        //config.showAll = false
 
-                    //withContext(Main) {
-                        setupDrawerLayout()
-                    //}
-                }
-                Log.e(JET, "on Create background $time ms")
-            //}
+        appLaunched(BuildConfig.APPLICATION_ID)
+        updateWidgets()
+        registerFileUpdateListener()
+        startSettingsScanner()
 
-            handleStoragePermission()
+        setupDrawerLayout()
+        handleStoragePermission()
 
-            if (savedInstanceState == null) {
-                if (config.showAll)
-                    showAllImages()
-                else
-                    showDirectories()
-            }
+        if (savedInstanceState == null) {
+            if (config.showAll) showAllImages() else showDirectories()
         }
-        Log.e(JET, "on Create $createTime ms")
     }
 
     override fun onDestroy() {
@@ -109,9 +95,7 @@ class MainActivity : SimpleActivity() {
             config.temporarilyShowHidden = false
             config.tempSkipDeleteConfirmation = false
             unregisterFileUpdateListener()
-
-            if (!config.showAll)
-                GalleryDatabase.destroyInstance()
+            if (!config.showAll) GalleryDatabase.destroyInstance()
         }
     }
 
