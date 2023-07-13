@@ -22,16 +22,13 @@ class TaskCreationFragment : Fragment() {
         binding = FragmentTaskCreationBinding.inflate(layoutInflater)
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_task_creation, container, false)
 
         root.apply {
             newTaskBtn.setOnClickListener {
-                TaskDialog(activity as BaseSimpleActivity){
-
-                }
+                TaskDialog(activity as BaseSimpleActivity){}
             }
         }
 

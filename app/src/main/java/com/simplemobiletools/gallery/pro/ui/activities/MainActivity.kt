@@ -22,7 +22,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.BuildConfig
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.TasksActivity
+import com.simplemobiletools.gallery.pro.*
 import com.simplemobiletools.gallery.pro.data.databases.GalleryDatabase
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
@@ -191,11 +191,6 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun showFavorites(){
-        //launchDefault {
-
-
-        //}
-
         config.showAll = false
         showMediaFragment(FAVORITES)
     }

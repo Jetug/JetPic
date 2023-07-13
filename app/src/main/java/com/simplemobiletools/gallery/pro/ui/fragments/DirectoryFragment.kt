@@ -1054,7 +1054,7 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
        binding.directories_horizontal_fastscroller.setScrollToX(directories_grid.computeHorizontalScrollOffset())
     }
 
-    private fun calculateContentHeight(directories: ArrayList<FolderItem>) {
+    private fun calculateContentHeight(directories: ArrayList<FolderItem>) { try {
         val layoutManager = binding.directories_grid.layoutManager as MyGridLayoutManager
 
         val fullHeight = if (config.folderStyle == FOLDER_STYLE_SQUARE) {
@@ -1073,6 +1073,9 @@ class DirectoryFragment : Fragment(), DirectoryOperationsListener {
         binding.directories_vertical_fastscroller.setContentHeight(fullHeight)
         binding.directories_vertical_fastscroller.setScrollToY(directories_grid.computeVerticalScrollOffset())
     }
+    catch (e: NullPointerException){ e.printStackTrace() }
+    }
+
     //Jet zoom
     private fun initZoomListener() {
         if (config.viewTypeFolders == VIEW_TYPE_GRID) {

@@ -1,4 +1,5 @@
 package com.simplemobiletools.gallery.pro.data.models.tasks
 
-abstract class AbstractTask {
-}
+import java.util.*
+
+abstract class AbstractTask(val id: String, val name: String) {}

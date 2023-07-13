@@ -43,7 +43,6 @@ open class SimpleActivity : BaseSimpleActivity() {
     lateinit var pickDirectoryCallBack: (String?) -> Unit
     //////
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityLauncher = registerForActivityResult(PickDirectoryContract()) { destination ->

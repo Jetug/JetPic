@@ -2,11 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/activated_item_foreground">
 
     <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/taskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:layout_margin="10dp"
+        android:gravity="start|center"
         android:textSize="20sp"/>
-
 </LinearLayout>

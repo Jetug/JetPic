@@ -1,4 +1,4 @@
 package com.simplemobiletools.gallery.pro.data.models.tasks
 
-class SimpleTask: AbstractTask() {
+class SimpleTask(id: String, name: String) : AbstractTask(id, name) {
 }

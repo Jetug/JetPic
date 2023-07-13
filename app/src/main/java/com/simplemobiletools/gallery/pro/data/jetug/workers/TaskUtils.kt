@@ -1,9 +1,13 @@
 package com.simplemobiletools.gallery.pro.data.jetug.workers
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.provider.OpenableColumns
 import androidx.documentfile.provider.DocumentFile
 import androidx.work.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.models.tasks.SimpleTask
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -19,21 +23,30 @@ fun Context.createMediaMoveTask(sourcePath: Uri, destinationPath: Uri) {
         .build()
 
     val id = mediaMoveWorkRequest.id
+    val name = getDirectoryNameFromUri(sourcePath) + " to " + getDirectoryNameFromUri(destinationPath)
 
-
-
+    config.addTask(SimpleTask(id.toString(), name))
     WorkManager.getInstance(this).enqueue(mediaMoveWorkRequest)
 }
 
 fun Context.getFileNameFromUri(uri: Uri): String? {
     val document = DocumentFile.fromSingleUri(applicationContext, uri)
+    return if (document != null && !document.isDirectory) return document.name else ""
+}
 
-    // Check if the document exists and is not a directory
-    if (document != null && !document.isDirectory) {
-        return document.name
+fun Context.getDirectoryNameFromUri(uri: Uri): String {
+    val documentFile = DocumentFile.fromTreeUri(this, uri)
+    val displayName = documentFile?.name
+
+    if (displayName != null) return displayName
+
+    contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        cursor.moveToFirst()
+        return cursor.getString(nameIndex)
     }
 
-    return null
+    return ""
 }
 
 fun Context.getAllTasks() {

@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.models.AlbumCover
+import com.simplemobiletools.gallery.pro.data.models.tasks.SimpleTask
 import java.util.*
 
 
@@ -122,9 +123,9 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getStringSet(EXCLUDED_FOLDERS, HashSet())!!
         set(excludedFolders) = prefs.edit().remove(EXCLUDED_FOLDERS).putStringSet(EXCLUDED_FOLDERS, excludedFolders).apply()
 
-    fun addTask(id: String, name: String) {
+    fun addTask(name: SimpleTask) {
         val currTask = tasks
-        currTask[id] = name
+        currTask[name.id] = name
         tasks = currTask
     }
 
@@ -134,18 +135,21 @@ class Config(context: Context) : BaseConfig(context) {
         tasks = currTask
     }
 
-    var tasks: HashMap<String, String>
-        get() = mapFromJson(prefs.getString("Tasks", "")) as HashMap<String, String>
+    var tasks: HashMap<String, SimpleTask>
+        get() {
+            val str = prefs.getString("Tasks", "")
+            return if(str == "") hashMapOf() else mapFromJson(str)
+        }
         set(excludedFolders) = prefs.edit().remove("Tasks").putString("Tasks", mapToJson(excludedFolders)).apply()
 
-    fun mapToJson(testHashMap: HashMap<*, *>): String? {
+    fun mapToJson(testHashMap: HashMap<String, SimpleTask>): String? {
         val gson = Gson()
         return gson.toJson(testHashMap)
     }
 
-    fun mapFromJson(storedHashMapString: String?): HashMap<*, *> {
+    fun mapFromJson(storedHashMapString: String?): HashMap<String, SimpleTask> {
         val gson = Gson()
-        val type = object : TypeToken<HashMap<String?, String?>?>() {}.type
+        val type = object : TypeToken<HashMap<String, SimpleTask>>() {}.type
         return gson.fromJson(storedHashMapString, type)
     }
 

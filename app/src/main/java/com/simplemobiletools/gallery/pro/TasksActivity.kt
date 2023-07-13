@@ -1,6 +1,7 @@
 package com.simplemobiletools.gallery.pro
 
 import android.content.Intent
+import android.content.res.Resources
 import androidx.appcompat.app.*
 import android.os.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import androidx.viewpager2.widget.*
 import com.google.android.material.tabs.*
 import com.google.android.material.tabs.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.extensions.updateActionBarTitle
 import com.simplemobiletools.commons.views.*
 import com.simplemobiletools.gallery.pro.data.interfaces.ResultListener
 import com.simplemobiletools.gallery.pro.databinding.*
@@ -36,6 +38,12 @@ class TasksActivity : SimpleActivity(), ResultListener {
                 1 -> tab.text = "My tasks"
             }
         }.attach()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        updateActionBarTitle(resources.getString(R.string.tasks))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

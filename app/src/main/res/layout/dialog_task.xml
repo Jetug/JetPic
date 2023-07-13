@@ -42,11 +42,12 @@
 
         <com.simplemobiletools.commons.views.MyButton
             android:id="@+id/selectSourcePath"
-            android:layout_width="100dp"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:drawableLeft="@drawable/ic_folder_open_vector"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -147,7 +148,7 @@
 
         <com.simplemobiletools.commons.views.MyButton
             android:id="@+id/selectPath"
-            android:layout_width="100dp"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:drawableLeft="@drawable/ic_folder_open_vector"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +158,7 @@
 
     <com.simplemobiletools.commons.views.MyButton
         android:id="@+id/okBtn"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:text="@string/ok"

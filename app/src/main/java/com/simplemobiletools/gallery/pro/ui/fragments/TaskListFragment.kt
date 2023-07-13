@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.databinding.FragmentTaskListBinding
-import com.simplemobiletools.gallery.pro.ui.adapters.TasksAdapter
+import com.simplemobiletools.gallery.pro.ui.adapters.*
+import kotlinx.android.synthetic.main.fragment_task_list.view.*
 
 class TaskListFragment : Fragment() {
     lateinit var binding: FragmentTaskListBinding
@@ -16,18 +18,24 @@ class TaskListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentTaskListBinding.inflate(layoutInflater)
-        createAdapter()
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_task_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_task_list, container, false)
+        return view
     }
 
-    private fun createAdapter(){
-        val recyclerView = binding.recyclerView
-        recyclerView.adapter = TasksAdapter(arrayListOf()){}
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        createAdapter(view)
+    }
+
+    private fun createAdapter(view: View) {
+        val activity = requireActivity()
+        val tasks = activity.config.tasks.map { it.value }
+        view.tasksRV.adapter = TasksAdapter(activity, tasks) {}
+        view.tasksRV.layoutManager = LinearLayoutManager(activity)
     }
 }
