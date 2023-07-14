@@ -2,16 +2,10 @@ package com.simplemobiletools.gallery.pro.data.jetug.workers
 
 import android.content.Context
 import android.net.Uri
-import android.view.WindowInsets.Side.all
-import androidx.appcompat.widget.AppCompatDrawableManager.get
 import androidx.documentfile.provider.DocumentFile
 import androidx.work.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.util.Observer
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 const val KEY_SOURCE_PATH = "source_path"
 const val KEY_DESTINATION_PATH = "destination_path"
@@ -23,12 +17,11 @@ class MediaMoveWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            // Retrieve source and destination paths from input data
             val sourcePath = Uri.parse(inputData.getString(KEY_SOURCE_PATH))
             val destinationPath = Uri.parse(inputData.getString(KEY_DESTINATION_PATH))
 
             if (sourcePath != null && destinationPath != null) {
-                context.movePhotosAndVideos(sourcePath, destinationPath)
+                context.moveMedia(sourcePath, destinationPath)
             } else {
                 throw IllegalArgumentException("Invalid input data")
             }
@@ -40,7 +33,7 @@ class MediaMoveWorker(
         }
     }
 
-    fun Context.movePhotosAndVideos(sourceUri: Uri, destinationUri: Uri) {
+    private fun Context.moveMedia(sourceUri: Uri, destinationUri: Uri) {
         val contentResolver = applicationContext.contentResolver
         val sourceDocument = DocumentFile.fromTreeUri(this, sourceUri)
         val destinationDocument = DocumentFile.fromTreeUri(this, destinationUri)
@@ -49,7 +42,7 @@ class MediaMoveWorker(
             val files = sourceDocument.listFiles()
 
             for (file in files) {
-                if (!file.isDirectory && isPhotoOrVideoFile(file)) {
+                if (!file.isDirectory && file.isPhotoVideo()) {
                     val sourceFileUri = file.uri
                     val destinationFile = file.name?.let {
                         destinationDocument?.createFile(file.type ?: "application/octet-stream", it)
@@ -61,6 +54,7 @@ class MediaMoveWorker(
                         sourceInputStream?.use { input ->
                             destinationOutputStream?.use { output ->
                                 input.copyTo(output)
+                                file.delete()
                             }
                         }
                     }
@@ -69,9 +63,7 @@ class MediaMoveWorker(
         }
     }
 
-    private fun isPhotoOrVideoFile(file: DocumentFile): Boolean {
-        val mimeType = file.type
-        return mimeType?.startsWith("image/") == true ||
-               mimeType?.startsWith("video/") == true
-    }
+    private fun DocumentFile.isPhotoVideo(): Boolean =
+        type?.startsWith("image/") == true ||
+        type?.startsWith("video/") == true
 }

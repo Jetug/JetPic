@@ -30,7 +30,7 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
 //            .setPositiveButton(R.string.ok, ::onPositiveButtonClick)
 //            .setNegativeButton(R.string.cancel, null)
             .create().apply {
-                activity.setupDialogStuff(view, this, R.string.edit_date) {
+                activity.setupDialogStuff(view, this, R.string.new_task) {
                     onCreate()
                 }
             }

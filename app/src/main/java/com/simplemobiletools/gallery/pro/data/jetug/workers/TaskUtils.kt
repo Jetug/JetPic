@@ -2,6 +2,7 @@ package com.simplemobiletools.gallery.pro.data.jetug.workers
 
 import android.content.*
 import android.net.*
+import android.provider.Settings.*
 import androidx.work.*
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.jetug.*
@@ -24,8 +25,19 @@ fun Context.createMediaMoveTask(sourcePath: Uri, destinationPath: Uri) {
     val name = getDirectoryNameFromUri(sourcePath) + " to " + getDirectoryNameFromUri(destinationPath)
 
     config.addTask(SimpleTask(id.toString(), name))
+    requestIgnoreBatteryOptimizations()
     WorkManager.getInstance(this).enqueue(mediaMoveWorkRequest)
 }
+
+fun Context.requestIgnoreBatteryOptimizations() {
+    val packageName = applicationContext.packageName
+    val intent = Intent().apply {
+        action = ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+        data = Uri.parse("package:$packageName")
+    }
+    startActivity(intent)
+}
+
 
 fun Context.removeWork(taskId: UUID) {
     val workManager = WorkManager.getInstance(applicationContext)

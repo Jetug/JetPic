@@ -51,51 +51,53 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <com.simplemobiletools.commons.views.MyTextView-->
-<!--        android:id="@+id/save_as_extension_label"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/extension"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/save_as_extension_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/extension"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/dialog_file_style_spacing_holder"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="@dimen/medium_margin"-->
-<!--        android:background="?attr/selectableItemBackground">-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:id="@+id/dialog_file_style_spacing_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:background="?attr/selectableItemBackground">
 
 
-<!--        <org.apmem.tools.layouts.FlowLayout-->
-<!--            android:id="@+id/flowLayout"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/addBtn"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
-<!--            <com.simplemobiletools.commons.views.MyEditText-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:singleLine="true"-->
-<!--                android:textCursorDrawable="@null"-->
-<!--                android:textSize="@dimen/normal_text_size"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-<!--        </org.apmem.tools.layouts.FlowLayout>-->
-<!--        -->
-<!--        <com.simplemobiletools.commons.views.MyButton-->
-<!--            android:id="@+id/addBtn"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:gravity="center"-->
-<!--            android:text="+"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <org.apmem.tools.layouts.FlowLayout
+            android:id="@+id/flowLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/addBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <com.simplemobiletools.commons.views.MyEditText
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </org.apmem.tools.layouts.FlowLayout>
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <com.simplemobiletools.commons.views.MyButton
+            android:id="@+id/addBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:text="+"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/sav"
