@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.data.interfaces.RefreshListener
 import com.simplemobiletools.gallery.pro.databinding.*
 import com.simplemobiletools.gallery.pro.databinding.*
 import com.simplemobiletools.gallery.pro.ui.dialogs.*
@@ -28,7 +29,11 @@ class TaskCreationFragment : Fragment() {
 
         root.apply {
             newTaskBtn.setOnClickListener {
-                TaskDialog(activity as BaseSimpleActivity){}
+                val activity = activity
+
+                TaskDialog(activity as BaseSimpleActivity){
+                    if(activity is RefreshListener) activity.refreshItems()
+                }
             }
         }
 

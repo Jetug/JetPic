@@ -1,26 +1,23 @@
 package com.simplemobiletools.gallery.pro.ui.adapters
 
 import android.app.Activity
-import android.content.Context
-import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.*
-import com.simplemobiletools.commons.activities.*
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import androidx.recyclerview.widget.RecyclerView.*
 import com.simplemobiletools.commons.views.*
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.models.Directory
-import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.interfaces.RefreshListener
+import com.simplemobiletools.gallery.pro.data.jetug.workers.removeWork
 import com.simplemobiletools.gallery.pro.data.models.tasks.AbstractTask
 import com.simplemobiletools.gallery.pro.data.models.tasks.SimpleTask
-import kotlinx.android.synthetic.main.item_task.view.*
+import java.util.*
 
-class TasksAdapter(val activity: Activity, var tasks: List<SimpleTask>, val itemClick: (Any) -> Unit) : RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
-
+class TasksAdapter(val activity: Activity, var tasks: List<SimpleTask>,
+                   val listener: RefreshListener) : Adapter<TasksAdapter.ViewHolder>() {
     init {
         val t = tasks
         println(t)
@@ -39,11 +36,28 @@ class TasksAdapter(val activity: Activity, var tasks: List<SimpleTask>, val item
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: SimpleTask): View {
-            return itemView.apply {
-                findViewById<MyTextView>(R.id.taskName).text = item.name
-                setOnClickListener { itemClick(item) }
+        fun bindView(item: AbstractTask): View = itemView.apply {
+            findViewById<MyTextView>(R.id.taskName).text = item.name
+            setOnClickListener { onClick(item, it) }
+        }
+    }
+
+    private fun onClick(item: AbstractTask, view: View){
+        val popupMenu = PopupMenu(activity, view)
+        popupMenu.menuInflater.inflate(R.menu.menu_task_item, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+            when (menuItem.itemId) {
+                R.id.remove -> {
+                    activity.removeWork(UUID.fromString(item.id))
+                    activity.config.removeTask(item.id)
+                    listener.refreshItems()
+                    true
+                }
+                else -> false
             }
         }
+
+        popupMenu.show()
     }
 }

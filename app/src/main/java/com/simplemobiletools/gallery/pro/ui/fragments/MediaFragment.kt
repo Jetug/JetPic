@@ -39,7 +39,7 @@ import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyGridLayoutManager
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapter
+import com.simplemobiletools.gallery.pro.ui.adapters.*
 import com.simplemobiletools.gallery.pro.data.extensions.*
 import com.simplemobiletools.gallery.pro.data.helpers.*
 import com.simplemobiletools.gallery.pro.data.models.Medium
@@ -54,14 +54,14 @@ import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeGroupingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeSortingDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.ChangeViewTypeDialog
 import com.simplemobiletools.gallery.pro.ui.dialogs.FilterMediaDialog
-import com.simplemobiletools.gallery.pro.ui.adapters.MediaAdapterControls
+import com.simplemobiletools.gallery.pro.data.interfaces.MediaAdapterControls
 import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
 
 interface FragmentControls{
     fun clearAdapter()
 }
 
-class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
+class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls, MediaAdapterControls {
     private val LAST_MEDIA_CHECK_PERIOD = 3000L
     private val IS_SWIPEREFRESH_ENABLED = false
 
@@ -305,6 +305,8 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         mMedia.clear()
     }
 
+    override fun recreateAdapter() = getMedia()
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_media, menu)
 
@@ -486,11 +488,6 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
         }
     }
 
-    val mediaControls = object : MediaAdapterControls {
-        override fun recreateAdapter() { getMedia() }
-    }
-
-
     override fun clearAdapter(){
         val size = mMedia.size
         mMedia.clear()
@@ -508,7 +505,7 @@ class MediaFragment : Fragment(), MediaOperationsListener, FragmentControls {
             initZoomListener()
             val fastScroller = if (config.scrollHorizontally) media_horizontal_fastscroller else media_vertical_fastscroller
             MediaAdapter(activity, mMedia.clone() as ArrayList<ThumbnailItem>, this, mIsGetImageIntent || mIsGetVideoIntent || mIsGetAnyIntent,
-                mAllowPickingMultiple, mPath, binding.media_grid, fastScroller, media_refresh_layout, mediaControls) {
+                mAllowPickingMultiple, mPath, binding.media_grid, fastScroller, media_refresh_layout) {
                 if (it is Medium && !activity.isFinishing) {
                     itemClicked(it.path)
                 }

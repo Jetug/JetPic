@@ -12,15 +12,18 @@ import com.google.android.material.tabs.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.updateActionBarTitle
 import com.simplemobiletools.commons.views.*
+import com.simplemobiletools.gallery.pro.data.interfaces.RefreshListener
 import com.simplemobiletools.gallery.pro.data.interfaces.ResultListener
 import com.simplemobiletools.gallery.pro.databinding.*
 import com.simplemobiletools.gallery.pro.ui.activities.*
 import com.simplemobiletools.gallery.pro.ui.adapters.*
 
-class TasksActivity : SimpleActivity(), ResultListener {
+class TasksActivity : SimpleActivity(), ResultListener, RefreshListener {
     lateinit var binding: ActivityTasksBinding
 
     override var onResult: (Int, Int, Intent?) -> Unit = { _, _, _ -> }
+
+    lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +31,15 @@ class TasksActivity : SimpleActivity(), ResultListener {
         setContentView(binding.root)
 
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
-        val viewPager: ViewPager2 = findViewById(R.id.view_pager)
+        viewPager = findViewById(R.id.view_pager)
         val adapter = PagerAdapter(supportFragmentManager, lifecycle)
+
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "New task"
-                1 -> tab.text = "My tasks"
+                0 -> tab.text = resources.getString(R.string.new_task)
+                1 -> tab.text = resources.getString(R.string.all_tasks)
             }
         }.attach()
     }
@@ -49,5 +53,10 @@ class TasksActivity : SimpleActivity(), ResultListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         onResult(requestCode, resultCode, data)
+    }
+
+    override fun refreshItems() {
+        viewPager.adapter = null
+        viewPager.adapter = PagerAdapter(supportFragmentManager, lifecycle)
     }
 }

@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.interfaces.RefreshListener
 import com.simplemobiletools.gallery.pro.databinding.FragmentTaskListBinding
 import com.simplemobiletools.gallery.pro.ui.adapters.*
 import kotlinx.android.synthetic.main.fragment_task_list.view.*
 
-class TaskListFragment : Fragment() {
+class TaskListFragment : Fragment(), RefreshListener {
     lateinit var binding: FragmentTaskListBinding
+    lateinit var root: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +25,8 @@ class TaskListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_task_list, container, false)
-        return view
+        root = inflater.inflate(R.layout.fragment_task_list, container, false)
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +37,12 @@ class TaskListFragment : Fragment() {
     private fun createAdapter(view: View) {
         val activity = requireActivity()
         val tasks = activity.config.tasks.map { it.value }
-        view.tasksRV.adapter = TasksAdapter(activity, tasks) {}
+        view.tasksRV.adapter = TasksAdapter(activity, tasks, this)
         view.tasksRV.layoutManager = LinearLayoutManager(activity)
+    }
+
+    override fun refreshItems() {
+        root.tasksRV.adapter = null
+        createAdapter(root)
     }
 }

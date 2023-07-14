@@ -3,44 +3,42 @@ package com.simplemobiletools.gallery.pro.ui.adapters
 import android.annotation.SuppressLint
 import android.view.Menu
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.simplemobiletools.gallery.pro.ui.dialogs.DateEditingDialog
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.SORT_BY_DATE_MODIFIED
+import com.simplemobiletools.commons.helpers.SORT_BY_DATE_TAKEN
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
-import com.simplemobiletools.gallery.pro.data.extensions.context.*
-import com.simplemobiletools.gallery.pro.data.extensions.*
+import com.simplemobiletools.gallery.pro.data.extensions.context.getFolderSorting
+import com.simplemobiletools.gallery.pro.data.extensions.context.mediaDB
+import com.simplemobiletools.gallery.pro.data.extensions.context.updateDirectory
+import com.simplemobiletools.gallery.pro.data.extensions.launchDefault
+import com.simplemobiletools.gallery.pro.data.extensions.launchMain
 import com.simplemobiletools.gallery.pro.data.helpers.MediaFetcher
-import com.simplemobiletools.gallery.pro.data.interfaces.MediaOperationsListener
-import com.simplemobiletools.gallery.pro.data.jetug.*
+import com.simplemobiletools.gallery.pro.data.interfaces.MediaAdapterControls
+import com.simplemobiletools.gallery.pro.data.jetug.alignDate
+import com.simplemobiletools.gallery.pro.data.jetug.saveDateToExif
 import com.simplemobiletools.gallery.pro.data.models.Directory
 import com.simplemobiletools.gallery.pro.data.models.DirectoryGroup
 import com.simplemobiletools.gallery.pro.data.models.Medium
 import com.simplemobiletools.gallery.pro.data.models.ThumbnailItem
+import com.simplemobiletools.gallery.pro.ui.activities.SimpleActivity
 import com.simplemobiletools.gallery.pro.ui.activities.mDirs
+import com.simplemobiletools.gallery.pro.ui.dialogs.DateEditingDialog
 import com.simplemobiletools.gallery.pro.ui.fragments.MediaFragment.Companion.mMedia
 import java.util.*
 
-interface MediaAdapterControls{
-    fun recreateAdapter()
-}
-
-val mediaEmpty = object : MediaAdapterControls{
-    override fun recreateAdapter() { }
-}
 @SuppressLint("ClickableViewAccessibility", "NotifyDataSetChanged")
 class MediaAdapter(
-    private val mediaActivity: SimpleActivity,
+    mediaActivity: SimpleActivity,
     media: ArrayList<ThumbnailItem>,
-    listener: MediaOperationsListener?,
+    listener: MediaAdapterControls?,
     isAGetIntent: Boolean,
     allowMultiplePicks: Boolean,
     path: String,
     recyclerView: MyRecyclerView,
     fastScroller: FastScroller? = null,
     swipeRefreshLayout : SwipeRefreshLayout? = null,
-    val controls: MediaAdapterControls = mediaEmpty, itemClick: (Any) -> Unit):
+    itemClick: (Any) -> Unit):
     MediaAdapterBase(mediaActivity, media, listener, isAGetIntent, allowMultiplePicks, path, recyclerView, fastScroller, swipeRefreshLayout, itemClick){
 
     override fun prepareActionMode(menu: Menu) {

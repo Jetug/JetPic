@@ -454,6 +454,8 @@
     <string name="save_exif_success">Date successfully saved to EXIF</string>
     <string name="download_full_app">Download full app</string>
     <string name="tasks">Tasks</string>
+    <string name="new_task">New task</string>
+    <string name="all_tasks">My tasks</string>
     <string name="align_date">Align date</string>
     <string name="redirect_task">Directory Redirect</string>
     <string name="create_new_redirect_task">Create New Redirect Task</string>

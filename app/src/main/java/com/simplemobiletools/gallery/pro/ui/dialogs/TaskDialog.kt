@@ -83,6 +83,7 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
     private fun onPositiveButtonClick(v: View){
         if (sourceUri == null || destinationUri == null || sourceUri.toString() == destinationUri.toString()) return
         activity.createMediaMoveTask(sourceUri!!, destinationUri!!)
+        onComplete()
         dialog.cancel()
     }
 }

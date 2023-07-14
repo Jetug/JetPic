@@ -44,7 +44,9 @@ import kotlin.collections.ArrayList
 
 open class MediaAdapterBase (
     activity: SimpleActivity, var media: ArrayList<ThumbnailItem>, val listener: MediaOperationsListener?, val isAGetIntent: Boolean,
-    val allowMultiplePicks: Boolean, val path: String, recyclerView: MyRecyclerView, fastScroller: FastScroller? = null, swipeRefreshLayout: SwipeRefreshLayout? = null, itemClick: (Any) -> Unit
+    val allowMultiplePicks: Boolean, val path: String, recyclerView: MyRecyclerView,
+    fastScroller: FastScroller? = null, swipeRefreshLayout: SwipeRefreshLayout? = null,
+    itemClick: (Any) -> Unit
 ) :
     ReorderableAdapter(activity, recyclerView, fastScroller, swipeRefreshLayout, itemClick) {
 
