@@ -520,6 +520,9 @@
             android:name=".data.helpers.jobs.NewPhotoFetcher"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service android:name=".data.jetug.services.FileTransferService" />
+
     </application>
 
 </manifest>
