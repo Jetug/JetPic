@@ -59,11 +59,13 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
 //                      .withChooseMode(false)
 //                      .withIsGreater(false)
 //                      .start()
+//
+//                  FilePickerManager
+//                      .from(activity)
+//                      .forResult(FilePickerManager.REQUEST_CODE)
 
-                  FilePickerManager
-                      .from(activity)
-                      .forResult(FilePickerManager.REQUEST_CODE)
-
+                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                  activity.startActivityForResult(intent, 0)
               }
 
               selectPath.setOnClickListener {
@@ -102,9 +104,18 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
 //            view.path.setText(path)
             view.path.setText(getDirectoryPathFromUri(destinationUri!!))
         }
+
+//        if(resultCode == Activity.RESULT_OK){
+//            sourceUri = data?.data
+//            val path = getDirectoryPathFromUri(sourceUri)
+//            when(requestCode){
+//                0 -> view.sourcePath.setText(getDirectoryPathFromUri(sourceUri!!))
+//                1 -> view.path.setText(getDirectoryPathFromUri(sourceUri!!))
+//            }
+//        }
     }
 
-    private fun getDirectoryPathFromUri(uri: Uri): String? {
+    private fun getDirectoryPathFromUri(uri: Uri): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val volumePath = DocumentsContract.getTreeDocumentId(uri).split(":")[1]
             return "${Environment.getExternalStorageDirectory().path}/$volumePath"
@@ -115,7 +126,7 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
                 return "${Environment.getExternalStorageDirectory().path}/$volumePath"
             }
         }
-        return null
+        return ""
     }
 
     private fun isFromExternalStorage(uri: Uri): Boolean {
@@ -124,7 +135,7 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
 
     private fun onPositiveButtonClick(v: View){
         if (sourceUri == null || destinationUri == null || sourceUri.toString() == destinationUri.toString()) return
-        activity.createMediaMoveTask(sourceUri!!, destinationUri!!)
+        activity.mediaMoveService(getDirectoryPathFromUri(sourceUri!!), getDirectoryPathFromUri(destinationUri!!))
         onComplete()
         dialog.cancel()
 

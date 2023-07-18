@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.taskDao
 import com.simplemobiletools.gallery.pro.data.interfaces.RefreshListener
 import com.simplemobiletools.gallery.pro.databinding.FragmentTaskListBinding
 import com.simplemobiletools.gallery.pro.ui.adapters.*
+import kotlinx.android.synthetic.main.fragment_task_list.*
 import kotlinx.android.synthetic.main.fragment_task_list.view.*
 
 class TaskListFragment : Fragment(), RefreshListener {
@@ -36,7 +38,7 @@ class TaskListFragment : Fragment(), RefreshListener {
 
     private fun createAdapter(view: View) {
         val activity = requireActivity()
-        val tasks = activity.config.tasks.map { it.value }
+        val tasks = activity.taskDao.getAll() //activity.config.tasks.map { it.value }
         view.tasksRV.adapter = TasksAdapter(activity, tasks, this)
         view.tasksRV.layoutManager = LinearLayoutManager(activity)
     }

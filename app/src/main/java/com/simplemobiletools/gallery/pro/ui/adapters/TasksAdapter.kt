@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.*
 import com.simplemobiletools.commons.views.*
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.taskDao
 import com.simplemobiletools.gallery.pro.data.interfaces.RefreshListener
 import com.simplemobiletools.gallery.pro.data.jetug.workers.removeWork
 import com.simplemobiletools.gallery.pro.data.models.tasks.AbstractTask
@@ -36,21 +37,21 @@ class TasksAdapter(val activity: Activity, var tasks: List<SimpleTask>,
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: AbstractTask): View = itemView.apply {
+        fun bindView(item: SimpleTask): View = itemView.apply {
             findViewById<MyTextView>(R.id.taskName).text = item.name
             setOnClickListener { onClick(item, it) }
         }
     }
 
-    private fun onClick(item: AbstractTask, view: View){
+    private fun onClick(item: SimpleTask, view: View){
         val popupMenu = PopupMenu(activity, view)
         popupMenu.menuInflater.inflate(R.menu.menu_task_item, popupMenu.menu)
 
         popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
             when (menuItem.itemId) {
                 R.id.remove -> {
-                    activity.removeWork(UUID.fromString(item.id))
-                    activity.config.removeTask(item.id)
+                    activity.taskDao.delete(item)
+                    //activity.config.removeTask(item.id)
                     listener.refreshItems()
                     true
                 }

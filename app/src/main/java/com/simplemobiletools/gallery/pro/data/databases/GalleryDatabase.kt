@@ -10,9 +10,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.gallery.pro.data.helpers.converters.JsonToStringConverter
 import com.simplemobiletools.gallery.pro.data.databases.dao.*
 import com.simplemobiletools.gallery.pro.data.models.*
+import com.simplemobiletools.gallery.pro.data.models.tasks.*
 
 @TypeConverters(JsonToStringConverter::class)
-@Database(entities = [Directory::class, Medium::class, Widget::class, DateTaken::class, Favorite::class, FolderSettings::class], version = 14)
+@Database(entities = [
+    Directory::class,
+    Medium::class,
+    Widget::class,
+    DateTaken::class,
+    Favorite::class,
+    FolderSettings::class,
+    SimpleTask::class], version = 15)
 abstract class GalleryDatabase : RoomDatabase() {
 
     abstract fun DirectoryDao(): DirectoryDao
@@ -26,6 +34,8 @@ abstract class GalleryDatabase : RoomDatabase() {
     abstract fun FavoritesDao(): FavoritesDao
 
     abstract fun FolderSettingsDao(): FolderSettingsDao
+
+    abstract fun TaskDao(): TaskDao
 
     companion object {
         private var db: GalleryDatabase? = null

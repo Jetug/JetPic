@@ -2,12 +2,13 @@ package com.simplemobiletools.gallery.pro.data.jetug.workers
 
 import android.content.*
 import android.net.*
+import android.os.Build
 import android.provider.Settings.*
 import androidx.work.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.jetug.*
-import com.simplemobiletools.gallery.pro.data.jetug.services.FileTransferService
+import com.simplemobiletools.gallery.pro.data.jetug.services.*
 import com.simplemobiletools.gallery.pro.data.models.tasks.*
 import java.io.File
 import java.util.*
@@ -19,13 +20,12 @@ fun Context.createMediaMoveTask(sourcePath: Uri, destinationPath: Uri) {
 
 fun BaseSimpleActivity.mediaMoveService(sourcePath: String, destinationPath: String) {
     val intent = Intent(this, FileTransferService::class.java)
-    intent.putExtra("sourceUri", sourcePath.toString())
-    intent.putExtra("targetUri", destinationPath.toString())
-    startService(intent)
-
-    val id = "mediaMoveWorkRequest.id"
+//    startService(intent)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        startForegroundService(intent)
+    }
     val name = File(sourcePath).name + " to " + File(destinationPath).name
-    config.addTask(SimpleTask(id, name))
+    taskDao.insert(SimpleTask(0, name, sourcePath, destinationPath))
 }
 
 fun Context.mediaMoveService(sourcePath: Uri, destinationPath: Uri) {
@@ -36,7 +36,7 @@ fun Context.mediaMoveService(sourcePath: Uri, destinationPath: Uri) {
 
     val id = "mediaMoveWorkRequest.id"
     val name = getDirectoryNameFromUri(sourcePath) + " to " + getDirectoryNameFromUri(destinationPath)
-    config.addTask(SimpleTask(id.toString(), name))
+//    config.addTask(SimpleTask(id.(), name))
 }
 
 fun Context.mediaMoveWorker(sourcePath: Uri, destinationPath: Uri) {
@@ -53,7 +53,7 @@ fun Context.mediaMoveWorker(sourcePath: Uri, destinationPath: Uri) {
     val id = mediaMoveWorkRequest.id
     val name = getDirectoryNameFromUri(sourcePath) + " to " + getDirectoryNameFromUri(destinationPath)
 
-    config.addTask(SimpleTask(id.toString(), name))
+//  config.addTask(SimpleTask(id.toString(), name))
     requestIgnoreBatteryOptimizations()
     WorkManager.getInstance(this).enqueue(mediaMoveWorkRequest)
 }

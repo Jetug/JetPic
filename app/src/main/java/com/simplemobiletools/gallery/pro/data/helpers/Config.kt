@@ -10,6 +10,7 @@ import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.models.AlbumCover
 import com.simplemobiletools.gallery.pro.data.models.tasks.SimpleTask
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Config(context: Context) : BaseConfig(context) {
@@ -125,31 +126,31 @@ class Config(context: Context) : BaseConfig(context) {
 
     fun addTask(name: SimpleTask) {
         val currTask = tasks
-        currTask[name.id] = name
+        currTask.add(name)
         tasks = currTask
     }
 
-    fun removeTask(id: String) {
+    fun removeTask(id: Int) {
         val currTask = tasks
-        currTask.remove(id)
+        currTask.removeAt(id)
         tasks = currTask
     }
 
-    var tasks: HashMap<String, SimpleTask>
+    var tasks: ArrayList<SimpleTask>
         get() {
             val str = prefs.getString("Tasks", "")
-            return if(str == "") hashMapOf() else mapFromJson(str)
+            return if(str == "") arrayListOf() else mapFromJson(str)
         }
         set(excludedFolders) = prefs.edit().remove("Tasks").putString("Tasks", mapToJson(excludedFolders)).apply()
 
-    fun mapToJson(testHashMap: HashMap<String, SimpleTask>): String? {
+    fun mapToJson(testHashMap: ArrayList<SimpleTask>): String? {
         val gson = Gson()
         return gson.toJson(testHashMap)
     }
 
-    fun mapFromJson(storedHashMapString: String?): HashMap<String, SimpleTask> {
+    fun mapFromJson(storedHashMapString: String?): ArrayList<SimpleTask> {
         val gson = Gson()
-        val type = object : TypeToken<HashMap<String, SimpleTask>>() {}.type
+        val type = object : TypeToken<ArrayList<SimpleTask>>() {}.type
         return gson.fromJson(storedHashMapString, type)
     }
 

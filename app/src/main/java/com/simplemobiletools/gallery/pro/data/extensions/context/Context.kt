@@ -80,6 +80,8 @@ val Context.dateTakensDB: DateTakensDao get() = GalleryDatabase.getInstance(appl
 
 val Context.folderSettingsDao: FolderSettingsDao get() = GalleryDatabase.getInstance(applicationContext).FolderSettingsDao()
 
+val Context.taskDao get() = GalleryDatabase.getInstance(applicationContext).TaskDao()
+
 val Context.recycleBin: File get() = filesDir
 
 val Context.recycleBinPath: String get() = filesDir.absolutePath

@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.IBinder
+import android.os.Looper
 import androidx.documentfile.provider.DocumentFile
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
+import com.simplemobiletools.gallery.pro.data.extensions.context.taskDao
+import com.simplemobiletools.gallery.pro.data.extensions.launchIO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -22,32 +25,63 @@ class FileTransferService : Service() {
         return null
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val sourceUri = Uri.parse(intent?.getStringExtra("sourceUri"))
-        val targetUri = Uri.parse(intent?.getStringExtra("targetUri"))
+    override fun onCreate() {
+        super.onCreate()
 
-        GlobalScope.launch(Dispatchers.IO) {
-            while (true) {
-                moveMedia(sourceUri, targetUri)
-                delay(5000)
-            }
+        handler = Handler(Looper.getMainLooper())
+        runnable = Runnable {
+            moveFiles() // Call the method to move files
+            handler.postDelayed(runnable, 5000) // Repeat every 5 seconds (5000 milliseconds)
         }
-
-        return START_NOT_STICKY
     }
 
-//    private fun moveFiles(sourceUri: String, targetUri: String) {
-//        val sourceDirectory = File(Uri.parse(sourceUri).path ?: return)
-//        val destinationDirectory = File(Uri.parse(targetUri).path ?: return)
+//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+//        val sourceUri = intent?.getStringExtra("sourceUri")
+//        val targetUri = intent?.getStringExtra("targetUri")
+//        if(sourceUri == null || targetUri == null) return START_STICKY
 //
-//        val sourceFiles = sourceDirectory.listFiles() ?: return
-//        for (file in sourceFiles) {
-//            if (isPhotoOrVideoFile(file)) {
-//                val destinationFile = File(destinationDirectory, file.name)
-//                file.renameTo(destinationFile)
+//        GlobalScope.launch(Dispatchers.IO) {
+//            while (true) {
+//                moveMedia(sourceUri, targetUri)
+//                delay(5000)
 //            }
 //        }
+//
+//        return START_STICKY
 //    }
+
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+//        launchIO { while (true) {
+//            moveFiles()
+//            delay(5000)
+//        } }
+        handler.postDelayed(runnable, 5000)
+        return START_STICKY
+    }
+
+    private fun moveFiles(){
+        taskDao.getAll().forEach{
+            moveFiles(it.sourcePath, it.targetPath)
+        }
+    }
+
+    private fun moveFiles(sourceUri: String, targetUri: String) {
+        val sourceDir = File(sourceUri)
+        val destinationDir = File(targetUri)
+
+        if (sourceDir.exists() && sourceDir.isDirectory) {
+            val files = sourceDir.listFiles { file ->
+                // Return true if you want to include the file in the move operation
+                file.extension == "jpg" || file.extension == "jpeg" ||
+                    file.extension == "png" || file.extension == "mp4"
+            }
+            files?.forEach { file ->
+                // Move file to the destination directory
+                val destFile = File(destinationDir, file.name)
+                file.renameTo(destFile)
+            }
+        }
+    }
 //
 //    private fun isPhotoOrVideoFile(file: File): Boolean {
 //        val extension = file.extension.toLowerCase()
@@ -55,33 +89,24 @@ class FileTransferService : Service() {
 //            extension == "gif" || extension == "mp4" || extension == "mov"
 //    }
 
-    private fun Context.moveMedia(sourceUri: Uri, destinationUri: Uri) {
-        val contentResolver = applicationContext.contentResolver
-        val sourceDocument = DocumentFile.fromTreeUri(this, sourceUri)
-        val destinationDocument = DocumentFile.fromTreeUri(this, destinationUri)
+    private fun Context.moveMedia(source: String, destination: String) {
+        val sourceFile = File(source)
+        val destinationDirectory = File(destination)
 
-        if (sourceDocument != null) {
-            val files = sourceDocument.listFiles()
+        if (sourceFile.exists() && destinationDirectory.isDirectory) {
+            val newFile = File(destinationDirectory, sourceFile.name)
+            val isMoved = sourceFile.renameTo(newFile)
 
-            for (file in files) {
-                if (!file.isDirectory && file.isPhotoVideo()) {
-                    val sourceFileUri = file.uri
-                    val destinationFile = file.name?.let {
-                        destinationDocument?.createFile(file.type ?: "application/octet-stream", it)
-                    }
-
-                    if (destinationFile != null) {
-                        val sourceInputStream = contentResolver.openInputStream(sourceFileUri)
-                        val destinationOutputStream = contentResolver.openOutputStream(destinationFile.uri)
-                        sourceInputStream?.use { input ->
-                            destinationOutputStream?.use { output ->
-                                input.copyTo(output)
-                                file.delete()
-                            }
-                        }
-                    }
-                }
+            if (isMoved) {
+                println("1")
+                // File moved successfully
+            } else {
+                println("0")
+                // File move failed
             }
+        } else {
+            // Source file doesn't exist or destination directory is invalid
+            // Handle the appropriate error case
         }
     }
 
