@@ -1,13 +1,19 @@
 package com.simplemobiletools.gallery.pro.data.jetug.services
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import androidx.core.app.NotificationCompat
 import androidx.documentfile.provider.DocumentFile
+import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.context.taskDao
 import com.simplemobiletools.gallery.pro.data.extensions.launchIO
@@ -55,6 +61,7 @@ class FileTransferService : Service() {
 //            moveFiles()
 //            delay(5000)
 //        } }
+        startForeground(1, createNotification())
         handler.postDelayed(runnable, 5000)
         return START_STICKY
     }
@@ -117,5 +124,29 @@ class FileTransferService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(runnable)
+    }
+
+    private fun createNotification(): Notification {
+        val channelId = "your_channel_id"
+        val channelName = "Your Channel Name"
+        val notificationId = 1
+
+        // Build a notification using NotificationCompat.Builder
+        // Set appropriate values for title, content, and other notification properties
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setContentTitle("File Moving Service")
+            .setContentText("File moving service is running.")
+            .setSmallIcon(R.drawable.ic_file_ai)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        // Create a notification channel if necessary (required on API level 26 and higher)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+            builder.setChannelId(channelId)
+        }
+
+        return builder.build()
     }
 }
