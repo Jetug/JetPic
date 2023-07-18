@@ -4,15 +4,28 @@ import android.content.*
 import android.net.*
 import android.provider.Settings.*
 import androidx.work.*
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.gallery.pro.data.extensions.context.*
 import com.simplemobiletools.gallery.pro.data.jetug.*
 import com.simplemobiletools.gallery.pro.data.jetug.services.FileTransferService
 import com.simplemobiletools.gallery.pro.data.models.tasks.*
+import java.io.File
 import java.util.*
 import java.util.concurrent.*
 
 fun Context.createMediaMoveTask(sourcePath: Uri, destinationPath: Uri) {
     mediaMoveService(sourcePath, destinationPath)
+}
+
+fun BaseSimpleActivity.mediaMoveService(sourcePath: String, destinationPath: String) {
+    val intent = Intent(this, FileTransferService::class.java)
+    intent.putExtra("sourceUri", sourcePath.toString())
+    intent.putExtra("targetUri", destinationPath.toString())
+    startService(intent)
+
+    val id = "mediaMoveWorkRequest.id"
+    val name = File(sourcePath).name + " to " + File(destinationPath).name
+    config.addTask(SimpleTask(id, name))
 }
 
 fun Context.mediaMoveService(sourcePath: Uri, destinationPath: Uri) {

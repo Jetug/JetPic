@@ -65,7 +65,6 @@ class MainActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //launchDefault {
         mIsPickImageIntent = isPickImageIntent(intent)
         mIsPickVideoIntent = isPickVideoIntent(intent)
         mIsGetImageContentIntent = isGetImageContentIntent(intent)
@@ -173,16 +172,11 @@ class MainActivity : SimpleActivity() {
     private var directoriesFragment: Fragment? = null
 
     private fun showDirectories(){
-        val time = measureTimeMillis {
-            config.showAll = false
+        config.showAll = false
 
-            if(directoriesFragment == null)
-                directoriesFragment = DirectoryFragment()
-
-            //showFragment(directoriesFragment!!)
-            showFragment(DirectoryFragment())
-        }
-        Log.i(JET, "showDirectories() $time ms")
+        if(directoriesFragment == null)
+            directoriesFragment = DirectoryFragment()
+        showFragment(DirectoryFragment())
     }
 
     private fun showAllImages(){
@@ -202,13 +196,11 @@ class MainActivity : SimpleActivity() {
 
     private fun showMediaFragment(dirName: String){
         currentMediaFragment?.clearAdapter()
-
         val fragment = MediaFragment()
         currentMediaFragment = fragment
         val bundle = Bundle()
         bundle.putString(DIRECTORY, dirName)
         fragment.arguments = bundle
-
         showFragment(fragment)
     }
 
@@ -225,11 +217,10 @@ class MainActivity : SimpleActivity() {
         if (isRPlus() && isProApp && baseConfig.appRunCount <= 5) {
             requestManageAllFilesPermission()
         } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (!it) {
-                    toast(R.string.no_storage_permissions)
-                    finish()
-                }
+            handlePermission(PERMISSION_WRITE_STORAGE) {hasPermission ->
+                if (hasPermission) return@handlePermission
+                toast(R.string.no_storage_permissions)
+                finish()
             }
         }
     }
