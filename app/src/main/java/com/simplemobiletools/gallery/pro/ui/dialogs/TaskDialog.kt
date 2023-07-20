@@ -14,9 +14,12 @@ import androidx.documentfile.provider.DocumentFile
 import com.google.android.flexbox.FlexboxLayout
 import com.leon.lfilepickerlibrary.LFilePicker
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.extensions.internalStoragePath
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.views.MyEditText
 import com.simplemobiletools.gallery.pro.R
+import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.copyFile
 import com.simplemobiletools.gallery.pro.data.interfaces.ResultListener
 import com.simplemobiletools.gallery.pro.data.jetug.workers.*
@@ -64,8 +67,13 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
 //                      .from(activity)
 //                      .forResult(FilePickerManager.REQUEST_CODE)
 
-                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                  activity.startActivityForResult(intent, 0)
+                  FilePickerDialog(activity, activity.internalStoragePath, false,
+                      activity.config.shouldShowHidden, false, true){
+
+                  }
+
+//                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+//                  activity.startActivityForResult(intent, 0)
               }
 
               selectPath.setOnClickListener {

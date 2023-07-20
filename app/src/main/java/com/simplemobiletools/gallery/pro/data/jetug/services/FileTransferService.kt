@@ -113,9 +113,9 @@ class FileTransferService : Service() {
         val channelName = resources.getString(R.string.tasks)
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("File Moving Service")
+            .setContentTitle("Redirection Service")
             .setContentText("File moving service is running.")
-            .setSmallIcon(R.drawable.ic_file_ai)
+            .setSmallIcon(R.drawable.ic_folder_vector)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

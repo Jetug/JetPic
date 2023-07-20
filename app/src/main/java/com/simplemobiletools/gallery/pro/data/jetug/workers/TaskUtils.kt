@@ -1,8 +1,11 @@
 package com.simplemobiletools.gallery.pro.data.jetug.workers
 
+import android.app.ActivityManager
 import android.content.*
 import android.net.*
 import android.os.Build
+import android.os.Build.*
+import android.os.Build.VERSION.SDK_INT
 import android.provider.Settings.*
 import androidx.work.*
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
@@ -19,13 +22,18 @@ fun Context.createMediaMoveTask(sourcePath: Uri, destinationPath: Uri) {
 }
 
 fun BaseSimpleActivity.mediaMoveService(sourcePath: String, destinationPath: String) {
-    val intent = Intent(this, FileTransferService::class.java)
-//    startService(intent)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(intent)
-    }
+    if (SDK_INT >= VERSION_CODES.O && !isServiceRunning(FileTransferService::class.java))
+        startForegroundService(Intent(this, FileTransferService::class.java))
     val name = File(sourcePath).name + " to " + File(destinationPath).name
     taskDao.insert(SimpleTask(0, name, sourcePath, destinationPath))
+}
+
+fun Context.isServiceRunning(serviceClass: Class<*>): Boolean {
+    val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+    for (service in manager.getRunningServices(Integer.MAX_VALUE))
+        if (serviceClass.name == service.service.className) return true
+    return false
 }
 
 fun Context.mediaMoveService(sourcePath: Uri, destinationPath: Uri) {

@@ -17,13 +17,14 @@
         android:textSize="23sp"/>
 
     <com.simplemobiletools.commons.views.MyButton
+        android:drawablePadding="10dp"
         android:id="@+id/newTaskBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_plus_vector"
-        android:drawableTint="@color/actionbar_menu_icon"
+        android:drawableStart="@drawable/ic_folder_vector"
         android:text="@string/redirect_task"
         android:textSize="20sp"
+        android:textAllCaps="false"
         android:gravity="start|center"
         android:layout_gravity="start">
     </com.simplemobiletools.commons.views.MyButton>
