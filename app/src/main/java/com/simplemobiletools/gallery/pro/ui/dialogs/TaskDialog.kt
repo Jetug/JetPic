@@ -69,6 +69,8 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
 
                   FilePickerDialog(activity, activity.internalStoragePath, false,
                       activity.config.shouldShowHidden, false, true){
+                      sourceUri = it
+                      view.sourcePath.setText(it)
 
                   }
 
@@ -77,8 +79,15 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
               }
 
               selectPath.setOnClickListener {
-                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                  activity.startActivityForResult(intent, 1)
+//                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+//                  activity.startActivityForResult(intent, 1)
+
+                  FilePickerDialog(activity, activity.internalStoragePath, false,
+                      activity.config.shouldShowHidden, false, true){
+                      destinationUri = it
+                      view.path.setText(it)
+
+                  }
               }
               //okBtn.isEnabled = false
               okBtn.setOnClickListener(::onPositiveButtonClick)
@@ -93,24 +102,24 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
         return textView
     }
 
-    private var sourceUri: Uri? = null
-    private var destinationUri: Uri? = null
+    private var sourceUri: String = ""
+    private var destinationUri: String = ""
 
     private fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            sourceUri = data?.data
+            sourceUri = getDirectoryPathFromUri(data?.data!!)
             if(data == null) return
 //            val path: String? = data.getStringExtra("path")
 //            view.sourcePath.setText(path)
-            view.sourcePath.setText(getDirectoryPathFromUri(sourceUri!!))
+            view.sourcePath.setText(sourceUri!!)
         }
         else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            destinationUri = data?.data
+            destinationUri = getDirectoryPathFromUri(data?.data!!)
             //view.path.setText(destinationUri?.path)
 
 //            val path = ContentUriUtils.getFilePath(activity, destinationUri!!)
 //            view.path.setText(path)
-            view.path.setText(getDirectoryPathFromUri(destinationUri!!))
+            view.path.setText(destinationUri!!)
         }
 
 //        if(resultCode == Activity.RESULT_OK){
@@ -142,8 +151,8 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
     }
 
     private fun onPositiveButtonClick(v: View){
-        if (sourceUri == null || destinationUri == null || sourceUri.toString() == destinationUri.toString()) return
-        activity.mediaMoveService(getDirectoryPathFromUri(sourceUri!!), getDirectoryPathFromUri(destinationUri!!))
+        if (sourceUri == destinationUri) return
+        activity.mediaMoveService(sourceUri, destinationUri)
         onComplete()
         dialog.cancel()
 
