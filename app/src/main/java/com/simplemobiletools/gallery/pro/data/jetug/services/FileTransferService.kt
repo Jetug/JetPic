@@ -55,7 +55,7 @@ class FileTransferService : Service() {
 //    }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        startForeground(1, createNotification( ))
+        startForeground(1, createNotification())
         handler.postDelayed(runnable, PERIOD)
         return START_STICKY
     }
@@ -109,19 +109,15 @@ class FileTransferService : Service() {
     }
 
     private fun createNotification(): Notification {
-        val channelId = "your_channel_id"
-        val channelName = "Your Channel Name"
-        val notificationId = 1
+        val channelId = "tasks"
+        val channelName = resources.getString(R.string.tasks)
 
-        // Build a notification using NotificationCompat.Builder
-        // Set appropriate values for title, content, and other notification properties
         val builder = NotificationCompat.Builder(this, channelId)
             .setContentTitle("File Moving Service")
             .setContentText("File moving service is running.")
             .setSmallIcon(R.drawable.ic_file_ai)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        // Create a notification channel if necessary (required on API level 26 and higher)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
