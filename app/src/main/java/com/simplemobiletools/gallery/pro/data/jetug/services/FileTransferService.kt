@@ -6,22 +6,18 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.webkit.MimeTypeMap
 import androidx.core.app.NotificationCompat
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.gallery.pro.R
-import com.simplemobiletools.gallery.pro.data.extensions.context.config
 import com.simplemobiletools.gallery.pro.data.extensions.context.taskDao
-import com.simplemobiletools.gallery.pro.data.extensions.launchIO
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.io.File
+
+private const val PERIOD = 10 * 1000L
 
 class FileTransferService : Service() {
     private lateinit var handler: Handler
@@ -36,8 +32,10 @@ class FileTransferService : Service() {
 
         handler = Handler(Looper.getMainLooper())
         runnable = Runnable {
-            moveFiles() // Call the method to move files
-            handler.postDelayed(runnable, 5000) // Repeat every 5 seconds (5000 milliseconds)
+            taskDao.getAll().forEach {
+                moveFiles(it.sourcePath, it.targetPath)
+            }
+            handler.postDelayed(runnable, PERIOD) // Repeat every 5 seconds (5000 milliseconds)
         }
     }
 
@@ -57,44 +55,28 @@ class FileTransferService : Service() {
 //    }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-//        launchIO { while (true) {
-//            moveFiles()
-//            delay(5000)
-//        } }
-        startForeground(1, createNotification())
-        handler.postDelayed(runnable, 5000)
+        startForeground(1, createNotification( ))
+        handler.postDelayed(runnable, PERIOD)
         return START_STICKY
-    }
-
-    private fun moveFiles(){
-        taskDao.getAll().forEach{
-            moveFiles(it.sourcePath, it.targetPath)
-        }
     }
 
     private fun moveFiles(sourceUri: String, targetUri: String) {
         val sourceDir = File(sourceUri)
-        val destinationDir = File(targetUri)
 
         if (sourceDir.exists() && sourceDir.isDirectory) {
-            val files = sourceDir.listFiles { file ->
-                // Return true if you want to include the file in the move operation
-                file.extension == "jpg" || file.extension == "jpeg" ||
-                    file.extension == "png" || file.extension == "mp4"
-            }
+            val files = sourceDir.listFiles { file -> file.isPhotoVideo }
             files?.forEach { file ->
-                // Move file to the destination directory
-                val destFile = File(destinationDir, file.name)
-                file.renameTo(destFile)
+                file.move(targetUri)
             }
         }
     }
-//
-//    private fun isPhotoOrVideoFile(file: File): Boolean {
-//        val extension = file.extension.toLowerCase()
-//        return extension == "jpg" || extension == "jpeg" || extension == "png" ||
-//            extension == "gif" || extension == "mp4" || extension == "mov"
-//    }
+
+    private fun File.move(targetDir: String) = renameTo(File(targetDir, name))
+
+    private val File.isPhotoVideo: Boolean get() {
+        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.lowercase())
+        return mimeType?.startsWith("image/") == true || mimeType?.startsWith("video/") == true
+    }
 
     private fun Context.moveMedia(source: String, destination: String) {
         val sourceFile = File(source)
