@@ -8,11 +8,8 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.documentfile.provider.DocumentFile
 import com.google.android.flexbox.FlexboxLayout
-import com.leon.lfilepickerlibrary.LFilePicker
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.internalStoragePath
@@ -20,14 +17,11 @@ import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.views.MyEditText
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.context.config
-import com.simplemobiletools.gallery.pro.data.extensions.copyFile
 import com.simplemobiletools.gallery.pro.data.interfaces.ResultListener
 import com.simplemobiletools.gallery.pro.data.jetug.workers.*
 //import droidninja.filepicker.FilePickerBuilder
 //import droidninja.filepicker.utils.ContentUriUtils
 import kotlinx.android.synthetic.main.dialog_task.view.*
-import me.rosuh.filepicker.config.FilePickerManager
-import java.io.File
 
 
 class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = {}) {
@@ -35,10 +29,8 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
     private val dialog: AlertDialog
 
     init {
-        if(activity is ResultListener) activity.onResult = ::onActivityResult
+        //if(activity is ResultListener) activity.onResult = ::onActivityResult
         dialog = AlertDialog.Builder(activity)
-//            .setPositiveButton(R.string.ok, ::onPositiveButtonClick)
-//            .setNegativeButton(R.string.cancel, null)
             .create().apply {
                 activity.setupDialogStuff(view, this, R.string.new_task) {
                     onCreate()
@@ -55,33 +47,14 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
               }
 
               selectSourcePath.setOnClickListener {
-
-//                  LFilePicker()
-//                      .withActivity(activity)
-//                      .withRequestCode(0)
-//                      .withChooseMode(false)
-//                      .withIsGreater(false)
-//                      .start()
-//
-//                  FilePickerManager
-//                      .from(activity)
-//                      .forResult(FilePickerManager.REQUEST_CODE)
-
                   FilePickerDialog(activity, activity.internalStoragePath, false,
                       activity.config.shouldShowHidden, false, true){
                       sourceUri = it
                       view.sourcePath.setText(it)
-
                   }
-
-//                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-//                  activity.startActivityForResult(intent, 0)
               }
 
               selectPath.setOnClickListener {
-//                  val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-//                  activity.startActivityForResult(intent, 1)
-
                   FilePickerDialog(activity, activity.internalStoragePath, false,
                       activity.config.shouldShowHidden, false, true){
                       destinationUri = it
@@ -105,32 +78,16 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
     private var sourceUri: String = ""
     private var destinationUri: String = ""
 
-    private fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            sourceUri = getDirectoryPathFromUri(data?.data!!)
-            if(data == null) return
-//            val path: String? = data.getStringExtra("path")
-//            view.sourcePath.setText(path)
-            view.sourcePath.setText(sourceUri!!)
-        }
-        else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            destinationUri = getDirectoryPathFromUri(data?.data!!)
-            //view.path.setText(destinationUri?.path)
-
-//            val path = ContentUriUtils.getFilePath(activity, destinationUri!!)
-//            view.path.setText(path)
-            view.path.setText(destinationUri!!)
-        }
-
-//        if(resultCode == Activity.RESULT_OK){
-//            sourceUri = data?.data
-//            val path = getDirectoryPathFromUri(sourceUri)
-//            when(requestCode){
-//                0 -> view.sourcePath.setText(getDirectoryPathFromUri(sourceUri!!))
-//                1 -> view.path.setText(getDirectoryPathFromUri(sourceUri!!))
-//            }
+//    private fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+//            sourceUri = getDirectoryPathFromUri(data?.data!!)
+//            view.sourcePath.setText(sourceUri)
 //        }
-    }
+//        else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+//            destinationUri = getDirectoryPathFromUri(data?.data!!)
+//            view.path.setText(destinationUri)
+//        }
+//    }
 
     private fun getDirectoryPathFromUri(uri: Uri): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -146,13 +103,9 @@ class TaskDialog(val activity: BaseSimpleActivity, val onComplete: () -> Unit = 
         return ""
     }
 
-    private fun isFromExternalStorage(uri: Uri): Boolean {
-        return uri.toString().contains("primary")
-    }
-
     private fun onPositiveButtonClick(v: View){
         if (sourceUri == destinationUri) return
-        activity.mediaMoveService(sourceUri, destinationUri)
+        activity.newRedirectTask(sourceUri, destinationUri)
         onComplete()
         dialog.cancel()
 

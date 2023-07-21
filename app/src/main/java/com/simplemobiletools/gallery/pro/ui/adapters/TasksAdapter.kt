@@ -36,13 +36,6 @@ class TasksAdapter(val activity: Activity, var tasks: List<SimpleTask>,
         return tasks.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: SimpleTask): View = itemView.apply {
-            findViewById<MyTextView>(R.id.taskName).text = item.name
-            setOnClickListener { onClick(item, it) }
-        }
-    }
-
     private fun onClick(item: SimpleTask, view: View){
         val popupMenu = PopupMenu(activity, view)
         popupMenu.menuInflater.inflate(R.menu.menu_task_item, popupMenu.menu)
@@ -60,5 +53,12 @@ class TasksAdapter(val activity: Activity, var tasks: List<SimpleTask>,
         }
 
         popupMenu.show()
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindView(item: SimpleTask): View = itemView.apply {
+            findViewById<MyTextView>(R.id.taskName).text = item.name
+            setOnClickListener { onClick(item, it) }
+        }
     }
 }

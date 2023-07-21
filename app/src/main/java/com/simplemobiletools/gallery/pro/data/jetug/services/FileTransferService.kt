@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.gallery.pro.R
 import com.simplemobiletools.gallery.pro.data.extensions.context.taskDao
+import com.simplemobiletools.gallery.pro.data.extensions.*
 import java.io.File
 
 private const val PERIOD = 10 * 1000L
@@ -29,30 +30,16 @@ class FileTransferService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-
         handler = Handler(Looper.getMainLooper())
         runnable = Runnable {
-            taskDao.getAll().forEach {
-                moveFiles(it.sourcePath, it.targetPath)
+            try {
+                for (it in taskDao.getAll())
+                    moveFiles(it.sourcePath, it.targetPath)
+                handler.postDelayed(runnable, PERIOD)
             }
-            handler.postDelayed(runnable, PERIOD) // Repeat every 5 seconds (5000 milliseconds)
+            catch (e: Exception){e.printStackTrace()}
         }
     }
-
-//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        val sourceUri = intent?.getStringExtra("sourceUri")
-//        val targetUri = intent?.getStringExtra("targetUri")
-//        if(sourceUri == null || targetUri == null) return START_STICKY
-//
-//        GlobalScope.launch(Dispatchers.IO) {
-//            while (true) {
-//                moveMedia(sourceUri, targetUri)
-//                delay(5000)
-//            }
-//        }
-//
-//        return START_STICKY
-//    }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         startForeground(1, createNotification())
@@ -70,38 +57,6 @@ class FileTransferService : Service() {
             }
         }
     }
-
-    private fun File.move(targetDir: String) = renameTo(File(targetDir, name))
-
-    private val File.isPhotoVideo: Boolean get() {
-        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.lowercase())
-        return mimeType?.startsWith("image/") == true || mimeType?.startsWith("video/") == true
-    }
-
-    private fun Context.moveMedia(source: String, destination: String) {
-        val sourceFile = File(source)
-        val destinationDirectory = File(destination)
-
-        if (sourceFile.exists() && destinationDirectory.isDirectory) {
-            val newFile = File(destinationDirectory, sourceFile.name)
-            val isMoved = sourceFile.renameTo(newFile)
-
-            if (isMoved) {
-                println("1")
-                // File moved successfully
-            } else {
-                println("0")
-                // File move failed
-            }
-        } else {
-            // Source file doesn't exist or destination directory is invalid
-            // Handle the appropriate error case
-        }
-    }
-
-    private fun DocumentFile.isPhotoVideo(): Boolean =
-        type?.startsWith("image/") == true ||
-        type?.startsWith("video/") == true
 
     override fun onDestroy() {
         super.onDestroy()
